@@ -1,0 +1,33 @@
+{
+  "files": {
+    "ba-routematcher.min.js": {
+      "src": ["ba-routematcher.js"],
+      "prelint": true,
+      "postlint": false,
+      "debug": false,
+      "meta": {
+        "label": "JavaScript Route Matcher",
+        "author": "\"Cowboy\" Ben Alman",
+        "version": "0.1pre",
+        "homeurl": "http://benalman.com/",
+        "license": ["MIT", "GPL"],
+        "copyright": "Copyright (c) 2011 \"Cowboy\" Ben Alman"
+      }
+    }
+  },
+  "jshint": {
+    "curly": true,
+    "eqnull": true,
+    "immed": true,
+    "newcap": true,
+    "noarg": true,
+    "undef": true,
+    "browser": true,
+    "predef": ["jQuery"]
+  },
+  "uglify": {
+    "mangle": {"except": ["$"]},
+    "squeeze": {},
+    "codegen": {}
+  }
+}

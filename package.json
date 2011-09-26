@@ -20,15 +20,16 @@
   "dependencies": {
     "colors": "~0.5.0",
     "dateformat": "1.0.1-1.2.3",
-    "jshint": "~0.2.2",
-    "nopt": "~1.0.5",
-    "pkginfo": "~0.2.1",
-    "uglify-js": "~1.0.2",
-    "zlib": "~1.0.2"
+    "handlebars": "1.0.2beta",
+    "jshint": "~0.2.3",
+    "nopt": "~1.0.8",
+    "pkginfo": "~0.2.2",
+    "uglify-js": "~1.0.7",
+    "zlib": "~1.0.5"
   },
   "bin": "./bin/grunt",
   "engines": {
-    "node": ">= 0.4.0"
+    "node": ">= 0.4.12"
   },
   "preferGlobal": true
 }

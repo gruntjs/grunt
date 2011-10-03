@@ -25,7 +25,8 @@
     "nopt": "~1.0.8",
     "pkginfo": "~0.2.2",
     "uglify-js": "~1.0.7",
-    "zlib": "~1.0.5"
+    "zlib": "~1.0.5",
+    "nodeunit": "~0.5.5"
   },
   "bin": "./bin/grunt",
   "engines": {

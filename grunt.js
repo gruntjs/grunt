@@ -1,35 +1,58 @@
+// Config.
 config.init({
   meta: {
     name: 'grunt',
-    title: 'Grunt',
-    version: '0.1pre',
+    version: '0.1.0',
     description: 'A command line build tool for JavaScript projects..',
-    homepage: 'http://benalman.com/',
+    homepage: 'http://github.com/cowboy/node-grunt',
     author: '"Cowboy" Ben Alman',
     license: ['MIT', 'GPL'],
     copyright: 'Copyright (c) 2011 "Cowboy" Ben Alman',
     repository: 'git://github.com/cowboy/node-grunt.git'
   },
+  build: {},
   test: {
-    //reporter: 'minimal',
-    folders: ['test/util']
+    files: ['test/**']
   },
   lint: {
+    files: ['lib/**', 'test/**'],
+    //files: ['grunt.js'],
     pre: true,
     post: true
   },
   jshint: {
-    curly: true,
-    eqnull: true,
-    immed: true,
-    newcap: true,
-    noarg: true,
-    undef: true,
-    browser: true,
-    predef: ['exports']
-  }
+    options: {
+      curly: true,
+      eqeqeq: true,
+      immed: true,
+      latedef: true,
+      newcap: true,
+      noarg: true,
+      undef: true,
+      eqnull: true,
+      node: true
+    },
+    globals: {
+      exports: true,
+      module: true,
+      grequire: true,
+      urequire: true,
+      exit: true,
+      _: true,
+      task: true,
+      file: true,
+      fail: true,
+      config: true,
+      option: true,
+      log: true,
+      verbose: true
+    }
+  },
+  uglify: {}
 });
 
-task.registerTask('default', 'Default stuff.', function() {
+// Tasks.
+task.registerTask('default', 'Run "test" task.', function() {
   this.task('test');
 });
+

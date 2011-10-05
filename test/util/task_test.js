@@ -55,7 +55,7 @@ exports['this.task'] = testCase({
     }.bind(this));
     done();
   },
-  'single': function(test) {
+  'single, chaining': function(test) {
     test.expect(1);
     this._test = test;
     this.t.registerTask('a', function() { push(this); this.task('b').task('c'); });
@@ -89,6 +89,38 @@ exports['this.task'] = testCase({
     });
     this.t.done(test.done);
     this.t.task('b').run();
+  }
+});
+
+exports['this.superTask'] = testCase({
+  setUp: function(done) {
+    result = [];
+    this.t = requireTask();
+    done();
+  },
+  'simple': function(test) {
+    test.expect(1);
+    this.t.registerTask('a', function() { result.push(3); push(this); });
+    this.t.registerTask('b', function() { result.push(2); push(this); });
+    this.t.registerTask('a', function() { result.push(1); push(this); this.task('b'); this.superTask(); });
+    this.t.done(function() {
+      test.deepEqual(result.join(''), '1a2b3a', 'overriden test should be callable as this.superTask.');
+      test.done();
+    });
+    this.t.task('a').run();
+  },
+  'less simple': function(test) {
+    test.expect(1);
+    this.t.registerTask('a', function() { result.push(2); push(this); });
+    this.t.registerTask('b', function() { result.push(5); push(this); });
+    this.t.registerTask('c', function() { result.push(4); push(this); });
+    this.t.registerTask('a', function() { result.push(1); push(this); this.superTask(); this.task('b'); });
+    this.t.registerTask('b', function() { result.push(3); push(this); this.task('c'); this.superTask(); });
+    this.t.done(function() {
+      test.deepEqual(result.join(''), '1a2a3b4c5b', 'overriden test should be callable as this.superTask.');
+      test.done();
+    });
+    this.t.task('a').run();
   }
 });
 

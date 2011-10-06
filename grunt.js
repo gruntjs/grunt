@@ -10,14 +10,14 @@ config.init({
     copyright: 'Copyright (c) 2011 "Cowboy" Ben Alman',
     repository: 'git://github.com/cowboy/node-grunt.git'
   },
-  build: {},
+  build: {
+    max: 'test.js'
+  },
   test: {
     files: ['test/**']
   },
   lint: {
-    files: ['grunt.js', 'lib/**', 'test/**'],
-    pre: true,
-    post: true
+    files: ['grunt.js', 'lib/**', 'test/**']
   },
   jshint: {
     options: {
@@ -51,6 +51,5 @@ config.init({
 
 // Tasks.
 task.registerTask('default', 'Run "lint" and "test" tasks.', function() {
-  this.task('lint').task('test');
+  this.task('lint:files', 'test'); //, 'build', 'lint:built', 'min');
 });
-

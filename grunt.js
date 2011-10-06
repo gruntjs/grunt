@@ -28,6 +28,7 @@ config.init({
       latedef: true,
       newcap: true,
       noarg: true,
+      sub: true,
       undef: true,
       eqnull: true,
       node: true
@@ -52,7 +53,7 @@ config.init({
 });
 
 // Tasks.
-task.registerTask('default', 'Run "test" task.', function() {
-  this.task('test');
+task.registerTask('default', 'Run "lint" and "test" tasks.', function() {
+  this.task('lint').task('test');
 });
 

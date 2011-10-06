@@ -27,7 +27,6 @@ config.init({
       latedef: true,
       newcap: true,
       noarg: true,
-      proto: true,
       sub: true,
       undef: true,
       eqnull: true,
@@ -37,7 +36,6 @@ config.init({
       setTimeout: true, // temp hack for https://github.com/jshint/jshint/issues/292
       grequire: true,
       urequire: true,
-      exit: true,
       _: true,
       task: true,
       file: true,

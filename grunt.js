@@ -27,6 +27,7 @@ config.init({
       latedef: true,
       newcap: true,
       noarg: true,
+      proto: true,
       sub: true,
       undef: true,
       eqnull: true,

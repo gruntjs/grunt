@@ -15,8 +15,7 @@ config.init({
     files: ['test/**']
   },
   lint: {
-    files: ['lib/**', 'test/**'],
-    //files: ['grunt.js'],
+    files: ['grunt.js', 'lib/**', 'test/**'],
     pre: true,
     post: true
   },
@@ -34,8 +33,7 @@ config.init({
       node: true
     },
     globals: {
-      exports: true,
-      module: true,
+      setTimeout: true, // temp hack for https://github.com/jshint/jshint/issues/292
       grequire: true,
       urequire: true,
       exit: true,

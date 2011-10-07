@@ -5,7 +5,7 @@ module.exports = {
   long: 'This is a much longer description. TODO: WRITE ACTUAL DESCRIPTION',
   task: function() {
     log.writeln('foo');
-    this.task(':bar');
+    this.run(':bar');
   },
   subtasks: {
     bar: function() {

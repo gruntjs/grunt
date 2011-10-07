@@ -51,5 +51,5 @@ config.init({
 
 // Tasks.
 task.registerTask('default', 'Run "lint" and "test" tasks.', function() {
-  this.task('lint:files', 'test'); //, 'build', 'lint:built', 'min');
+  this.run('lint:files test'); //, 'build', 'lint:built', 'min');
 });

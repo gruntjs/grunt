@@ -1,5 +1,6 @@
 // Config.
 config.init({
+  default_tasks: 'lint:files test', // build lint:built min',
   meta: {
     name: 'grunt',
     version: '0.1.0',
@@ -47,9 +48,4 @@ config.init({
     }
   },
   uglify: {}
-});
-
-// Tasks.
-task.registerTask('default', 'Run "lint" and "test" tasks.', function() {
-  this.run('lint:files test'); //, 'build', 'lint:built', 'min');
 });

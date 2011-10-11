@@ -12,13 +12,15 @@ config.init({
     repository: 'git://github.com/cowboy/node-grunt.git'
   },
   build: {
-    max: 'test.js'
+    src: ['grunt.js', 'lib/**'],
+    max: 'generated.js'
   },
   test: {
     files: ['test/**']
   },
   lint: {
-    files: ['grunt.js', 'lib/**', 'test/**']
+    files: ['grunt.js', 'lib/**', 'test/**'],
+    built: ['generated.js']
   },
   jshint: {
     options: {
@@ -49,3 +51,5 @@ config.init({
   },
   uglify: {}
 });
+
+task.registerTask('foo', 'a convenient shortcut.', 'lint:files test');

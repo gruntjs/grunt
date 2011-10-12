@@ -6,7 +6,7 @@ function delay(fn) { setTimeout(fn, 10); }
 
 var result = (function() {
   var arr;
-  var push = function(val) { arr.push(val); }
+  var push = function() { [].push.apply(arr, arguments); }
   return {
     reset: function() { arr = []; },
     push: push,
@@ -72,6 +72,27 @@ exports['Tasks'] = testCase({
     test.ok('nothing' in task._tasks, 'It should register the passed task.');
     test.done();
   },
+  'Task#registerTask (alias)': function(test) {
+    test.expect(1);
+    var task = this.task;
+    result.reset();
+    task.registerTask('a', 'Push task name onto result.', result.pushTaskname);
+    task.registerTask('b', 'Push task name onto result.', result.pushTaskname);
+    task.registerTask('c', 'Push task name onto result.', result.pushTaskname);
+    task.registerTask('x', 'a b c');
+    task.registerTask('y', ['a', 'b', 'c']);
+    task.registerTask('z', 'a b nonexistent c');
+    task.options({
+      error: function(e) {
+        result.push('!' + this.name);
+      },
+      done: function() {
+        test.strictEqual(result.getJoined(), 'abcabc!z', 'The specified tasks should have run, in-order.');
+        test.done();
+      }
+    });
+    task.run('x y z').start();
+  },
   'Task#renameTask': function(test) {
     test.expect(4);
     var task = this.task;
@@ -104,7 +125,7 @@ exports['Tasks'] = testCase({
     });
     task.run('yay nay').start();
   },
-  'Task#run (arguments, queue order)': function(test) {
+  'Task#run (signatures, queue order)': function(test) {
     test.expect(1);
     var task = this.task;
     result.reset();
@@ -122,6 +143,35 @@ exports['Tasks'] = testCase({
       }
     });
     task.run('a').run('b', 'c').run(['d', 'e']).run('f g').start();
+  },
+  'Task#run (colon separated arguments)': function(test) {
+    test.expect(1);
+    var task = this.task;
+    result.reset();
+    task.registerTask('a', 'Push task name and args onto result.', function(x, y) { result.push(1, this.name, x, y); });
+    task.registerTask('a:b', 'Push task name and args onto result.', function(x, y) { result.push(2, this.name, x, y); });
+    task.registerTask('a:b:c', 'Push task name and args onto result.', function(x, y) { result.push(3, this.name, x, y); });
+    task.options({
+      error: function(e) {
+        console.log('ERROR', this.name, e.message);
+      },
+      done: function() {
+        test.deepEqual(result.get(), [
+          1, 'a',     undefined,  undefined,
+          2, 'a:b',   'b',        undefined,
+          3, 'a:b:c', 'b',        'c',
+          1, 'a',     'x',        undefined,
+          1, 'a',     'x',        'y',
+          2, 'a:b',   'b',        'x'
+        ], 'Named tasks should be called as-specified if possible, and arguments should be passed properly.');
+        test.done();
+      }
+    });
+    try {
+      task.run('a a:b a:b:c a:x a:x:y a:b:x').start();
+    } catch (e) {
+      console.log(e);
+    }
   },
   'Task#run (nested tasks, queue order)': function(test) {
     test.expect(1);
@@ -197,7 +247,7 @@ exports['Tasks'] = testCase({
         result.push('!' + this.name);
       },
       done: function() {
-        test.strictEqual(result.getJoined(), 'abcde!x!y!z', 'Tasks whose requirements have failed should not run.');
+        test.strictEqual(result.getJoined(), 'abcde!x!y!z', 'Tasks whose requirements have failed or are missing should not run.');
         test.done();
       }
     });

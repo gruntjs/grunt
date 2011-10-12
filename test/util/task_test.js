@@ -1,12 +1,11 @@
 var testCase = require('nodeunit').testCase;
 
 // Test helpers.
-function push(t) { result.push(t.name); }
 function delay(fn) { setTimeout(fn, 10); }
 
 var result = (function() {
   var arr;
-  var push = function() { [].push.apply(arr, arguments); }
+  var push = function() { [].push.apply(arr, arguments); };
   return {
     reset: function() { arr = []; },
     push: push,
@@ -41,10 +40,16 @@ exports['Helpers'] = testCase({
     test.done();
   },
   'Task#helper': function(test) {
-    test.expect(2);
+    test.expect(4);
     var task = this.task;
     test.strictEqual(task.helper('add', 1, 2), 3, 'It should receive arguments and return a value.');
     test.throws(function() { task.helper('nonexistent'); }, 'Attempting to execute unregistered handlers should throw an exception.');
+    task.options({
+      error: result.pushTaskname
+    });
+    result.reset();
+    test.doesNotThrow(function() { task.helper('nonexistent'); }, 'It should not throw an exception because an error handler is defined.');
+    test.deepEqual(result.get(), [null], 'Non-nested tasks have a null name.');
     test.done();
   },
   'Task#renameHelper': function(test) {
@@ -61,6 +66,7 @@ exports['Helpers'] = testCase({
 
 exports['Tasks'] = testCase({
   setUp: function(done) {
+    result.reset();
     this.task = requireTask().create();
     var task = this.task;
     task.registerTask('nothing', 'Do nothing.', function() {});
@@ -75,7 +81,6 @@ exports['Tasks'] = testCase({
   'Task#registerTask (alias)': function(test) {
     test.expect(1);
     var task = this.task;
-    result.reset();
     task.registerTask('a', 'Push task name onto result.', result.pushTaskname);
     task.registerTask('b', 'Push task name onto result.', result.pushTaskname);
     task.registerTask('c', 'Push task name onto result.', result.pushTaskname);
@@ -100,20 +105,24 @@ exports['Tasks'] = testCase({
     test.ok('newnothing' in task._tasks, 'It should rename the specified task.');
     test.equal('nothing' in task._tasks, false, 'It should remove the previous task.');
     test.doesNotThrow(function() { task.run('newnothing'); }, 'It should be accessible by its new name.');
-    test.throws(function() { task.run('nothing'); }, 'It should not be accessible by its previous name.');
+    test.throws(function() { task.run('nothing'); }, 'It should not be accessible by its previous name and throw an exception.');
     test.done();
   },
   'Task#run (exception handling)': function(test) {
-    test.expect(2);
+    test.expect(4);
     var task = this.task;
     test.doesNotThrow(function() { task.run('nothing'); }, 'Registered tasks should be runnable.');
     test.throws(function() { task.run('nonexistent'); }, 'Attempting to run unregistered tasks should throw an exception.');
+    task.options({
+      error: result.pushTaskname
+    });
+    test.doesNotThrow(function() { task.run('nonexistent'); }, 'It should not throw an exception because an error handler is defined.');
+    test.deepEqual(result.get(), [null], 'Non-nested tasks have a null name.');
     test.done();
   },
   'Task#run (nested, exception handling)': function(test) {
     test.expect(2);
     var task = this.task;
-    result.reset();
     task.registerTask('yay', 'Run a registered task.', function() {
       test.doesNotThrow(function() { task.run('nothing'); }, 'Registered tasks should be runnable.');
     });
@@ -128,7 +137,6 @@ exports['Tasks'] = testCase({
   'Task#run (signatures, queue order)': function(test) {
     test.expect(1);
     var task = this.task;
-    result.reset();
     task.registerTask('a', 'Push task name onto result.', result.pushTaskname);
     task.registerTask('b', 'Push task name onto result.', result.pushTaskname);
     task.registerTask('c', 'Push task name onto result.', result.pushTaskname);
@@ -147,14 +155,10 @@ exports['Tasks'] = testCase({
   'Task#run (colon separated arguments)': function(test) {
     test.expect(1);
     var task = this.task;
-    result.reset();
     task.registerTask('a', 'Push task name and args onto result.', function(x, y) { result.push(1, this.name, x, y); });
     task.registerTask('a:b', 'Push task name and args onto result.', function(x, y) { result.push(2, this.name, x, y); });
     task.registerTask('a:b:c', 'Push task name and args onto result.', function(x, y) { result.push(3, this.name, x, y); });
     task.options({
-      error: function(e) {
-        console.log('ERROR', this.name, e.message);
-      },
       done: function() {
         test.deepEqual(result.get(), [
           1, 'a',     undefined,  undefined,
@@ -167,16 +171,11 @@ exports['Tasks'] = testCase({
         test.done();
       }
     });
-    try {
-      task.run('a a:b a:b:c a:x a:x:y a:b:x').start();
-    } catch (e) {
-      console.log(e);
-    }
+    task.run('a a:b a:b:c a:x a:x:y a:b:x').start();
   },
   'Task#run (nested tasks, queue order)': function(test) {
     test.expect(1);
     var task = this.task;
-    result.reset();
     task.registerTask('a', 'Push task name onto result and run other tasks.', function() { result.push(this.name); task.run('b e'); });
     task.registerTask('b', 'Push task name onto result and run other tasks.', function() { result.push(this.name); task.run('c d'); });
     task.registerTask('c', 'Push task name onto result.', result.pushTaskname);
@@ -195,7 +194,6 @@ exports['Tasks'] = testCase({
   'Task#run (async, nested tasks, queue order)': function(test) {
     test.expect(1);
     var task = this.task;
-    result.reset();
     task.registerTask('a', 'Push task name onto result and run other tasks.', function() { result.push(this.name); task.run('b e'); delay(this.async()); });
     task.registerTask('b', 'Push task name onto result and run other tasks.', function() { result.push(this.name); delay(this.async()); task.run('c d'); });
     task.registerTask('c', 'Push task name onto result.', result.pushTaskname);
@@ -214,7 +212,6 @@ exports['Tasks'] = testCase({
   'Task#requires': function(test) {
     test.expect(1);
     var task = this.task;
-    result.reset();
     task.registerTask('notrun', 'This task is never run.', function() {});
     task.registerTask('a', 'Push task name onto result, but fail.', function() {
       result.push(this.name);
@@ -247,18 +244,51 @@ exports['Tasks'] = testCase({
         result.push('!' + this.name);
       },
       done: function() {
-        test.strictEqual(result.getJoined(), 'abcde!x!y!z', 'Tasks whose requirements have failed or are missing should not run.');
+        test.strictEqual(result.getJoined(), 'a!ab!bcde!x!y!z', 'Tasks whose requirements have failed or are missing should not run.');
         test.done();
       }
     });
     task.run('a b c d e x y z').start();
-  },
+  }
 });
 
-
-
-
-
-
-
-
+exports['Task#parseArgs'] = testCase({
+  setUp: function(done) {
+    var task = requireTask().create();
+    this.parseTest = function() {
+      return task.parseArgs(arguments);
+    };
+    done();
+  },
+  'single task string': function(test) {
+    test.expect(1);
+    test.deepEqual(this.parseTest('foo'), ['foo'], 'string should be split into array.');
+    test.done();
+  },
+  'multiple task string': function(test) {
+    test.expect(1);
+    test.deepEqual(this.parseTest('foo bar baz'), ['foo', 'bar', 'baz'], 'string should be split into array.');
+    test.done();
+  },
+  'arguments': function(test) {
+    test.expect(1);
+    test.deepEqual(this.parseTest('foo', 'bar', 'baz'), ['foo', 'bar', 'baz'], 'arguments should be converted to array.');
+    test.done();
+  },
+  'array': function(test) {
+    test.expect(1);
+    test.deepEqual(this.parseTest(['foo', 'bar', 'baz']), ['foo', 'bar', 'baz'], 'passed array should be used.');
+    test.done();
+  },
+  'object': function(test) {
+    test.expect(1);
+    var obj = {};
+    test.deepEqual(this.parseTest(obj), [obj], 'single object should be returned as array.');
+    test.done();
+  },
+  'nothing': function(test) {
+    test.expect(1);
+    test.deepEqual(this.parseTest(), [], 'should return an empty array if nothing passed.');
+    test.done();
+  }
+});

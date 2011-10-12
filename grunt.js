@@ -1,6 +1,5 @@
 // Config.
 config.init({
-  default_tasks: 'lint:files test', // build lint:built min',
   meta: {
     name: 'grunt',
     version: '0.1.0',
@@ -52,4 +51,4 @@ config.init({
   uglify: {}
 });
 
-task.registerTask('foo', 'a convenient shortcut.', 'lint:files test');
+task.registerTask('default', 'lint:files test'); //build lint:built min');

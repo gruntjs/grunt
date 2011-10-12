@@ -52,7 +52,7 @@ exports['Helpers'] = testCase({
     var task = this.task;
     task.renameHelper('add', 'newadd');
     test.ok('newadd' in task._helpers, 'It should rename the specified helper.');
-    test.equal('add' in task._helpers, false, 'It should remove the previous helper name.');
+    test.equal('add' in task._helpers, false, 'It should remove the previous helper.');
     test.doesNotThrow(function() { task.helper('newadd'); }, 'It should be accessible by its new name.');
     test.throws(function() { task.helper('add'); }, 'It should not be accessible by its previous name.');
     test.done();
@@ -70,6 +70,16 @@ exports['Tasks'] = testCase({
     test.expect(1);
     var task = this.task;
     test.ok('nothing' in task._tasks, 'It should register the passed task.');
+    test.done();
+  },
+  'Task#renameTask': function(test) {
+    test.expect(4);
+    var task = this.task;
+    task.renameTask('nothing', 'newnothing');
+    test.ok('newnothing' in task._tasks, 'It should rename the specified task.');
+    test.equal('nothing' in task._tasks, false, 'It should remove the previous task.');
+    test.doesNotThrow(function() { task.run('newnothing'); }, 'It should be accessible by its new name.');
+    test.throws(function() { task.run('nothing'); }, 'It should not be accessible by its previous name.');
     test.done();
   },
   'Task#run (exception handling)': function(test) {
@@ -155,6 +165,7 @@ exports['Tasks'] = testCase({
     test.expect(1);
     var task = this.task;
     result.reset();
+    task.registerTask('notrun', 'This task is never run.', function() {});
     task.registerTask('a', 'Push task name onto result, but fail.', function() {
       result.push(this.name);
       return false;
@@ -165,25 +176,32 @@ exports['Tasks'] = testCase({
     });
     task.registerTask('c', 'Succeed.', result.pushTaskname);
     task.registerTask('d', 'Succeed.', result.pushTaskname);
-    task.registerTask('e', 'Fail because a required task has failed.', function() {
-      task.requires('a c d');
-      result.push(this.name);
-    });
-    task.registerTask('f', 'Fail because a required task has failed.', function() {
-      task.requires('b c d');
-      result.push(this.name);
-    });
-    task.registerTask('g', 'Succeed because all required tasks have succeeded.', function() {
+    task.registerTask('e', 'Succeed because all required tasks ran and succeeded.', function() {
       task.requires('c d');
       result.push(this.name);
     });
+    task.registerTask('x', 'Fail because a required task never ran.', function() {
+      task.requires('c notrun d');
+      result.push(this.name);
+    });
+    task.registerTask('y', 'Fail because a synchronous required task has failed.', function() {
+      task.requires('a c d');
+      result.push(this.name);
+    });
+    task.registerTask('z', 'Fail because an asynchronous required task has failed.', function() {
+      task.requires('b c d');
+      result.push(this.name);
+    });
     task.options({
+      error: function(e) {
+        result.push('!' + this.name);
+      },
       done: function() {
-        test.strictEqual(result.getJoined(), 'abcdg', 'Tasks whose requirements have failed should not run.');
+        test.strictEqual(result.getJoined(), 'abcde!x!y!z', 'Tasks whose requirements have failed should not run.');
         test.done();
       }
     });
-    task.run('a b c d e f g').start();
+    task.run('a b c d e x y z').start();
   },
 });
 

@@ -10,9 +10,11 @@ config.init({
     copyright: 'Copyright (c) 2011 "Cowboy" Ben Alman',
     repository: 'git://github.com/cowboy/node-grunt.git'
   },
-  build: {
-    src: ['grunt.js', 'lib/**'],
-    max: 'generated.js'
+  concat: {
+    'generated.js': ['grunt.js', 'lib/**']
+  },
+  min: {
+    'generated.min.js': 'generated.js'
   },
   test: {
     files: ['test/**']

@@ -155,18 +155,18 @@ exports['Tasks'] = testCase({
   'Task#run (colon separated arguments)': function(test) {
     test.expect(1);
     var task = this.task;
-    task.registerTask('a', 'Push task name and args onto result.', function(x, y) { result.push(1, this.name, x, y); });
-    task.registerTask('a:b', 'Push task name and args onto result.', function(x, y) { result.push(2, this.name, x, y); });
-    task.registerTask('a:b:c', 'Push task name and args onto result.', function(x, y) { result.push(3, this.name, x, y); });
+    task.registerTask('a', 'Push task name and args onto result.', function(x, y) { result.push(1, this.name, this.nameArgs, x, y); });
+    task.registerTask('a:b', 'Push task name and args onto result.', function(x, y) { result.push(2, this.name, this.nameArgs, x, y); });
+    task.registerTask('a:b:c', 'Push task name and args onto result.', function(x, y) { result.push(3, this.name, this.nameArgs, x, y); });
     task.options({
       done: function() {
         test.deepEqual(result.get(), [
-          1, 'a',     undefined,  undefined,
-          2, 'a:b',   'b',        undefined,
-          3, 'a:b:c', 'b',        'c',
-          1, 'a',     'x',        undefined,
-          1, 'a',     'x',        'y',
-          2, 'a:b',   'b',        'x'
+          1, 'a',     'a',     undefined,  undefined,
+          2, 'a:b',   'a:b',   'b',        undefined,
+          3, 'a:b:c', 'a:b:c', 'b',        'c',
+          1, 'a',     'a:x',   'x',        undefined,
+          1, 'a',     'a:x:y', 'x',        'y',
+          2, 'a:b',   'a:b:x', 'b',        'x'
         ], 'Named tasks should be called as-specified if possible, and arguments should be passed properly.');
         test.done();
       }

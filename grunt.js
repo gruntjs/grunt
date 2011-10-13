@@ -19,7 +19,7 @@ config.init({
   },
   lint: {
     files: ['grunt.js', 'lib/**', 'test/**'],
-    built: ['generated.js']
+    built: 'generated.js'
   },
   jshint: {
     options: {
@@ -51,4 +51,5 @@ config.init({
   uglify: {}
 });
 
+// Default task.
 task.registerTask('default', 'lint:files test'); //build lint:built min');

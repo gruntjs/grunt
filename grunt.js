@@ -11,17 +11,17 @@ config.init({
     repository: 'git://github.com/cowboy/node-grunt.git'
   },
   concat: {
-    'generated.js': ['grunt.js', 'lib/**']
+    'example/dist/main.js': ['grunt.js', 'lib/**']
   },
   min: {
-    'generated.min.js': 'generated.js'
+    'example/dist/min.js': 'example/dist/main.js'
   },
   test: {
     files: ['test/**']
   },
   lint: {
     files: ['grunt.js', 'lib/**', 'test/**'],
-    built: 'generated.js'
+    built: 'example/dist/main.js'
   },
   jshint: {
     options: {
@@ -54,4 +54,5 @@ config.init({
 });
 
 // Default task.
-task.registerTask('default', 'lint:files test'); //build lint:built min');
+//task.registerTask('default', 'lint:files test'); //build lint:built min');
+task.registerTask('default', 'lint:files test:files concat lint:built min');

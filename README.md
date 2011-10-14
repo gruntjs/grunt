@@ -11,6 +11,16 @@ As of now, grunt has the following predefined tasks.
 
 More will be added as I find the time, but you can very easily define your own tasks in your gruntfile.
 
+## Getting started
+
+Once this is in npm it'll be a little easier, but for now, just clone and install grunt like this:
+
+```bash
+git clone git://github.com/cowboy/node-grunt.git && cd node-grunt && npm install && npm link
+```
+
+Once done, type `grunt --help` for help, or just `grunt` to see grunt "grunt" itself.
+
 ## The "gruntfile"
 
 Create a `grunt.js` file at the root of your project's repo. Take a look at the [sample config files][configs].

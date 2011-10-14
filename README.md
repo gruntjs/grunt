@@ -70,7 +70,11 @@ Of course, you probably don't want to type "grunt lint concat" every time you ne
 
 ## Tasks
 
-The "default" task is one that will be executed by grunt if no task is explicitly specified on the command line. You can create any number of arbitrary task aliases, but the "default" task is a special case.
+The "default" task is one that will be executed by grunt if no task is explicitly specified on the command line. You can create any number of arbitrary task aliases, but the "default" task is a special case. And while you can specify a description for a task alias, grunt will add one for you if you don't, so don't bother.
+
+```javascript
+task.registerTask(taskName, [optionalDescription], taskFunctionOrAliasString);
+```
 
 This alias example is a little naive, because it tries to lint the "afterconcat" file before it's been created by the concat task.
 
@@ -89,8 +93,8 @@ Either way, just make sure you register a "default" task in your gruntfile.
 A custom task can be created as-follows (and it doesn't have to be called "default" either).
 
 ```javascript
-task.registerTask('default', 'This is the description of the "default" task.', function() {
-  console.log('Currently running the "default" task.');
+task.registerTask('default', 'My "default" task description.', function() {
+  log.writeln('Currently running the "default" task.');
 });
 ```
 
@@ -99,7 +103,7 @@ Inside a task, you can run other tasks.
 ```javascript
 task.registerTask('foo', 'My "foo" task.', function() {
   // Run "bar" and "baz" tasks, in-order.
-  task.run("bar baz");
+  task.run('bar baz');
 });
 ```
 
@@ -123,13 +127,73 @@ Tasks can access their own name and arguments.
 
 ```javascript
 task.registerTask('foo', 'My "foo" task.', function(a, b) {
-  console.log(this.name, a, b);
+  log.writeln(this.name, a, b);
 });
 
-// grunt foo foo:bar foo:bar:baz
-// logs: "foo", undefined, undefined
-// logs: "foo", "bar", undefined
-// logs: "foo", "bar", "baz"
+// Usage:
+// grunt foo foo:bar
+//   logs: "foo", undefined, undefined
+//   logs: "foo", "bar", undefined
+// grunt foo:bar:baz
+//   logs: "foo", "bar", "baz"
+```
+
+Tasks can fail (causing all subsequent tasks to be aborted unless `--force` is used on the command line).
+
+```javascript
+task.registerTask('foo', 'My "foo" task.', function() {
+  // Fail synchronously.
+  return false;
+});
+
+task.registerTask('bar', 'My "bar" task.', function() {
+  var done = this.async();
+  setTimeout(function() {
+    // Fail asynchronously.
+    done(false);
+  }, 1000);
+});
+```
+
+Tasks can be dependent on the successful execution of other tasks. Note that `task.requires` won't actually RUN the other task. It'll just check to see that it has run and not failed.
+
+```javascript
+task.registerTask('foo', 'My "foo" task.', function() {
+  return false;
+});
+
+task.registerTask('bar', 'My "bar" task.', function() {
+  // Fail task if "foo" task failed or never ran.
+  task.requires('foo');
+  // Oops?
+  log.writeln('Nope, not gonna happen.');
+});
+
+// Usage:
+// grunt foo bar
+//   doesn't log, because foo failed.
+// grunt bar
+//   doesn't log, because foo never ran.
+```
+
+Tasks can fail if required configuration properties don't exist.
+
+```javascript
+task.registerTask('foo', 'My "foo" task.', function() {
+  // Fail task if "meta.name" config prop is missing.
+  config.requires('meta.name');
+  // Log... conditionally.
+  log.writeln('This will only log if meta.name is defined in the config.');
+});
+```
+
+Tasks can access configuration properties.
+
+```javascript
+task.registerTask('foo', 'My "foo" task.', function() {
+  // Log the property value. Returns null if the property is undefined.
+  log.writeln('The meta.name property is: ' + config('meta.name'));
+});
 ```
 
 Look at the [built-in tasks][tasks] for more examples.

@@ -36,12 +36,16 @@ config.init({
       noarg: true,
       sub: true,
       undef: true,
-      eqnull: true
+      eqnull: true,
+      browser: true
     },
     globals: {
+      jQuery: true
     }
   },
-  uglify: {}
+  uglify: {
+    mangle: {except: ['$']}
+  }
 });
 
 // Default task.

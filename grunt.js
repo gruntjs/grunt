@@ -8,19 +8,22 @@ config.init({
     author: '"Cowboy" Ben Alman',
     license: ['MIT', 'GPL'],
     copyright: 'Copyright (c) 2011 "Cowboy" Ben Alman',
-    repository: 'git://github.com/cowboy/node-grunt.git'
+    repository: 'git://github.com/cowboy/node-grunt.git',
+    banner: '/* {{meta.name}} - v{{meta.version}} - {{today "m/d/yyyy"}}\n' +
+            ' * {{meta.homepage}}\n' + 
+            ' * {{{meta.copyright}}}; Licensed {{join meta.license}} */'
   },
   concat: {
-    'example/dist/main.js': ['grunt.js', 'lib/**']
+    'example/dist/main.js': ['<banner>', 'grunt.js', 'lib/**']
   },
   min: {
-    'example/dist/min.js': 'example/dist/main.js'
+    'example/dist/min.js': ['<banner>', 'example/dist/main.js']
   },
   test: {
-    files: ['test/**']
+    files: ['test/**/*.js']
   },
   lint: {
-    files: ['grunt.js', 'lib/**', 'test/**'],
+    files: ['grunt.js', 'lib/**/*.js', 'test/**/*.js', 'template/**/*.js'],
     built: 'example/dist/main.js'
   },
   jshint: {

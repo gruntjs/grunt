@@ -64,6 +64,38 @@ exports['Helpers'] = testCase({
   }
 });
 
+exports['Directives'] = testCase({
+  setUp: function(done) {
+    this.task = requireTask().create();
+    this.task.registerHelper('add', function(a, b) { return Number(a) + Number(b); });
+    done();
+  },
+  'Task#getDirectiveParts': function(test) {
+    test.expect(8);
+    var task = this.task;
+    test.deepEqual(task.getDirectiveParts('<add>'), ['add'], 'It should split a directive into parts.');
+    test.deepEqual(task.getDirectiveParts('<add:1>'), ['add', '1'], 'It should split a directive into parts.');
+    test.deepEqual(task.getDirectiveParts('<add:1:2>'), ['add', '1', '2'], 'It should split a directive into parts.');
+    test.deepEqual(task.getDirectiveParts('<foo>'), null, 'It should return null if the directive does not match an existing helper.');
+    test.deepEqual(task.getDirectiveParts('<foo:bar>'), null, 'It should return null if the directive does not match an existing helper.');
+    test.deepEqual(task.getDirectiveParts('x<foo>'), null, 'It should return null otherwise.');
+    test.deepEqual(task.getDirectiveParts('<foo>x'), null, 'It should return null otherwise.');
+    test.deepEqual(task.getDirectiveParts('<--arrow!'), null, 'It should return null otherwise.');
+    test.done();
+  },
+  'Task#directive': function(test) {
+    test.expect(5);
+    var task = this.task;
+    var fn = function(val) { return '_' + val + '_'; };
+    test.equal(task.directive('foo'), 'foo', 'If a directive is not passed, it should return the passed value.');
+    test.equal(task.directive('foo', fn), '_foo_', 'If a directive is not passed, the value should be passed through the specified callback.');
+    test.equal(task.directive('<foo>'), '<foo>', 'If a directive is passed but not found, it should return the passed value.');
+    test.equal(task.directive('<foo>', fn), '_<foo>_', 'If a directive is passed but not found, the value should be passed through the specified callback.');
+    test.equal(task.directive('<add:1:2>'), 3, 'If a directive is passed and found, it should call the directive with arguments.');
+    test.done();
+  }
+});
+
 exports['Tasks'] = testCase({
   setUp: function(done) {
     result.reset();

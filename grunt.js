@@ -18,6 +18,10 @@ config.init({
   lint: {
     files: ['grunt.js', 'lib/**/*.js', 'test/**/*.js', 'template/**/*.js']
   },
+  watch: {
+    files: '<config:lint.files>',
+    tasks: 'default'
+  },
   jshint: {
     options: {
       curly: true,

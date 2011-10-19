@@ -26,6 +26,10 @@ config.init({
     files: ['grunt.js', 'lib/**/*.js', 'test/**/*.js'],
     built: 'dist/project.js'
   },
+  watch: {
+    files: '<config:lint.files>',
+    tasks: 'default'
+  },
   jshint: {
     options: {
       curly: true,

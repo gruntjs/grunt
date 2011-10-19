@@ -27,7 +27,7 @@
     "nopt": "~1.0.8",
     "pkginfo": "~0.2.2",
     "uglify-js": "~1.0.7",
-    "underscore": "~1.1.7",
+    "underscore": "~1.2",
     "zlib": "~1.0.5"
   },
   "bin": "./bin/grunt",

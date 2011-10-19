@@ -14,7 +14,7 @@ config.init({
             ' * {{{meta.copyright}}}; Licensed {{join meta.license}} */'
   },
   concat: {
-    'dist/project.js': ['<banner>', 'lib/project.js']
+    'dist/project.js': ['<banner>', '<file_strip_banner:lib/project.js>']
   },
   min: {
     'dist/project.min.js': ['<banner>', 'dist/project.js']

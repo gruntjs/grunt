@@ -1,4 +1,4 @@
-// Config.
+/*global config:true, task:true*/
 config.init({
   meta: {
     name: 'grunt',

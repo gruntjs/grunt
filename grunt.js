@@ -4,11 +4,11 @@ config.init({
     name: 'grunt',
     version: '0.1.0',
     description: 'A command line build tool for JavaScript projects..',
-    homepage: 'http://github.com/cowboy/node-grunt',
+    homepage: 'http://github.com/cowboy/grunt',
     author: '"Cowboy" Ben Alman',
     license: ['MIT', 'GPL'],
     copyright: 'Copyright (c) 2011 "Cowboy" Ben Alman',
-    repository: 'git://github.com/cowboy/node-grunt.git'
+    repository: 'git://github.com/cowboy/grunt.git'
   },
   concat: {},
   min: {},

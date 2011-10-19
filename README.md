@@ -16,7 +16,7 @@ More will be added as I find the time, but you can very easily define your own t
 Once this is in npm it'll be a little easier, but for now, just clone and install grunt like this:
 
 ```bash
-git clone git://github.com/cowboy/node-grunt.git && cd node-grunt && npm install && npm link
+git clone git://github.com/cowboy/grunt.git && cd grunt && npm install && npm link
 ```
 
 Once done, type `grunt --help` for help, or just `grunt` to see grunt "grunt" itself.
@@ -217,5 +217,5 @@ _(more documentation coming soon)_
 
 
 
-[configs]: https://github.com/cowboy/node-grunt/tree/master/template
-[tasks]: https://github.com/cowboy/node-grunt/tree/master/lib/grunt/tasks
+[configs]: https://github.com/cowboy/grunt/tree/master/template
+[tasks]: https://github.com/cowboy/grunt/tree/master/lib/grunt/tasks

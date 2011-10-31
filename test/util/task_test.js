@@ -1,5 +1,3 @@
-var testCase = require('nodeunit').testCase;
-
 // Test helpers.
 function delay(fn) { setTimeout(fn, 10); }
 
@@ -17,16 +15,16 @@ var result = (function() {
 
 var requireTask = require.bind(this, '../../lib/util/task.js');
 
-exports['new Task'] = testCase({
+exports['new Task'] = {
   'create': function(test) {
     test.expect(1);
     var tasklib = requireTask();
     test.ok(tasklib.create() instanceof tasklib.Task, 'It should return a Task instance.');
     test.done();
   }
-});
+};
 
-exports['Helpers'] = testCase({
+exports['Helpers'] = {
   setUp: function(done) {
     this.task = requireTask().create();
     this.fn = function(a, b) { return a + b; };
@@ -62,9 +60,9 @@ exports['Helpers'] = testCase({
     test.throws(function() { task.helper('add'); }, 'It should not be accessible by its previous name.');
     test.done();
   }
-});
+};
 
-exports['Directives'] = testCase({
+exports['Directives'] = {
   setUp: function(done) {
     this.task = requireTask().create();
     this.task.registerHelper('add', function(a, b) { return Number(a) + Number(b); });
@@ -94,9 +92,9 @@ exports['Directives'] = testCase({
     test.equal(task.directive('<add:1:2>'), 3, 'If a directive is passed and found, it should call the directive with arguments.');
     test.done();
   }
-});
+};
 
-exports['Tasks'] = testCase({
+exports['Tasks'] = {
   setUp: function(done) {
     result.reset();
     this.task = requireTask().create();
@@ -283,9 +281,9 @@ exports['Tasks'] = testCase({
     });
     task.run('a b c d e x y z').start();
   }
-});
+};
 
-exports['Task#parseArgs'] = testCase({
+exports['Task#parseArgs'] = {
   setUp: function(done) {
     var task = requireTask().create();
     this.parseTest = function() {
@@ -324,4 +322,4 @@ exports['Task#parseArgs'] = testCase({
     test.deepEqual(this.parseTest(), [], 'should return an empty array if nothing passed.');
     test.done();
   }
-});
+};

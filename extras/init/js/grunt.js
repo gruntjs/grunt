@@ -1,34 +1,33 @@
 /*global config:true, task:true*/
 config.init({
   meta: {
-    name: 'project_name',
+    name: '<%PROJECTNAME%>',
     version: '0.1.0',
     description: '',
-    homepage: 'http://github.com/your_name/project',
-    author: 'your_name',
+    homepage: 'http://github.com/<%GITNAME%>/<%PROJECTNAME%>',
+    author: '<%USERNAME%>',
     license: ['MIT', 'GPL'],
-    copyright: 'Copyright (c) YYYY your_name',
-    repository: 'git://github.com/your_name/project.git',
+    copyright: 'Copyright (c) <%TODAY:yyyy%> <%USERNAME%>',
+    repository: 'git://github.com/<%GITNAME%>/<%PROJECTNAME%>.git',
     banner: '/* {{meta.name}} - v{{meta.version}} - {{today "m/d/yyyy"}}\n' +
             ' * {{meta.homepage}}\n' + 
             ' * {{{meta.copyright}}}; Licensed {{join meta.license}} */'
   },
   concat: {
-    'dist/project.js': ['<banner>', '<file_strip_banner:lib/project.js>']
+    'dist/<%PROJECTNAME%>.js': ['<banner>', '<file_strip_banner:lib/<%PROJECTNAME%>.js>']
   },
   min: {
-    'dist/project.min.js': ['<banner>', 'dist/project.js']
+    'dist/<%PROJECTNAME%>.min.js': ['<banner>', 'dist/<%PROJECTNAME%>.js']
   },
   test: {
     files: ['test/**/*.js']
   },
   lint: {
-    files: ['grunt.js', 'lib/**/*.js', 'test/**/*.js'],
-    built: 'dist/project.js'
+    files: ['grunt.js', 'lib/**/*.js', 'test/**/*.js']
   },
   watch: {
     files: '<config:lint.files>',
-    tasks: 'default'
+    tasks: 'lint:files test:files'
   },
   jshint: {
     options: {
@@ -40,17 +39,14 @@ config.init({
       noarg: true,
       sub: true,
       undef: true,
-      eqnull: true,
-      browser: true
+      eqnull: true
     },
     globals: {
-      jQuery: true
+      exports: true
     }
   },
-  uglify: {
-    mangle: {except: ['$']}
-  }
+  uglify: {}
 });
 
 // Default task.
-task.registerTask('default', 'lint:files test:files concat lint:built min');
+task.registerTask('default', 'lint:files test:files concat min');

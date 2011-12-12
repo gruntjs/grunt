@@ -16,7 +16,7 @@ config.init({
     files: ['test/**/*.js']
   },
   lint: {
-    files: ['grunt.js', 'lib/**/*.js', 'test/**/*.js', 'template/**/*.js']
+    files: ['grunt.js', 'lib/**/*.js', 'test/**/*.js']
   },
   watch: {
     files: '<config:lint.files>',
@@ -39,6 +39,7 @@ config.init({
       setTimeout: true, // temp hack for https://github.com/jshint/jshint/issues/292
       grequire: true,
       urequire: true,
+      extraspath: true,
       _: true,
       task: true,
       file: true,

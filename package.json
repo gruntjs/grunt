@@ -20,7 +20,7 @@
   "dependencies": {
     "colors": "~0.5.0",
     "dateformat": "1.0.1-1.2.3",
-    "glob": "~2.0.9",
+    "glob": "~2.1.0",
     "handlebars": "1.0.2beta",
     "jshint": "~0.5",
     "nodeunit": "~0.6.2",

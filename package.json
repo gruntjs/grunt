@@ -31,6 +31,7 @@
     "zlib": "~1.0.5"
   },
   "bin": "./bin/grunt",
+  "main": "./lib/grunt",
   "engines": {
     "node": ">= 0.4.12"
   },

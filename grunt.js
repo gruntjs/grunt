@@ -32,6 +32,7 @@ config.init({
       noarg: true,
       sub: true,
       undef: true,
+      boss: true,
       eqnull: true,
       node: true
     },

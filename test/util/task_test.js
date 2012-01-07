@@ -128,6 +128,16 @@ exports['Tasks'] = {
     });
     task.run('x y z').start();
   },
+  'Task#isTaskAlias': function(test) {
+    test.expect(2);
+    var task = this.task;
+    task.registerTask('a', 'nothing', function() {});
+    task.registerTask('b', 'nothing', function() {});
+    task.registerTask('c', 'a b');
+    test.strictEqual(task.isTaskAlias('a'), false, 'It should not be an alias.');
+    test.strictEqual(task.isTaskAlias('c'), true, 'It should be an alias.');
+    test.done();
+  },
   'Task#renameTask': function(test) {
     test.expect(4);
     var task = this.task;

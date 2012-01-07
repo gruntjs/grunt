@@ -219,3 +219,11 @@ _(more documentation coming soon)_
 
 [configs]: https://github.com/cowboy/grunt/tree/master/template
 [tasks]: https://github.com/cowboy/grunt/tree/master/lib/grunt/tasks
+
+## Release History
+Nothing official yet...
+
+## License
+Copyright (c) 2012 "Cowboy" Ben Alman  
+Licensed under the MIT license.  
+<http://benalman.com/about/license/>

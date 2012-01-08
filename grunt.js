@@ -3,11 +3,11 @@ config.init({
   meta: {
     name: 'grunt',
     version: '0.1.0',
-    description: 'A command line build tool for JavaScript projects..',
-    homepage: 'http://github.com/cowboy/grunt',
+    description: 'A command line build tool for JavaScript projects.',
+    homepage: 'https://github.com/cowboy/grunt',
     author: '"Cowboy" Ben Alman',
     license: ['MIT'],
-    copyright: 'Copyright (c) 2011 "Cowboy" Ben Alman',
+    copyright: 'Copyright (c) 2012 "Cowboy" Ben Alman',
     repository: 'git://github.com/cowboy/grunt.git'
   },
   concat: {},
@@ -37,7 +37,6 @@ config.init({
       node: true
     },
     globals: {
-      setTimeout: true, // temp hack for https://github.com/jshint/jshint/issues/292
       grequire: true,
       urequire: true,
       extraspath: true,
@@ -55,4 +54,4 @@ config.init({
 });
 
 // Default task.
-task.registerTask('default', 'lint:files test:files');
+task.registerTask('default', 'lint test');

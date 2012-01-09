@@ -1,14 +1,9 @@
 /*global config:true, task:true*/
 config.init({
+  pkg: '<json:package.json>',
   meta: {
-    name: 'grunt',
-    version: '0.1.0',
-    description: 'A command line build tool for JavaScript projects.',
-    homepage: 'https://github.com/cowboy/grunt',
-    author: '"Cowboy" Ben Alman',
     license: ['MIT'],
-    copyright: 'Copyright (c) 2012 "Cowboy" Ben Alman',
-    repository: 'git://github.com/cowboy/grunt.git'
+    copyright: 'Copyright (c) 2012 "Cowboy" Ben Alman'
   },
   concat: {},
   min: {},

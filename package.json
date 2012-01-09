@@ -1,39 +1,38 @@
 {
+  "author": "\"Cowboy\" Ben Alman (http://benalman.com/)",
   "name": "grunt",
-  "version": "0.1.0",
   "description": "A command line build tool for JavaScript projects.",
+  "version": "0.1.0",
+  "homepage": "http://github.com/cowboy/grunt",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cowboy/grunt.git"
+  },
+  "main": "lib/grunt",
+  "bin": "bin/grunt",
+  "engines": {
+    "node": ">= 0.4.12"
+  },
+  "preferGlobal": true,
   "keywords": [
     "cli",
-    "cowboy",
     "make",
     "jake",
     "javascript",
     "jquery",
     "build"
   ],
-  "homepage": "http://github.com/cowboy/node-grunt",
-  "author": "\"Cowboy\" Ben Alman <plugins@benalman.com> (http://benalman.com/)",
-  "repository": {
-    "type": "git",
-    "url": "http://github.com/cowboy/node-grunt.git"
-  },
   "dependencies": {
-    "colors": "~0.5.0",
-    "dateformat": "1.0.1-1.2.3",
+    "colors": "~0.6.0",
+    "dateformat": "1.0.2-1.2.3",
     "glob": "~2.1.0",
     "handlebars": "1.0.2beta",
     "jshint": "~0.5",
-    "nodeunit": "~0.6.2",
-    "nopt": "~1.0.8",
-    "pkginfo": "~0.2.2",
+    "nodeunit": "~0.6.4",
+    "nopt": "~1.0.10",
     "uglify-js": "~1.0.7",
-    "underscore": "~1.2",
+    "underscore": "~1.2.4",
     "deflate-js": "~0.2.2"
   },
-  "bin": "./bin/grunt",
-  "main": "./lib/grunt",
-  "engines": {
-    "node": ">= 0.4.12"
-  },
-  "preferGlobal": true
+  "devDependencies": {}
 }

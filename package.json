@@ -28,7 +28,7 @@
     "pkginfo": "~0.2.2",
     "uglify-js": "~1.0.7",
     "underscore": "~1.2",
-    "zlib.sync": "~1.0.5"
+    "deflate-js": "~0.2.2"
   },
   "bin": "./bin/grunt",
   "main": "./lib/grunt",

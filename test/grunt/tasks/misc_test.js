@@ -2,8 +2,8 @@ var dateformat = require('dateformat');
 
 exports['config'] = function(test) {
   test.expect(2);
-  test.equal(task.helper('config'), config(), 'It should just pass through to config.');
-  test.equal(task.helper('config', 'meta'), config('meta'), 'It should just pass through to config.');
+  test.deepEqual(task.helper('config'), config(), 'It should just pass through to config.');
+  test.deepEqual(task.helper('config', 'meta'), config('meta'), 'It should just pass through to config.');
   test.done();
 };
 

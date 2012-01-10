@@ -36,6 +36,7 @@ config.init({
       urequire: true,
       extraspath: true,
       _: true,
+      util: true,
       task: true,
       file: true,
       fail: true,

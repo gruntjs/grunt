@@ -9,6 +9,8 @@ As of now, grunt has the following predefined tasks:
  * **test** - Run unit tests with [nodeunit][nodeunit].
  * **watch** - Run predefined tasks whenever watched files change.
 
+_(My TODO list includes a "project scaffolding" task as well as a "QUnit headless unit-testing" task)_
+
 And in addition to the predefined tasks, you can define your own.
 
 [concat]: https://github.com/cowboy/grunt/blob/master/lib/grunt/tasks/concat.js
@@ -76,6 +78,8 @@ config.init({
   uglify: {}
 });
 ```
+
+Take a look at grunt's own [grunt.js gruntfile][gruntfile] or [javascript-hooker's gruntfile](https://github.com/cowboy/javascript-hooker/blob/master/grunt.js) for a few examples.
 
 _Note: you don't need to specify configuration settings for tasks that you don't use._
 

@@ -29,7 +29,9 @@ And in addition to the predefined tasks, you can define your own.
 [lint]: https://github.com/cowboy/grunt/blob/master/lib/grunt/tasks/lint.js
 [min]: https://github.com/cowboy/grunt/blob/master/lib/grunt/tasks/min.js
 [test]: https://github.com/cowboy/grunt/blob/master/lib/grunt/tasks/test.js
+[misc]: https://github.com/cowboy/grunt/blob/master/lib/grunt/tasks/misc.js
 [tasks]: https://github.com/cowboy/grunt/tree/master/lib/grunt/tasks
+[gruntfile]: https://github.com/cowboy/grunt/blob/master/grunt.js
 
 [node]: http://nodejs.org/
 [npm]: http://npmjs.org/
@@ -95,7 +97,7 @@ _Note: you don't need to specify configuration settings for tasks that you don't
 ## Tasks
 Tasks are the things you do most often, like [concat][concat], [lint][lint], [min][min] or [test][test] files. Every time grunt is run, one or more tasks must be specified, which tells grunt what you want it to do. Note that if you don't specify a task, but a task named "default" has been defined, that task will run (unsurprisingly) by default.
 
-_You should probably create a ["default" task](https://github.com/cowboy/grunt/blob/master/grunt.js) in your gruntfile._
+_You should probably create a ["default" task][gruntfile] in your gruntfile._
 
 Tasks can be created in a few ways.
 
@@ -108,7 +110,7 @@ task.registerTask(taskName, [description, ] taskList);
 
 _Note that the description is optional. If omitted, a useful description will be added for you automatically._
 
-The following example defines a task named "theworks" that, when run, actually runs the "lint:files" "test:files" "concat" "min" tasks, in-order. so instead of typing `grunt lint:files test:files concat min` at the command line, you can just type `grunt theworks`. If this task were named "default" instead of "theworks" it would be run by default when `grunt` was executed without specifying tasks.
+The following example defines a task named "theworks" that, when run, actually runs the "lint:files" "test:files" "concat" "min" tasks, in-order. so instead of typing `grunt lint:files test:files concat min` at the command line, you can just type `grunt theworks`. If this task were named "default" instead of "theworks" it would be run by default whenever `grunt` was executed without specifying tasks.
 
 ```javascript
 task.registerTask('theworks', 'lint:files test:files concat min');
@@ -157,8 +159,10 @@ Inside a task, you can run other tasks.
 
 ```javascript
 task.registerTask('foo', 'My "foo" task.', function() {
-  // Run "bar" and "baz" tasks, in-order.
+  // Enqueue "bar" and "baz" tasks, to run after 'foo' finishes, in-order.
   task.run('bar baz');
+  // Or:
+  task.run(['bar', 'baz']);
 });
 ```
 
@@ -194,6 +198,7 @@ task.registerTask('foo', 'My "foo" task.', function(a, b) {
 ```
 
 Tasks can fail if any errors were logged.
+
 ```javascript
 task.registerTask('foo', 'My "foo" task.', function() {
   if (someError) {
@@ -272,15 +277,64 @@ task.registerTask('foo', 'My "foo" task.', function() {
 Look at the [built-in tasks][tasks] for more examples.
 
 ## Helpers
+Helpers are just utility functions, exposed through the `task` global variable, so that they can be used by tasks in other files.
 
-_(more documentation coming soon)_
+It's not much more complex than this:
 
+```javascript
+task.registerHelper('foo', function(a, b) {
+  return a + b;
+});
 
+task.helper('foo', 2, 3) // 5
+```
 
+For example, in the [min][min] task, the majority of the actual minification work is done in an [uglify][min] helper, so that other tasks can utilize that code if they need to.
 
+## Directives
+Directives are essentially string placeholders for helper functions, specified as values in the [configuration object](#config). It's not as crazy as it sounds.
 
-## Examples.
+A good example of directives would be the `<json:package.json>` and `<config:lint.files>` directives in grunt's own [grunt.js gruntfile][gruntfile]. Or the `<banner>` and `<file_strip_banner:lib/hooker.js>` directives in [javascript-hooker's gruntfile](https://github.com/cowboy/javascript-hooker/blob/master/grunt.js).
 
+In brief, when a directive like `<foo>` is encountered, the `foo` helper is executed, and its return value is used. If `<foo:bar:baz>` is encountered, the `foo` helper is executed, with arguments `"bar"` and `"baz"` passed in, and its return value is used.
+
+Some of the built-in directives:
+
+* `<config:prop.subprop>` - expand to the prop.subprop config property. Great for DRYing up file lists.
+* `<json:file.json>` - expand to the object parsed from file.json (a valid JSON file).
+* `<banner>` - the string in config property `meta.banner`, parsed via [handlebars][misc].
+* `<banner:prop.subprop>` - same as above, but using a custom config property.
+* `<file_strip_banner:file.js>` - expand to the given file, with any leading /*...*/ banner stripped.
+
+Can you guess what these directives do? They're from grunt's own [grunt.js gruntfile][gruntfile].
+
+```javascript
+config.init({
+  pkg: '<json:package.json>',
+  lint: {
+    files: ['grunt.js', 'lib/**/*.js', 'test/**/*.js']
+  },
+  watch: {
+    files: '<config:lint.files>',
+    tasks: 'default'
+  }
+});
+```
+
+## Global Variables
+In an effort to make things easier, there are a lot of global variables.
+
+* `_` - [Underscore.js](http://underscorejs.org/)
+* `util` - miscellaneous utilities
+* `task` - the entire task interface
+* `file` - glob expansion, file reading, writing, directory traversing
+* `fail` - more serious than error logging, `fail.warn` and `fail.fatal` will halt everything
+* `config` - reading values from the grunt configuration
+* `option` - reading values from the command-line options
+* `log` - don't use `console.log`, use `log.writeln` instead!
+* `verbose` - just like `log`, but only logs if --verbose mode is specified.
+
+## Examples
 In this example, you don't want to run `grunt lint concat` every time you need to process your code, because "dist/output.js" will be linted before it's created!
 
 You should really do `grunt lint:beforeconcat concat lint:afterconcat`.
@@ -310,6 +364,9 @@ And to make your workflow easier, create an [Alias Task](#tasks_alias):
 ```javascript
 task.registerTask('default', 'lint:beforeconcat concat lint:afterconcat');
 ```
+
+## Contributing
+Fork, tweak, and make pull requests.. but you'd better successfully `grunt` it first, or I'm not even looking.
 
 ## Release History
 Nothing official yet...

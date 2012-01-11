@@ -250,6 +250,26 @@ exports['Tasks'] = {
     });
     task.run('a g').start();
   },
+  'Task#clearQueue': function(test) {
+    test.expect(1);
+    var task = this.task;
+    task.registerTask('a', 'Push task name onto result.', result.pushTaskname);
+    task.registerTask('b', 'Push task name onto result.', result.pushTaskname);
+    task.registerTask('c', 'Clear the queue.', function() {
+      result.push(this.name);
+      task.clearQueue().run('f');
+    });
+    task.registerTask('d', 'Push task name onto result.', result.pushTaskname);
+    task.registerTask('e', 'Push task name onto result.', result.pushTaskname);
+    task.registerTask('f', 'Push task name onto result.', result.pushTaskname);
+    task.options({
+      done: function() {
+        test.strictEqual(result.getJoined(), 'abcf', 'The specified tasks should have run, in-order.');
+        test.done();
+      }
+    });
+    task.run('a b c d e').start();
+  },
   'Task#requires': function(test) {
     test.expect(1);
     var task = this.task;

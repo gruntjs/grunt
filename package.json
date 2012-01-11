@@ -8,6 +8,15 @@
     "type": "git",
     "url": "git://github.com/cowboy/grunt.git"
   },
+  "bugs": {
+    "url" : "http://github.com/cowboy/grunt/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://github.com/cowboy/grunt/blob/master/LICENSE-MIT"
+    }
+  ],
   "main": "lib/grunt",
   "bin": "bin/grunt",
   "engines": {
@@ -16,11 +25,15 @@
   "preferGlobal": true,
   "keywords": [
     "cli",
+    "minify",
+    "uglify",
+    "build",
+    "underscore",
+    "unit",
+    "test",
     "make",
     "jake",
-    "javascript",
-    "jquery",
-    "build"
+    "tool"
   ],
   "dependencies": {
     "colors": "~0.6.0",

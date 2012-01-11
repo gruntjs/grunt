@@ -33,8 +33,6 @@ Doing all this stuff manually is a total pain, and building all this stuff into 
 Being primarily a JavaScript developer, I decided to use [Node.js][node] and [npm][npm] because the dependencies I most care about ([JSHint][jshint] and [UglifyJS][uglify]) were already npm modules. That being said, while Node.js was designed to support highly-concurrent asynchronous-IO-driven web servers, it was clearly NOT designed to make command-line build tools. But none of that matters, because grunt works. Just install it and see.
 
 ## Installing grunt
-_(note: Grunt is not yet available in npm. Coming soon!)_
-
 Grunt is available as an [npm][npm] module. If you install grunt globally via `npm install -g grunt`, it will be available for use in all of your projects.
 
 Once grunt has been installed, you can type `grunt --help` at the command line for more information. And if you want to see grunt "grunt" itself, cd into grunt's directory and type `grunt`.
@@ -79,7 +77,7 @@ config.init({
 });
 ```
 
-Take a look at grunt's own [grunt.js gruntfile][gruntfile] or [javascript-hooker's gruntfile](https://github.com/cowboy/javascript-hooker/blob/master/grunt.js) for a few examples.
+Take a look at grunt's own [grunt.js gruntfile][gruntfile] or [javascript-hooker's gruntfile](https://github.com/cowboy/javascript-hooker/blob/master/grunt.js) or [glob-whatev's gruntfile](https://github.com/cowboy/node-glob-whatev/blob/master/grunt.js) for a few examples.
 
 _Note: you don't need to specify configuration settings for tasks that you don't use._
 
@@ -314,7 +312,7 @@ config.init({
 ## Global Variables
 In an effort to make things easier, there are a lot of global variables.
 
-* `_` - [Underscore.js](http://underscorejs.org/)
+* `underscore` - [Underscore.js](http://underscorejs.org/)
 * `util` - miscellaneous utilities
 * `task` - the entire task interface
 * `file` - glob expansion, file reading, writing, directory traversing
@@ -427,7 +425,8 @@ _(more examples coming... soon)_
 Fork, tweak, and make pull requests.. but you'd better successfully `grunt` it first, or I'm not even looking.
 
 ## Release History
-Nothing official yet...
+
+2012/01/11 - v0.1.0 - Initial release.
 
 ## License
 Copyright (c) 2012 "Cowboy" Ben Alman  

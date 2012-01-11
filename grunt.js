@@ -1,12 +1,6 @@
 /*global config:true, task:true*/
 config.init({
   pkg: '<json:package.json>',
-  meta: {
-    license: ['MIT'],
-    copyright: 'Copyright (c) 2012 "Cowboy" Ben Alman'
-  },
-  concat: {},
-  min: {},
   test: {
     files: ['test/**/*.js']
   },
@@ -45,8 +39,7 @@ config.init({
       log: true,
       verbose: true
     }
-  },
-  uglify: {}
+  }
 });
 
 // Default task.

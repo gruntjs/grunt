@@ -25,7 +25,7 @@
   "dependencies": {
     "colors": "~0.6.0",
     "dateformat": "1.0.2-1.2.3",
-    "glob": "~2.1.0",
+    "glob-whatev": "~0.1.0",
     "handlebars": "1.0.2beta",
     "jshint": "~0.5",
     "nodeunit": "~0.6.4",

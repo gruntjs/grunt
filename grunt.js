@@ -35,7 +35,7 @@ config.init({
       grequire: true,
       urequire: true,
       extraspath: true,
-      _: true,
+      underscore: true,
       util: true,
       task: true,
       file: true,

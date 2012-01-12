@@ -45,7 +45,7 @@
     "nopt": "~1.0.10",
     "uglify-js": "~1.0.7",
     "underscore": "~1.2.4",
-    "deflate-js": "~0.2.2"
+    "gzip-js": "~0.3.1"
   },
   "devDependencies": {}
 }

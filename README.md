@@ -13,6 +13,8 @@ _(My TODO list includes a "project scaffolding" task as well as a "QUnit headles
 
 And in addition to the predefined tasks, you can define your own.
 
+[issues]: https://github.com/cowboy/grunt/issues
+
 [concat]: https://github.com/cowboy/grunt/blob/master/lib/grunt/tasks/concat.js
 [lint]: https://github.com/cowboy/grunt/blob/master/lib/grunt/tasks/lint.js
 [min]: https://github.com/cowboy/grunt/blob/master/lib/grunt/tasks/min.js
@@ -33,9 +35,12 @@ Doing all this stuff manually is a total pain, and building all this stuff into 
 Being primarily a JavaScript developer, I decided to use [Node.js][node] and [npm][npm] because the dependencies I most care about ([JSHint][jshint] and [UglifyJS][uglify]) were already npm modules. That being said, while Node.js was designed to support highly-concurrent asynchronous-IO-driven web servers, it was clearly NOT designed to make command-line build tools. But none of that matters, because grunt works. Just install it and see.
 
 ## Installing grunt
+
+_Grunt is currently in beta. while I'm already using it on multiple projects, it might have an issue or two. And things might change before its final release, based on your feedback. Please try it out in your projects, and [make suggestions][issues] or [report bugs][issues]!_
+
 Grunt is available as an [npm][npm] module. If you install grunt globally via `npm install -g grunt`, it will be available for use in all of your projects.
 
-Once grunt has been installed, you can type `grunt --help` at the command line for more information. And if you want to see grunt "grunt" itself, cd into grunt's directory and type `grunt`.
+Once grunt has been installed, you can type `grunt --help` at the command line for more information. And if you want to see grunt "grunt" itself, cd into grunt's directory and type `grunt` (in Windows, you might need to run it as `grunt.cmd`).
 
 ## The config file, aka "gruntfile"
 When run, grunt looks in the current directory for a file named `grunt.js`, and if not found, continues looking in parent directories until found. The gruntfile is typically placed in the root of your project repository, and is a valid JavaScript file comprised of two parts: [project configuration](#config), and [tasks](#tasks) / [helpers](#helpers).

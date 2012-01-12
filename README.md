@@ -36,7 +36,7 @@ Being primarily a JavaScript developer, I decided to use [Node.js][node] and [np
 
 ## Installing grunt
 
-_Grunt is currently in beta. while I'm already using it on multiple projects, it might have an issue or two. And things might change before its final release, based on your feedback. Please try it out in your projects, and [make suggestions][issues] or [report bugs][issues]!_
+_Grunt is currently in beta. While I'm already using it on multiple projects, it might have a minor issue or two. And things might change before its final release, based on your feedback. Please try it out in a project, and [make suggestions][issues] or [report bugs][issues]!_
 
 Grunt is available as an [npm][npm] module. If you install grunt globally via `npm install -g grunt`, it will be available for use in all of your projects.
 

@@ -431,6 +431,7 @@ Fork, tweak, and make pull requests.. but you'd better successfully `grunt` it f
 
 ## Release History
 
+2012/01/19 - v0.1.1 - Minor 'watch' task tweak.  
 2012/01/11 - v0.1.0 - Initial release.
 
 ## License

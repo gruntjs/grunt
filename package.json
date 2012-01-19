@@ -2,7 +2,7 @@
   "author": "\"Cowboy\" Ben Alman (http://benalman.com/)",
   "name": "grunt",
   "description": "A command line build tool for JavaScript projects.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "http://github.com/cowboy/grunt",
   "repository": {
     "type": "git",

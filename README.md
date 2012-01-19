@@ -430,8 +430,8 @@ _(more examples coming... soon)_
 Fork, tweak, and make pull requests.. but you'd better successfully `grunt` it first, or I'm not even looking.
 
 ## Release History
+_(For now, this will only be updated for v0.x releases, not v0.x.x releases)_
 
-2012/01/19 - v0.1.1 - Minor 'watch' task tweak.  
 2012/01/11 - v0.1.0 - Initial release.
 
 ## License

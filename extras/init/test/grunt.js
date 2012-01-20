@@ -23,22 +23,9 @@ config.init({
       undef: true,
       boss: true,
       eqnull: true,
-      node: true,
-      es5: true
+      node: true
     },
-    globals: {
-      grequire: true,
-      urequire: true,
-      underscore: true,
-      util: true,
-      task: true,
-      file: true,
-      fail: true,
-      config: true,
-      option: true,
-      log: true,
-      verbose: true
-    }
+    globals: {}
   }
 });
 

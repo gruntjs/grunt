@@ -45,6 +45,7 @@
     "nodeunit": "~0.6.4",
     "nopt": "~1.0.10",
     "prompt": "~0.1.12",
+    "semver": "~1.0.13",
     "uglify-js": "~1.0.7",
     "underscore": "~1.2.4",
     "gzip-js": "~0.3.1"

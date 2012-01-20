@@ -36,6 +36,7 @@ config.init({
       fail: true,
       config: true,
       option: true,
+      template: true,
       log: true,
       verbose: true
     }

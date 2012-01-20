@@ -1,7 +1,5 @@
-var path = require('path');
-
 module.exports = function(done) {
-  var properties = [
+  task.helper('prompt', [
     task.helper('property', 'name'),
     task.helper('property', 'description'),
     task.helper('property', 'version'),
@@ -11,9 +9,8 @@ module.exports = function(done) {
     task.helper('property', 'author_name'),
     task.helper('property', 'author_email'),
     task.helper('property', 'author_url')
-  ];
-
-  task.helper('prompt', properties, function(err, properties) {
+  ], function(err, properties) {
+    log.subhead('Properties:');
     console.log(properties);
     done();
   });

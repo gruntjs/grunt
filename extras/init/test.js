@@ -1,22 +1,39 @@
 var path = require('path');
 
 module.exports = function(done) {
-  var obj = {
-    name: path.basename(process.cwd()),
-    description: 'A sample project.',
-    author: task.helper.bind(task, 'child_process', {
-      cmd: 'git',
-      args: ['config', '--get', 'user.name'],
-      fallback: 'Joe User'
-    }),
-    email: task.helper.bind(task, 'child_process', {
-      cmd: 'git',
-      args: ['config', '--get', 'user.email'],
-      fallback: 'joe@example.com'
-    })
-  };
-  task.helper('prompt', obj, function(obj) {
-    console.log(obj);
+  var properties = [
+    {
+      message: 'Project name',
+      name: 'name',
+      default: path.basename(process.cwd())
+    },
+    {
+      message: 'Project description',
+      name: 'description',
+      default: 'A sample project.'
+    },
+    {
+      message: 'Your name',
+      name: 'author',
+      default: task.helper.bind(task, 'child_process', {
+        cmd: 'git',
+        args: ['config', '--get', 'user.name'],
+        fallback: 'Joe Spamworth'
+      })
+    },
+    {
+      message: 'Your email address',
+      name: 'email',
+      default: task.helper.bind(task, 'child_process', {
+        cmd: 'git',
+        args: ['config', '--get', 'user.email'],
+        fallback: 'spam@example.com'
+      })
+    },
+  ];
+
+  task.helper('prompt', properties, function(err, properties) {
+    console.log(properties);
     done();
   });
 };

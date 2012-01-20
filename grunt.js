@@ -23,7 +23,8 @@ config.init({
       undef: true,
       boss: true,
       eqnull: true,
-      node: true
+      node: true,
+      es5: true
     },
     globals: {
       grequire: true,

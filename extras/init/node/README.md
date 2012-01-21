@@ -23,5 +23,5 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 _(Nothing yet)_
 
 ## License
-Copyright (c) <% print(template.formatToday('yyyy')) %> <%= author_name %>
+Copyright (c) <% print(template.formatToday('yyyy')) %> <%= author_name %>  
 Licensed under the <% print(licenses.join(', ')) %> license<% print(licenses.length === 1 ? '' : 's') %>.

@@ -27,6 +27,7 @@ config.init({
       es5: true
     },
     globals: {
+      grunt: true,
       grequire: true,
       urequire: true,
       underscore: true,

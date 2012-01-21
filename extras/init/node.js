@@ -1,19 +1,19 @@
 module.exports = function(init, done) {
   task.helper('prompt', [
     // Prompt for these values.
-    task.helper('property', 'name'),
-    task.helper('property', 'description'),
-    task.helper('property', 'version'),
-    task.helper('property', 'homepage'),
-    task.helper('property', 'repository'),
-    task.helper('property', 'bugs'),
-    task.helper('property', 'licenses'),
-    task.helper('property', 'author_name'),
-    task.helper('property', 'author_email'),
-    task.helper('property', 'author_url'),
-    task.helper('property', 'node_version'),
-    task.helper('property', 'node_main'),
-    task.helper('property', 'node_test')
+    task.helper('prompt_for', 'name'),
+    task.helper('prompt_for', 'description'),
+    task.helper('prompt_for', 'version'),
+    task.helper('prompt_for', 'homepage'),
+    task.helper('prompt_for', 'repository'),
+    task.helper('prompt_for', 'bugs'),
+    task.helper('prompt_for', 'licenses'),
+    task.helper('prompt_for', 'author_name'),
+    task.helper('prompt_for', 'author_email'),
+    task.helper('prompt_for', 'author_url'),
+    task.helper('prompt_for', 'node_version'),
+    task.helper('prompt_for', 'node_main'),
+    task.helper('prompt_for', 'node_test')
   ], function(err, props) {
     // Files to copy (and process).
     var files = [

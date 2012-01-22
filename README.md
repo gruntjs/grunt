@@ -4,23 +4,27 @@ Grunt is a command line build tool for JavaScript projects.
 As of now, grunt has the following predefined tasks:
 
  * **concat** - Concatenate files.
+ * **init** - Generate project scaffolding based on user input.
  * **lint** - Validate files with [JSHint][jshint].
  * **min** - Minify files with [UglifyJS][uglify].
  * **test** - Run unit tests with [nodeunit][nodeunit].
  * **watch** - Run predefined tasks whenever watched files change.
 
-_(My TODO list includes a "project scaffolding" task as well as a "QUnit headless unit-testing" task)_
+_(My TODO list includes more "project scaffolding" templates as well as a "QUnit headless unit-testing" task)_
 
 And in addition to the predefined tasks, you can define your own.
 
 [issues]: https://github.com/cowboy/grunt/issues
 
-[concat]: https://github.com/cowboy/grunt/blob/master/lib/grunt/tasks/concat.js
-[lint]: https://github.com/cowboy/grunt/blob/master/lib/grunt/tasks/lint.js
-[min]: https://github.com/cowboy/grunt/blob/master/lib/grunt/tasks/min.js
-[test]: https://github.com/cowboy/grunt/blob/master/lib/grunt/tasks/test.js
-[misc]: https://github.com/cowboy/grunt/blob/master/lib/grunt/tasks/misc.js
-[tasks]: https://github.com/cowboy/grunt/tree/master/lib/grunt/tasks
+[concat]: https://github.com/cowboy/grunt/blob/master/tasks/concat.js
+[init]: https://github.com/cowboy/grunt/blob/master/tasks/init.js
+[init-nodejs]: https://github.com/cowboy/grunt/blob/master/tasks/init/node.js
+[init-nodedir]: https://github.com/cowboy/grunt/blob/master/tasks/init/node
+[lint]: https://github.com/cowboy/grunt/blob/master/tasks/lint.js
+[min]: https://github.com/cowboy/grunt/blob/master/tasks/min.js
+[test]: https://github.com/cowboy/grunt/blob/master/tasks/test.js
+[misc]: https://github.com/cowboy/grunt/blob/master/tasks/misc.js
+[tasks]: https://github.com/cowboy/grunt/tree/master/tasks
 [gruntfile]: https://github.com/cowboy/grunt/blob/master/grunt.js
 
 [node]: http://nodejs.org/
@@ -140,7 +144,7 @@ task.registerBasicTask('log', 'This task logs something.', function(data, name) 
 <div id="tasks_custom"></div>
 ### Custom tasks
 
-You can go crazy with tasks, though. They don't have to be basic.
+You can go crazy with tasks, though. They don't have to be basic. If your tasks don't follow the "basic task" structure, use a custom task.
 
 ```javascript
 task.registerTask('default', 'My "default" task description.', function() {
@@ -205,7 +209,7 @@ task.registerTask('foo', 'My "foo" task.', function() {
 });
 ```
 
-When tasks fail, all subsequent tasks will be aborted unless `--force` is specified.
+When tasks fail, all subsequent tasks will be aborted unless `--force` was specified.
 
 ```javascript
 task.registerTask('foo', 'My "foo" task.', function() {
@@ -305,7 +309,7 @@ Can you guess what these directives do? They're from grunt's own [grunt.js grunt
 config.init({
   pkg: '<json:package.json>',
   lint: {
-    files: ['grunt.js', 'lib/**/*.js', 'test/**/*.js']
+    files: ['grunt.js', 'lib/**/*.js', 'tasks/*.js', 'test/**/*.js']
   },
   watch: {
     files: '<config:lint.files>',
@@ -432,6 +436,7 @@ Fork, tweak, and make pull requests.. but you'd better successfully `grunt` it f
 ## Release History
 _(For now, this will only be updated for v0.x releases, not v0.x.x releases)_
 
+2012/01/22 - v0.2.0 - Added "init" task with a sample template, reworked a lot of code. Hopefully it's backwards-compatible.  
 2012/01/11 - v0.1.0 - Initial release.
 
 ## License

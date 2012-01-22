@@ -162,11 +162,12 @@ task.registerInitTask('init', 'Initialize a project from a predefined template.'
         if (prop in props) { pkg[prop] = props[prop]; }
       });
       // Author.
-      if ('author_name' in props) {
-        pkg.author = props.author_name;
-        if (props.author_email) { pkg.author += ' <' + props.author_email + '>'; }
-        if (props.author_url) { pkg.author += ' (' + props.author_url + ')'; }
-      }
+      ['name', 'email', 'url'].forEach(function(prop) {
+        if (props['author_' + prop]) {
+          if (!pkg.author) { pkg.author = {}; }
+          pkg.author[prop] = props['author_' + prop];
+        }
+      });
       // Other stuff.
       if ('repository' in props) { pkg.repository = {type: 'git', url: props.repository}; }
       if ('bugs' in props) { pkg.bugs = {url: props.bugs}; }

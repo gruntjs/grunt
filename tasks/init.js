@@ -27,7 +27,7 @@ function getDefaults() {
   if (defaults) { return defaults; }
   defaults = {};
   // Search all available init-specific extras paths for a defaults.json file.
-  var paths = file.extraspaths('init').map(function(dirpath) {
+  var paths = file.taskpaths('init').map(function(dirpath) {
     return path.join(dirpath, 'defaults.json');
   }).filter(function(filepath) {
     return path.existsSync(filepath);
@@ -45,10 +45,11 @@ function getDefaults() {
 
 // An array of all available license files.
 function availableLicenses() {
-  var licensespath = file.extraspath('init/licenses');
-  return fs.readdirSync(licensespath).map(function(filename) {
-    return filename.replace(/^LICENSE-/, '');
-  });
+  return file.taskpaths('init/licenses').reduce(function(arr, filepath) {
+    return arr.concat(fs.readdirSync(filepath).map(function(filename) {
+      return filename.replace(/^LICENSE-/, '');
+    }));
+  }, []);
 }
 
 task.registerInitTask('init', 'Initialize a project from a predefined template.', function(name) {
@@ -94,15 +95,15 @@ task.registerInitTask('init', 'Initialize a project from a predefined template.'
     // Expose any user-specified default init values.
     defaults: getDefaults(),
     // Search init extras paths for filename.
-    srcpath: function(filename) {
+    srcpath: function(filepath) {
       var result = null;
       searchpaths.some(function(obj) {
         return obj.subdirs.filter(function(dirname) {
           return dirname === name;
         }).some(function(dirname) {
-          var filepath = path.join(obj.path, dirname, filename);
-          if (path.existsSync(filepath)) {
-            result = filepath;
+          var abspath = path.join(obj.path, dirname, filepath);
+          if (path.existsSync(abspath)) {
+            result = abspath;
             return true;
           }
         });
@@ -132,7 +133,7 @@ task.registerInitTask('init', 'Initialize a project from a predefined template.'
       var abssrcpath = init.srcpath(srcpath);
       var absdestpath = init.destpath(destpath);
       if (!path.existsSync(abssrcpath)) {
-        abssrcpath = file.extraspath('init/misc/placeholder');
+        abssrcpath = init.srcpath('../misc/placeholder');
       }
       verbose.or.write('Writing ' + destpath + '...');
       try {

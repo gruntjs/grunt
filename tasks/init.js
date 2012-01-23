@@ -149,7 +149,7 @@ task.registerInitTask('init', 'Initialize a project from a predefined template.'
     copyAndProcess: function(files, props) {
       files.forEach(function(files) {
         init.copy(files.src, files.dest || files.src, function(contents) {
-          return underscore.template(contents)(props);
+          return template.process(contents, props, 'init');
         });
       });
     },

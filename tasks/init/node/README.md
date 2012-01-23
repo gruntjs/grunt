@@ -1,13 +1,13 @@
-# <%= name %>
+# {%= name %}
 
-<%= description %>
+{%= description %}
 
 ## Getting Started
-Install the module with: `npm install <%= name %>`
+Install the module with: `npm install {%= name %}`
 
 ```javascript
-var <%= js_safe_name %> = require('<%= name %>');
-<%= js_safe_name %>.awesome(); // "awesome"
+var {%= js_safe_name %} = require('{%= name %}');
+{%= js_safe_name %}.awesome(); // "awesome"
 ```
 
 ## Documentation
@@ -23,5 +23,5 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 _(Nothing yet)_
 
 ## License
-Copyright (c) <% print(template.formatToday('yyyy')) %> <%= author_name %>  
-Licensed under the <% print(licenses.join(', ')) %> license<% print(licenses.length === 1 ? '' : 's') %>.
+Copyright (c) {%= template.today('yyyy') %} {%= author_name %}  
+Licensed under the {%= licenses.join(', ') %} license{%= licenses.length === 1 ? '' : 's' %}.

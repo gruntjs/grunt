@@ -434,8 +434,9 @@ _(more examples coming... soon)_
 Fork, tweak, and make pull requests.. but you'd better successfully `grunt` it first, or I'm not even looking.
 
 ## Release History
-_(For now, this will only be updated for v0.x releases, not v0.x.x releases)_
+_(Until v1.0.0, this will only be updated when major or breaking changes are made)_
 
+2012/01/22 - v0.2.1 - Removed handlebars, templates are universally handled by underscore now. Changed init task template tags from <% %> to {% %}. Banners beginning with /*! will no longer be stripped.
 2012/01/22 - v0.2.0 - Added "init" task with a sample template, reworked a lot of code. Hopefully it's backwards-compatible.  
 2012/01/11 - v0.1.0 - Initial release.
 

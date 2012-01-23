@@ -1,7 +1,7 @@
 {
   "name": "grunt",
   "description": "A command line build tool for JavaScript projects.",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "\"Cowboy\" Ben Alman (http://benalman.com/)",
   "homepage": "http://github.com/cowboy/grunt",
   "repository": {
@@ -23,7 +23,7 @@
     "test": "grunt test"
   },
   "engines": {
-    "node": ">= 0.4.12"
+    "node": ">= 0.6.0"
   },
   "preferGlobal": true,
   "keywords": [
@@ -43,7 +43,6 @@
     "colors": "~0.6.0",
     "dateformat": "1.0.2-1.2.3",
     "glob-whatev": "~0.1.0",
-    "handlebars": "1.0.2beta",
     "jshint": "~0.5",
     "nodeunit": "~0.6.4",
     "nopt": "~1.0.10",

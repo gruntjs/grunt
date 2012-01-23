@@ -28,7 +28,6 @@ config.init({
     },
     globals: {
       grunt: true,
-      grequire: true,
       underscore: true,
       util: true,
       task: true,

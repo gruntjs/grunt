@@ -17,6 +17,7 @@ module.exports = function(init, done) {
   ], function(err, props) {
     // Files to copy (and process).
     var files = [
+      {src: '.gitignore'},
       {src: 'grunt.js'},
       {src: 'README.md'},
       {src: 'lib/name.js', dest: 'lib/' + props.name + '.js'},

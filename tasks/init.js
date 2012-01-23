@@ -327,19 +327,6 @@ task.registerHelper('prompt_for', function(name, alternateDefault) {
       validator: semver.valid,
       warning: 'Must be a valid semantic version.'
     },
-    homepage: {
-      message: 'Project homepage',
-      default: function(data, done) {
-        // If GitHub is the origin, a homepage is easy to figure out.
-        task.helper('git_origin', function(err, result) {
-          if (!err) {
-            result = result.replace(/\.git$/, '')
-              .replace(/^git@(github.com):/, 'https://$1/');
-          }
-          done(null, result);
-        });
-      }
-    },
     repository: {
       message: 'Project git repository',
       default: function(data, done) {
@@ -352,12 +339,18 @@ task.registerHelper('prompt_for', function(name, alternateDefault) {
         });
       }
     },
+    homepage: {
+      message: 'Project homepage',
+      // If GitHub is the origin, the (potential) homepage is easy to figure out.
+      default: function(data, done) {
+        done(null, task.helper('github_web_url', data.repository) || 'none');
+      }
+    },
     bugs: {
       message: 'Project issues tracker',
+      // If GitHub is the origin, the issues tracker is easy to figure out.
       default: function(data, done) {
-        // This probably only makes sense for GitHub repos.
-        done(null, data.repository.replace(/^git/, 'https')
-          .replace(/\.git$/, '/issues'));
+        done(null, task.helper('github_web_url', data.repository, 'issues') || 'none');
       }
     },
     licenses: {
@@ -439,4 +432,16 @@ task.registerHelper('git_origin', function(done) {
       done(null, result.split(/\s/)[1]);
     }
   });
+});
+
+// Generate a GitHub web URL from a GitHub repo URI.
+var githubWebUrlRe = /^.+(?:@|:\/\/)(github.com)[:\/](.+?)(?:\.git|\/)?$/;
+task.registerHelper('github_web_url', function(uri, suffix) {
+  var matches = githubWebUrlRe.exec(uri);
+  if (!matches) { return null; }
+  var url = 'https://' + matches[1] + '/' + matches[2];
+  if (suffix) {
+    url += '/' + suffix.replace(/^\//, '');
+  }
+  return url;
 });

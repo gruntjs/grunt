@@ -52,7 +52,11 @@ function availableLicenses() {
   }, []);
 }
 
-task.registerInitTask('init', 'Initialize a project from a predefined template.', function(name) {
+task.registerInitTask('init', 'Initialize a project from a predefined template.', function() {
+  // Extra arguments will be applied to the template file.
+  var args = util.toArray(arguments);
+  // Template name.
+  var name = args.shift();
   // Valid init templates (.js files).
   var templates = {};
   // Template-related search paths.
@@ -195,15 +199,20 @@ task.registerInitTask('init', 'Initialize a project from a predefined template.'
     }
   };
 
-  // Execute template code.
-  require(templates[name])(init, function() {
+  // Make args available as flags.
+  init.flags = {};
+  args.forEach(function(flag) { init.flags[flag] = true; });
+
+  // Execute template code, passing in the init object, done function, and any
+  // other arguments specified after the init:name:???.
+  require(templates[name]).apply(null, [init, function() {
     // Fail task if errors were logged.
     if (task.hadErrors()) { taskDone(false); }
     // Otherwise, print a success message.
     log.writeln().writeln('Initialized from template "' + name + '".');
     // All done!
     taskDone();
-  });
+  }].concat(args));
 });
 
 // ============================================================================

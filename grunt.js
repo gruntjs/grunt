@@ -5,7 +5,7 @@ config.init({
     files: ['test/**/*.js']
   },
   lint: {
-    files: ['grunt.js', 'lib/**/*.js', 'tasks/*.js', 'test/**/*.js']
+    files: ['grunt.js', 'lib/**/*.js', 'tasks/*.js', 'tasks/init/*.js', 'test/**/*.js']
   },
   watch: {
     files: '<config:lint.files>',

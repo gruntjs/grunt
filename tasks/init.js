@@ -310,9 +310,20 @@ task.registerHelper('prompt_for', function(name, alternateDefault) {
   var options = {
     name: {
       message: 'Project name',
-      default: path.basename(process.cwd()),
-      validator: /^[\w\-]+$/,
-      warning: 'Name must be only letters, numbers, dashes or underscores.',
+      default: function(data, done) {
+        var type = data.type || '';
+        // This regexp matches:
+        //   leading type- type. type_
+        //   trailing -type .type _type and/or -js .js _js
+        var re = new RegExp('^' + type + '[\\-\\._]?|(?:[\\-\\._]?' + type + ')?(?:[\\-\\._]?js)?$', 'ig');
+        // Strip the above stuff from the current dirname.
+        var name = path.basename(process.cwd()).replace(re, '');
+        // Remove anything not a letter, number, dash, dot or underscore.
+        name = name.replace(/[^\w\-\.]/g, '');
+        done(null, name);
+      },
+      validator: /^[\w\-\.]+$/,
+      warning: 'Name must be only letters, numbers, dashes, dots or underscores.',
       sanitize: function(value, obj) {
         // An additional value, safe to use as a JavaScript identifier.
         obj.js_safe_name = value.replace(/[\W_]+/g, '_').replace(/^(\d)/, '_$1');

@@ -13,7 +13,7 @@ var {%= js_safe_name %} = require('{%= name %}');
 Or in the browser:
 
 ```html
-<script src="dist/{%= js_safe_name %}.min.js"></script>
+<script src="dist/{%= name %}.min.js"></script>
 <script>
 awesome(); // "awesome"
 </script>
@@ -25,7 +25,7 @@ In the browser, you can attach {%= name %}'s methods to any object.
 <script>
 this.exports = Bocoup.utils;
 </script>
-<script src="dist/{%= js_safe_name %}.min.js"></script>
+<script src="dist/{%= name %}.min.js"></script>
 <script>
 Bocoup.utils.awesome(); // "awesome"
 </script>

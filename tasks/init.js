@@ -219,7 +219,14 @@ task.registerInitTask('init', 'Initialize a project from a predefined template.'
 // ============================================================================
 
 // Prompt user to override default values passed in obj.
-task.registerHelper('prompt', function(options, done) {
+task.registerHelper('prompt', function(defaults, options, done) {
+  // If defaults are omitted, shuffle arguments a bit.
+  if (util.kindOf(defaults) === 'array') {
+    done = options;
+    options = defaults;
+    defaults = {};
+  }
+
   // Keep track of any "sanitize" functions for later use.
   var sanitize = {};
   options.forEach(function(option) {
@@ -239,8 +246,7 @@ task.registerHelper('prompt', function(options, done) {
   // once, and might be repeated.
   (function ask() {
     log.subhead('Please answer the following:');
-    // Results data object generated from the prompt answers.
-    var result = {};
+    var result = underscore.clone(defaults);
     // Loop over each prompt option.
     async.forEachSeries(options, function(option, done) {
       // Actually get user input.

@@ -1,5 +1,5 @@
 module.exports = function(init, done) {
-  task.helper('prompt', [
+  task.helper('prompt', {}, [
     // Prompt for these values.
     task.helper('prompt_for', 'name'),
     task.helper('prompt_for', 'description'),

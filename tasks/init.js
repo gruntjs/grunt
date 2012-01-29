@@ -161,7 +161,7 @@ task.registerInitTask('init', 'Initialize a project from a predefined template.'
     writePackage: function(filename, props, callback) {
       var pkg = {};
       // Basic values.
-      ['name', 'description', 'version', 'homepage'].forEach(function(prop) {
+      ['name', 'title', 'description', 'version', 'homepage'].forEach(function(prop) {
         if (prop in props) { pkg[prop] = props[prop]; }
       });
       // Author.
@@ -302,135 +302,152 @@ task.registerHelper('prompt', function(defaults, options, done) {
   }());
 });
 
+// Built-in prompt options for the prompt_for helper.
+// These generally follow the node "prompt" module convention, except:
+// * The "default" value can be a function which is executed at run-time.
+// * An optional "sanitize" function has been added to post-process data.
+var prompts = {
+  name: {
+    message: 'Project name',
+    default: function(data, done) {
+      var type = data.type || '';
+      // This regexp matches:
+      //   leading type- type. type_
+      //   trailing -type .type _type and/or -js .js _js
+      var re = new RegExp('^' + type + '[\\-\\._]?|(?:[\\-\\._]?' + type + ')?(?:[\\-\\._]?js)?$', 'ig');
+      // Strip the above stuff from the current dirname.
+      var name = path.basename(process.cwd()).replace(re, '');
+      // Remove anything not a letter, number, dash, dot or underscore.
+      name = name.replace(/[^\w\-\.]/g, '');
+      done(null, name);
+    },
+    validator: /^[\w\-\.]+$/,
+    warning: 'Name must be only letters, numbers, dashes, dots or underscores.',
+    sanitize: function(value, obj) {
+      // An additional value, safe to use as a JavaScript identifier.
+      obj.js_safe_name = value.replace(/[\W_]+/g, '_').replace(/^(\d)/, '_$1');
+      // The original value must be returned so that "name" isn't unset.
+      return value;
+    }
+  },
+  title: {
+    message: 'Project title',
+    default: function(data, done) {
+      var title = data.name || '';
+      title = title.replace(/[\W_]+/g, ' ');
+      title = title.replace(/\w+/g, function(word) {
+        return word[0].toUpperCase() + word.slice(1).toLowerCase();
+      });
+      done(null, title);
+    }
+  },
+  description: {
+    message: 'Description',
+    default: 'The best project ever.'
+  },
+  version: {
+    message: 'Version',
+    default: function(data, done) {
+      // Get a valid semver tag from `git describe --tags` if possible.
+      task.helper('child_process', {
+        cmd: 'git',
+        args: ['describe', '--tags']
+      }, function(err, result) {
+        if (result) {
+          result = result.split('-')[0];
+        }
+        done(null, semver.valid(result) || '0.1.0');
+      });
+    },
+    validator: semver.valid,
+    warning: 'Must be a valid semantic version.'
+  },
+  repository: {
+    message: 'Project git repository',
+    default: function(data, done) {
+      // Change any git@...:... uri to git://.../... format.
+      task.helper('git_origin', function(err, result) {
+        if (!err) {
+          result = result.replace(/^git@([^:]+):/, 'git://$1/');
+        }
+        done(null, result);
+      });
+    }
+  },
+  homepage: {
+    message: 'Project homepage',
+    // If GitHub is the origin, the (potential) homepage is easy to figure out.
+    default: function(data, done) {
+      done(null, task.helper('github_web_url', data.repository) || 'none');
+    }
+  },
+  bugs: {
+    message: 'Project issues tracker',
+    // If GitHub is the origin, the issues tracker is easy to figure out.
+    default: function(data, done) {
+      done(null, task.helper('github_web_url', data.repository, 'issues') || 'none');
+    }
+  },
+  licenses: {
+    message: 'Licenses',
+    default: 'MIT',
+    validator: /^[\w\-]+(?:\s+[\w\-]+)*$/,
+    warning: 'Must be one or more space-separated licenses. (eg. ' +
+      availableLicenses().join(' ') + ')',
+    // Split the string on spaces.
+    sanitize: function(value) { return value.split(/\s+/); }
+  },
+  author_name: {
+    message: 'Author name',
+    default: function(data, done) {
+      // Attempt to pull the data from the user's git config.
+      task.helper('child_process', {
+        cmd: 'git',
+        args: ['config', '--get', 'user.name'],
+        fallback: 'none'
+      }, done);
+    }
+  },
+  author_email: {
+    message: 'Author email',
+    default: function(data, done) {
+      // Attempt to pull the data from the user's git config.
+      task.helper('child_process', {
+        cmd: 'git',
+        args: ['config', '--get', 'user.email'],
+        fallback: 'none'
+      }, done);
+    }
+  },
+  author_url: {
+    message: 'Author url',
+    default: 'none'
+  },
+  node_version: {
+    message: 'What versions of node does it run on?',
+    default: '>= ' + process.versions.node
+  },
+  node_main: {
+    message: 'Main module/entry point',
+    default: function(data, done) {
+      done(null, 'lib/' + data.name);
+    }
+  },
+  node_test: {
+    message: 'Test command',
+    default: 'grunt test'
+  }
+};
+
+// Expose prompts object so that prompt_for prompts can be added or modified.
+task.registerHelper('prompt_for_obj', function() {
+  return prompts;
+});
+
 // Commonly-used prompt options with meaningful default values.
 task.registerHelper('prompt_for', function(name, alternateDefault) {
-  // These generally follow the node "prompt" module convention, except:
-  // * The "default" value can be a function which is executed at run-time.
-  // * An optional "sanitize" function has been added to post-process data.
-  var options = {
-    name: {
-      message: 'Project name',
-      default: function(data, done) {
-        var type = data.type || '';
-        // This regexp matches:
-        //   leading type- type. type_
-        //   trailing -type .type _type and/or -js .js _js
-        var re = new RegExp('^' + type + '[\\-\\._]?|(?:[\\-\\._]?' + type + ')?(?:[\\-\\._]?js)?$', 'ig');
-        // Strip the above stuff from the current dirname.
-        var name = path.basename(process.cwd()).replace(re, '');
-        // Remove anything not a letter, number, dash, dot or underscore.
-        name = name.replace(/[^\w\-\.]/g, '');
-        done(null, name);
-      },
-      validator: /^[\w\-\.]+$/,
-      warning: 'Name must be only letters, numbers, dashes, dots or underscores.',
-      sanitize: function(value, obj) {
-        // An additional value, safe to use as a JavaScript identifier.
-        obj.js_safe_name = value.replace(/[\W_]+/g, '_').replace(/^(\d)/, '_$1');
-        // The original value must be returned so that "name" isn't unset.
-        return value;
-      }
-    },
-    description: {
-      message: 'Description',
-      default: 'The best project ever.'
-    },
-    version: {
-      message: 'Version',
-      default: function(data, done) {
-        // Get a valid semver tag from `git describe --tags` if possible.
-        task.helper('child_process', {
-          cmd: 'git',
-          args: ['describe', '--tags']
-        }, function(err, result) {
-          if (result) {
-            result = result.split('-')[0];
-          }
-          done(null, semver.valid(result) || '0.1.0');
-        });
-      },
-      validator: semver.valid,
-      warning: 'Must be a valid semantic version.'
-    },
-    repository: {
-      message: 'Project git repository',
-      default: function(data, done) {
-        // Change any git@...:... uri to git://.../... format.
-        task.helper('git_origin', function(err, result) {
-          if (!err) {
-            result = result.replace(/^git@([^:]+):/, 'git://$1/');
-          }
-          done(null, result);
-        });
-      }
-    },
-    homepage: {
-      message: 'Project homepage',
-      // If GitHub is the origin, the (potential) homepage is easy to figure out.
-      default: function(data, done) {
-        done(null, task.helper('github_web_url', data.repository) || 'none');
-      }
-    },
-    bugs: {
-      message: 'Project issues tracker',
-      // If GitHub is the origin, the issues tracker is easy to figure out.
-      default: function(data, done) {
-        done(null, task.helper('github_web_url', data.repository, 'issues') || 'none');
-      }
-    },
-    licenses: {
-      message: 'Licenses',
-      default: 'MIT',
-      validator: /^[\w\-]+(?:\s+[\w\-]+)*$/,
-      warning: 'Must be one or more space-separated licenses. (eg. ' +
-        availableLicenses().join(' ') + ')',
-      // Split the string on spaces.
-      sanitize: function(value) { return value.split(/\s+/); }
-    },
-    author_name: {
-      message: 'Author name',
-      default: function(data, done) {
-        // Attempt to pull the data from the user's git config.
-        task.helper('child_process', {
-          cmd: 'git',
-          args: ['config', '--get', 'user.name'],
-          fallback: 'none'
-        }, done);
-      }
-    },
-    author_email: {
-      message: 'Author email',
-      default: function(data, done) {
-        // Attempt to pull the data from the user's git config.
-        task.helper('child_process', {
-          cmd: 'git',
-          args: ['config', '--get', 'user.email'],
-          fallback: 'none'
-        }, done);
-      }
-    },
-    author_url: {
-      message: 'Author url',
-      default: 'none'
-    },
-    node_version: {
-      message: 'What versions of node does it run on?',
-      default: '>= ' + process.versions.node
-    },
-    node_main: {
-      message: 'Main module/entry point',
-      default: function(data, done) {
-        done(null, 'lib/' + data.name);
-      }
-    },
-    node_test: {
-      message: 'Test command',
-      default: 'grunt test'
-    }
-  };
-
   // Clone the option so the original options object doesn't get modified.
-  var option = underscore.clone(options[name]);
+  var option = underscore.clone(prompts[name]);
   option.name = name;
 
   if (name in getDefaults()) {

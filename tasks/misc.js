@@ -28,11 +28,11 @@ task.registerHelper('child_process', function(opts, done) {
   child.stderr.on('data', errors.push.bind(errors));
   child.on('exit', function(code) {
     if (code === 0) {
-      done(null, results.join('').replace(/\s+$/, ''));
+      done(null, results.join('').replace(/\s+$/, ''), code);
     } else if ('fallback' in opts) {
-      done(null, opts.fallback);
+      done(null, opts.fallback, code);
     } else {
-      done(errors.join('').replace(/\s+$/, ''));
+      done(code, errors.join('').replace(/\s+$/, ''), code);
     }
   });
 });

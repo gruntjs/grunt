@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{%= name %} Test Suite</title>
+  <link rel="stylesheet" href="../libs/qunit/qunit.css" media="screen">
+  <!-- When run in grunt, load the local jQuery. -->
+  <script type="text/grunt" src="../libs/jquery/jquery.js"></script>
+  <!-- When run in browser, load the latest jQuery from CDN, falling back to the local jQuery on error. -->
+  <script>window.jQuery||document.write('<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"><\/script>')</script>
+  <script>window.jQuery||document.write('<script src="../libs/jquery/jquery.js"><\/script>')</script>
+  <!-- Your code should use jQuery, not $. This ensures that you do that. -->
+  <script>$.noConflict()</script>
+  <!-- Load local QUnit. -->
+  <script src="../libs/qunit/qunit.js"></script>
+  <!-- When run in grunt, load custom QUnit reporter code. -->
+  <script type="text/grunt">qunit</script>
+  <!-- Load local lib and tests. -->
+  <script src="{%= name %}_test.js"></script>
+  <script src="../src/{%= name %}.js"></script>
+</head>
+<body>
+  <h1 id="qunit-header">{%= name %} Test Suite</h1>
+  <h2 id="qunit-banner"></h2>
+  <div id="qunit-testrunner-toolbar"></div>
+  <h2 id="qunit-userAgent"></h2>
+  <ol id="qunit-tests"></ol>
+  <div id="qunit-fixture">
+    <span>lame test markup</span>
+    <span>normal test markup</span>
+    <span>awesome test markup</span>
+  </div>
+</body>
+</html>

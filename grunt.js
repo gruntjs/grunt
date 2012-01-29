@@ -28,6 +28,7 @@ config.init({
     },
     globals: {
       grunt: true,
+      async: true,
       underscore: true,
       util: true,
       task: true,

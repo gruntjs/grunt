@@ -10,7 +10,6 @@
 var fs = require('fs');
 var path = require('path');
 
-var async = require('async');
 var semver = require('semver');
 
 var prompt = require('prompt');

@@ -37,7 +37,7 @@ process.on('exit', function() {
 // Keep track of failed assertions for pretty-printing.
 var failedAssertions = [];
 function logFailedAssertions() {
-  var assertion;
+  var assertion, stack;
   // Print each assertion error + stack.
   while (assertion = failedAssertions.shift()) {
     nodeunitUtils.betterErrors(assertion);
@@ -45,7 +45,9 @@ function logFailedAssertions() {
     if (assertion.error.name === 'AssertionError' && assertion.message) {
       log.error('AssertionMessage: ' + assertion.message.magenta);
     }
-    log.error(assertion.error.stack.replace(/:(.*?\n)/, '$1'.magenta) + '\n');
+    stack = assertion.error.stack.replace(/ {4}(at)/g, '  $1');
+    stack = stack.replace(/:(.*?\n)/, '$1'.magenta);
+    log.error(stack + '\n').writeln();
   }
 }
 

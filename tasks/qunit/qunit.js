@@ -7,9 +7,9 @@
  * http://benalman.com/about/license/
  */
 
-// Run tests in-order.
+// Don't re-order tests.
 QUnit.config.reorder = false;
-// Run tests serially.
+// Run tests serially, not in parallel.
 QUnit.config.autorun = false;
 
 // Send messages to the parent zombie.js process via alert! Good times!!

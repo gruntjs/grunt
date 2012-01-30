@@ -1,7 +1,7 @@
 {
   "name": "grunt",
   "description": "A command line build tool for JavaScript projects.",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "author": "\"Cowboy\" Ben Alman (http://benalman.com/)",
   "homepage": "http://github.com/cowboy/grunt",
   "repository": {

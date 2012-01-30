@@ -2,10 +2,11 @@
 config.init({
   pkg: '<json:package.json>',
   meta: {
-    banner: '/*! <%= pkg.title %> - v<%= pkg.version %> - <%= template.today("m/d/yyyy") %>\n' +
-            '* <%= pkg.homepage %>\n' +
-            '* Copyright (c) <%= template.today("yyyy") %> <%= pkg.author.name %>;' +
-            ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */'
+    banner: '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
+      '<%= template.today("m/d/yyyy") %>\n' +
+      '<%= pkg.homepage ? "* " + pkg.homepage + "\n" : "" %>' +
+      '* Copyright (c) <%= template.today("yyyy") %> <%= pkg.author.name %>;' +
+      ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */'
   },
   concat: {
     'dist/{%= name %}.js': ['<banner>', '<file_strip_banner:src/{%= name %}.js>']

@@ -26,17 +26,13 @@ function getDefaults() {
   if (defaults) { return defaults; }
   defaults = {};
   // Search all available init-specific extras paths for a defaults.json file.
-  var paths = file.taskpaths('init').map(function(dirpath) {
-    return path.join(dirpath, 'defaults.json');
-  }).filter(function(filepath) {
-    return path.existsSync(filepath);
-  });
+  var filepaths = file.taskfiles('init/defaults.json');
   // Load defaults data.
-  if (paths.length) {
+  if (filepaths.length) {
     verbose.subhead('Loading defaults');
     // Since extras path order goes from most-specific to least-specific, only
     // add-in properties that don't already exist.
-    paths.forEach(function(filepath) {
+    filepaths.forEach(function(filepath) {
       underscore.defaults(defaults, file.readJson(filepath));
     });
   }
@@ -97,22 +93,8 @@ task.registerInitTask('init', 'Initialize a project from a predefined template.'
   var init = {
     // Expose any user-specified default init values.
     defaults: getDefaults(),
-    // Search init extras paths for filename.
-    srcpath: function(filepath) {
-      var result = null;
-      searchpaths.some(function(obj) {
-        return obj.subdirs.filter(function(dirname) {
-          return dirname === name;
-        }).some(function(dirname) {
-          var abspath = path.join(obj.path, dirname, filepath);
-          if (path.existsSync(abspath)) {
-            result = abspath;
-            return true;
-          }
-        });
-      });
-      return result;
-    },
+    // Search init template paths for filename.
+    srcpath: file.taskfile.bind(file, 'init', name),
     // Determine absolute destination file path.
     destpath: path.join.bind(path, process.cwd()),
     // Given some number of licenses, add properly-named license files to the

@@ -26,7 +26,7 @@ function patchJsdom() {
   lang.javascript = function(element, code, filename) {
     // Piggy-back custom QUnit grunt reporter code onto request for qunit.js.
     if (path.basename(filename) === 'qunit.js') {
-      code += fs.readFileSync(path.join(__dirname, 'qunit/qunit.js'), 'utf-8');
+      code += fs.readFileSync(file.taskfile('qunit/qunit.js'), 'utf-8');
     }
     return this._javascript(element, code, filename);
   };

@@ -3,15 +3,11 @@
 <head>
   <meta charset="utf-8">
   <title>{%= name %} Test Suite</title>
+  <!-- Load local jQuery, removing access to $ (use jQuery, not $). -->
+  <script src="../libs/jquery/jquery.js"></script>
+  <script>jQuery.noConflict()</script>
+  <!-- Load local QUnit (grunt requires v1.0.0 or newer). -->
   <link rel="stylesheet" href="../libs/qunit/qunit.css" media="screen">
-  <!-- When run from within grunt, the local jQuery is loaded. -->
-  <script type="text/grunt" src="../libs/jquery/jquery.js"></script>
-  <!-- When run in-browser, load the latest jQuery from CDN, falling back to the local jQuery on error. -->
-  <script>window.jQuery||document.write('<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"><\/script>')</script>
-  <script>window.jQuery||document.write('<script src="../libs/jquery/jquery.js"><\/script>')</script>
-  <!-- This ensures that your code relies on jQuery, not $. -->
-  <script>$.noConflict()</script>
-  <!-- Load local QUnit (1.2.0 or newer). -->
   <script src="../libs/qunit/qunit.js"></script>
   <!-- Load local lib and tests. -->
   <script src="{%= name %}_test.js"></script>

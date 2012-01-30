@@ -12,16 +12,31 @@ var path = require('path');
 
 var connect = require('connect');
 
-// Add a custom "text/grunt" type to zombie's jsdom for custom grunt-only scripts.
-var jsdom = require('zombie/node_modules/jsdom/lib/jsdom').dom.level3.html;
-jsdom.languageProcessors.grunt = function(element, code, filename) {
-  if (/<script>$/.test(filename)) {
-    // If a local script was defined, it's the name of a file to load. Load it.
-    code = fs.readFileSync(path.join(__dirname, 'qunit/' + code + '.js'), 'utf-8');
-  }
-  // Execute code as JavaScript.
-  return this.javascript(element, code, filename);
-};
+// Patch jsdom to add support for "text/grunt" scripts as well as auto-loading
+// QUnit grunt reporter code.
+var patched;
+function patchJsdom() {
+  if (patched) { return; }
+  // Add a custom "text/grunt" type to zombie's jsdom for custom grunt-only scripts.
+  var jsdom = require('zombie/node_modules/jsdom/lib/jsdom');
+  var lang = jsdom.dom.level3.html.languageProcessors;
+  // Backup the current JavaScript handler.
+  lang._javascript = lang.javascript;
+  // Override it.
+  lang.javascript = function(element, code, filename) {
+    // Piggy-back custom QUnit grunt reporter code onto request for qunit.js.
+    if (path.basename(filename) === 'qunit.js') {
+      code += fs.readFileSync(path.join(__dirname, 'qunit/qunit.js'), 'utf-8');
+    }
+    return this._javascript(element, code, filename);
+  };
+
+  // When run from within this task, scripts specified as "text/grunt" will be
+  // run like JavaScript!
+  lang.grunt = lang.javascript;
+
+  patched = true;
+}
 
 // Keep track of the last-started module, test and status.
 var currentModule, currentTest, status;
@@ -109,7 +124,7 @@ task.registerBasicTask('qunit', 'Run qunit tests in a headless browser.', functi
   var done = this.async();
 
   // Start static file server.
-  var port = 1337;
+  var port = config('qunit._port') || 1337;
   var server = connect(connect.static(process.cwd())).listen(port);
 
   // Reset status.
@@ -125,6 +140,7 @@ task.registerBasicTask('qunit', 'Run qunit tests in a headless browser.', functi
 
     // Load test page.
     var zombie = require('zombie');
+    patchJsdom();
     var url = 'http://localhost:' + port + '/' + filepath;
     zombie.visit(url, {debug: false, silent: false}, function(e, browser) {
       // Messages are recieved from QUnit via alert!

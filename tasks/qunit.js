@@ -130,7 +130,7 @@ task.registerBasicTask('qunit', 'Run qunit tests in a headless browser.', functi
   var done = this.async();
 
   // Create socket tempfile.
-  tempfile = new Tempfile;
+  tempfile = new Tempfile();
 
   // Hook HTTP.request to use socket file for http://grunt/* requests.
   hooker.hook(HTTP, 'request', function(options) {

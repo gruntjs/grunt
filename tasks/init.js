@@ -38,6 +38,18 @@ function getDefaults() {
   }
 }
 
+// Get AUTHORS file contents for "contributors", if it exists.
+var contributors;
+function getContributors() {
+  if (contributors) { return contributors; }
+  contributors = [];
+
+  if (path.existsSync(path.join(process.cwd(), 'AUTHORS'))) {
+    contributors = file.read('AUTHORS').split('\n');
+  }
+}
+
+
 // An array of all available license files.
 function availableLicenses() {
   return file.taskpaths('init/licenses').reduce(function(arr, filepath) {
@@ -73,6 +85,9 @@ task.registerInitTask('init', 'Initialize a project from a predefined template.'
       }
     });
   });
+
+  // Attempt to create contributors, looks for an AUTHORS file
+  getContributors();
 
   // Abort if a valid template was not specified.
   if (!(name && name in templates)) {
@@ -153,6 +168,10 @@ task.registerInitTask('init', 'Initialize a project from a predefined template.'
           pkg.author[prop] = props['author_' + prop];
         }
       });
+      // Contributors
+      if (contributors.length) {
+        pkg.contributors = contributors;
+      }
       // Other stuff.
       if ('repository' in props) { pkg.repository = {type: 'git', url: props.repository}; }
       if ('bugs' in props) { pkg.bugs = {url: props.bugs}; }

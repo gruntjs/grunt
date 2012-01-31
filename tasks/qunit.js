@@ -26,16 +26,15 @@ function patchJsdom() {
   // Add a custom "text/grunt" type to zombie's jsdom for custom grunt-only scripts.
   var jsdom = require('zombie/node_modules/jsdom/lib/jsdom');
   var lang = jsdom.dom.level3.html.languageProcessors;
-  // Backup the current JavaScript handler.
-  lang._javascript = lang.javascript;
-  // Override it.
-  lang.javascript = function(element, code, filename) {
+
+  // Override the built-in JavaScript handler.
+  hooker.hook(lang, 'javascript', function(element, code, filename) {
     // Piggy-back custom QUnit grunt reporter code onto request for qunit.js.
     if (path.basename(filename) === 'qunit.js') {
       code += fs.readFileSync(file.taskfile('qunit/qunit.js'), 'utf-8');
+      return hooker.filter(this, [element, code, filename]);
     }
-    return this._javascript(element, code, filename);
-  };
+  });
 
   // When run from within this task, scripts specified as "text/grunt" will be
   // run like JavaScript!

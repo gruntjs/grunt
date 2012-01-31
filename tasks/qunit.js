@@ -146,7 +146,7 @@ task.registerBasicTask('qunit', 'Run qunit tests in a headless browser.', functi
   status = {failed: 0, passed: 0, total: 0, duration: 0};
 
   // Process each filepath in-order.
-  async.forEachSeries(filepaths, function(filepath, done) {
+  async.forEachSeries(filepaths, function(filepath, next) {
     var basename = path.basename(filepath);
     verbose.subhead('Testing ' + basename).or.write('Testing ' + basename);
 
@@ -176,7 +176,7 @@ task.registerBasicTask('qunit', 'Run qunit tests in a headless browser.', functi
           log.error();
           fail.warn('An async test was missing start().');
         }
-        done();
+        next();
       });
     });
   }, function(err) {

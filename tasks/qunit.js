@@ -152,32 +152,72 @@ task.registerBasicTask('qunit', 'Run qunit tests in a headless browser.', functi
     // Reset current module.
     currentModule = null;
 
-    // Load test page.
-    var zombie = require('zombie');
+    // Load zombie and patch jsdom.
+    var Browser = require('zombie');
     patchJsdom();
-    var url = 'http://grunt/' + filepath;
-    zombie.visit(url, {debug: false, silent: false}, function(e, browser) {
-      // Messages are recieved from QUnit via alert!
-      browser.onalert(function(message) {
-        var args = JSON.parse(message);
-        var method = args.shift();
-        if (qunit[method]) {
-          qunit[method].apply(null, args);
-        }
-      });
-      // Simulate window.load event.
-      // https://github.com/assaf/zombie/issues/172
-      browser.fire('load', browser.window);
-      // Timeout after 10 seconds of nothing.
-      browser.wait(10000, function(err, browser) {
-        var len = Object.keys(unfinished).length;
-        if (len > 0) {
-          log.error();
-          fail.warn('An async test was missing start().');
-        }
+
+    // Create a new browser.
+    var browser = new Browser({debug: false, silent: false});
+    browser.onalert(function(message) {
+      var args = JSON.parse(message);
+      var method = args.shift();
+      if (qunit[method]) {
+        qunit[method].apply(null, args);
+      }
+      if (method === 'done') {
         next();
-      });
+      }
     });
+    // browser.on('done', function() {
+    //   console.log('done');
+    // });
+    // browser.on('loaded', function() {
+    //   console.log('loaded');
+    // });
+    // browser.on('error', function() {
+    //   console.log('error');
+    // });
+    browser.window.location = 'http://grunt/' + filepath;
+
+    var i = 0;
+    (function loopy() {
+      browser.wait(10000, function() {
+        if (i++ === 0) {
+          browser.fire('load', browser.window);
+        }
+        if (i < 10000) {
+          loopy();
+        }
+      });
+    }());
+
+    // Load test page.
+    // var url = 'http://grunt/' + filepath;
+    // zombie.visit(url, {debug: true, silent: false}, function(e, browser) {
+    //   // Messages are recieved from QUnit via alert!
+    //   browser.onalert(function(message) {
+    //     var args = JSON.parse(message);
+    //     var method = args.shift();
+    //     if (qunit[method]) {
+    //       qunit[method].apply(null, args);
+    //     }
+    //     if (method === 'done') {
+    //       next();
+    //     }
+    //   });
+    //   // Simulate window.load event.
+    //   // https://github.com/assaf/zombie/issues/172
+    //   browser.fire('load', browser.window);
+    //   // Timeout after 60 seconds of nothing.
+    //   browser.wait(6000, function(err, browser) {
+    //     var len = Object.keys(unfinished).length;
+    //     if (len > 0) {
+    //       log.error();
+    //       fail.warn('An async test was missing start().');
+    //       next();
+    //     }
+    //   });
+    // });
   }, function(err) {
     // All tests have been run.
     server.close();

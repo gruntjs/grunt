@@ -10,7 +10,13 @@
 var fs = require('fs');
 var path = require('path');
 
+var hooker = require('hooker');
 var connect = require('connect');
+var HTTP = require('http');
+
+// Temporary file to be used for HTTP request socket.
+var Tempfile = require('temporary/lib/file');
+var tempfile;
 
 // Patch jsdom to add support for "text/grunt" scripts as well as auto-loading
 // QUnit grunt reporter code.
@@ -123,9 +129,18 @@ task.registerBasicTask('qunit', 'Run qunit tests in a headless browser.', functi
   // This task is asynchronous.
   var done = this.async();
 
+  // Create socket tempfile.
+  tempfile = new Tempfile;
+
+  // Hook HTTP.request to use socket file for http://grunt/* requests.
+  hooker.hook(HTTP, 'request', function(options) {
+    if (options.host === 'grunt') {
+      options.socketPath = tempfile.path;
+    }
+  });
+
   // Start static file server.
-  var port = config('qunit._port') || 1337;
-  var server = connect(connect.static(process.cwd())).listen(port);
+  var server = connect(connect.static(process.cwd())).listen(tempfile.path);
 
   // Reset status.
   status = {failed: 0, passed: 0, total: 0, duration: 0};
@@ -141,7 +156,7 @@ task.registerBasicTask('qunit', 'Run qunit tests in a headless browser.', functi
     // Load test page.
     var zombie = require('zombie');
     patchJsdom();
-    var url = 'http://localhost:' + port + '/' + filepath;
+    var url = 'http://grunt/' + filepath;
     zombie.visit(url, {debug: false, silent: false}, function(e, browser) {
       // Messages are recieved from QUnit via alert!
       browser.onalert(function(message) {
@@ -175,6 +190,9 @@ task.registerBasicTask('qunit', 'Run qunit tests in a headless browser.', functi
       verbose.writeln();
       log.ok(status.total + ' assertions passed (' + status.duration + 'ms)');
     }
+    // Clean up.
+    hooker.unhook(HTTP, 'request');
+    tempfile.unlink();
     // All done!
     done();
   });

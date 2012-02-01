@@ -3,6 +3,7 @@
 {%= description %}
 
 ## Getting Started
+### On the server
 Install the module with: `npm install {%= name %}`
 
 ```javascript
@@ -10,7 +11,13 @@ var {%= js_safe_name %} = require('{%= name %}');
 {%= js_safe_name %}.awesome(); // "awesome"
 ```
 
-Or in the browser:
+### In the browser
+Download the [production version][min] or the [development version][max].
+
+[min]: https://raw.github.com/{%= git_user %}/{%= name %}/master/dist/{%= name %}.min.js
+[max]: https://raw.github.com/{%= git_user %}/{%= name %}/master/dist/{%= name %}.js
+
+In your web page:
 
 ```html
 <script src="dist/{%= name %}.min.js"></script>
@@ -19,7 +26,7 @@ awesome(); // "awesome"
 </script>
 ```
 
-In the browser, you can attach {%= name %}'s methods to any object.
+In your code, you can attach {%= name %}'s methods to any object.
 
 ```html
 <script>

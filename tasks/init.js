@@ -305,9 +305,9 @@ var prompts = {
     },
     validator: /^[\w\-\.]+$/,
     warning: 'Name must be only letters, numbers, dashes, dots or underscores.',
-    sanitize: function(value, obj) {
+    sanitize: function(value, data) {
       // An additional value, safe to use as a JavaScript identifier.
-      obj.js_safe_name = value.replace(/[\W_]+/g, '_').replace(/^(\d)/, '_$1');
+      data.js_safe_name = value.replace(/[\W_]+/g, '_').replace(/^(\d)/, '_$1');
       // The original value must be returned so that "name" isn't unset.
       return value;
     }
@@ -359,15 +359,15 @@ var prompts = {
         done(null, result);
       });
     },
-    sanitize: function(value, obj) {
+    sanitize: function(value, data) {
       // An additional computed "git_user" property.
-      var repo = task.helper('github_web_url', obj.repository);
+      var repo = task.helper('github_web_url', data.repository);
       var parts;
       if (repo != null) {
         parts = repo.split('/');
-        obj.git_user = parts[parts.length - 2];
+        data.git_user = parts[parts.length - 2];
       } else {
-        obj.git_user = process.env.USER || '???';
+        data.git_user = process.env.USER || '???';
       }
       // The original value must be returned so that "repository" isn't unset.
       return value;

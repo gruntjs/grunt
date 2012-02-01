@@ -63,6 +63,10 @@ task.registerHelper('lint', function(src, options, globals, extraMsg) {
   // Enable/disable debugging if option explicitly set.
   if (option('debug') !== undefined) {
     options.devel = options.debug = option('debug');
+    // Tweak a few things.
+    if (option('debug')) {
+      options.maxerr = Infinity;
+    }
   }
   var msg = 'Linting' + (extraMsg ? ' ' + extraMsg : '') + '...';
   verbose.write(msg);

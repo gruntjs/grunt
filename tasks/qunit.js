@@ -18,31 +18,6 @@ var HTTP = require('http');
 var Tempfile = require('temporary/lib/file');
 var tempfile;
 
-// Patch jsdom to add support for "text/grunt" scripts as well as auto-loading
-// QUnit grunt reporter code.
-var patched;
-function patchJsdom() {
-  if (patched) { return; }
-  // Add a custom "text/grunt" type to zombie's jsdom for custom grunt-only scripts.
-  var jsdom = require('zombie/node_modules/jsdom/lib/jsdom');
-  var lang = jsdom.dom.level3.html.languageProcessors;
-
-  // Override the built-in JavaScript handler.
-  hooker.hook(lang, 'javascript', function(element, code, filename) {
-    // Piggy-back custom QUnit grunt reporter code onto request for qunit.js.
-    if (path.basename(filename) === 'qunit.js') {
-      code += fs.readFileSync(file.taskfile('qunit/qunit.js'), 'utf-8');
-      return hooker.filter(this, [element, code, filename]);
-    }
-  });
-
-  // When run from within this task, scripts specified as "text/grunt" will be
-  // run like JavaScript!
-  lang.grunt = lang.javascript;
-
-  patched = true;
-}
-
 // Keep track of the last-started module, test and status.
 var currentModule, currentTest, status;
 // Keep track of the last-started test(s).
@@ -144,6 +119,26 @@ task.registerBasicTask('qunit', 'Run qunit tests in a headless browser.', functi
   // Reset status.
   status = {failed: 0, passed: 0, total: 0, duration: 0};
 
+  // Load zombie and patch jsdom.
+  var Browser = require('zombie');
+
+  // Add a custom "text/grunt" type to zombie's jsdom for custom grunt-only scripts.
+  var jsdom = require('zombie/node_modules/jsdom/lib/jsdom');
+  var lang = jsdom.dom.level3.html.languageProcessors;
+
+  // Override the built-in JavaScript handler.
+  hooker.hook(lang, 'javascript', function(element, code, filename) {
+    // Piggy-back custom QUnit grunt reporter code onto request for qunit.js.
+    if (path.basename(filename) === 'qunit.js') {
+      code += fs.readFileSync(file.taskfile('qunit/qunit.js'), 'utf-8');
+      return hooker.filter(this, [element, code, filename]);
+    }
+  });
+
+  // When run from within this task, scripts specified as "text/grunt" will be
+  // run like JavaScript!
+  lang.grunt = lang.javascript;
+
   // Process each filepath in-order.
   async.forEachSeries(filepaths, function(filepath, next) {
     var basename = path.basename(filepath);
@@ -152,12 +147,10 @@ task.registerBasicTask('qunit', 'Run qunit tests in a headless browser.', functi
     // Reset current module.
     currentModule = null;
 
-    // Load zombie and patch jsdom.
-    var Browser = require('zombie');
-    patchJsdom();
-
     // Create a new browser.
     var browser = new Browser({debug: false, silent: false});
+
+    // Messages are recieved from QUnit via alert!
     browser.onalert(function(message) {
       var args = JSON.parse(message);
       var method = args.shift();
@@ -168,59 +161,31 @@ task.registerBasicTask('qunit', 'Run qunit tests in a headless browser.', functi
         next();
       }
     });
-    // browser.on('done', function() {
-    //   console.log('done');
-    // });
-    // browser.on('loaded', function() {
-    //   console.log('loaded');
-    // });
-    // browser.on('error', function() {
-    //   console.log('error');
-    // });
-    browser.window.location = 'http://grunt/' + filepath;
 
-    var i = 0;
-    (function loopy() {
+    // For some reason, the browser.wait callback fires well before all the
+    // events have completed, for example, when there are heavily async tests
+    // running for more than a few seconds. This "fix" simply re-queues the
+    // browser.wait about a zillion times, which seems to work.
+    //
+    // This may be related to issue https://github.com/joyent/node/issues/2515
+    (function loopy(i) {
       browser.wait(10000, function() {
-        if (i++ === 0) {
+        if (i === 0) {
+          // Simulate window.load event.
+          // https://github.com/assaf/zombie/issues/172
           browser.fire('load', browser.window);
         }
         if (i < 10000) {
-          loopy();
+          loopy(i + 1);
         }
       });
-    }());
+    }(0));
 
-    // Load test page.
-    // var url = 'http://grunt/' + filepath;
-    // zombie.visit(url, {debug: true, silent: false}, function(e, browser) {
-    //   // Messages are recieved from QUnit via alert!
-    //   browser.onalert(function(message) {
-    //     var args = JSON.parse(message);
-    //     var method = args.shift();
-    //     if (qunit[method]) {
-    //       qunit[method].apply(null, args);
-    //     }
-    //     if (method === 'done') {
-    //       next();
-    //     }
-    //   });
-    //   // Simulate window.load event.
-    //   // https://github.com/assaf/zombie/issues/172
-    //   browser.fire('load', browser.window);
-    //   // Timeout after 60 seconds of nothing.
-    //   browser.wait(6000, function(err, browser) {
-    //     var len = Object.keys(unfinished).length;
-    //     if (len > 0) {
-    //       log.error();
-    //       fail.warn('An async test was missing start().');
-    //       next();
-    //     }
-    //   });
-    // });
+    // Actually load test page.
+    browser.window.location = 'http://grunt/' + filepath;
   }, function(err) {
     // All tests have been run.
-    server.close();
+
     // Log results.
     if (status.failed > 0) {
       fail.warn(status.failed + '/' + status.total + ' assertions failed (' +
@@ -229,9 +194,14 @@ task.registerBasicTask('qunit', 'Run qunit tests in a headless browser.', functi
       verbose.writeln();
       log.ok(status.total + ' assertions passed (' + status.duration + 'ms)');
     }
+
     // Clean up.
     hooker.unhook(HTTP, 'request');
+    server.close();
     tempfile.unlink();
+    hooker.unhook(lang, 'javascript');
+    delete lang.grunt;
+
     // All done!
     done();
   });

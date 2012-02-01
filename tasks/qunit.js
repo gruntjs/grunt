@@ -10,9 +10,10 @@
 var fs = require('fs');
 var path = require('path');
 
-var hooker = require('hooker');
 var connect = require('connect');
 var HTTP = require('http');
+
+var hooker = util.hooker;
 
 // Temporary file to be used for HTTP request socket.
 var Tempfile = require('temporary/lib/file');

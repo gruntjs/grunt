@@ -5,8 +5,8 @@
 ## Getting Started
 Download the [production version][min] or the [development version][max].
 
-[min]: https://raw.github.com/cowboy/{%= name %}/master/dist/{%= name %}.min.js
-[max]: https://raw.github.com/cowboy/{%= name %}/master/dist/{%= name %}.js
+[min]: https://raw.github.com/{%= git_user %}/{%= name %}/master/dist/{%= name %}.min.js
+[max]: https://raw.github.com/{%= git_user %}/{%= name %}/master/dist/{%= name %}.js
 
 In the browser:
 
@@ -33,5 +33,5 @@ _Also, please don't edit files in the "dist" subdirectory as they are generated 
 _(Nothing yet)_
 
 ## License
-Copyright (c) {%= template.today('yyyy') %} {%= author_name %}  
+Copyright (c) {%= template.today('yyyy') %} {%= author_name %}
 Licensed under the {%= licenses.join(', ') %} license{%= licenses.length === 1 ? '' : 's' %}.

@@ -354,6 +354,18 @@ var prompts = {
         }
         done(null, result);
       });
+    },
+    sanitize: function(value, obj) {
+      // Adds an additional property for the "git_user"
+      var repo = task.helper('github_web_url', obj.repository);
+      var parts;
+
+      obj.git_user = process.env.USER || "???";
+      if (repo != null) {
+        parts = repo.split("/");
+        obj.git_user = parts[ parts.length - 2 ];
+      }
+      return value;
     }
   },
   homepage: {

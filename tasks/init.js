@@ -349,7 +349,11 @@ var prompts = {
     default: function(data, done) {
       // Change any git@...:... uri to git://.../... format.
       task.helper('git_origin', function(err, result) {
-        if (!err) {
+        if (err) {
+          // Attempt to guess at the repo name. Maybe we'll get lucky!
+          result = 'git://github.com/' + (process.env.USER || '???') + '/' +
+            data.name + '.git';
+        } else {
           result = result.replace(/^git@([^:]+):/, 'git://$1/');
         }
         done(null, result);

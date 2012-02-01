@@ -78,7 +78,8 @@ task.registerHelper('lint', function(src, options, globals, extraMsg) {
         fail.errorcount++;
         // Descriptive code error.
         pos = '['.red + ('L' + e.line).yellow + ':'.red + ('C' + e.character).yellow + ']'.red;
-        log.writeln(pos + ' ' + e.reason.yellow).writeln(e.evidence.inverse);
+        log.writeln(pos + ' ' + e.reason.yellow);
+        log.writeln(e.evidence.replace(/\t/g, '  ').inverse);
       } else {
         // Generic "Whoops, too many errors" error.
         log.error(e.reason);

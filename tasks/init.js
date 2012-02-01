@@ -360,6 +360,7 @@ var prompts = {
       var repo = task.helper('github_web_url', obj.repository);
       var parts;
 
+      obj.git_user = process.env.USER || "???";
       if (repo != null) {
         parts = repo.split("/");
         obj.git_user = parts[ parts.length - 2 ];

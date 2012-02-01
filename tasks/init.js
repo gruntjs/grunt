@@ -356,15 +356,16 @@ var prompts = {
       });
     },
     sanitize: function(value, obj) {
-      // Adds an additional property for the "git_user"
+      // An additional computed "git_user" property.
       var repo = task.helper('github_web_url', obj.repository);
       var parts;
-
-      obj.git_user = process.env.USER || "???";
       if (repo != null) {
-        parts = repo.split("/");
-        obj.git_user = parts[ parts.length - 2 ];
+        parts = repo.split('/');
+        obj.git_user = parts[parts.length - 2];
+      } else {
+        obj.git_user = process.env.USER || '???';
       }
+      // The original value must be returned so that "repository" isn't unset.
       return value;
     }
   },

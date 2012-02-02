@@ -7,6 +7,8 @@
  * http://benalman.com/about/license/
  */
 
+/*global QUnit:true, alert:true*/
+
 // Don't re-order tests.
 QUnit.config.reorder = false;
 // Run tests serially, not in parallel.

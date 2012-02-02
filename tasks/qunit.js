@@ -95,7 +95,9 @@ var qunit = {
   done_timeout: function() {
     log.writeln();
     fail.warn('PhantomJS timed out, possibly due to a missing QUnit start() call.', 90);
-  }
+  },
+  console: console.log.bind(console),
+  debug: log.debug.bind(log)
 };
 
 // ============================================================================
@@ -103,8 +105,8 @@ var qunit = {
 // ============================================================================
 
 task.registerBasicTask('qunit', 'Run qunit tests in a headless browser.', function(data, name) {
-  // File paths.
-  var filepaths = file.expand(data);
+  // Get files as URLs.
+  var urls = file.expandToUrls(data);
 
   // This task is asynchronous.
   var done = this.async();
@@ -113,8 +115,8 @@ task.registerBasicTask('qunit', 'Run qunit tests in a headless browser.', functi
   status = {failed: 0, passed: 0, total: 0, duration: 0};
 
   // Process each filepath in-order.
-  async.forEachSeries(filepaths, function(filepath, next) {
-    var basename = path.basename(filepath);
+  async.forEachSeries(urls, function(url, next) {
+    var basename = path.basename(url);
     verbose.subhead('Testing ' + basename).or.write('Testing ' + basename);
 
     // Create temporary file to be used for grunt-phantom communication.
@@ -130,7 +132,7 @@ task.registerBasicTask('qunit', 'Run qunit tests in a headless browser.', functi
     // This function needs to be defined here to be able to access "filepath".
     qunit.done_fail = function(url) {
       log.writeln();
-      fail.warn('PhantomJS unable to load "' + filepath + '" file.', 90);
+      fail.warn('PhantomJS unable to load "' + basename + '" file.', 90);
     };
 
     // Clean up.
@@ -181,8 +183,8 @@ task.registerBasicTask('qunit', 'Run qunit tests in a headless browser.', functi
       tempfile.path,
       // The QUnit helper file to be injected.
       file.taskfile('qunit/qunit.js'),
-      // The QUnit .html test file to run.
-      'file://' + path.resolve(filepath),
+      // URL to the QUnit .html test file to run.
+      url,
       // PhantomJS options.
       '--config=' + file.taskfile('qunit/phantom.json')
     ];

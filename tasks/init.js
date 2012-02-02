@@ -320,6 +320,7 @@ var prompts = {
       title = title.replace(/\w+/g, function(word) {
         return word[0].toUpperCase() + word.slice(1).toLowerCase();
       });
+      title = title.replace(/jquery/i, 'jQuery');
       done(null, title);
     }
   },

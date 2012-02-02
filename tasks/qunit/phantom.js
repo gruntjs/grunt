@@ -31,6 +31,11 @@ function sendMessage(args) {
   }
 }
 
+// Send a debugging message.
+function sendDebugMessage() {
+  sendMessage(['debug'].concat([].slice.call(arguments)));
+}
+
 // Abort if QUnit doesn't do anything for a while.
 setInterval(function() {
   if (new Date() - last > 5000) {
@@ -44,6 +49,17 @@ var page = require('webpage').create();
 // QUnit sends its messages via alert(jsonstring);
 page.onAlert = function(args) {
   sendMessage(JSON.parse(args));
+};
+
+// Additional message sending
+page.onConsoleMessage = function(message) {
+  sendMessage(['console', message]);
+};
+page.onResourceRequested = function(request) {
+  sendDebugMessage('onResourceRequested', request.url);
+};
+page.onResourceReceived = function(request) {
+  sendDebugMessage('onResourceReceived', request.url);
 };
 
 var loaded;

@@ -33,5 +33,5 @@ _Also, please don't edit files in the "dist" subdirectory as they are generated 
 _(Nothing yet)_
 
 ## License
-Copyright (c) {%= template.today('yyyy') %} {%= author_name %}
+Copyright (c) {%= template.today('yyyy') %} {%= author_name %}  
 Licensed under the {%= licenses.join(', ') %} license{%= licenses.length === 1 ? '' : 's' %}.

@@ -394,7 +394,7 @@ You can write crazy logging chains, omg!
 * `10` - Uglify-JS error.
 * `11` - Banner generation error.
 * `20` - Init error.
-* `61-69` - Nodeunit errors.
+* `91-99` - Nodeunit/QUnit errors.
 
 <div id="examples"></div>
 ## Examples

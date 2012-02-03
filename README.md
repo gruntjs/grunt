@@ -7,9 +7,9 @@ As of now, grunt has the following predefined tasks:
  * **init** - Generate project scaffolding from a predefined template.
  * **lint** - Validate files with [JSHint][jshint].
  * **min** - Minify files with [UglifyJS][uglify].
- * **test** - Run unit tests with [nodeunit][nodeunit].
  * **qunit** - Run [QUnit][qunit] unit tests in a headless [PhantomJS][phantom] instance.
  * **server** - Start a static web server.
+ * **test** - Run unit tests with [nodeunit][nodeunit].
  * **watch** - Run predefined tasks whenever watched files change.
 
 _(My TODO list includes more "project scaffolding" templates among other things)_
@@ -49,50 +49,6 @@ _Grunt is currently in beta. While I'm already using it on multiple projects, it
 Grunt is available as an [npm][npm] module. If you install grunt globally via `npm install -g grunt`, it will be available for use in all of your projects.
 
 Once grunt has been installed, you can type `grunt --help` at the command line for more information. And if you want to see grunt "grunt" itself, cd into grunt's directory and type `grunt` (in Windows, you might need to run it as `grunt.cmd`).
-
-## The config file, aka "gruntfile"
-When run, grunt looks in the current directory for a file named `grunt.js`, and if not found, continues looking in parent directories until found. The gruntfile is typically placed in the root of your project repository, and is a valid JavaScript file comprised of two parts: [project configuration](#config), and [tasks](#tasks) / [helpers](#helpers).
-
-<div id="config"></div>
-## Project configuration
-Each grunt task relies on configuration information defined in a single `config.init()` call in the gruntfile. Usually, this information is specified in task-named sub-properties of a main configuration object. It's not as complicated as it sounds.
-
-For example, this simple configuration would define a list of files to be linted when the task "lint:files" was run on the command line like this: `grunt lint:files`.
-
-```javascript
-config.init({
-  lint: {
-    files: ['lib/*.js', 'test/*.js', 'grunt.js']
-  }
-});
-```
-
-Also note that because the "lint" task is a [basic task](#tasks_basic), you can also run _all_ lint sub-tasks with just `grunt lint`.
-
-You can store any arbitrary information inside of the configuration object, and as long as it doesn't conflict with a property one of your tasks is using, it will be ignored.
-
-```javascript
-config.init({
-  // Generic project information used by some helpers and tasks.
-  meta: {},
-  // Lists of files to be concatenated, used by the "concat" task.
-  concat: {},
-  // Lists of files to be minififed with UglifyJS, used by the "min" task.
-  min: {},
-  // Lists of files to be unit tested with Nodeunit, used by the "test" task.
-  test: {},
-  // Lists of files to be linted with JSHint, used by the "lint" task.
-  lint: {},
-  // Global configuration options for JSHint.
-  jshint: {},
-  // Global configuration options for UglifyJS.
-  uglify: {}
-});
-```
-
-Take a look at grunt's own [grunt.js gruntfile][gruntfile] or [javascript-hooker's gruntfile](https://github.com/cowboy/javascript-hooker/blob/master/grunt.js) or [glob-whatev's gruntfile](https://github.com/cowboy/node-glob-whatev/blob/master/grunt.js) for a few examples.
-
-_Note: you don't need to specify configuration settings for tasks that you don't use._
 
 <div id="tasks"></div>
 ## Tasks
@@ -389,17 +345,6 @@ An explanation of the above code:
 
 You can write crazy logging chains, omg!
 
-<div id="exit_codes"></div>
-## Exit Codes
-
-* `1` - Generic error.
-* `2` - Config file not found.
-* `3` - Generic task failed.
-* `10` - Uglify-JS error.
-* `11` - Banner generation error.
-* `20` - Init error.
-* `91-99` - Nodeunit/QUnit errors.
-
 <div id="examples"></div>
 ## Examples
 In this example, you don't want to run `grunt lint concat` every time you need to process your code, because "dist/output.js" will be linted before it's created!
@@ -433,9 +378,6 @@ task.registerTask('default', 'lint:beforeconcat concat lint:afterconcat');
 ```
 
 _(more examples coming... soon)_
-
-## Contributing
-Fork, tweak, and make pull requests.. but you'd better successfully `grunt` it first, or I'm not even looking.
 
 ## Release History
 _(Until v1.0.0, this will only be updated when major or breaking changes are made)_

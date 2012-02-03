@@ -14,7 +14,9 @@ In your web page:
 <script src="jquery.js"></script>
 <script src="dist/{%= name %}.min.js"></script>
 <script>
-$.awesome(); // "awesome"
+jQuery(function($) {
+  $.awesome(); // "awesome"
+});
 </script>
 ```
 

@@ -4,13 +4,15 @@ Grunt is a command line build tool for JavaScript projects.
 As of now, grunt has the following predefined tasks:
 
  * **concat** - Concatenate files.
- * **init** - Generate project scaffolding based on user input.
+ * **init** - Generate project scaffolding from a predefined template.
  * **lint** - Validate files with [JSHint][jshint].
  * **min** - Minify files with [UglifyJS][uglify].
  * **test** - Run unit tests with [nodeunit][nodeunit].
+ * **qunit** - Run [QUnit][qunit] unit tests in a headless [PhantomJS][phantom] instance.
+ * **server** - Start a static web server.
  * **watch** - Run predefined tasks whenever watched files change.
 
-_(My TODO list includes more "project scaffolding" templates as well as a "QUnit headless unit-testing" task)_
+_(My TODO list includes more "project scaffolding" templates among other things)_
 
 And in addition to the predefined tasks, you can define your own.
 
@@ -32,6 +34,8 @@ And in addition to the predefined tasks, you can define your own.
 [jshint]: http://www.jshint.com/
 [uglify]: https://github.com/mishoo/UglifyJS/
 [nodeunit]: https://github.com/caolan/nodeunit
+[qunit]: http://docs.jquery.com/QUnit
+[phantom]: http://www.phantomjs.org/
 
 ## Why does grunt exist?
 Doing all this stuff manually is a total pain, and building all this stuff into a gigantic Makefile / Jakefile / Cakefile / Rakefile / ?akefile that's maintained across all my projects was also becoming a total pain. Since I always found myself performing the same tasks over and over again, for every project, it made sense to build a task-based build tool.
@@ -436,6 +440,7 @@ Fork, tweak, and make pull requests.. but you'd better successfully `grunt` it f
 ## Release History
 _(Until v1.0.0, this will only be updated when major or breaking changes are made)_
 
+* 2012/02/03 - v0.2.14 - Added a server task (which starts a static webserver for your tasks). The qunit task now uses PhantomJS instead of Zombie.js (4768 of 4971 jQuery unit test pass, neat), and supports both file wildcards as well as http:// or https:// urls. (static webserver, anyone?). Grunt should no longer "hang" when done.
 * 2012/01/29 - v0.2.5 - Added a "qunit" task as well as an init "jquery" template (as of now, there are also "node" and "commonjs" init templates).
 * 2012/01/22 - v0.2.1 - Removed handlebars, templates are universally handled by underscore now. Changed init task template tags from <% %> to {% %}. Banners beginning with /*! will no longer be stripped.
 * 2012/01/22 - v0.2.0 - Added "init" task with a sample template, reworked a lot of code. Hopefully it's backwards-compatible.

@@ -47,7 +47,7 @@ function availableLicenses() {
   }, []);
 }
 
-task.registerInitTask('init', 'Initialize a project from a predefined template.', function() {
+task.registerInitTask('init', 'Generate project scaffolding from a predefined template.', function() {
   // Extra arguments will be applied to the template file.
   var args = util.toArray(arguments);
   // Template name.

@@ -1,14 +1,14 @@
-# grunt
+[Back to grunt](https://github.com/cowboy/grunt)
 
-## Contributing to grunt
+# Contributing to grunt
 
 If you want to make contributions to grunt, by all means, please do so. "Patches welcome."
 
-### Discussing grunt
+## Discussing grunt
 
 Join the [freenode](http://freenode.net/) #grunt IRC channel. We've got a bot and everything.
 
-### Cloning grunt
+## Cloning grunt
 
 Ensure that you have the latest [Node.js](http://nodejs.org/) and [npm](http://npmjs.org/) installed.
 
@@ -24,7 +24,7 @@ To download grunt dependencies and add the development `grunt` script to your pa
 npm install && npm link
 ```
 
-### Reverting back to production grunt
+## Reverting back to production grunt
 
 If, for some reason, you need to revert back to the official grunt release, this will ensure that the `grunt` script links to the globally installed production release:
 
@@ -32,7 +32,7 @@ If, for some reason, you need to revert back to the official grunt release, this
 npm install -g grunt
 ```
 
-### Actually contributing
+## Actually contributing
 
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Fork, tweak, and make pull requests.. but `grunt` grunt first:
 

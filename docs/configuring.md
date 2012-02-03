@@ -68,6 +68,21 @@ config.init({
 
 _Note: you don't need to specify configuration settings for tasks that you don't use._
 
+## Project tasks
+
+You aren't required to define any tasks in your project gruntfile, because grunt ships with a number of built-in tasks. That being said, until you define a `default` task, grunt won't know what to do when you run it just as `grunt` (without specifying any tasks).
+
+The easiest way to define the default task is to create an [alias task](tasks.md).
+
+In the following example, a default task is defined that, when invoked by `grunt` or `grunt default`, will execute the `lint`, `qunit`, `concat` and `min` tasks in-order. It behaves exactly as if `grunt lint qunit concat min` was run on the command line.
+
+```javascript
+// Default task.
+task.registerTask('default', 'lint qunit concat min');
+```
+
+_Note: choose the default tasks that make the most sense for your project. If you find yourself commonly executing other "groups" of tasks, create as many other named aliases as you need!_
+
 ## Example gruntfiles
 
 Take a look at these example gruntfiles to see a few of the possible variations:

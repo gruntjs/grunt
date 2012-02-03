@@ -73,6 +73,7 @@ page.open(url, function (status) {
     sendMessage(['done_fail', url]);
   } else {
     // Inject QUnit helper file.
+    sendDebugMessage('inject', qunit);
     page.injectJs(qunit);
     // Because this happens after window load, "begin" must be sent manually.
     sendMessage(['begin']);

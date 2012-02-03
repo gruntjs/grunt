@@ -97,7 +97,7 @@ var qunit = {
     fail.warn('PhantomJS timed out, possibly due to a missing QUnit start() call.', 90);
   },
   console: console.log.bind(console),
-  debug: log.debug.bind(log)
+  debug: log.debug.bind(log, 'phantomjs')
 };
 
 // ============================================================================
@@ -193,13 +193,18 @@ task.registerBasicTask('qunit', 'Run qunit tests in a headless browser.', functi
       if (code === 0) { return; }
       // Something went horribly wrong.
       cleanup();
-      log.writeln();
+      verbose.or.writeln();
+      log.write('Running PhantomJS...').error();
       if (code === 127) {
-        fail.warn('PhantomJS not found. Visit www.phantomjs.org for installation instructions.', 90);
+        log.error('In order for the qunit task to work properly, PhantomJS must be installed and');
+        log.error('in the system PATH (if you can run "phantomjs" at the command line, this task');
+        log.error('should work). Unfortunately, PhantomJS cannot be installed automatically via');
+        log.error('npm or grunt. Visit www.phantomjs.org for detailed installation instructions.');
+        fail.warn('PhantomJS not found.', 90);
       } else {
-        fail.warn('PhantomJS exited abruptly with exit code ' + code + '.', 90);
+        fail.warn('PhantomJS exited unexpectedly with exit code ' + code + '.', 90);
       }
-      next();
+      done();
     });
 
   }, function(err) {

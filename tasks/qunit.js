@@ -42,8 +42,9 @@ function logFailedAssertions() {
   }
 }
 
-// QUnit hooks.
-var qunit = {
+// Handle methods passed from PhantomJS, including QUnit hooks.
+var phantomHandlers = {
+  // QUnit hooks.
   moduleStart: function(name) {
     unfinished[name] = true;
     currentModule = name;
@@ -92,11 +93,19 @@ var qunit = {
       }
     }
   },
+  // Error handlers.
+  done_fail: function(url) {
+    verbose.write('Running PhantomJS...').or.write('...');
+    log.error();
+    fail.warn('PhantomJS unable to load "' + url + '" URI.', 90);
+  },
   done_timeout: function() {
     log.writeln();
     fail.warn('PhantomJS timed out, possibly due to a missing QUnit start() call.', 90);
   },
+  // console.log pass-through.
   console: console.log.bind(console),
+  // Debugging messages.
   debug: log.debug.bind(log, 'phantomjs')
 };
 
@@ -129,12 +138,6 @@ task.registerBasicTask('qunit', 'Run qunit tests in a headless browser.', functi
     // Reset current module.
     currentModule = null;
 
-    // This function needs to be defined here to be able to access "filepath".
-    qunit.done_fail = function(url) {
-      log.writeln();
-      fail.warn('PhantomJS unable to load "' + basename + '" file.', 90);
-    };
-
     // Clean up.
     function cleanup() {
       clearTimeout(id);
@@ -154,8 +157,8 @@ task.registerBasicTask('qunit', 'Run qunit tests in a headless browser.', functi
         var args = JSON.parse(line);
         var method = args.shift();
         // Execute method if it exists.
-        if (qunit[method]) {
-          qunit[method].apply(null, args);
+        if (phantomHandlers[method]) {
+          phantomHandlers[method].apply(null, args);
         }
         // If the method name started with test, return true. Because the
         // Array#some method was used, this not only sets "done" to true,

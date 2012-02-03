@@ -51,22 +51,29 @@ page.onAlert = function(args) {
   sendMessage(JSON.parse(args));
 };
 
+// Keep track if QUnit has been injected already.
+var injected;
+
 // Additional message sending
 page.onConsoleMessage = function(message) {
   sendMessage(['console', message]);
 };
 page.onResourceRequested = function(request) {
+  if (/\/qunit\.js$/.test(request.url)) {
+    // Reset injected to false, if for some reason a redirect occurred and
+    // the test page (including qunit.js) had to be re-requested.
+    injected = false;
+  }
   sendDebugMessage('onResourceRequested', request.url);
 };
 page.onResourceReceived = function(request) {
   sendDebugMessage('onResourceReceived', request.url);
 };
 
-var loaded;
 page.open(url, function (status) {
-  // Only execute this callback the first time.
-  if (loaded) { return; }
-  loaded = true;
+  // Only execute this code if QUnit has not yet been injected.
+  if (injected) { return; }
+  injected = true;
   // The window has loaded.
   if (status !== 'success') {
     // File loading failure.
@@ -75,7 +82,8 @@ page.open(url, function (status) {
     // Inject QUnit helper file.
     sendDebugMessage('inject', qunit);
     page.injectJs(qunit);
-    // Because this happens after window load, "begin" must be sent manually.
+    // Because injection happens after window load, "begin" must be sent
+    // manually.
     sendMessage(['begin']);
   }
 });

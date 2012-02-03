@@ -35,5 +35,6 @@ task.registerTask('server', 'Start a static web server.', function() {
   }
 
   // Start server.
+  log.writeln('Starting static web server on port ' + port + '.');
   connect.apply(null, middleware).listen(port);
 });

@@ -1,4 +1,4 @@
-[Back to grunt](https://github.com/cowboy/grunt)
+[Grunt homepage](https://github.com/cowboy/grunt)
 
 # Contributing to grunt
 

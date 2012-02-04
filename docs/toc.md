@@ -11,6 +11,7 @@
 
 * [concat](task_concat.md) - Concatenate files.
 * _(more documentation coming soon)_
+
 <!--
 * [init](task_init.md) - Generate project scaffolding from a predefined template.
 * [lint](task_lint.md) - Validate files with [JSHint][jshint].

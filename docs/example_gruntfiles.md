@@ -1,4 +1,4 @@
-[Documentation index](README.md)
+[Grunt homepage](https://github.com/cowboy/grunt) | [Documentation table of contents](toc.md)
 
 # Example gruntfiles
 

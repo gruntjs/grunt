@@ -17,6 +17,8 @@ task.helper('foo', 2, 3) // 5
 
 For example, in the [min](https://github.com/cowboy/grunt/blob/master/tasks/min.js) task, the majority of the actual minification work is done in an `uglify` helper, so that other tasks can utilize that code if they need to.
 
+Take a look at the [built-in tasks](https://github.com/cowboy/grunt/tree/master/tasks) for more examples.
+
 ## Directives
 Directives are essentially string placeholders for helper functions, specified as values in the [configuration object](configuring.md). It's not as crazy as it sounds.
 
@@ -31,3 +33,5 @@ Some of the built-in directives:
 * `<banner>` - the string in config property `meta.banner`, parsed via [handlebars][misc].
 * `<banner:prop.subprop>` - same as above, but using a custom config property.
 * `<file_strip_banner:file.js>` - expand to the given file, with any leading /*...*/ banner stripped.
+
+Take a look at the [example gruntfiles](example_gruntfiles.md) for more configuration examples.

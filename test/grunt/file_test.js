@@ -1,9 +1,7 @@
-
 var fs = require('fs');
 
-//
 // test helper
-
+//
 // compare - to effectively compare Buffers, we would need something like
 // bnoordhuis/buffertools, but I'd rather not add a new dependency for the sake
 // of testing.
@@ -53,8 +51,6 @@ exports['file'] = {
 
     test.strictEqual(fs.readFileSync('test/fixtures/test_copy.js', 'utf8'), fs.readFileSync('test/fixtures/a.js', 'utf8') + tmpltest);
 
-
-
     file.copy('test/fixtures/octocat.png', 'test/fixtures/test_copy.png');
     test.strictEqual(fs.readFileSync('test/fixtures/test_copy.png', 'utf8'), fs.readFileSync('test/fixtures/octocat.png', 'utf8'));
     test.ok(compare('test/fixtures/test_copy.png', 'test/fixtures/octocat.png'), 'both buffers should match');
@@ -63,5 +59,3 @@ exports['file'] = {
     test.done();
   }
 };
-
-

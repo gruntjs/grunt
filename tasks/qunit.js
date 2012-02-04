@@ -149,8 +149,12 @@ task.registerBasicTask('qunit', 'Run QUnit unit tests in a headless PhantomJS in
     // checks that file for new lines, and for each one parses its JSON and
     // executes the corresponding method with the specified arguments.
     (function loopy() {
+      // Disable logging temporarily.
+      log.muted = true;
       // Read the file, splitting lines on \n, and removing a trailing line.
-      var lines = fs.readFileSync(tempfile.path, 'utf-8').split('\n').slice(0, -1);
+      var lines = file.read(tempfile.path).split('\n').slice(0, -1);
+      // Re-enable logging.
+      log.muted = false;
       // Iterate over all lines that haven't already been processed.
       var done = lines.slice(n).some(function(line) {
         // Get args and method.

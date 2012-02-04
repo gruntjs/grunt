@@ -1,8 +1,9 @@
 [Grunt homepage](https://github.com/cowboy/grunt) | [Documentation table of contents](toc.md)
 
 # concat
+Concatenate one or more input files (and/or [directives](helpers_directives.md) output, like `<banner>`) into an output file.
 
-The `concat` task is a [basic task](tasks_creating.md), and very simple. It concatenates one or more files (and/or [directives](helpers_directives.md) output, like `<banner>`) into an output file.
+This task is a [basic task](tasks_creating.md), meaning that grunt will automatically iterate over all `concat` targets if no specific target is specified.
 
 For more information on general configuration options, see the [configuring grunt](configuring.md) page.
 

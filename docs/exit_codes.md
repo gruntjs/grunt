@@ -1,4 +1,4 @@
-[Grunt homepage](https://github.com/cowboy/grunt)
+[Documentation index](README.md)
 
 # Grunt exit codes
 

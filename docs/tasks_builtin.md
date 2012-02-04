@@ -1,5 +1,5 @@
 [Documentation index](README.md)
 
-# Logging inside tasks
+# Tasks
 
 _(Coming soon)_

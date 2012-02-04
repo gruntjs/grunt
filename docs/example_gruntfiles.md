@@ -40,7 +40,7 @@ config.init({
 });
 ```
 
-And to make your workflow easier, create an `default` [alias task](tasks_creation.md):
+And to make your workflow easier, create an `default` [alias task](tasks_creating.md):
 
 ```javascript
 task.registerTask('default', 'lint:beforeconcat concat lint:afterconcat');

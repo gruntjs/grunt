@@ -1,6 +1,6 @@
 [Grunt homepage](https://github.com/cowboy/grunt) | [Documentation table of contents](toc.md)
 
-# Logging inside tasks
+# Logging inside tasks and helpers
 
 I wanted grunt to look pretty. As such, there are a LOT of logging methods, and a few useful patterns:
 

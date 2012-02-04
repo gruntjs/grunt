@@ -31,7 +31,7 @@ This generated banner will be the contents of the `meta.banner` mustache templat
 config.init({
   pkg: '<json:package.json>',
   meta: {
-    banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= template.today("m/d/yyyy") %> /*'
+    banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= template.today("m/d/yyyy") %> */'
   },
   concat: {
     'dist/built.js': ['<banner>', '<file_strip_banner:src/project.js>']

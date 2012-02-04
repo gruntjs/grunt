@@ -30,7 +30,7 @@ Some of the built-in directives:
 
 * `<config:prop.subprop>` - expand to the prop.subprop config property. Great for DRYing up file lists.
 * `<json:file.json>` - expand to the object parsed from file.json (a valid JSON file).
-* `<banner>` - the string in config property `meta.banner`, parsed via [handlebars][misc].
+* `<banner>` - the string in config property `meta.banner`, parsed via [Underscore.JS template](http://underscorejs.org/#template), using `<% %>` delimiters.
 * `<banner:prop.subprop>` - same as above, but using a custom config property.
 * `<file_strip_banner:file.js>` - expand to the given file, with any leading /*...*/ banner stripped.
 

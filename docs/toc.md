@@ -5,8 +5,30 @@
 ## Getting started
 
 * [Configuring grunt](configuring.md)
-* [Using built-in tasks](tasks_builtin.md)
 * [Example gruntfiles](example_gruntfiles.md)
+
+## Built-in tasks
+
+* [concat](task_concat.md) - Concatenate files.
+* _(more documentation coming soon)_
+<!--
+* [init](task_init.md) - Generate project scaffolding from a predefined template.
+* [lint](task_lint.md) - Validate files with [JSHint][jshint].
+* [min](task_min.md) - Minify files with [UglifyJS][uglify].
+* [qunit](task_qunit.md) - Run [QUnit][qunit] unit tests in a headless [PhantomJS][phantom] instance.
+* [server](task_server.md) - Start a static web server.
+* [test](task_test.md) - Run unit tests with [nodeunit][nodeunit].
+* [watch](task_watch.md) - Run predefined tasks whenever watched files change.
+-->
+
+[jshint]: http://www.jshint.com/
+[uglify]: https://github.com/mishoo/UglifyJS/
+[nodeunit]: https://github.com/caolan/nodeunit
+[qunit]: http://docs.jquery.com/QUnit
+[phantom]: http://www.phantomjs.org/
+
+## More info
+
 * [Directives](helpers_directives.md)
 * [Grunt exit codes](exit_codes.md)
 

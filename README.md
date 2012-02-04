@@ -4,7 +4,7 @@ Grunt is a task-based command line build tool for JavaScript projects.
 _Grunt is currently in beta. While I'm already using it on multiple projects, it might have a minor issue or two. And things might change before its final release, based on your feedback. Please try it out in a project, and [make suggestions][issues] or [report bugs][issues]!_
 
 ## Tasks
-As of now, grunt has the following predefined tasks:
+As of now, grunt has the following predefined tasks. For detailed usage information, see [the documentation][docs].
 
  * **concat** - Concatenate files.
  * **init** - Generate project scaffolding from a predefined template.
@@ -15,13 +15,12 @@ As of now, grunt has the following predefined tasks:
  * **test** - Run unit tests with [nodeunit][nodeunit].
  * **watch** - Run predefined tasks whenever watched files change.
 
-_(My TODO list includes more "project scaffolding" templates among other things)_
+_(My TODO list includes more "project scaffolding" templates, among other things)_
 
 And in addition to the predefined tasks, you can define your own.
 
 ## Documentation
-
-Take a look at [the documentation](https://github.com/cowboy/grunt/blob/master/docs/toc.md) for all the things.
+Take a look at [the documentation][docs] for all the things.
 
 ## Why does grunt exist?
 Doing all this stuff manually is a total pain, and building all this stuff into a gigantic Makefile / Jakefile / Cakefile / Rakefile / ?akefile that's maintained across all my projects was also becoming a total pain. Since I always found myself performing the same tasks over and over again, for every project, it made sense to build a task-based build tool.
@@ -51,6 +50,7 @@ Licensed under the MIT license.
 <http://benalman.com/about/license/>
 
 
+[docs]: https://github.com/cowboy/grunt/blob/master/docs/toc.md
 [issues]: https://github.com/cowboy/grunt/issues
 
 [node]: http://nodejs.org/

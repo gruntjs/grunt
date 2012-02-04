@@ -26,6 +26,8 @@ In this example, `grunt concat` will first strip any pre-existing banner comment
 
 This generated banner will be the contents of the `meta.banner` mustache template string interpolated (in this case) with values imported from the `package.json` file (which are available via the `pkg` config property) plus today's date.
 
+_Note: you don't have to use an external `.json` file. You could just have additional `meta` sub-properties that are referenced in the banner template like `meta.foo`. Also, you can specify the config property that `<banner>` uses. See the [directives](helpers_directives.md) page for more information on directives and their options._
+
 ```javascript
 /*global config:true, task:true*/
 config.init({
@@ -38,8 +40,6 @@ config.init({
   }
 });
 ```
-
-_Note: you can specify the config property that `<banner>` uses. See the [directives](helpers_directives.md) page for more information on directives and their options._
 
 In this example, `grunt concat` will build two separate files. One "basic" version, with the main file essentially just copied to `dist/basic.js`, and another "with_extras" concatenated version written to `dist/with_extras.js`.
 

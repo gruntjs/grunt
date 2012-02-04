@@ -15,7 +15,7 @@ _(Do you have a really crazy gruntfile? Let me know by filing an issue, and I'll
 
 ## Scenarios
 
-# Linting both before and after concat
+### Linting both before and after concat
 In this example, you don't want to run `grunt lint concat` every time you need to process your code, because "dist/output.js" will get linted before it's created!
 
 You should really do `grunt lint:beforeconcat concat lint:afterconcat`.

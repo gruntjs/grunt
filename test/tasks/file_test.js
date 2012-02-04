@@ -1,6 +1,20 @@
 
 var fs = require('fs');
 
+//
+// test helper
+
+// compare - to effectively compare Buffers, we would need something like
+// bnoordhuis/buffertools, but I'd rather not add a new dependency for the sake
+// of testing.
+//
+// So we're relying on comparisons between the `hex` of buffers to do that,
+// seems to be reliant enough to cover our test needs with file copy.
+function compare(actual, expected, encoding) {
+  encoding = encoding || 'hex';
+  return fs.readFileSync(actual, encoding) === fs.readFileSync(expected, encoding);
+}
+
 exports['file'] = {
   'read': function(test) {
     test.expect(2);
@@ -51,15 +65,3 @@ exports['file'] = {
 };
 
 
-// test helper
-
-// compare - to effectively compare Buffers, we would need something like
-// bnoordhuis/buffertools, but I'd rather not add a new dependency for the sake
-// of testing.
-//
-// So we're relying on comparisons between the `hex` of buffers to do that,
-// seems to be reliant enough to cover our test needs with file copy.
-function compare(actual, expected, encoding) {
-  encoding = encoding || 'hex';
-  return fs.readFileSync(actual, encoding) === fs.readFileSync(expected, encoding);
-}

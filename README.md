@@ -1,6 +1,9 @@
 # grunt
-Grunt is a command line build tool for JavaScript projects.
+Grunt is a task-based command line build tool for JavaScript projects.
 
+_Grunt is currently in beta. While I'm already using it on multiple projects, it might have a minor issue or two. And things might change before its final release, based on your feedback. Please try it out in a project, and [make suggestions][issues] or [report bugs][issues]!_
+
+## Tasks
 As of now, grunt has the following predefined tasks:
 
  * **concat** - Concatenate files.
@@ -20,16 +23,6 @@ And in addition to the predefined tasks, you can define your own.
 
 Take a look at [the documentation](https://github.com/cowboy/grunt/blob/master/docs/toc.md) for all the things.
 
-[issues]: https://github.com/cowboy/grunt/issues
-
-[node]: http://nodejs.org/
-[npm]: http://npmjs.org/
-[jshint]: http://www.jshint.com/
-[uglify]: https://github.com/mishoo/UglifyJS/
-[nodeunit]: https://github.com/caolan/nodeunit
-[qunit]: http://docs.jquery.com/QUnit
-[phantom]: http://www.phantomjs.org/
-
 ## Why does grunt exist?
 Doing all this stuff manually is a total pain, and building all this stuff into a gigantic Makefile / Jakefile / Cakefile / Rakefile / ?akefile that's maintained across all my projects was also becoming a total pain. Since I always found myself performing the same tasks over and over again, for every project, it made sense to build a task-based build tool.
 
@@ -37,11 +30,11 @@ Being primarily a JavaScript developer, I decided to use [Node.js][node] and [np
 
 ## Installing grunt
 
-_Grunt is currently in beta. While I'm already using it on multiple projects, it might have a minor issue or two. And things might change before its final release, based on your feedback. Please try it out in a project, and [make suggestions][issues] or [report bugs][issues]!_
-
 Grunt is available as an [npm][npm] module. If you install grunt globally via `npm install -g grunt`, it will be available for use in all of your projects.
 
-Once grunt has been installed, you can type `grunt --help` at the command line for more information. And if you want to see grunt "grunt" itself, cd into grunt's directory and type `grunt` (in Windows, you might need to run it as `grunt.cmd`).
+Once grunt has been installed, you can type `grunt --help` at the command line for more information. And if you want to see grunt "grunt" itself, cd into grunt's directory and type `grunt`
+
+_Note: in Windows, you may need to run grunt as `grunt.cmd`._
 
 ## Release History
 _(Until v1.0.0, this will only be updated when major or breaking changes are made)_
@@ -56,3 +49,14 @@ _(Until v1.0.0, this will only be updated when major or breaking changes are mad
 Copyright (c) 2012 "Cowboy" Ben Alman  
 Licensed under the MIT license.  
 <http://benalman.com/about/license/>
+
+
+[issues]: https://github.com/cowboy/grunt/issues
+
+[node]: http://nodejs.org/
+[npm]: http://npmjs.org/
+[jshint]: http://www.jshint.com/
+[uglify]: https://github.com/mishoo/UglifyJS/
+[nodeunit]: https://github.com/caolan/nodeunit
+[qunit]: http://docs.jquery.com/QUnit
+[phantom]: http://www.phantomjs.org/

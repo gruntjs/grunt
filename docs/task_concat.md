@@ -3,19 +3,13 @@
 # concat
 Concatenate one or more input files (and/or [directives](helpers_directives.md) output, like `<banner>`) into an output file.
 
+## About
+
 This task is a [basic task](tasks_creating.md), meaning that grunt will automatically iterate over all `concat` targets if no specific target is specified.
 
 For more information on general configuration options, see the [configuring grunt](configuring.md) page.
 
-## Helpers
-
-A generic `concat` helper is available for use in any other task where file and/or directive concatenation might be useful. For example:
-
-```javascript
-var fooPlusBar = task.helper('concat', ['foo.txt', 'bar.txt']);
-```
-
-## Examples
+## Usage examples
 
 In this example, `grunt concat` will simply concatenate three source files, in order, writing the output to `dist/built.js`.
 
@@ -57,4 +51,12 @@ config.init({
     'dist/with_extras.js': ['src/main.js', 'src/extras.js']
   }
 });
+```
+
+## Helpers
+
+A generic `concat` helper is available for use in any other task where file and/or directive concatenation might be useful. For example:
+
+```javascript
+var fooPlusBar = task.helper('concat', ['foo.txt', 'bar.txt']);
 ```

@@ -24,7 +24,7 @@ config.init({
 
 In this example, `grunt concat` will first strip any pre-existing banner comment from the `src/project.js` file, then concatenate that with a newly-generated banner comment, writing the output to `dist/built.js`.
 
-This generated banner will be the contents of the `meta.banner` mustache template string interpolated (in this case) with values imported from the `package.json` file (which are available via the `pkg` config property).
+This generated banner will be the contents of the `meta.banner` mustache template string interpolated (in this case) with values imported from the `package.json` file (which are available via the `pkg` config property) plus today's date.
 
 ```javascript
 /*global config:true, task:true*/

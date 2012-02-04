@@ -30,8 +30,10 @@ In this example, a default task is defined that, when invoked by `grunt` or `gru
 task.registerTask('default', 'lint qunit concat min');
 ```
 
+_In case it's not obvious, defining a `default` task is helpful because it runs by default, whenever you run `grunt` without explicitly specifying tasks._
+
 ## Basic tasks
-A basic task is a task that implicitly iterates over all of its configuration sub-properties if no sub-task is specified. For example, in the following, while `grunt lint:test` or `grunt lint:lib` will lint only the specific files, `grunt lint` will automatically run the `test`, `lib` and `grunt` sub-tasks for you. It's convenient.
+A basic task is a task that implicitly iterates over all of its configuration sub-properties if no sub-task is specified. For example, in the following, while `grunt lint:test` or `grunt lint:lib` will lint only those specific files, `grunt lint` will automatically run the `test`, `lib` and `grunt` sub-tasks for you. It's super convenient.
 
 ```javascript
 config.init({
@@ -43,7 +45,7 @@ config.init({
 });
 ```
 
-While it's probably most useful for you to check out the JavaScript source of the [built-in tasks](https://github.com/cowboy/grunt/tree/master/tasks), this is how you might define a Basic task:
+While it's probably most useful for you to check out the JavaScript source of the [built-in tasks](https://github.com/cowboy/grunt/tree/master/tasks), this example shows how you might define your own Basic task:
 
 ```javascript
 task.registerBasicTask('log', 'This task logs something.', function(data, name) {
@@ -70,7 +72,7 @@ Inside a task, you can run other tasks.
 
 ```javascript
 task.registerTask('foo', 'My "foo" task.', function() {
-  // Enqueue "bar" and "baz" tasks, to run after 'foo' finishes, in-order.
+  // Enqueue "bar" and "baz" tasks, to run after "foo" finishes, in-order.
   task.run('bar baz');
   // Or:
   task.run(['bar', 'baz']);
@@ -112,7 +114,7 @@ Tasks can fail if any errors were logged.
 
 ```javascript
 task.registerTask('foo', 'My "foo" task.', function() {
-  if (someError) {
+  if (failureOfSomeKind) {
     log.error('This is an error message.');
   }
 
@@ -140,7 +142,7 @@ task.registerTask('bar', 'My "bar" task.', function() {
 });
 ```
 
-Tasks can be dependent on the successful execution of other tasks. Note that `task.requires` won't actually RUN the other task. It'll just check to see that it has run and not failed.
+Tasks can be dependent on the successful execution of other tasks. Note that `task.requires` won't actually RUN the other task(s). It'll just check to see that it has run and not failed.
 
 ```javascript
 task.registerTask('foo', 'My "foo" task.', function() {

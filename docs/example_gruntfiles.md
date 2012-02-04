@@ -12,3 +12,40 @@ Take a look at these example gruntfiles to see a few of the possible variations:
 * [glob-whatev's gruntfile](https://github.com/cowboy/node-glob-whatev/blob/master/grunt.js)
 
 _(Do you have a really crazy gruntfile? Let me know by filing an issue, and I'll try to include it here._
+
+## Scenarios
+
+# Linting both before and after concat
+In this example, you don't want to run `grunt lint concat` every time you need to process your code, because "dist/output.js" will get linted before it's created!
+
+You should really do `grunt lint:beforeconcat concat lint:afterconcat`.
+
+```javascript
+config.init({
+  // When the "concat:dist/output.js" task is run, the specified "foo.js" and
+  // "bar.js" files will be concatenated in-order and saved to the "output.js"
+  // output file. Because the "concat" task is a Basic task, when it is run
+  // without an argument, all sub-tasks will automatically be run.
+  concat: {
+    'dist/output.js': ['src/foo.js', 'src/bar.js']
+  },
+  lint: {
+    // When the "lint:beforeconcat" task is run, the specified "foo.js" and
+    // "bar.js" files will be linted with JSHint. The same follows for the
+    // "lint:afterconcat" task. Because the "lint" task is a Basic task, when
+    // it is run without an argument, all sub-tasks will automatically be run.
+    beforeconcat: ['src/foo.js', 'src/bar.js'],
+    afterconcat: ['dist/output.js']
+  }
+});
+```
+
+And to make your workflow easier, create an `default` [alias task](tasks_creation.md):
+
+```javascript
+task.registerTask('default', 'lint:beforeconcat concat lint:afterconcat');
+```
+
+Now, when you do `grunt`, it does everything automatically.
+
+_(more examples coming... soon)_

@@ -39,6 +39,8 @@ config.init({
 });
 ```
 
+_Note: you can specify the config property that `<banner>` uses. See the [directives](helpers_directives.md) page for more information on directives and their options._
+
 In this example, `grunt concat` will build two separate files. One "basic" version, with the main file essentially just copied to `dist/basic.js`, and another "with_extras" concatenated version written to `dist/with_extras.js`.
 
 While each concat target can be built individually by running `grunt concat:dist/basic.js` or `grunt concat:dist/with_extras.js`, running `grunt concat` will build all concat targets. This is because concat is a [basic task](tasks_creating.md).

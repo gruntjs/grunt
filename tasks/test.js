@@ -132,7 +132,7 @@ nodeunit.reporters.grunt = {
 
     // Nodeunit needs absolute paths.
     var paths = files.map(function (filepath) {
-      return path.join(process.cwd(), filepath);
+      return path.resolve(filepath);
     });
     nodeunit.runFiles(paths, opts);
   }

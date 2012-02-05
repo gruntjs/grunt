@@ -19,21 +19,19 @@ _Note that for alias tasks, the description is optional. If omitted, a useful de
 In the following example, a `theworks` task is defined that, when invoked by `grunt theworks`, will execute the `lint`, `qunit`, `concat` and `min` tasks in-order. Running `grunt theworks` behaves exactly as if `grunt lint qunit concat min` was run on the command line.
 
 ```javascript
-// Default task.
 task.registerTask('theworks', 'lint qunit concat min');
 ```
 
 In this example, a default task is defined that, when invoked by `grunt` or `grunt default`, will execute the `lint`, `qunit`, `concat` and `min` tasks in-order. It behaves exactly as if `grunt lint qunit concat min` was run on the command line.
 
 ```javascript
-// Default task.
 task.registerTask('default', 'lint qunit concat min');
 ```
 
 _In case it's not obvious, defining a `default` task is helpful because it runs by default, whenever you run `grunt` without explicitly specifying tasks._
 
 ## Basic tasks
-A basic task is a task that implicitly iterates over all of its configuration sub-properties if no sub-task is specified. For example, in the following, while `grunt lint:test` or `grunt lint:lib` will lint only those specific files, `grunt lint` will automatically run the `test`, `lib` and `grunt` sub-tasks for you. It's super convenient.
+A basic task is a task that implicitly iterates over all of its targets if no target is specified. For example, in the following, while `grunt lint:test` or `grunt lint:lib` will lint only those specific sets of files, `grunt lint` will automatically run the `test`, `lib` and `grunt` targets for you. It's super convenient.
 
 ```javascript
 config.init({
@@ -49,8 +47,8 @@ While it's probably most useful for you to check out the JavaScript source of th
 
 ```javascript
 task.registerBasicTask('log', 'This task logs something.', function(data, name) {
-  // data === the value of the config sub-prop
-  // name === the name of the config sub-prop
+  // data === the value of the target-specific sub-property
+  // name === the name of the target-specific sub-property
 
   log.writeln(data);
 

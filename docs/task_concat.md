@@ -68,3 +68,5 @@ A generic `concat` helper is available for use in any other task where file and/
 ```javascript
 var fooPlusBar = task.helper('concat', ['foo.txt', 'bar.txt']);
 ```
+
+See the [concat task source](https://github.com/cowboy/grunt/blob/master/tasks/concat.js) for more information.

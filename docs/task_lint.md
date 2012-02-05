@@ -101,3 +101,5 @@ var filename = 'example.js';
 var src = file.read(filename);
 task.helper('lint', src, {browser: true}, {jQuery: true}, filename);
 ```
+
+See the [lint task source](https://github.com/cowboy/grunt/blob/master/tasks/lint.js) for more information.

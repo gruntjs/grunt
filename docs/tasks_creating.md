@@ -46,15 +46,70 @@ config.init({
 While it's probably most useful for you to check out the JavaScript source of the [built-in tasks](https://github.com/cowboy/grunt/tree/master/tasks), this example shows how you might define your own Basic task:
 
 ```javascript
-task.registerBasicTask('log', 'This task logs something.', function(data, name) {
+/*global config:true, task:true*/
+config.init({
+  logstuff: {
+    foo: [1, 2, 3],
+    bar: 'hello world',
+    baz: false
+  }
+});
+
+task.registerBasicTask('logstuff', 'This task logs stuff.', function(data, name) {
   // data === the value of the target-specific sub-property
   // name === the name of the target-specific sub-property
 
-  log.writeln(data);
+  // Log some stuff.
+  log.writeln(name + ': ' + data);
 
-  if (failureOfSomeKind) { return false; }
-  log.writeln('Your success message.');
+  // If data was falsy, abort!!
+  if (!data) { return false; }
+  log.writeln('Logging stuff succeeded.');
 });
+```
+
+Sample grunt output from running `logstuff` targets individually:
+
+```
+$ grunt logstuff:foo
+Running "logstuff:foo" (logstuff) task
+foo: 1,2,3
+Logging stuff succeeded.
+
+Done, without errors.
+
+$ grunt logstuff:bar
+Running "logstuff:bar" (logstuff) task
+bar: hello world
+Logging stuff succeeded.
+
+Done, without errors.
+
+$ grunt logstuff:baz
+Running "logstuff:baz" (logstuff) task
+baz: false
+<WARN> Task "logstuff:baz" failed. Use --force to continue. </WARN>
+
+Aborted due to warnings.
+```
+
+Sample grunt output from running `logstuff` task:
+
+```
+$ grunt logstuff
+Running "logstuff:foo" (logstuff) task
+foo: 1,2,3
+Logging stuff succeeded.
+
+Running "logstuff:bar" (logstuff) task
+bar: hello world
+Logging stuff succeeded.
+
+Running "logstuff:baz" (logstuff) task
+baz: false
+<WARN> Task "logstuff:baz" failed. Use --force to continue. </WARN>
+
+Aborted due to warnings.
 ```
 
 ## Custom tasks
@@ -80,7 +135,7 @@ task.registerTask('foo', 'My "foo" task.', function() {
 Tasks can be asynchronous.
 
 ```javascript
-task.registerTask('async', 'My "foo" task.', function() {
+task.registerTask('asyncfoo', 'My "asyncfoo" task.', function() {
   // Force task into async mode and grab a handle to the "done" function.
   var done = this.async();
   // Run some sync stuff.

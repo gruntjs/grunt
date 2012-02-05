@@ -33,6 +33,8 @@ _In case it's not obvious, defining a `default` task is helpful because it runs 
 ## Basic tasks
 A basic task is a task that implicitly iterates over all of its targets if no target is specified. For example, in the following, while `grunt lint:test` or `grunt lint:lib` will lint only those specific sets of files, `grunt lint` will automatically run the `test`, `lib` and `grunt` targets for you. It's super convenient.
 
+_Note: basic tasks will ignore any config sub-properties beginning with `_` (underscore)._
+
 ```javascript
 /*global config:true, task:true*/
 config.init({

@@ -27,7 +27,7 @@ task.registerBasicTask('concat', 'Concatenate files.', function(data, name) {
 // HELPERS
 // ============================================================================
 
-// Concat source files.
+// Concat source files and/or directives.
 task.registerHelper('concat', function(files) {
   return files ? files.map(function(filepath) {
     return task.directive(filepath, file.read);

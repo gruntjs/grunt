@@ -62,9 +62,9 @@ task.registerTask('default', 'lint:beforeconcat concat lint:afterconcat');
 
 ### Specifying options and globals
 
-In this example, taken from the [Sample jQuery plugin gruntfile](https://github.com/cowboy/grunt-jquery-example/blob/master/grunt.js), custom JSHint `options` and `globals` are specified. The meanings of these options are explained in the [JSHint documentation](http://www.jshint.com/options/).
+In this example, taken from the [Sample jQuery plugin gruntfile](https://github.com/cowboy/grunt-jquery-example/blob/master/grunt.js), custom JSHint `options` and `globals` are specified. These options are explained in the [JSHint documentation](http://www.jshint.com/options/).
 
-_Note: these options pertain to the entire project, but can be overridden on a per-file basis with a comment like `/*global config:true, task:true*/` at the top._
+_Note: config `jshint.options` and `jshint.globals` apply to the entire project, but can be overridden with per-file comments like `/*global config:true, task:true*/`._
 
 ```javascript
 /*global config:true, task:true*/

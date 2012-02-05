@@ -203,17 +203,18 @@ task.registerBasicTask('qunit', 'Run QUnit unit tests in a headless PhantomJS in
       verbose.or.writeln();
       log.write('Running PhantomJS...').error();
       if (code === 127) {
-        log.error('In order for the qunit task to work properly, PhantomJS must be installed and');
-        log.error('in the system PATH (if you can run "phantomjs" at the command line, this task');
-        log.error('should work). Unfortunately, PhantomJS cannot be installed automatically via');
-        log.error('npm or grunt. Visit www.phantomjs.org for detailed installation instructions.');
+        log.error(
+          'In order for the qunit task to work properly, PhantomJS must be installed and\n' +
+          'in the system PATH (if you can run "phantomjs" at the command line, this task\n' +
+          'should work). Unfortunately, PhantomJS cannot be installed automatically via\n' +
+          'npm or grunt. Visit www.phantomjs.org for detailed installation instructions.'
+        );
         fail.warn('PhantomJS not found.', 90);
       } else {
         fail.warn('PhantomJS exited unexpectedly with exit code ' + code + '.', 90);
       }
       done();
     });
-
   }, function(err) {
     // All tests have been run.
 

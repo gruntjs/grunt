@@ -11,6 +11,8 @@ For more information on general configuration options, see the [configuring grun
 
 ## Usage examples
 
+### Concatenating multiple files
+
 In this example, `grunt concat` will simply concatenate three source files, in order, writing the output to `dist/built.js`.
 
 ```javascript
@@ -21,6 +23,8 @@ config.init({
   }
 });
 ```
+
+### Banner comments
 
 In this example, `grunt concat` will first strip any pre-existing banner comment from the `src/project.js` file, then concatenate that with a newly-generated banner comment, writing the output to `dist/built.js`.
 
@@ -40,6 +44,8 @@ config.init({
   }
 });
 ```
+
+### Multiple build targets
 
 In this example, `grunt concat` will build two separate files. One "basic" version, with the main file essentially just copied to `dist/basic.js`, and another "with_extras" concatenated version written to `dist/with_extras.js`.
 

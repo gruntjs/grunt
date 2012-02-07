@@ -2,13 +2,13 @@
 config.init({
   pkg: '<json:package.json>',
   test: {
-    files: ['test/**/*.js']
+    all: ['test/**/*.js']
   },
   lint: {
-    files: ['grunt.js', 'lib/**/*.js', 'tasks/*.js', 'tasks/*/*.js', 'test/**/*.js']
+    all: ['grunt.js', 'lib/**/*.js', 'tasks/*.js', 'tasks/*/*.js', 'test/**/*.js']
   },
   watch: {
-    files: '<config:lint.files>',
+    files: '<config:lint.all>',
     tasks: 'default'
   },
   jshint: {

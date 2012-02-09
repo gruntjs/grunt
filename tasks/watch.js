@@ -64,13 +64,9 @@ task.registerTask('watch', 'Run predefined tasks whenever watched files change.'
       file.clearRequireCache(obj.filepath);
     });
     // Unwatch all watched files.
-    if(watchers.length === 0) {
-      files.forEach(fs.unwatchFile);
-    } else {
-      watchers.forEach(function(watcher) {
-        watcher.close();
-      });
-    }
+    watchers.forEach(function(watcher) {
+      watcher.close();
+    });
     // Enqueue all specified tasks, followed by this task (so that it loops).
     task.run(tasks).run(nameArgs);
     // Continue task queue.
@@ -88,30 +84,14 @@ task.registerTask('watch', 'Run predefined tasks whenever watched files change.'
   files.forEach(function(filepath) {
     // Watch each specified file for changes. This probably won't scale to
     // hundreds of files.. but I bet someone will try it!
-    if(fs.watch) {
-      var watcher = fs.watch(filepath, {interval: 500}, function(event, filename) {
-        var status = event + 'd'; // rename -> renamed, change -> changed
-        // Call "change" for this file.
-        change(status, filename || filepath);
-      });
+    var watcher = fs.watch(filepath, {interval: 500}, function(event, filename) {
+      var status = event + 'd'; // rename -> renamed, change -> changed
+      // Call "change" for this file.
+      change(status, filename || filepath);
+    });
 
-      // Store the file watcher, if we use the fs.watch api
-      watchers.push(watcher);
-    } else {
-      // Fallback to old api
-      fs.watchFile(filepath, {interval: 500}, function(curr, prev) {
-        var status = 'changed';
-        if (curr.nlink < prev.nlink) {
-          // The file was deleted.
-          status = 'deleted';
-        } else if (+curr.mtime === +prev.mtime) {
-          // The file hasn't changed, so abort.
-          return;
-        }
-        // Call "change" for this file.
-        change(status, filepath);
-      });
-    }
+    // Store the file watcher, if we use the fs.watch api
+    watchers.push(watcher);
   });
 
   // Files that have been added.

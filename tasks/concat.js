@@ -7,6 +7,8 @@
  * http://benalman.com/about/license/
  */
 
+var lf = process.platform === 'win32' ? '\r\n' : '\n';
+
 // ============================================================================
 // TASKS
 // ============================================================================
@@ -31,5 +33,5 @@ task.registerBasicTask('concat', 'Concatenate files.', function(data, name) {
 task.registerHelper('concat', function(files) {
   return files ? files.map(function(filepath) {
     return task.directive(filepath, file.read);
-  }).join('\n') : '';
+  }).join(lf) : '';
 });

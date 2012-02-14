@@ -259,19 +259,25 @@ task.registerHelper('prompt', function(defaults, options, done) {
         // Clean up.
         delete result.ANSWERS_VALID;
         // Iterate over all results.
-        Object.keys(result).forEach(function(name) {
+        async.forEachSeries(Object.keys(result), function(name, next) {
           // If this value needs to be sanitized, process it now.
           if (sanitize[name]) {
-            result[name] = sanitize[name](result[name], result);
+            sanitize[name](result[name], result, function(err, value) {
+              if (err) {
+                result[name] = err;
+              } else if (arguments.length === 2) {
+                result[name] = value === 'none' ? '' : value;
+              }
+              next();
+            });
+          } else {
+            next();
           }
-          // If is value is "none" set it to empty string.
-          if (result[name] === 'none') {
-            result[name] = '';
-          }
+        }, function(err) {
+          // Done!
+          log.writeln();
+          done(err, result);
         });
-        // Done!
-        log.writeln();
-        done(err, result);
       } else {
         // Otherwise update the default value for each user prompt option...
         options.slice(0, -1).forEach(function(option) {
@@ -305,11 +311,11 @@ var prompts = {
     },
     validator: /^[\w\-\.]+$/,
     warning: 'Name must be only letters, numbers, dashes, dots or underscores.',
-    sanitize: function(value, data) {
+    sanitize: function(value, data, done) {
       // An additional value, safe to use as a JavaScript identifier.
       data.js_safe_name = value.replace(/[\W_]+/g, '_').replace(/^(\d)/, '_$1');
-      // The original value must be returned so that "name" isn't unset.
-      return value;
+      // If no value is passed to `done`, the original property isn't modified.
+      done();
     }
   },
   title: {
@@ -360,18 +366,25 @@ var prompts = {
         done(null, result);
       });
     },
-    sanitize: function(value, data) {
+    sanitize: function(value, data, done) {
       // An additional computed "git_user" property.
       var repo = task.helper('github_web_url', data.repository);
       var parts;
       if (repo != null) {
         parts = repo.split('/');
         data.git_user = parts[parts.length - 2];
+        done();
       } else {
-        data.git_user = process.env.USER || '???';
+        // Attempt to pull the data from the user's git config.
+        task.helper('child_process', {
+          cmd: 'git',
+          args: ['config', '--get', 'github.user'],
+          fallback: ''
+        }, function(err, result) {
+          data.git_user = result || process.env.USER || '???';
+          done();
+        });
       }
-      // The original value must be returned so that "repository" isn't unset.
-      return value;
     }
   },
   homepage: {
@@ -395,7 +408,7 @@ var prompts = {
     warning: 'Must be one or more space-separated licenses. (eg. ' +
       availableLicenses().join(' ') + ')',
     // Split the string on spaces.
-    sanitize: function(value) { return value.split(/\s+/); }
+    sanitize: function(value, data, done) { done(value.split(/\s+/)); }
   },
   author_name: {
     message: 'Author name',

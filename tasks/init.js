@@ -76,7 +76,10 @@ task.registerInitTask('init', 'Generate project scaffolding from a predefined te
     // Expose any user-specified default init values.
     defaults: file.taskfileDefaults('init/defaults.json'),
     // Search init template paths for filename.
-    srcpath: file.taskfile.bind(file, 'init', name),
+    srcpath: function() {
+      var args = ['init', name].concat(util.toArray(arguments));
+      return String(file.taskfile.apply(file, args));
+    },
     // Determine absolute destination file path.
     destpath: path.join.bind(path, process.cwd()),
     // Given some number of licenses, add properly-named license files to the

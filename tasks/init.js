@@ -20,24 +20,6 @@ prompt.delimiter = ' ';
 // TASKS
 // ============================================================================
 
-// Get user-specified init defaults (if they exist).
-var defaults;
-function getDefaults() {
-  if (defaults) { return defaults; }
-  defaults = {};
-  // Search all available init-specific extras paths for a defaults.json file.
-  var filepaths = file.taskfiles('init/defaults.json');
-  // Load defaults data.
-  if (filepaths.length) {
-    verbose.subhead('Loading defaults');
-    // Since extras path order goes from most-specific to least-specific, only
-    // add-in properties that don't already exist.
-    filepaths.forEach(function(filepath) {
-      underscore.defaults(defaults, file.readJson(filepath));
-    });
-  }
-}
-
 // An array of all available license files.
 function availableLicenses() {
   return file.taskpaths('init/licenses').reduce(function(arr, filepath) {
@@ -92,7 +74,7 @@ task.registerInitTask('init', 'Generate project scaffolding from a predefined te
   // Useful init sub-task-specific utilities.
   var init = {
     // Expose any user-specified default init values.
-    defaults: getDefaults(),
+    defaults: file.taskfileDefaults('init/defaults.json'),
     // Search init template paths for filename.
     srcpath: file.taskfile.bind(file, 'init', name),
     // Determine absolute destination file path.
@@ -463,9 +445,10 @@ task.registerHelper('prompt_for', function(name, alternateDefault) {
   var option = underscore.clone(prompts[name]);
   option.name = name;
 
-  if (name in getDefaults()) {
+  var defaults = file.taskfileDefaults('init/defaults.json');
+  if (name in defaults) {
     // A user default was specified for this option, so use its value.
-    option.default = getDefaults()[name];
+    option.default = defaults[name];
   } else if (arguments.length === 2) {
     // An alternate default was specified, so use it.
     option.default = alternateDefault;

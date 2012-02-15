@@ -1,4 +1,5 @@
 var fs = require('fs');
+var path = require('path');
 
 // test helper
 //
@@ -14,9 +15,14 @@ function compare(actual, expected, encoding) {
 }
 
 exports['file'] = {
+  'isPathAbsolute': function(test) {
+    test.expect(2);
+    test.ok(file.isPathAbsolute(path.resolve('test/fixtures/a.js')), 'should return true');
+    test.equal(file.isPathAbsolute('test/fixtures/a.js'), false, 'should return false');
+    test.done();
+  },
   'read': function(test) {
     test.expect(2);
-
     test.strictEqual(file.read('test/fixtures/a.js'), fs.readFileSync('test/fixtures/a.js', 'utf8'));
     test.strictEqual(file.read('test/fixtures/octocat.png'), fs.readFileSync('test/fixtures/octocat.png', 'utf8'));
     test.done();
@@ -36,7 +42,6 @@ exports['file'] = {
     ['test/fixtures/test_write.js', 'test/fixtures/test_write.png'].forEach(fs.unlinkSync);
     test.done();
   },
-
   'copy': function(test) {
     test.expect(6);
     file.copy('test/fixtures/a.js', 'test/fixtures/test_copy.js');

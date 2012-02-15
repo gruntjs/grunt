@@ -75,35 +75,62 @@ task.registerInitTask('init', 'Generate project scaffolding from a predefined te
   var init = {
     // Expose any user-specified default init values.
     defaults: file.taskfileDefaults('init/defaults.json'),
+    // Expose rename rules for this template.
+    renames: file.taskfileDefaults('init', name, 'rename.json'),
+    // Return an object containing files to copy with their absolute source path
+    // and relative destination path, renamed (or omitted) according to rules in
+    // rename.json (if it exists).
+    filesToCopy: function(props) {
+      var files = {};
+      var prefix = 'init/' + name + '/root/';
+      // Iterate over all source files.
+      file.taskfiles('init', name, 'root', '**').forEach(function(obj) {
+        // Get the path relative to the template root.
+        var relpath = obj.rel.slice(prefix.length);
+        var rule = init.renames[relpath];
+        // Omit files that have an empty / false rule value.
+        if (!rule && relpath in init.renames) { return; }
+        // Create an object for this file.
+        files[relpath] = {
+          src: obj.abs,
+          // Rename if a rule exists.
+          dest: rule ? template.process(rule, props, 'init') : relpath
+        };
+      });
+      return files;
+    },
     // Search init template paths for filename.
     srcpath: function() {
-      var args = ['init', name].concat(util.toArray(arguments));
-      return String(file.taskfile.apply(file, args));
+      var args = ['init', name, 'root'].concat(util.toArray(arguments));
+      var obj = file.taskfile.apply(file, args);
+      return obj ? String(obj) : null;
     },
     // Determine absolute destination file path.
     destpath: path.join.bind(path, process.cwd()),
     // Given some number of licenses, add properly-named license files to the
-    // files array.
+    // files object.
     addLicenseFiles: function(files, licenses) {
       var available = availableLicenses();
       licenses.forEach(function(license) {
-        files.push({
-          src: '../licenses/LICENSE-' + license,
+        var srcpath = file.taskfile('init/licenses/LICENSE-' + license);
+        files['LICENSE-' + license] = {
+          src: srcpath ? String(srcpath) : null,
           dest: 'LICENSE-' + license
-        });
+        };
       });
     },
-    // Given a relative URL, copy a file (optionally processing it through
-    // a passed callback).
+    // Given an absolute or relative source path, and an optional relative
+    // destination path, copy a file, optionally processing it through the
+    // passed callback.
     copy: function(srcpath, destpath, callback) {
       if (typeof destpath !== 'string') {
         callback = destpath;
         destpath = srcpath;
       }
-      var abssrcpath = init.srcpath(srcpath);
+      var abssrcpath = file.isPathAbsolute(srcpath) ? srcpath : init.srcpath(srcpath);
       var absdestpath = init.destpath(destpath);
       if (!path.existsSync(abssrcpath)) {
-        abssrcpath = init.srcpath('../misc/placeholder');
+        abssrcpath = file.taskfile('init/misc/placeholder');
       }
       verbose.or.write('Writing ' + destpath + '...');
       try {
@@ -114,11 +141,12 @@ task.registerInitTask('init', 'Generate project scaffolding from a predefined te
         throw e;
       }
     },
-    // Iterate over all files in the passed array, copying the source file to
+    // Iterate over all files in the passed object, copying the source file to
     // the destination, processing the contents.
     copyAndProcess: function(files, props) {
-      files.forEach(function(files) {
-        init.copy(files.src, files.dest || files.src, function(contents) {
+      Object.keys(files).forEach(function(key) {
+        var obj = files[key];
+        init.copy(obj.src, obj.dest, function(contents) {
           return template.process(contents, props, 'init');
         });
       });

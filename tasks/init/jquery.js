@@ -1,3 +1,12 @@
+/*
+ * grunt
+ * https://github.com/cowboy/grunt
+ *
+ * Copyright (c) 2012 "Cowboy" Ben Alman
+ * Licensed under the MIT license.
+ * http://benalman.com/about/license/
+ */
+
 module.exports = function(init, done) {
   task.helper('prompt', {type: 'jquery'}, [
     // Prompt for these values.
@@ -14,18 +23,11 @@ module.exports = function(init, done) {
     task.helper('prompt_for', 'author_url')
   ], function(err, props) {
     // Files to copy (and process).
-    var files = [
-      {src: 'grunt.js'},
-      {src: 'README.md'},
-      {src: 'src/name.js', dest: 'src/' + props.name + '.js'},
-      {src: 'test/name_test.js', dest: 'test/' + props.name + '_test.js'},
-      {src: 'test/name.html', dest: 'test/' + props.name + '.html'},
-      {src: 'libs/jquery/jquery.js'},
-      {src: 'libs/qunit/qunit.js'},
-      {src: 'libs/qunit/qunit.css'}
-    ];
+    var files = init.filesToCopy(props);
+
     // Add properly-named license files.
     init.addLicenseFiles(files, props.licenses);
+
     // Actually copy (and process). files.
     init.copyAndProcess(files, props);
 

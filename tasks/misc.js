@@ -9,8 +9,6 @@
 
 var spawn = require('child_process').spawn;
 
-var lf = process.platform === 'win32' ? '\r\n' : '\n';
-
 // ============================================================================
 // HELPERS
 // ============================================================================
@@ -60,7 +58,7 @@ task.registerHelper('banner', function(prop) {
     verbose.write('Generating banner...');
     try {
       // Compile and run template, passing in config object as the data source.
-      banner = template.process(tmpl, obj) + lf;
+      banner = template.process(tmpl, obj) + util.linefeed;
       verbose.ok();
     } catch(e) {
       banner = '';

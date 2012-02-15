@@ -1,4 +1,4 @@
-var lf = process.platform === 'win32' ? '\r\n' : '\n';
+var lf = util.linefeed;
 
 exports['config'] = function(test) {
   test.expect(2);
@@ -53,7 +53,7 @@ exports['file_strip_banner'] = function(test) {
   var filepath = 'test/fixtures/banner.js';
   test.equal(task.helper('file_strip_banner', filepath), '// Comment' + lf + '' + lf + '/* Comment */' + lf + '', 'It should strip only the top banner.');
   filepath = 'test/fixtures/banner2.js';
-  test.equal(task.helper('file_strip_banner', filepath), '' + lf + '/*! SAMPLE' + lf + ' * BANNER */' + lf + '' + lf + '// Comment' + lf + '' + lf + '/* Comment */' + lf + '', 'It should not strip a top banner beginning with /*!.');
+  test.equal(task.helper('file_strip_banner', filepath), '' + lf + '/*! SAMPLE' + lf + ' * BANNER */' + lf + lf + '// Comment' + lf + '' + lf + '/* Comment */' + lf + '', 'It should not strip a top banner beginning with /*!.');
   test.done();
 };
 

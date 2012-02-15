@@ -1,4 +1,4 @@
-var lf = process.platform === 'win32' ? '\r\n' : '\n';
+var lf = util.linefeed;
 
 exports['concat'] = function(test) {
   test.expect(1);

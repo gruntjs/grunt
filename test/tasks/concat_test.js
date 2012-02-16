@@ -1,5 +1,3 @@
-var lf = util.linefeed;
-
 exports['concat'] = function(test) {
   test.expect(1);
   task.registerHelper('test_helper', function(a, b) { return a + b; });
@@ -8,6 +6,7 @@ exports['concat'] = function(test) {
     '<test_helper:x:y>',
     'test/fixtures/b.js'
   ];
-  test.equal(task.helper('concat', files), 'var a = 1;' + lf + lf + 'xy' + lf + 'var b = 2;' + lf, 'It should concatenate files and directives.');
+  var lf = util.linefeed;
+  test.equal(task.helper('concat', files), 'var a = 1;\n' + lf + 'xy' + lf + 'var b = 2;\n', 'It should concatenate files and directives.');
   test.done();
 };

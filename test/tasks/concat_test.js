@@ -1,3 +1,4 @@
+var lf = util.linefeed;
 
 exports['concat'] = function(test) {
   test.expect(1);
@@ -7,6 +8,6 @@ exports['concat'] = function(test) {
     '<test_helper:x:y>',
     'test/fixtures/b.js'
   ];
-  test.equal(task.helper('concat', files), 'var a = 1;\n\nxy\nvar b = 2;\n', 'It should concatenate files and directives.');
+  test.equal(task.helper('concat', files), 'var a = 1;' + lf + lf + 'xy' + lf + 'var b = 2;' + lf, 'It should concatenate files and directives.');
   test.done();
 };

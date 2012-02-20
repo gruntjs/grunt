@@ -311,7 +311,9 @@ var prompts = {
   name: {
     message: 'Project name',
     default: function(data, done) {
-      var type = data.type || '';
+      var types = ['javascript', 'js'];
+      if (data.type) { types.push(data.type); }
+      var type = '(?:' + types.join('|') + ')';
       // This regexp matches:
       //   leading type- type. type_
       //   trailing -type .type _type and/or -js .js _js

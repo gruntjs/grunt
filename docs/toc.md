@@ -10,12 +10,11 @@
 ## Built-in tasks
 
 * [concat](task_concat.md) - Concatenate files.
+* [init](task_init.md) - Generate project scaffolding from a predefined template.
 * [lint](task_lint.md) - Validate files with [JSHint][jshint].
 * _(more documentation coming soon)_
 
 <!--
-* [init](task_init.md) - Generate project scaffolding from a predefined template.
-* LINT
 * [min](task_min.md) - Minify files with [UglifyJS][uglify].
 * [qunit](task_qunit.md) - Run [QUnit][qunit] unit tests in a headless [PhantomJS][phantom] instance.
 * [server](task_server.md) - Start a static web server.

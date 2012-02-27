@@ -1,28 +1,32 @@
 [Grunt homepage](https://github.com/cowboy/grunt) | [Documentation table of contents](toc.md)
 
 # init (built-in task)
-Initialize a new project. Looks at the enviroment, asks you a few questions, then generates a [grunt.js configuration](configuraring.md)
-and some other files, depending on the template you choose
+Generate project scaffolding from a predefined template.
 
 ## About
 
-Unlike other taks, init should be run only once for a project. For existing projects, make sure that everything is already commited, as
-it may override existing files, like a README.md or package.json.
+The `init` task initializes a new project, based on the current environment and the answers to a few questions. Once complete, a [grunt.js configuration file](configuring.md) will be generated along with a complete directory structure, including a basic readme, license, package.json, sample source files and unit tests (etc).
 
-init currently supports three templates:
+The exact files and contents created depend on the template chosen along with the answers to the questions asked.
 
-* commonjs
-* jquery
-* node
+Unlike other tasks, init should only ever be run once for a project. Typically, it is run at the very beginning before work has begun, but it can be run later. **Just keep in mind that new files are generated, so for existing projects, ensure that everything is already committed first.**
 
 ## Usage examples
 
-Create a new jQuery plugin project:
+Change to a new directory, and type in `grunt init:TEMPLATE` where TEMPLATE is one of the following templates. Answer the questions. Done.
 
-`grunt init:jquery`
+## Built-in templates
 
-Create a new node.js project:
+This task currently supports these templates:
 
-`grunt init:node`
+* `commonjs` - [sample repo](https://github.com/cowboy/grunt-commonjs-example/tree/HEAD~1) and [sample creation transcript](https://github.com/cowboy/grunt-commonjs-example)
+* `jquery` - [sample repo](https://github.com/cowboy/grunt-jquery-example/tree/HEAD~1) and [sample creation transcript](https://github.com/cowboy/grunt-jquery-example)
+* `node` - [sample repo](https://github.com/cowboy/grunt-node-example/tree/HEAD~1) and [sample creation transcript](https://github.com/cowboy/grunt-node-example)
+
+For each, you can view a sample repository as well as a transcript of the commands used to generate that sample repository. Take a look!
+
+## Template structure
+
+_TODO: write this_
 
 See the [init task source](https://github.com/cowboy/grunt/blob/master/tasks/init.js) for more information.

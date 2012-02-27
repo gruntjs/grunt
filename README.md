@@ -35,6 +35,8 @@ Once grunt has been installed, you can type `grunt --help` at the command line f
 
 _Note: in Windows, you may need to run grunt as `grunt.cmd`._
 
+For projects already using grunt, you're done. Otherwise, check out the [init task][docs-init].
+
 ## Release History
 _(Until v1.0.0, this will only be updated when major or breaking changes are made)_
 
@@ -51,6 +53,7 @@ Licensed under the MIT license.
 
 
 [docs]: https://github.com/cowboy/grunt/blob/master/docs/toc.md
+[docs-init]: https://github.com/cowboy/grunt/blob/master/docs/task_init.md
 [issues]: https://github.com/cowboy/grunt/issues
 
 [node]: http://nodejs.org/

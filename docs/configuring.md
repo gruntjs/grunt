@@ -2,6 +2,8 @@
 
 # Configuring grunt
 
+If you're starting from scratch, use the [init task](task_init.md) to have grunt set everything up for you.
+
 ## The config file, aka "gruntfile"
 Each time grunt is run, it looks in the current directory for a file named `grunt.js`, and if not found, continues looking in parent directories until that file is found. This file is typically placed in the root of your project repository, and is a valid JavaScript file comprised of two parts:
 

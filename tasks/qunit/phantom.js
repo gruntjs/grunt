@@ -70,7 +70,7 @@ page.onResourceReceived = function(request) {
   sendDebugMessage('onResourceReceived', request.url);
 };
 
-page.open(url, function (status) {
+page.open(url, function(status) {
   // Only execute this code if QUnit has not yet been injected.
   if (injected) { return; }
   injected = true;

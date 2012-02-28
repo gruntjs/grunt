@@ -14,6 +14,10 @@ var path = require('path');
 // TASKS
 // ============================================================================
 
+// Keep track of last modified times of files, in case files are reported to
+// have changed incorrectly.
+var mtimes = {};
+
 task.registerTask('watch', 'Run predefined tasks whenever watched files change.', function(prop) {
 
   var props = ['watch'];
@@ -30,19 +34,18 @@ task.registerTask('watch', 'Run predefined tasks whenever watched files change.'
 
   // This task is asynchronous.
   var taskDone = this.async();
-  // The files to be watched.
+  // Get a list of ffles to be watched.
   var getFiles = file.expand.bind(file, config(filesProp));
-  var files = getFiles();
   // The tasks to be run.
   var tasks = config(tasksProp);
   // This task's name + optional args, in string format.
   var nameArgs = this.nameArgs;
   // An ID by which the setInterval can be canceled.
   var intervalId;
+  // Files that are being watched.
+  var watchedFiles = {};
   // File changes to be logged.
-  var changes = [];
-  // The file watchers
-  var watchers = [];
+  var changedFiles = {};
 
   // Define an alternate fail "warn" behavior.
   fail.warnAlternate = function() {
@@ -57,52 +60,85 @@ task.registerTask('watch', 'Run predefined tasks whenever watched files change.'
     clearInterval(intervalId);
     // Ok!
     log.ok();
-    changes.forEach(function(obj) {
+    Object.keys(changedFiles).forEach(function(filepath) {
       // Log which file has changed, and how.
-      log.ok('File "' + obj.filepath + '" ' + obj.status + '.');
+      log.ok('File "' + filepath + '" ' + changedFiles[filepath] + '.');
       // Clear the modified file's cached require data.
-      file.clearRequireCache(obj.filepath);
+      file.clearRequireCache(filepath);
     });
     // Unwatch all watched files.
-    watchers.forEach(function(watcher) {
-      watcher.close();
-    });
-    // Enqueue all specified tasks, followed by this task (so that it loops).
-    task.run(tasks).run(nameArgs);
+    Object.keys(watchedFiles).forEach(unWatchFile);
+    // Enqueue all specified tasks (if specified)...
+    if (tasks) { task.run(tasks); }
+    // ...followed by the watch task, so that it loops.
+    task.run(nameArgs);
     // Continue task queue.
     taskDone();
   }, 250);
 
-  function change(status, filepath) {
-    // Push changes onto array for later logging.
-    changes.push({filepath: filepath, status: status});
+  // Handle file changes.
+  function fileChanged(status, filepath) {
+    // If file was deleted and then re-added, consider it changed.
+    if (changedFiles[filepath] === 'deleted' && status === 'added') {
+      status = 'changed';
+    }
+    // Keep track of changed status for later.
+    changedFiles[filepath] = status;
     // Execute debounced done function.
     done();
   }
 
-  // Watch existing files for changes.
-  files.forEach(function(filepath) {
-    // Watch each specified file for changes. This probably won't scale to
-    // hundreds of files.. but I bet someone will try it!
-    var watcher = fs.watch(filepath, {interval: 500}, function(event, filename) {
-      var status = event + 'd'; // rename -> renamed, change -> changed
-      // Call "change" for this file.
-      change(status, filename || filepath);
-    });
+  // Watch a file.
+  function watchFile(filepath) {
+    if (!watchedFiles[filepath]) {
+      // Watch this file for changes. This probably won't scale to hundreds of
+      // files.. but I bet someone will try it!
+      watchedFiles[filepath] = fs.watch(filepath, function(event) {
+        var mtime;
+        // Has the file been deleted?
+        var deleted = !path.existsSync(filepath);
+        if (deleted) {
+          // If file was deleted, stop watching file.
+          unWatchFile(filepath);
+          // Remove from mtimes.
+          delete mtimes[filepath];
+        } else {
+          // Get last modified time of file.
+          mtime = +fs.statSync(filepath).mtime;
+          // If same as stored mtime, the file hasn't changed.
+          if (mtime === mtimes[filepath]) { return; }
+          // Otherwise it has, store mtime for later use.
+          mtimes[filepath] = mtime;
+        }
+        // Call "change" for this file, setting status appropriately (rename ->
+        // renamed, change -> changed).
+        fileChanged(deleted ? 'deleted' : event + 'd', filepath);
+      });
+    }
+  }
 
-    // Store the file watcher, if we use the fs.watch api
-    watchers.push(watcher);
-  });
+  // Unwatch a file.
+  function unWatchFile(filepath) {
+    if (watchedFiles[filepath]) {
+      // Close watcher.
+      watchedFiles[filepath].close();
+      // Remove from watched files.
+      delete watchedFiles[filepath];
+    }
+  }
 
-  // Files that have been added.
-  var addedFiles = [];
+  // Watch all currently existing files for changes.
+  getFiles().forEach(watchFile);
+
   // Watch for files to be added.
   intervalId = setInterval(function() {
-    // Files that have been added since last execution.
-    var difference = underscore.difference(getFiles(), files, addedFiles);
-    // Store added files for possible future "difference" test.
-    addedFiles = addedFiles.concat(difference);
-    // Call "change" once for each added file.
-    difference.forEach(change.bind(this, 'added'));
+    // Files that have been added since last interval execution.
+    var added = underscore.difference(getFiles(), Object.keys(watchedFiles));
+    added.forEach(function(filepath) {
+      // This file has been added.
+      fileChanged('added', filepath);
+      // Watch this file.
+      watchFile(filepath);
+    });
   }, 200);
 });

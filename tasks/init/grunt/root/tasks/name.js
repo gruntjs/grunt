@@ -6,6 +6,9 @@
  * Licensed under the {%= licenses.join(', ') %} license{%= licenses.length === 1 ? '' : 's' %}.
  */
 
+// Please see the grunt documentation for more information regarding task and
+// helper creation: https://github.com/cowboy/grunt/blob/master/docs/toc.md
+
 // ============================================================================
 // TASKS
 // ============================================================================

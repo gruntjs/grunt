@@ -43,7 +43,7 @@ config.init({
   }
 });
 
-// Load additional tasks.
+// Load local tasks.
 task.loadTasks('tasks');
 
 // Default task.

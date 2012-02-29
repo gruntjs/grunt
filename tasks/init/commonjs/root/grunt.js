@@ -9,10 +9,16 @@ config.init({
       ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */'
   },
   concat: {
-    'dist/{%= name %}.js': ['<banner>', '<file_strip_banner:lib/{%= name %}.js>']
+    dist: {
+      src: ['<banner>', '<file_strip_banner:lib/<%= pkg.name %>.js>'],
+      dest: 'dist/<%= pkg.name %>.js'
+    }
   },
   min: {
-    'dist/{%= name %}.min.js': ['<banner>', 'dist/{%= name %}.js']
+    dist: {
+      src: ['<banner>', '<config:concat.dist.dest>'],
+      dest: 'dist/<%= pkg.name %>.min.js'
+    }
   },
   test: {
     files: ['test/**/*.js']

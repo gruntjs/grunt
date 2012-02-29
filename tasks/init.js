@@ -12,9 +12,9 @@ var path = require('path');
 
 var semver = require('semver');
 
-var prompt = require('prompt');
-prompt.message = '[' + '?'.green + ']';
-prompt.delimiter = ' ';
+var prmpt = require('prompt');
+prmpt.message = '[' + '?'.green + ']';
+prmpt.delimiter = ' ';
 
 // ============================================================================
 // TASKS
@@ -246,8 +246,8 @@ task.registerHelper('prompt', function(defaults, options, done) {
     async.forEachSeries(options, function(option, done) {
       // Actually get user input.
       function doPrompt() {
-        prompt.start();
-        prompt.getInput(option, function(err, line) {
+        prmpt.start();
+        prmpt.getInput(option, function(err, line) {
           if (err) { return done(err); }
           result[option.name] = line;
           done();
@@ -268,7 +268,7 @@ task.registerHelper('prompt', function(defaults, options, done) {
       // After all prompt questions have been answered...
       if (/y/i.test(result.ANSWERS_VALID)) {
         // User accepted all answers. Suspend prompt.
-        prompt.pause();
+        prmpt.pause();
         // Clean up.
         delete result.ANSWERS_VALID;
         // Iterate over all results.

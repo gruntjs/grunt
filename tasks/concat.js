@@ -11,16 +11,16 @@
 // TASKS
 // ============================================================================
 
-task.registerBasicTask('concat', 'Concatenate files.', function(data, name) {
+task.registerBasicTask('concat', 'Concatenate files.', function(data, target) {
   // Concat specified files.
-  var files = file.expand(data);
-  file.write(name, task.helper('concat', files));
+  var files = file.expand(data.src);
+  file.write(data.dest, task.helper('concat', files));
 
   // Fail task if errors were logged.
   if (task.hadErrors()) { return false; }
 
   // Otherwise, print a success message.
-  log.writeln('File "' + name + '" created.');
+  log.writeln('File "' + data.dest + '" created.');
 });
 
 // ============================================================================

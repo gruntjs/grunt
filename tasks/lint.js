@@ -13,14 +13,14 @@ var jshint = require('jshint').JSHINT;
 // TASKS
 // ============================================================================
 
-task.registerBasicTask('lint', 'Validate files with JSHint.', function(data, name) {
+task.registerBasicTask('lint', 'Validate files with JSHint.', function(data, target) {
   // Get flags and globals, allowing target-specific options and globals to
   // override the default options and globals.
   var options, globals, tmp;
 
-  tmp = config(['jshint', name, 'options']);
+  tmp = config(['jshint', target, 'options']);
   if (typeof tmp === 'object') {
-    verbose.writeln('Using "' + name + '" JSHint options.');
+    verbose.writeln('Using "' + target + '" JSHint options.');
     options = tmp;
   } else {
     verbose.writeln('Using master JSHint options.');
@@ -28,9 +28,9 @@ task.registerBasicTask('lint', 'Validate files with JSHint.', function(data, nam
   }
   verbose.writeflags(options, 'Options');
 
-  tmp = config(['jshint', name, 'globals']);
+  tmp = config(['jshint', target, 'globals']);
   if (typeof tmp === 'object') {
-    verbose.writeln('Using "' + name + '" JSHint globals.');
+    verbose.writeln('Using "' + target + '" JSHint globals.');
     globals = tmp;
   } else {
     verbose.writeln('Using master JSHint globals.');
@@ -39,7 +39,7 @@ task.registerBasicTask('lint', 'Validate files with JSHint.', function(data, nam
   verbose.writeflags(globals, 'Globals');
 
   // Lint specified files.
-  file.expand(data).forEach(function(filepath) {
+  file.expand(data.src).forEach(function(filepath) {
     task.helper('lint', file.read(filepath), options, globals, filepath);
   });
 

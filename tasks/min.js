@@ -14,8 +14,8 @@ var gzip = require('gzip-js');
 // TASKS
 // ============================================================================
 
-task.registerBasicTask('min', 'Minify files with UglifyJS.', function(data, name) {
-  var files = file.expand(data);
+task.registerBasicTask('min', 'Minify files with UglifyJS.', function(data, target) {
+  var files = file.expand(data.src);
   // Get banner, if specified. It would be nice if UglifyJS supported ignoring
   // all comments matching a certain pattern, like /*!...*/, but it doesn't.
   var banner = task.directive(files[0], function() { return null; });
@@ -30,13 +30,13 @@ task.registerBasicTask('min', 'Minify files with UglifyJS.', function(data, name
 
   // Concat banner + minified source.
   var min = banner + task.helper('uglify', max, config('uglify'));
-  file.write(name, min);
+  file.write(data.dest, min);
 
   // Fail task if errors were logged.
   if (task.hadErrors()) { return false; }
 
   // Otherwise, print a success message....
-  log.writeln('File "' + name + '" created.');
+  log.writeln('File "' + data.dest + '" created.');
   // ...and report some size information.
   task.helper('min_max_info', min, max);
 });

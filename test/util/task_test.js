@@ -82,7 +82,7 @@ exports['Directives'] = {
     test.done();
   },
   'Task#directive': function(test) {
-    test.expect(5);
+    test.expect(9);
     var task = this.task;
     var fn = function(val) { return '_' + val + '_'; };
     test.equal(task.directive('foo'), 'foo', 'If a directive is not passed, it should return the passed value.');
@@ -90,6 +90,18 @@ exports['Directives'] = {
     test.equal(task.directive('<foo>'), '<foo>', 'If a directive is passed but not found, it should return the passed value.');
     test.equal(task.directive('<foo>', fn), '_<foo>_', 'If a directive is passed but not found, the value should be passed through the specified callback.');
     test.equal(task.directive('<add:1:2>'), 3, 'If a directive is passed and found, it should call the directive with arguments.');
+
+    task.registerHelper('call_as_helper', function(a, b) {
+      test.ok(!this.directive, 'should not indicate the helper was called as a directive');
+      return Number(a) + Number(b);
+    });
+    test.equal(task.helper('call_as_helper', '1', '2'), 3, 'Should receive the proper arguments (and return the proper result).');
+
+    task.registerHelper('call_as_directive', function(a, b) {
+      test.ok(this.directive, 'should indicate the helper was called as a directive');
+      return Number(a) + Number(b);
+    });
+    test.equal(task.directive('<call_as_directive:1:2>'), 3, 'Should receive the proper arguments (and return the proper result).');
     test.done();
   }
 };

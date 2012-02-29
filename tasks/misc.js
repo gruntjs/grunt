@@ -17,7 +17,14 @@ var spawn = require('child_process').spawn;
 task.registerHelper('config', config);
 
 // Read a JSON file. Most useful as a directive like <json:package.json>.
-task.registerHelper('json', file.readJson.bind(file));
+var jsons = {};
+task.registerHelper('json', function(filepath) {
+  // Don't re-fetch if being called as a directive and JSON is already cached.
+  if (!this.directive || !(filepath in jsons)) {
+    jsons[filepath] = file.readJson(filepath);
+  }
+  return jsons[filepath];
+});
 
 // Spawn a child process, capturing its stdout and stderr.
 task.registerHelper('child_process', function(opts, done) {

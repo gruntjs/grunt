@@ -178,6 +178,7 @@ task.registerInitTask('init', 'Generate project scaffolding from a predefined te
       // Node/npm-specific (?)
       if (props.node_version) { pkg.engines = {node: props.node_version}; }
       if (props.node_main) { pkg.main = props.node_main; }
+      if (props.node_bin) { pkg.bin = props.node_bin; }
       if (props.node_test) {
         pkg.scripts = {test: props.node_test};
         if (props.node_test.split(' ')[0] === 'grunt') {
@@ -244,26 +245,33 @@ task.registerHelper('prompt', function(defaults, options, done) {
     var result = underscore.clone(defaults);
     // Loop over each prompt option.
     async.forEachSeries(options, function(option, done) {
-      // Actually get user input.
-      function doPrompt() {
+      var defaultValue;
+      async.forEachSeries(['default', 'altDefault'], function(prop, next) {
+        if (typeof option[prop] === 'function') {
+          // If the value is a function, execute that function, using the
+          // value passed into the return callback as the new default value.
+          option[prop](defaultValue, result, function(err, value) {
+            defaultValue = value;
+            next();
+          });
+        } else {
+          // Otherwise, if the value actually exists, use it.
+          if (prop in option) {
+            defaultValue = option[prop];
+          }
+          next();
+        }
+      }, function() {
+        // Handle errors (there should never be errors).
+        option.default = defaultValue;
+        // Actually get user input.
         prmpt.start();
         prmpt.getInput(option, function(err, line) {
           if (err) { return done(err); }
           result[option.name] = line;
           done();
         });
-      }
-      // If the default value is a function, execute that function, using the
-      // value passed into the return callback as the new default value.
-      if (typeof option.default === 'function') {
-        option.default(result, function(err, value) {
-          // Handle errors (there should never be errors).
-          option.default = err ? '???' : value;
-          doPrompt();
-        });
-      } else {
-        doPrompt();
-      }
+      });
     }, function(err) {
       // After all prompt questions have been answered...
       if (/y/i.test(result.ANSWERS_VALID)) {
@@ -310,7 +318,7 @@ task.registerHelper('prompt', function(defaults, options, done) {
 var prompts = {
   name: {
     message: 'Project name',
-    default: function(data, done) {
+    default: function(value, data, done) {
       var types = ['javascript', 'js'];
       if (data.type) { types.push(data.type); }
       var type = '(?:' + types.join('|') + ')';
@@ -335,7 +343,7 @@ var prompts = {
   },
   title: {
     message: 'Project title',
-    default: function(data, done) {
+    default: function(value, data, done) {
       var title = data.name || '';
       title = title.replace(/[\W_]+/g, ' ');
       title = title.replace(/\w+/g, function(word) {
@@ -351,7 +359,7 @@ var prompts = {
   },
   version: {
     message: 'Version',
-    default: function(data, done) {
+    default: function(value, data, done) {
       // Get a valid semver tag from `git describe --tags` if possible.
       task.helper('child_process', {
         cmd: 'git',
@@ -368,7 +376,7 @@ var prompts = {
   },
   repository: {
     message: 'Project git repository',
-    default: function(data, done) {
+    default: function(value, data, done) {
       // Change any git@...:... uri to git://.../... format.
       task.helper('git_origin', function(err, result) {
         if (err) {
@@ -405,14 +413,14 @@ var prompts = {
   homepage: {
     message: 'Project homepage',
     // If GitHub is the origin, the (potential) homepage is easy to figure out.
-    default: function(data, done) {
+    default: function(value, data, done) {
       done(null, task.helper('github_web_url', data.repository) || 'none');
     }
   },
   bugs: {
     message: 'Project issues tracker',
     // If GitHub is the origin, the issues tracker is easy to figure out.
-    default: function(data, done) {
+    default: function(value, data, done) {
       done(null, task.helper('github_web_url', data.repository, 'issues') || 'none');
     }
   },
@@ -427,7 +435,7 @@ var prompts = {
   },
   author_name: {
     message: 'Author name',
-    default: function(data, done) {
+    default: function(value, data, done) {
       // Attempt to pull the data from the user's git config.
       task.helper('child_process', {
         cmd: 'git',
@@ -438,7 +446,7 @@ var prompts = {
   },
   author_email: {
     message: 'Author email',
-    default: function(data, done) {
+    default: function(value, data, done) {
       // Attempt to pull the data from the user's git config.
       task.helper('child_process', {
         cmd: 'git',
@@ -457,8 +465,14 @@ var prompts = {
   },
   node_main: {
     message: 'Main module/entry point',
-    default: function(data, done) {
+    default: function(value, data, done) {
       done(null, 'lib/' + data.name);
+    }
+  },
+  node_bin: {
+    message: 'CLI script',
+    default: function(value, data, done) {
+      done(null, 'bin/' + data.name);
     }
   },
   node_test: {
@@ -473,7 +487,7 @@ task.registerHelper('prompt_for_obj', function() {
 });
 
 // Commonly-used prompt options with meaningful default values.
-task.registerHelper('prompt_for', function(name, alternateDefault) {
+task.registerHelper('prompt_for', function(name, altDefault) {
   // Clone the option so the original options object doesn't get modified.
   var option = underscore.clone(prompts[name]);
   option.name = name;
@@ -484,7 +498,7 @@ task.registerHelper('prompt_for', function(name, alternateDefault) {
     option.default = defaults[name];
   } else if (arguments.length === 2) {
     // An alternate default was specified, so use it.
-    option.default = alternateDefault;
+    option.altDefault = altDefault;
   }
   return option;
 });

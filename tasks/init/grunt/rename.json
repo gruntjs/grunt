@@ -1,4 +1,5 @@
 {
+  "bin/name": "bin/{%= name %}",
   "tasks/name.js": "tasks/{%= name %}.js",
   "test/name_test.js": "test/{%= name %}_test.js"
 }

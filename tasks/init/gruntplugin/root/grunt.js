@@ -30,7 +30,7 @@ config.init({
       grunt: true,
       async: true,
       underscore: true,
-      util: true,
+      utils: true,
       task: true,
       file: true,
       fail: true,

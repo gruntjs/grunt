@@ -41,19 +41,19 @@ exports['banner'] = function(test) {
   config('test_config', {a: 'aaaaa', b: 'bbbbb', c: [1, 2, 3], d: [{a: 1}, {a: 2}, {a: 3}]});
 
   config('meta.banner', 'foo\n<%= test_config.a %>\nbar');
-  test.equal(task.helper('banner'), util.normalizelf('foo\naaaaa\nbar\n'), 'It should use the default banner.');
+  test.equal(task.helper('banner'), utils.normalizelf('foo\naaaaa\nbar\n'), 'It should use the default banner.');
 
   config('test_config.banner', '<%= test_config.b %>');
-  test.equal(task.helper('banner', 'test_config.banner'), util.normalizelf('bbbbb\n'), 'It should use the requested banner.');
+  test.equal(task.helper('banner', 'test_config.banner'), utils.normalizelf('bbbbb\n'), 'It should use the requested banner.');
 
   config('test_config.banner', '<%= test_config.c.join(", ") %>');
-  test.equal(task.helper('banner', 'test_config.banner'), util.normalizelf('1, 2, 3\n'), 'It should join arrays.');
+  test.equal(task.helper('banner', 'test_config.banner'), utils.normalizelf('1, 2, 3\n'), 'It should join arrays.');
 
   config('test_config.banner', '<%= _.pluck(test_config.d, "a").join(", ") %>');
-  test.equal(task.helper('banner', 'test_config.banner'), util.normalizelf('1, 2, 3\n'), 'It should join arrays.');
+  test.equal(task.helper('banner', 'test_config.banner'), utils.normalizelf('1, 2, 3\n'), 'It should join arrays.');
 
   config('test_config.banner', '<%= template.today("m/d/yyyy") %>');
-  test.equal(task.helper('banner', 'test_config.banner'), util.normalizelf(template.today('m/d/yyyy') + '\n'), 'It should parse the current date correctly.');
+  test.equal(task.helper('banner', 'test_config.banner'), utils.normalizelf(template.today('m/d/yyyy') + '\n'), 'It should parse the current date correctly.');
 
   test.done();
 };

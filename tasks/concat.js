@@ -31,5 +31,5 @@ task.registerBasicTask('concat', 'Concatenate files.', function(data, target) {
 task.registerHelper('concat', function(files) {
   return files ? files.map(function(filepath) {
     return task.directive(filepath, file.read);
-  }).join(util.linefeed) : '';
+  }).join(utils.linefeed) : '';
 });

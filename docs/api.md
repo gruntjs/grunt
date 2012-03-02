@@ -11,7 +11,7 @@ In an effort to make development easier, grunt exposes a lot of its functionalit
 
 ## Internals
 
-* `util` - miscellaneous utilities
+* `utils` - miscellaneous utilities
 * `task` - the entire task interface
 * `file` - glob expansion, file reading, writing, directory traversing
 * `fail` - more serious than error logging, `fail.warn` and `fail.fatal` will halt everything

@@ -65,7 +65,7 @@ task.registerHelper('banner', function(prop) {
     verbose.write('Generating banner...');
     try {
       // Compile and run template, passing in config object as the data source.
-      banner = template.process(tmpl, obj) + util.linefeed;
+      banner = template.process(tmpl, obj) + utils.linefeed;
       verbose.ok();
     } catch(e) {
       banner = '';

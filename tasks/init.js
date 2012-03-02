@@ -31,7 +31,7 @@ function availableLicenses() {
 
 task.registerInitTask('init', 'Generate project scaffolding from a predefined template.', function() {
   // Extra arguments will be applied to the template file.
-  var args = util.toArray(arguments);
+  var args = utils.toArray(arguments);
   // Template name.
   var name = args.shift();
   // Valid init templates (.js files).
@@ -101,7 +101,7 @@ task.registerInitTask('init', 'Generate project scaffolding from a predefined te
     },
     // Search init template paths for filename.
     srcpath: function() {
-      var args = ['init', name, 'root'].concat(util.toArray(arguments));
+      var args = ['init', name, 'root'].concat(utils.toArray(arguments));
       var obj = file.taskfile.apply(file, args);
       return obj ? String(obj) : null;
     },
@@ -220,7 +220,7 @@ task.registerInitTask('init', 'Generate project scaffolding from a predefined te
 // Prompt user to override default values passed in obj.
 task.registerHelper('prompt', function(defaults, options, done) {
   // If defaults are omitted, shuffle arguments a bit.
-  if (util.kindOf(defaults) === 'array') {
+  if (utils.kindOf(defaults) === 'array') {
     done = options;
     options = defaults;
     defaults = {};

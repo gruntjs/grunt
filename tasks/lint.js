@@ -66,7 +66,7 @@ function getTabStr(options) {
   var tabsize = isNaN(character) ? 1 : character;
   // If tabsize > 1, return something that should be safe to use as a
   // placeholder. \uFFFF repeated 2+ times.
-  return tabsize > 1 && util.repeat(tabsize, '\uFFFF');
+  return tabsize > 1 && utils.repeat(tabsize, '\uFFFF');
 }
 
 var tabregex = /\t/g;

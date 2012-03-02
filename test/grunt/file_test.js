@@ -53,7 +53,7 @@ exports['file'] = {
       test.equal(typeof src, 'string');
       return template.process(src + '<%= tmpltest %>', {tmpltest: tmpltest});
     });
-    test.strictEqual(fs.readFileSync('test/fixtures/test_copy.js', 'utf8'), util.normalizelf(fs.readFileSync('test/fixtures/a.js', 'utf8')) + tmpltest);
+    test.strictEqual(fs.readFileSync('test/fixtures/test_copy.js', 'utf8'), utils.normalizelf(fs.readFileSync('test/fixtures/a.js', 'utf8')) + tmpltest);
 
     file.copy('test/fixtures/octocat.png', 'test/fixtures/test_copy.png');
     test.strictEqual(fs.readFileSync('test/fixtures/test_copy.png', 'utf8'), fs.readFileSync('test/fixtures/octocat.png', 'utf8'));

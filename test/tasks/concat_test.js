@@ -6,7 +6,7 @@ exports['concat'] = function(test) {
     '<test_helper:x:y>',
     'test/fixtures/b.js'
   ];
-  var lf = util.linefeed;
+  var lf = utils.linefeed;
   test.equal(task.helper('concat', files), 'var a = 1;\n' + lf + 'xy' + lf + 'var b = 2;\n', 'It should concatenate files and directives.');
   test.done();
 };

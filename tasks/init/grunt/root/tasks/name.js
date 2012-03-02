@@ -1,5 +1,5 @@
 /*
- * {%= name %}
+ * {%= full_name %}
  * {%= homepage %}
  *
  * Copyright (c) {%= template.today('yyyy') %} {%= author_name %}
@@ -13,14 +13,14 @@
 // TASKS
 // ============================================================================
 
-task.registerTask('{%= name %}', 'Your task description goes here.', function() {
- log.write(task.helper('{%= name %}'));
+task.registerTask('{%= short_name %}', 'Your task description goes here.', function() {
+ log.write(task.helper('{%= short_name %}'));
 });
 
 // ============================================================================
 // HELPERS
 // ============================================================================
 
-task.registerHelper('{%= name %}', function() {
- return '{%= name %}!!!';
+task.registerHelper('{%= short_name %}', function() {
+ return '{%= short_name %}!!!';
 });

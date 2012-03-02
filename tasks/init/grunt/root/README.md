@@ -1,14 +1,14 @@
-# {%= name %}
+# {%= full_name %}
 
 {%= description %}
 
 ## Getting Started
-Install this grunt plugin with: `npm install -g {%= name %}`
+Install this grunt plugin with: `npm install -g {%= full_name %}`
 
 Then add this to your project's `grunt.js` gruntfile:
 
 ```javascript
-task.loadNpmTasks('{%= name %}');
+task.loadNpmTasks('{%= full_name %}');
 ```
 
 ## Documentation

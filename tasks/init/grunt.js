@@ -8,11 +8,13 @@
  */
 
 module.exports = function(init, done) {
-  task.helper('prompt', {type: 'node'}, [
+  task.helper('prompt', {type: 'grunt'}, [
     // Prompt for these values.
     task.helper('prompt_for', 'name', function(value, data, done) {
       // Prepend "grunt-" to default name if not already there.
-      if (!/^grunt-/.test(value)) { value = 'grunt-' + value; }
+      data.short_name = value;
+      value = data.full_name = 'grunt-' + value;
+      // if (!/^grunt-/.test(value)) { value = 'grunt-' + value; }
       done(null, value);
     }),
     task.helper('prompt_for', 'description', 'The best sample grunt tasks ever.'),
@@ -24,12 +26,14 @@ module.exports = function(init, done) {
     task.helper('prompt_for', 'author_name'),
     task.helper('prompt_for', 'author_email'),
     task.helper('prompt_for', 'author_url'),
-    task.helper('prompt_for', 'node_version', '*'),
+    task.helper('prompt_for', 'grunt_version'),
+    task.helper('prompt_for', 'node_version', '*')
   ], function(err, props) {
     // Set a few grunt-plugin-specific properties.
     props.node_main = 'grunt.js';
     props.node_test = 'grunt test';
     props.node_bin = 'bin/' + props.name;
+    props.node_dependencies = {grunt: props.grunt_version};
 
     // Files to copy (and process).
     var files = init.filesToCopy(props);

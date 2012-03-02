@@ -182,9 +182,12 @@ task.registerInitTask('init', 'Generate project scaffolding from a predefined te
       if (props.node_test) {
         pkg.scripts = {test: props.node_test};
         if (props.node_test.split(' ')[0] === 'grunt') {
-          pkg.devDependencies.grunt = '~' + grunt.version;
+          if (!props.node_devDependencies) { props.node_devDependencies = {}; }
+          props.node_devDependencies.grunt = '~' + grunt.version;
         }
       }
+      if (props.node_dependencies) { pkg.dependencies = props.node_dependencies; }
+      if (props.node_devDependencies) { pkg.devDependencies = props.node_devDependencies; }
 
       // Allow final tweaks to the pkg object.
       if (callback) { pkg = callback(pkg, props); }
@@ -478,6 +481,10 @@ var prompts = {
   node_test: {
     message: 'Test command',
     default: 'grunt test'
+  },
+  grunt_version: {
+    message: 'What versions of grunt does it require?',
+    default: '~' + grunt.version
   }
 };
 

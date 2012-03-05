@@ -28,8 +28,6 @@ config.init({
     },
     globals: {
       grunt: true,
-      async: true,
-      underscore: true,
       utils: true,
       task: true,
       file: true,

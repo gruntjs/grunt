@@ -52,6 +52,7 @@
     "semver": "~1.0.13",
     "uglify-js": "~1.0.7",
     "underscore": "~1.2.4",
+    "underscore.string": "~2.0.0",
     "temporary": "~0.0.2",
     "gzip-js": "~0.3.1"
   },

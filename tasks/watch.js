@@ -55,7 +55,7 @@ task.registerTask('watch', 'Run predefined tasks whenever watched files change.'
   // Cleanup when files have changed. This is debounced to handle situations
   // where editors save multiple files "simultaneously" and should wait until
   // all the files are saved.
-  var done = underscore.debounce(function() {
+  var done = utils._.debounce(function() {
     // Clear the files-added setInterval.
     clearInterval(intervalId);
     // Ok!
@@ -133,7 +133,7 @@ task.registerTask('watch', 'Run predefined tasks whenever watched files change.'
   // Watch for files to be added.
   intervalId = setInterval(function() {
     // Files that have been added since last interval execution.
-    var added = underscore.difference(getFiles(), Object.keys(watchedFiles));
+    var added = utils._.difference(getFiles(), Object.keys(watchedFiles));
     added.forEach(function(filepath) {
       // This file has been added.
       fileChanged('added', filepath);

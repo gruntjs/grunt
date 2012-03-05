@@ -245,11 +245,11 @@ task.registerHelper('prompt', function(defaults, options, done) {
   // once, and might be repeated.
   (function ask() {
     log.subhead('Please answer the following:');
-    var result = underscore.clone(defaults);
+    var result = utils._.clone(defaults);
     // Loop over each prompt option.
-    async.forEachSeries(options, function(option, done) {
+    utils.async.forEachSeries(options, function(option, done) {
       var defaultValue;
-      async.forEachSeries(['default', 'altDefault'], function(prop, next) {
+      utils.async.forEachSeries(['default', 'altDefault'], function(prop, next) {
         if (typeof option[prop] === 'function') {
           // If the value is a function, execute that function, using the
           // value passed into the return callback as the new default value.
@@ -283,7 +283,7 @@ task.registerHelper('prompt', function(defaults, options, done) {
         // Clean up.
         delete result.ANSWERS_VALID;
         // Iterate over all results.
-        async.forEachSeries(Object.keys(result), function(name, next) {
+        utils.async.forEachSeries(Object.keys(result), function(name, next) {
           // If this value needs to be sanitized, process it now.
           if (sanitize[name]) {
             sanitize[name](result[name], result, function(err, value) {
@@ -496,7 +496,7 @@ task.registerHelper('prompt_for_obj', function() {
 // Commonly-used prompt options with meaningful default values.
 task.registerHelper('prompt_for', function(name, altDefault) {
   // Clone the option so the original options object doesn't get modified.
-  var option = underscore.clone(prompts[name]);
+  var option = utils._.clone(prompts[name]);
   option.name = name;
 
   var defaults = file.taskfileDefaults('init/defaults.json');

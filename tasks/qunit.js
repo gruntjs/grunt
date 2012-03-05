@@ -124,7 +124,7 @@ task.registerBasicTask('qunit', 'Run QUnit unit tests in a headless PhantomJS in
   status = {failed: 0, passed: 0, total: 0, duration: 0};
 
   // Process each filepath in-order.
-  async.forEachSeries(urls, function(url, next) {
+  utils.async.forEachSeries(urls, function(url, next) {
     var basename = path.basename(url);
     verbose.subhead('Testing ' + basename).or.write('Testing ' + basename);
 

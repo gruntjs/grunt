@@ -74,8 +74,8 @@ var tabregex = /\t/g;
 // Lint source code with JSHint.
 task.registerHelper('lint', function(src, options, globals, extraMsg) {
   // JSHint sometimes modifies objects you pass in, so clone them.
-  options = underscore.clone(options);
-  globals = underscore.clone(globals);
+  options = utils._.clone(options);
+  globals = utils._.clone(globals);
   // Enable/disable debugging if option explicitly set.
   if (option('debug') !== undefined) {
     options.devel = options.debug = option('debug');

@@ -27,6 +27,7 @@
   },
   "preferGlobal": true,
   "keywords": [
+    "async",
     "cli",
     "minify",
     "uglify",
@@ -34,6 +35,11 @@
     "underscore",
     "unit",
     "test",
+    "qunit",
+    "nodeunit",
+    "server",
+    "init",
+    "scaffold",
     "make",
     "jake",
     "tool"

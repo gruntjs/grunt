@@ -15,7 +15,7 @@ Each time grunt is run, it looks in the current directory for a file named `grun
 
 Each grunt task relies on configuration information defined in a single `config.init()` call in the gruntfile. Usually, this information is specified in task-named sub-properties of a main configuration object. It's not as complicated as it sounds.
 
-For example, this very simple configuration defines a list of files to be linted when the `lint:all` task/target is run on the command line via `grunt lint:all` (or less specifically, `grunt lint`).
+For example, this very simple configuration defines a list of files to be linted when the `lint:all` task/target is run on the command line via `grunt lint:all`.
 
 ```javascript
 /*global config:true, task:true*/
@@ -26,9 +26,9 @@ config.init({
 });
 ```
 
-_Note: you can run all targets of any [basic task](tasks.md) by just specifying the name of the task, like `grunt lint`._
+_Note: you can run all targets of any [basic task](tasks.md) by just specifying the name of the task. In this case, running `grunt lint` would automatically run the `all` target and any others that might exist under `lint`._
 
-In another example, this very simple configuration saved in the root of a [jQuery repository](https://github.com/jquery/jquery) clone allows the jQuery QUnit unit tests to be run via grunt with `grunt qunit:index` (or less specifically, `grunt qunit`).
+In another example, this very simple configuration saved in the root of a [jQuery repository](https://github.com/jquery/jquery) clone allows the jQuery QUnit unit tests to be run via grunt with `grunt qunit:index`.
 
 ```javascript
 /*global config:true, task:true*/
@@ -79,17 +79,18 @@ While you can define [tasks](tasks.md) and [helpers](helpers_directives.md) in y
 // Load tasks and helpers from the "tasks" directory, relative to grunt.js.
 task.loadTasks('tasks');
 
-// Load tasks and helpers from the "grunt-sample" Npm module. Note that if grunt
-// is installed globally, this will use the global "grunt-sample" module. If
-// grunt is installed locally, this will use the local "grunt-sample" module.
+// Load tasks and helpers from the "grunt-sample" grunt plugin. Grunt plugins
+// are Npm modules, so note that if grunt is installed globally, this will use
+// the global "grunt-sample" module. If grunt is installed locally, this will
+// use the local "grunt-sample" module.
 task.loadNpmTasks('grunt-sample');
 ```
 
-_Note: loading externally defined tasks and helpers in this way is preferred to loading them via the analogous `--tasks` command-line option. This is because when tasks are specified in the gruntfile or loaded via one of these commands in the gruntfile, the tasks effectively become part of the project and will always be used (provided they are available) when running `grunt`._
+_Note: loading externally defined tasks and helpers in this way is preferred to loading them via the analogous `--tasks` command-line option. This is because when tasks are specified in the gruntfile or loaded via one of these commands in the gruntfile, the tasks effectively become part of the project and will always be used (provided they are available) whenever `grunt` is run._
 
 ## Tasks and helpers
 
-You aren't required to define any tasks in your project gruntfile, because grunt ships with a number of built-in tasks. That being said, until you define a `default` task, grunt won't know what to do when you run it just as `grunt` without specifying any tasks, because grunt doesn't provide a default `default` task.
+You aren't required to define any tasks in your project gruntfile, because grunt provides a number of built-in tasks. That being said, until you define a `default` task, grunt won't know what to do when you run it just as `grunt` without specifying any tasks, because grunt doesn't provide a default `default` task.
 
 The easiest way to define the default task is to create an [alias task](tasks.md).
 

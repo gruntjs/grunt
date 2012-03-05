@@ -13,7 +13,7 @@ For more information on general configuration options, see the [configuring grun
 
 ### Concatenating multiple files
 
-In this example, `grunt concat` will simply concatenate three source files, in order, writing the output to `dist/built.js`.
+In this example, `grunt concat:dist` (or `grunt concat` because it's a [basic task](tasks_creating.md)) will simply concatenate three source files, in order, writing the output to `dist/built.js`.
 
 ```javascript
 /*global config:true, task:true*/
@@ -29,9 +29,9 @@ config.init({
 
 ### Banner comments
 
-In this example, `grunt concat` will first strip any pre-existing banner comment from the `src/project.js` file, then concatenate that with a newly-generated banner comment, writing the output to `dist/built.js`.
+In this example, `grunt concat:dist` (or `grunt concat` because it's a [basic task](tasks_creating.md)) will first strip any pre-existing banner comment from the `src/project.js` file, then concatenate that with a newly-generated banner comment, writing the output to `dist/built.js`.
 
-This generated banner will be the contents of the `meta.banner` mustache template string interpolated (in this case) with values imported from the `package.json` file (which are available via the `pkg` config property) plus today's date.
+This generated banner will be the contents of the `meta.banner` underscore template string interpolated (in this case) with values imported from the `package.json` file (which are available via the `pkg` config property) plus today's date.
 
 _Note: you don't have to use an external `.json` file. You could just have additional `meta` sub-properties that are referenced in the banner template like `meta.foo`. Also, you can specify the config property that `<banner>` uses. See the [directives](helpers_directives.md) page for more information on directives and their options._
 
@@ -70,6 +70,23 @@ config.init({
       dest: 'dist/with_extras.js'
     }
   }
+});
+```
+
+### Dynamic filenames
+
+Files can be generated dynamically by using `<% %>` delimted underscore templates as filenames. In this example, the `concat:dist` destination filename is generated from the `name` and `version` properties of the referenced `package.json` file through the `pkg` config property.
+
+```javascript
+/*global config:true, task:true*/
+config.init({
+  pkg: '<json:package.json>',
+  concat: {
+    dist: {
+      src: ['src/main.js'],
+      dest: 'dist/<%= pkg.name %>-<%= pkg.version %>.js'
+    }
+  },
 });
 ```
 

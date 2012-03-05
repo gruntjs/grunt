@@ -63,7 +63,9 @@ If this build process was something you did frequently, it would make sense to c
 task.registerTask('default', 'lint:beforeconcat concat lint:afterconcat');
 ```
 
-If you want to avoid duplication, you can use a [directive](helpers_directives.md) like `'<config:concat.dist.dest>'` in place of `'dist/output.js'` in the `afterconcat` lint target. This allows you to generate the output filename dynamically, like so:
+### Dynamic filenames
+
+Building on the previous example, if you want to avoid duplication, you can use a [directive](helpers_directives.md) like `'<config:concat.dist.dest>'` in place of `'dist/output.js'` in the `afterconcat` lint target. This allows you to generate the output filename dynamically. In this example, the `concat:dist` destination filename is generated from the `name` and `version` properties of the referenced `package.json` file through the `pkg` config property.
 
 ```javascript
 /*global config:true, task:true*/
@@ -82,8 +84,7 @@ config.init({
 });
 ```
 
-
-### Specifying options and globals
+### Specifying JSHint options and globals
 
 In this example, taken from the [Sample jQuery plugin gruntfile](https://github.com/cowboy/grunt-jquery-example/blob/master/grunt.js), custom JSHint `options` and `globals` are specified. These options are explained in the [JSHint documentation](http://www.jshint.com/options/).
 
@@ -114,6 +115,8 @@ config.init({
   }
 });
 ```
+
+_Note: for each `lint` target, grunt looks for a target-named object underneath the `jshint` config object. If this object is found, its `options` and `globals` sub-objects will be used instead of the global ones. this allows per-lint-target JSHint options/globals overrides._
 
 ## Helpers
 

@@ -36,6 +36,10 @@ If, for some reason, you need to revert back to the official grunt release, this
 npm install -g grunt
 ```
 
+## Devloping grunt plugins
+
+_(Coming soon)_
+
 ## Actually contributing
 
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Fork, tweak, and make pull requests.. but `grunt` grunt first:
@@ -44,7 +48,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 grunt
 ```
 
-_(you shouldn't see any red when you do this)_
+_(you shouldn't see any red or yellow when you do this)_
 
 ## One final note about contributing
 

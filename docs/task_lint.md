@@ -45,7 +45,10 @@ You really need to lint the "beforeconcat" set first, then concat, then lint the
 /*global config:true, task:true*/
 config.init({
   concat: {
-    'dist/output.js': ['src/foo.js', 'src/bar.js']
+    dist: {
+      src: ['src/foo.js', 'src/bar.js'],
+      dest: 'dist/output.js'
+    }
   },
   lint: {
     beforeconcat: ['src/foo.js', 'src/bar.js'],
@@ -54,11 +57,31 @@ config.init({
 });
 ```
 
-If this build process was something you did frequently, it would make sense to create an [alias task](tasks_creating.md) for it with a short name like "build" so that it can be run as `grunt build`. To make life even easier, naming that alias task "default" would allow you to run it as `grunt`.
+If this build process was something you did frequently, it would make sense to create an [alias task](tasks_creating.md) for it with a short name like "build" so that it can be run as `grunt build`. To make life even easier, naming that alias task "default" would allow you to run it with the command `grunt`.
 
 ```javascript
 task.registerTask('default', 'lint:beforeconcat concat lint:afterconcat');
 ```
+
+If you want to avoid duplication, you can use a [directive](helpers_directives.md) like `'<config:concat.dist.dest>'` in place of `'dist/output.js'` in the `afterconcat` lint target. This allows you to generate the output filename dynamically, like so:
+
+```javascript
+/*global config:true, task:true*/
+config.init({
+  pkg: '<json:package.json>',
+  concat: {
+    dist: {
+      src: ['src/foo.js', 'src/bar.js'],
+      dest: 'dist/<%= pkg.name %>-<%= pkg.version %>.js'
+    }
+  },
+  lint: {
+    beforeconcat: ['src/foo.js', 'src/bar.js'],
+    afterconcat: ['<config:concat.dist.dest>']
+  }
+});
+```
+
 
 ### Specifying options and globals
 

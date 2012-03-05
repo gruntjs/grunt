@@ -2,19 +2,20 @@
 
 # Configuring grunt
 
-If you're starting from scratch, use the [init task](task_init.md) to have grunt set everything up for you.
+If you're starting from scratch, use the [init task](task_init.md) to have grunt set everything up for you. Even if you don't ultimately use what is generated, you can learn more about grunt from it.
 
 ## The config file, aka "gruntfile"
-Each time grunt is run, it looks in the current directory for a file named `grunt.js`, and if not found, continues looking in parent directories until that file is found. This file is typically placed in the root of your project repository, and is a valid JavaScript file comprised of two parts:
+Each time grunt is run, it looks in the current directory for a file named `grunt.js`. If this file is not found, grunt continues looking in parent directories until that file is found. This file is typically placed in the root of your project repository, and is a valid JavaScript file comprised of these parts:
 
-1. Project configuration
-2. [Tasks](tasks.md) and [helpers](helpers_directives.md)
+* Project configuration
+* Loading grunt plugins or tasks folders
+* [Tasks](tasks.md) and [helpers](helpers_directives.md)
 
 ## Project configuration
 
 Each grunt task relies on configuration information defined in a single `config.init()` call in the gruntfile. Usually, this information is specified in task-named sub-properties of a main configuration object. It's not as complicated as it sounds.
 
-For example, this very simple configuration defines a list of files to be linted when the "lint:all" sub-task is run on the command line like this: `grunt lint:all` (or less specifically, `grunt lint`).
+For example, this very simple configuration defines a list of files to be linted when the `lint:all` task/target is run on the command line via `grunt lint:all` (or less specifically, `grunt lint`).
 
 ```javascript
 /*global config:true, task:true*/
@@ -25,7 +26,7 @@ config.init({
 });
 ```
 
-_Note: you can run all sub-tasks of any [basic task](tasks.md) by just specifying the name of the task, like `grunt lint`._
+_Note: you can run all targets of any [basic task](tasks.md) by just specifying the name of the task, like `grunt lint`._
 
 In another example, this very simple configuration saved in the root of a [jQuery repository](https://github.com/jquery/jquery) clone allows the jQuery QUnit unit tests to be run via grunt with `grunt qunit:index` (or less specifically, `grunt qunit`).
 
@@ -40,7 +41,7 @@ config.init({
 
 _Note: even though jQuery's unit tests run in grunt doesn't mean they're going to actually pass. It is headless, after all._
 
-You can store any arbitrary information inside of the configuration object, and as long as it doesn't conflict with a property one of your tasks is using, it will be ignored.
+You can store any arbitrary information inside of the configuration object, and as long as it doesn't conflict with a property one of your tasks is using, it will be ignored. Also, because this is JavaScript and not JSON, you can use any valid JavaScript here. This allows you to programatically generate the configuration object, if necessary.
 
 ```javascript
 /*global config:true, task:true*/
@@ -60,7 +61,7 @@ config.init({
   // Lists of files to be unit tested with Nodeunit, used by the "test" task.
   test: {},
   // Configuration options for the "watch" task.
-  server: {},
+  watch: {},
   // Global configuration options for JSHint.
   jshint: {},
   // Global configuration options for UglifyJS.
@@ -70,19 +71,35 @@ config.init({
 
 _Note: you don't need to specify configuration settings for tasks that you don't use._
 
-## Project tasks
+## Loading grunt plugins or tasks folders
 
-You aren't required to define any tasks in your project gruntfile, because grunt ships with a number of built-in tasks. That being said, until you define a `default` task, grunt won't know what to do when you run it just as `grunt` (without specifying any tasks).
+While you can define [tasks](tasks.md) and [helpers](helpers_directives.md) in your project's gruntfile, you can also load tasks from external sources.
+
+```javascript
+// Load tasks and helpers from the "tasks" directory, relative to grunt.js.
+task.loadTasks('tasks');
+
+// Load tasks and helpers from the "grunt-sample" Npm module. Note that if grunt
+// is installed globally, this will use the global "grunt-sample" module. If
+// grunt is installed locally, this will use the local "grunt-sample" module.
+task.loadNpmTasks('grunt-sample');
+```
+
+_Note: loading externally defined tasks and helpers in this way is preferred to loading them via the analogous `--tasks` command-line option. This is because when tasks are specified in the gruntfile or loaded via one of these commands in the gruntfile, the tasks effectively become part of the project and will always be used (provided they are available) when running `grunt`._
+
+## Tasks and helpers
+
+You aren't required to define any tasks in your project gruntfile, because grunt ships with a number of built-in tasks. That being said, until you define a `default` task, grunt won't know what to do when you run it just as `grunt` without specifying any tasks, because grunt doesn't provide a default `default` task.
 
 The easiest way to define the default task is to create an [alias task](tasks.md).
 
-In the following example, a default task is defined that, when invoked by `grunt` or `grunt default`, will execute the `lint`, `qunit`, `concat` and `min` tasks in-order. It behaves exactly as if `grunt lint qunit concat min` was run on the command line.
+In the following example, a default task is defined that, when invoked by specifying `grunt` or `grunt default` on the command line, will execute the `lint`, `qunit`, `concat` and `min` tasks in-order. It behaves exactly as if `grunt lint qunit concat min` was run on the command line.
 
 ```javascript
 // Default task.
 task.registerTask('default', 'lint qunit concat min');
 ```
 
-_Note: choose the default tasks that make the most sense for your project. If you find yourself commonly executing other "groups" of tasks, create as many other named aliases as you need!_
+_Note: choose the default tasks that make the most sense for your project. If you find yourself commonly executing other `groups of tasks, create as many other named aliases as you need!_
 
 Take a look at the [example gruntfiles](example_gruntfiles.md) for more configuration examples.

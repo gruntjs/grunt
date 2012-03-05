@@ -19,7 +19,10 @@ In this example, `grunt concat` will simply concatenate three source files, in o
 /*global config:true, task:true*/
 config.init({
   concat: {
-    'dist/built.js': ['src/intro.js', 'src/project.js', 'src/outro.js']
+    dist: {
+      src: ['src/intro.js', 'src/project.js', 'src/outro.js'],
+      dest: 'dist/built.js'
+    }
   }
 });
 ```
@@ -40,7 +43,10 @@ config.init({
     banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= template.today("m/d/yyyy") %> */'
   },
   concat: {
-    'dist/built.js': ['<banner>', '<file_strip_banner:src/project.js>']
+    dist: {
+      src: ['<banner>', '<file_strip_banner:src/project.js>'],
+      dest: 'dist/built.js'
+    }
   }
 });
 ```
@@ -49,14 +55,20 @@ config.init({
 
 In this example, `grunt concat` will build two separate files. One "basic" version, with the main file essentially just copied to `dist/basic.js`, and another "with_extras" concatenated version written to `dist/with_extras.js`.
 
-While each concat target can be built individually by running `grunt concat:dist/basic.js` or `grunt concat:dist/with_extras.js`, running `grunt concat` will build all concat targets. This is because concat is a [basic task](tasks_creating.md).
+While each concat target can be built individually by running `grunt concat:basic` or `grunt concat:extras`, running `grunt concat` will build all concat targets. This is because concat is a [basic task](tasks_creating.md).
 
 ```javascript
 /*global config:true, task:true*/
 config.init({
   concat: {
-    'dist/basic.js': ['src/main.js'],
-    'dist/with_extras.js': ['src/main.js', 'src/extras.js']
+    basic: {
+      src: ['src/main.js'],
+      dest: 'dist/basic.js'
+    },
+    extras: {
+      src: ['src/main.js', 'src/extras.js'],
+      dest: 'dist/with_extras.js'
+    }
   }
 });
 ```

@@ -58,8 +58,8 @@ task.registerInitTask('init', 'Generate project scaffolding from a predefined te
 
   // Abort if a valid template was not specified.
   if (!(name && name in templates)) {
-    log.error('A valid template name must be specified. Valid templates are: ' +
-      log.wordlist(Object.keys(templates)) + '.');
+    log.error('A valid template name must be specified, eg. "grunt init:commonjs".' +
+      ' Valid templates are: ' + log.wordlist(Object.keys(templates)) + '.');
     return false;
   }
 

@@ -262,7 +262,25 @@ exports['Tasks'] = {
     });
     task.run('a g').start();
   },
-  'Task#clearQueue': function(test) {
+  'Task#current': function(test) {
+    test.expect(7);
+    var task = this.task;
+    test.deepEqual(task.current, {}, 'Should start empty.');
+    task.registerTask('a', 'Sample task.', function() {
+      test.equal(task.current, this, 'This and task.current should be the same object.');
+      test.equal(task.current.nameArgs, 'a:b:c', 'Should be task name + args, as-specified.');
+      test.equal(task.current.name, 'a', 'Should be just the task name, no args.');
+      test.equal(typeof task.current.async, 'function', 'Should be a function.');
+      test.deepEqual(task.current.args, ['b', 'c'], 'Should be an array of args.');
+    });
+    task.options({
+      done: function() {
+        test.deepEqual(task.current, {}, 'Should be empty again once tasks are done.');
+        test.done();
+      }
+    });
+    task.run('a:b:c').start();
+  },  'Task#clearQueue': function(test) {
     test.expect(1);
     var task = this.task;
     task.registerTask('a', 'Push task name onto result.', result.pushTaskname);

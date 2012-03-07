@@ -263,7 +263,7 @@ exports['Tasks'] = {
     task.run('a g').start();
   },
   'Task#current': function(test) {
-    test.expect(7);
+    test.expect(8);
     var task = this.task;
     test.deepEqual(task.current, {}, 'Should start empty.');
     task.registerTask('a', 'Sample task.', function() {
@@ -272,6 +272,7 @@ exports['Tasks'] = {
       test.equal(task.current.name, 'a', 'Should be just the task name, no args.');
       test.equal(typeof task.current.async, 'function', 'Should be a function.');
       test.deepEqual(task.current.args, ['b', 'c'], 'Should be an array of args.');
+      test.deepEqual(task.current.flags, {b: true, c: true}, 'Should be a map of flags.');
     });
     task.options({
       done: function() {

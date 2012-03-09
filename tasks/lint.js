@@ -13,7 +13,7 @@ var jshint = require('jshint').JSHINT;
 // TASKS
 // ============================================================================
 
-task.registerBasicTask('lint', 'Validate files with JSHint.', function(data, target) {
+task.registerBasicTask('lint', 'Validate files with JSHint.', function(target) {
   // Get flags and globals, allowing target-specific options and globals to
   // override the default options and globals.
   var options, globals, tmp;
@@ -39,7 +39,7 @@ task.registerBasicTask('lint', 'Validate files with JSHint.', function(data, tar
   verbose.writeflags(globals, 'Globals');
 
   // Lint specified files.
-  file.expand(data.src).forEach(function(filepath) {
+  file.expand(this.file.src).forEach(function(filepath) {
     task.helper('lint', file.read(filepath), options, globals, filepath);
   });
 

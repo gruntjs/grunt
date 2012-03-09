@@ -113,9 +113,9 @@ var phantomHandlers = {
 // TASKS
 // ============================================================================
 
-task.registerBasicTask('qunit', 'Run QUnit unit tests in a headless PhantomJS instance.', function(data, target) {
+task.registerBasicTask('qunit', 'Run QUnit unit tests in a headless PhantomJS instance.', function(target) {
   // Get files as URLs.
-  var urls = file.expandToUrls(data.src);
+  var urls = file.expandToUrls(this.file.src);
 
   // This task is asynchronous.
   var done = this.async();

@@ -58,15 +58,19 @@ config.init({
   }
 });
 
-task.registerBasicTask('logstuff', 'This task logs stuff.', function(data, name) {
-  // data === the value of the target-specific sub-property
-  // name === the name of the target-specific sub-property
+task.registerBasicTask('logstuff', 'This task logs stuff.', function(target) {
+  // target === the name of the target
+  // this.data === the target's value in the config object
+  // this.name === the task name
+  // this.args === an array of args specified after the target on the command-line
+  // this.flags === a map of flags specified after the target on the command-line
+  // this.file === file-specific .src and .dest properties
 
   // Log some stuff.
-  log.writeln(name + ': ' + data);
+  log.writeln(target + ': ' + this.data);
 
   // If data was falsy, abort!!
-  if (!data) { return false; }
+  if (!this.data) { return false; }
   log.writeln('Logging stuff succeeded.');
 });
 ```

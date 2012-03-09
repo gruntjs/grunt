@@ -29,18 +29,22 @@ task.registerHelper('json', function(filepath) {
 // Spawn a child process, capturing its stdout and stderr.
 task.registerHelper('child_process', function(opts, done) {
   var child = spawn(opts.cmd, opts.args, opts.opts);
-  var results = [];
-  var errors = [];
-  child.stdout.on('data', results.push.bind(results));
-  child.stderr.on('data', errors.push.bind(errors));
+  var stdout = '';
+  var stderr = '';
+  child.stdout.on('data', function(buf) { stdout += buf; });
+  child.stderr.on('data', function(buf) { stderr += buf; });
   child.on('exit', function(code) {
-    if (code === 0) {
-      done(null, results.join('').replace(/\s+$/, ''), code);
-    } else if ('fallback' in opts) {
-      done(null, opts.fallback, code);
-    } else {
-      done(code, errors.join('').replace(/\s+$/, ''), code);
-    }
+    // Remove trailing whitespace (newline)
+    stdout = utils._.rtrim(stdout);
+    stderr = utils._.rtrim(stderr);
+    // To keep JSHint from complaining about using new String().
+    var MyString = String;
+    // Create a new string... with properties.
+    var result = new MyString(code === 0 ? stdout : 'fallback' in opts ? opts.fallback : stderr);
+    result.stdout = stdout;
+    result.stderr = stderr;
+    result.code = code;
+    done(code === 0 || 'fallback' in opts ? null: code, result, code);
   });
 });
 

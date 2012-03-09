@@ -196,8 +196,11 @@ task.registerBasicTask('qunit', 'Run QUnit unit tests in a headless PhantomJS in
       '--config=' + file.taskfile('qunit/phantom.json')
     ];
 
-    spawn('phantomjs', args).on('exit', function (code) {
-      if (code === 0) { return; }
+    task.helper('child_process', {
+      cmd: 'phantomjs',
+      args: args
+    }, function(err, result, code) {
+      if (!err) { return; }
       // Something went horribly wrong.
       cleanup();
       verbose.or.writeln();
@@ -211,6 +214,7 @@ task.registerBasicTask('qunit', 'Run QUnit unit tests in a headless PhantomJS in
         );
         fail.warn('PhantomJS not found.', 90);
       } else {
+        result.split('\n').forEach(log.error, log);
         fail.warn('PhantomJS exited unexpectedly with exit code ' + code + '.', 90);
       }
       done();

@@ -366,11 +366,10 @@ var prompts = {
       // Get a valid semver tag from `git describe --tags` if possible.
       task.helper('child_process', {
         cmd: 'git',
-        args: ['describe', '--tags']
-      }, function(err, result) {
-        if (result) {
-          result = result.split('-')[0];
-        }
+        args: ['describe', '--tags'],
+        fallback: ''
+      }, function(err, result, code) {
+        result = result.split('-')[0];
         done(null, semver.valid(result) || '0.1.0');
       });
     },
@@ -406,7 +405,7 @@ var prompts = {
           cmd: 'git',
           args: ['config', '--get', 'github.user'],
           fallback: ''
-        }, function(err, result) {
+        }, function(err, result, code) {
           data.git_user = result || process.env.USER || '???';
           done();
         });
@@ -515,14 +514,17 @@ task.registerHelper('git_origin', function(done) {
   task.helper('child_process', {
     cmd: 'git',
     args: ['remote', '-v']
-  }, function(err, result) {
-    var re = /^origin/;
-    if (err || !result) {
-      done(true, 'none');
-    } else {
-      result = result.split('\n').filter(re.test.bind(re))[0];
-      done(null, result.split(/\s/)[1]);
+  }, function(err, result, code) {
+    var re = /^origin\s/;
+    var lines;
+    if (!err) {
+      lines = result.split('\n').filter(re.test, re);
+      if (lines.length > 0) {
+        done(null, lines[0].split(/\s/)[1]);
+        return;
+      }
     }
+    done(true, 'none');
   });
 });
 

@@ -116,9 +116,11 @@ config.init({
 });
 ```
 
-_Note: for each `lint` target, grunt looks for a target-named object underneath the `jshint` config object. If this object is found, its `options` and `globals` sub-objects will be used instead of the global ones. this allows per-lint-target JSHint options/globals overrides._
+#### Per-target JSHint options and globals
 
-You can combine this with multiple lint targets to create different lint configurations. In this example, there's three sets: One for client-side js files, one for client-side QUnit-based tests, one for grunt.js:
+For each `lint` target, grunt looks for a target-named object underneath the `jshint` config object. If this object is found, its `options` and `globals` sub-objects will be used instead of the global ones. this allows per-lint-target JSHint options/globals overrides.
+
+In this example, there are default JSHint settings, as well as per-target overrides:
 
 ```javascript
 config.init({
@@ -128,45 +130,23 @@ config.init({
     tests: 'tests/unit/**/*.js'
   },
   jshint: {
-    // applies to all
-    options: {
-      curly: true
-    },
-    // just for grunt.js
+    // Defaults.
+    options: {curly: true},
+    globals: {},
+    // Just for the lint:grunt target.
     grunt: {
-      options: {
-        node: true
-      },
-      globals: {
-        task: true,
-        config: true,
-        file: true,
-        log: true,
-        template: true
-      }
+      options: {node: true},
+      globals: {task: true, config: true, file: true, log: true, template: true}
     },
-    // just for src/*.js
+    // Just for the lint:src target.
     src: {
-      options: {
-        browser: true
-      },
-      globals: {
-        jQuery: true
-      }
+      options: {browser: true},
+      globals: {jQuery: true}
     },
-    // just for tests/unit/**/*.js
+    // Just for the lint:tests target.
     tests: {
-      options: {
-        jquery: true
-      },
-      globals: {
-        module: true,
-        test: true,
-        ok: true,
-        equal: true,
-        deepEqual: true,
-        QUnit: true
-      }
+      options: {jquery: true},
+      globals: {module: true, test: true, ok: true, equal: true, deepEqual: true, QUnit: true}
     }
   }
 });

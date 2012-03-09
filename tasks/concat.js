@@ -14,7 +14,16 @@
 task.registerBasicTask('concat', 'Concatenate files.', function(data, target) {
   // Concat specified files.
   var files = file.expand(data.src);
-  file.write(data.dest, task.helper('concat', files));
+  // Get banner, if specified. It would be nice if UglifyJS supported ignoring
+  // all comments matching a certain pattern, like /*!...*/, but it doesn't.
+  var banner = task.directive(files[0], function() { return null; });
+  if (banner === null) {
+    banner = '';
+  } else {
+    files.shift();
+  }
+  // prepend banner
+  file.write(data.dest, banner + task.helper('concat', files));
 
   // Fail task if errors were logged.
   if (task.hadErrors()) { return false; }

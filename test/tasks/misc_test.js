@@ -23,7 +23,7 @@ exports['strip_banner'] = function(test) {
   var src = file.read('test/fixtures/banner.js');
   test.equal(task.helper('strip_banner', src), '// Comment\n\n/* Comment */\n', 'It should strip only the top banner.');
   src = file.read('test/fixtures/banner2.js');
-  test.equal(task.helper('strip_banner', src), '\n/*! SAMPLE\n * BANNER */\n\n// Comment\n\n/* Comment */\n', 'It should strip only the top banner.');
+  test.equal(task.helper('strip_banner', src), '// Comment\n\n/* Comment */\n', 'It should also strip a top banner beginning with /*!.');
   test.done();
 };
 
@@ -32,7 +32,7 @@ exports['file_strip_banner'] = function(test) {
   var filepath = 'test/fixtures/banner.js';
   test.equal(task.helper('file_strip_banner', filepath), '// Comment\n\n/* Comment */\n', 'It should strip only the top banner.');
   filepath = 'test/fixtures/banner2.js';
-  test.equal(task.helper('file_strip_banner', filepath), '\n/*! SAMPLE\n * BANNER */\n\n// Comment\n\n/* Comment */\n', 'It should not strip a top banner beginning with /*!.');
+  test.equal(task.helper('file_strip_banner', filepath), '// Comment\n\n/* Comment */\n', 'It should also strip a top banner beginning with /*!.');
   test.done();
 };
 

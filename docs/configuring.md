@@ -9,7 +9,7 @@ Each time grunt is run, it looks in the current directory for a file named `grun
 
 * Project configuration
 * Loading grunt plugins or tasks folders
-* [Tasks](tasks.md) and [helpers](helpers_directives.md)
+* [Tasks](tasks_creating.md) and [helpers](helpers_directives.md)
 
 ## Project configuration
 
@@ -26,7 +26,7 @@ config.init({
 });
 ```
 
-_Note: you can run all targets of any [basic task](tasks.md) by just specifying the name of the task. In this case, running `grunt lint` would automatically run the `all` target and any others that might exist under `lint`._
+_Note: you can run all targets of any [basic task](tasks_builtin.md) by just specifying the name of the task. In this case, running `grunt lint` would automatically run the `all` target and any others that might exist under `lint`._
 
 In another example, this very simple configuration saved in the root of a [jQuery repository](https://github.com/jquery/jquery) clone allows the jQuery QUnit unit tests to be run via grunt with `grunt qunit:index`.
 
@@ -73,7 +73,7 @@ _Note: you don't need to specify configuration settings for tasks that you don't
 
 ## Loading grunt plugins or tasks folders
 
-While you can define [tasks](tasks.md) and [helpers](helpers_directives.md) in your project's gruntfile, you can also load tasks from external sources.
+While you can define [tasks](tasks_builtin.md) and [helpers](helpers_directives.md) in your project's gruntfile, you can also load tasks from external sources.
 
 ```javascript
 // Load tasks and helpers from the "tasks" directory, relative to grunt.js.
@@ -92,7 +92,7 @@ _Note: loading externally defined tasks and helpers in this way is preferred to 
 
 You aren't required to define any tasks in your project gruntfile, because grunt provides a number of built-in tasks. That being said, until you define a `default` task, grunt won't know what to do when you run it just as `grunt` without specifying any tasks, because grunt doesn't provide a default `default` task.
 
-The easiest way to define the default task is to create an [alias task](tasks.md).
+The easiest way to define the default task is to create an [alias task](tasks_creating.md).
 
 In the following example, a default task is defined that, when invoked by specifying `grunt` or `grunt default` on the command line, will execute the `lint`, `qunit`, `concat` and `min` tasks in-order. It behaves exactly as if `grunt lint qunit concat min` was run on the command line.
 

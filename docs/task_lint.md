@@ -118,6 +118,60 @@ config.init({
 
 _Note: for each `lint` target, grunt looks for a target-named object underneath the `jshint` config object. If this object is found, its `options` and `globals` sub-objects will be used instead of the global ones. this allows per-lint-target JSHint options/globals overrides._
 
+You can combine this with multiple lint targets to create different lint configurations. In this example, there's three sets: One for client-side js files, one for client-side QUnit-based tests, one for grunt.js:
+
+```javascript
+config.init({
+  lint: {
+    src: 'src/*.js',
+    grunt: 'grunt.js',
+    tests: 'tests/unit/**/*.js'
+  },
+  jshint: {
+    // applies to all
+    options: {
+      curly: true
+    },
+    // just for grunt.js
+    grunt: {
+      options: {
+        node: true
+      },
+      globals: {
+        task: true,
+        config: true,
+        file: true,
+        log: true,
+        template: true
+      }
+    },
+    // just for src/*.js
+    src: {
+      options: {
+        browser: true
+      },
+      globals: {
+        jQuery: true
+      }
+    },
+    // just for tests/unit/**/*.js
+    tests: {
+      options: {
+        jquery: true
+      },
+      globals: {
+        module: true,
+        test: true,
+        ok: true,
+        equal: true,
+        deepEqual: true,
+        QUnit: true
+      }
+    }
+  }
+});
+```
+
 ## Helpers
 
 A generic `lint` helper is available for use in any other task where file linting might be useful. For example:

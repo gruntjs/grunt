@@ -45,7 +45,7 @@ config.init({
     },
     globals: {
       exports: true,
-      module: true
+      module: false
     }
   },
   uglify: {}

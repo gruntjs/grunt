@@ -27,6 +27,7 @@ config.init({
       es5: true
     },
     globals: {
+      exports: true,
       grunt: true,
       utils: true,
       task: true,

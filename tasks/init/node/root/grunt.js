@@ -25,7 +25,9 @@ config.init({
       eqnull: true,
       node: true
     },
-    globals: {}
+    globals: {
+      exports: true
+    }
   }
 });
 

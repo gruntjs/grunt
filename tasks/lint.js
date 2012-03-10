@@ -92,15 +92,14 @@ task.registerHelper('lint', function(src, options, globals, extraMsg) {
   // Lint.
   var result = jshint(src, options || {}, globals || {});
   // Attempt to work around JSHint erroneously reporting bugs.
-  if (!result) {
-    jshint.errors = jshint.errors.filter(function(o) {
-      // This is not a bug: exports = module.exports = something
-      // https://github.com/jshint/jshint/issues/289
-      return o && !(o.reason === 'Read only.' && /\bexports\s*[=]/.test(o.evidence));
-    });
-    // If no errors are left, JSHint actually succeeded.
-    result = jshint.errors.length === 0;
-  }
+  // if (!result) {
+  //   // Filter out errors that shouldn't be reported.
+  //   jshint.errors = jshint.errors.filter(function(o) {
+  //     return o && o.something === 'something';
+  //   });
+  //   // If no errors are left, JSHint actually succeeded.
+  //   result = jshint.errors.length === 0;
+  // }
   if (result) {
     // Success!
     verbose.ok();

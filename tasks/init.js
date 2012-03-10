@@ -364,7 +364,7 @@ var prompts = {
     message: 'Version',
     default: function(value, data, done) {
       // Get a valid semver tag from `git describe --tags` if possible.
-      task.helper('child_process', {
+      utils.spawn({
         cmd: 'git',
         args: ['describe', '--tags'],
         fallback: ''
@@ -401,7 +401,7 @@ var prompts = {
         done();
       } else {
         // Attempt to pull the data from the user's git config.
-        task.helper('child_process', {
+        utils.spawn({
           cmd: 'git',
           args: ['config', '--get', 'github.user'],
           fallback: ''
@@ -439,7 +439,7 @@ var prompts = {
     message: 'Author name',
     default: function(value, data, done) {
       // Attempt to pull the data from the user's git config.
-      task.helper('child_process', {
+      utils.spawn({
         cmd: 'git',
         args: ['config', '--get', 'user.name'],
         fallback: 'none'
@@ -450,7 +450,7 @@ var prompts = {
     message: 'Author email',
     default: function(value, data, done) {
       // Attempt to pull the data from the user's git config.
-      task.helper('child_process', {
+      utils.spawn({
         cmd: 'git',
         args: ['config', '--get', 'user.email'],
         fallback: 'none'
@@ -511,7 +511,7 @@ task.registerHelper('prompt_for', function(name, altDefault) {
 
 // Get the git origin url from the current repo (if possible).
 task.registerHelper('git_origin', function(done) {
-  task.helper('child_process', {
+  utils.spawn({
     cmd: 'git',
     args: ['remote', '-v']
   }, function(err, result, code) {

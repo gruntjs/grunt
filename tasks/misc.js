@@ -7,8 +7,6 @@
  * http://benalman.com/about/license/
  */
 
-var spawn = require('child_process').spawn;
-
 // ============================================================================
 // HELPERS
 // ============================================================================
@@ -24,28 +22,6 @@ task.registerHelper('json', function(filepath) {
     jsons[filepath] = file.readJson(filepath);
   }
   return jsons[filepath];
-});
-
-// Spawn a child process, capturing its stdout and stderr.
-task.registerHelper('child_process', function(opts, done) {
-  var child = spawn(opts.cmd, opts.args, opts.opts);
-  var stdout = '';
-  var stderr = '';
-  child.stdout.on('data', function(buf) { stdout += buf; });
-  child.stderr.on('data', function(buf) { stderr += buf; });
-  child.on('exit', function(code) {
-    // Remove trailing whitespace (newline)
-    stdout = utils._.rtrim(stdout);
-    stderr = utils._.rtrim(stderr);
-    // To keep JSHint from complaining about using new String().
-    var MyString = String;
-    // Create a new string... with properties.
-    var result = new MyString(code === 0 ? stdout : 'fallback' in opts ? opts.fallback : stderr);
-    result.stdout = stdout;
-    result.stderr = stderr;
-    result.code = code;
-    done(code === 0 || 'fallback' in opts ? null: code, result, code);
-  });
 });
 
 // Return the given source coude with any leading banner comment stripped.

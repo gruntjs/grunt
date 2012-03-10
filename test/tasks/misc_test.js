@@ -13,11 +13,6 @@ exports['json'] = function(test) {
   test.done();
 };
 
-exports['child_process'] = function(test) {
-  // nothing yet
-  test.done();
-};
-
 exports['strip_banner'] = function(test) {
   test.expect(2);
   var src = file.read('test/fixtures/banner.js');

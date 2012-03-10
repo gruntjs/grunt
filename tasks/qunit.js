@@ -196,7 +196,7 @@ task.registerBasicTask('qunit', 'Run QUnit unit tests in a headless PhantomJS in
       '--config=' + file.taskfile('qunit/phantom.json')
     ];
 
-    task.helper('child_process', {
+    utils.spawn({
       cmd: 'phantomjs',
       args: args
     }, function(err, result, code) {

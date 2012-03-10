@@ -59,17 +59,14 @@ task.registerHelper('file_strip_banner', function(filepath) {
 // Generate banner from template.
 task.registerHelper('banner', function(prop) {
   if (!prop) { prop = 'meta.banner'; }
-  var banner, obj;
+  var banner;
   var tmpl = config(prop);
   if (tmpl) {
-    // Read config object first, to ensure that verbose-mode JSON reading via
-    // <json> directive doesn't interrupt logging.
-    obj = config();
     // Now, log.
     verbose.write('Generating banner...');
     try {
-      // Compile and run template, passing in config object as the data source.
-      banner = template.process(tmpl, obj) + utils.linefeed;
+      // Compile and run template, using config object as the data source.
+      banner = template.process(tmpl) + utils.linefeed;
       verbose.ok();
     } catch(e) {
       banner = '';

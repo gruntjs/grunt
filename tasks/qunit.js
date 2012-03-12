@@ -210,7 +210,8 @@ task.registerBasicTask('qunit', 'Run QUnit unit tests in a headless PhantomJS in
           'In order for the qunit task to work properly, PhantomJS must be installed and\n' +
           'in the system PATH (if you can run "phantomjs" at the command line, this task\n' +
           'should work). Unfortunately, PhantomJS cannot be installed automatically via\n' +
-          'npm or grunt. Visit www.phantomjs.org for detailed installation instructions.'
+          'npm or grunt. See the grunt qunit task documentation for more instructions at\n' +
+          'https://github.com/cowboy/grunt/blob/master/docs/task_qunit.md'
         );
         fail.warn('PhantomJS not found.', 90);
       } else {

@@ -21,5 +21,5 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 _(Nothing yet)_
 
 ## License
-Copyright (c) {%= template.today('yyyy') %} {%= author_name %}  
+Copyright (c) {%= grunt.template.today('yyyy') %} {%= author_name %}  
 Licensed under the {%= licenses.join(', ') %} license{%= licenses.length === 1 ? '' : 's' %}.

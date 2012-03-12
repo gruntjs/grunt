@@ -7,34 +7,50 @@
  * http://benalman.com/about/license/
  */
 
-var path = require('path');
+ module.exports = function(grunt) {
+  // Grunt utilities.
+  var task = grunt.task;
+  var file = grunt.file;
+  var utils = grunt.utils;
+  var log = grunt.log;
+  var verbose = grunt.verbose;
+  var fail = grunt.fail;
+  var option = grunt.option;
+  var config = grunt.config;
+  var template = grunt.template;
 
-var connect = require('connect');
+  // Nodejs libs.
+  var path = require('path');
 
-// ============================================================================
-// TASKS
-// ============================================================================
+  // External libs.
+  var connect = require('connect');
 
-task.registerTask('server', 'Start a static web server.', function() {
-  // Get values from config, or use defaults.
-  var port = config('server.port') || 8000;
-  var base = path.resolve(config('server.base') || '.');
+  // ==========================================================================
+  // TASKS
+  // ==========================================================================
 
-  var middleware = [
-    // Serve static files.
-    connect.static(base),
-    // Make empty directories browsable. (overkill?)
-    connect.directory(base)
-  ];
+  grunt.registerTask('server', 'Start a static web server.', function() {
+    // Get values from config, or use defaults.
+    var port = config('server.port') || 8000;
+    var base = path.resolve(config('server.base') || '.');
 
-  // If --debug was specified, enable logging.
-  if (option('debug')) {
-    connect.logger.format('grunt', ('[D] server :method :url :status ' +
-      ':res[content-length] - :response-time ms').magenta);
-    middleware.unshift(connect.logger('grunt'));
-  }
+    var middleware = [
+      // Serve static files.
+      connect.static(base),
+      // Make empty directories browsable. (overkill?)
+      connect.directory(base)
+    ];
 
-  // Start server.
-  log.writeln('Starting static web server on port ' + port + '.');
-  connect.apply(null, middleware).listen(port);
-});
+    // If --debug was specified, enable logging.
+    if (option('debug')) {
+      connect.logger.format('grunt', ('[D] server :method :url :status ' +
+        ':res[content-length] - :response-time ms').magenta);
+      middleware.unshift(connect.logger('grunt'));
+    }
+
+    // Start server.
+    log.writeln('Starting static web server on port ' + port + '.');
+    connect.apply(null, middleware).listen(port);
+  });
+
+ };

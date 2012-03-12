@@ -1,46 +1,57 @@
-/*global config:true, task:true*/
-config.init({
-  pkg: '<json:package.json>',
-  test: {
-    all: ['test/**/*.js']
-  },
-  lint: {
-    all: ['grunt.js', 'lib/**/*.js', 'tasks/*.js', 'tasks/*/*.js', 'test/**/*.js']
-  },
-  watch: {
-    files: '<config:lint.all>',
-    tasks: 'default'
-  },
-  jshint: {
-    options: {
-      curly: true,
-      eqeqeq: true,
-      immed: true,
-      latedef: true,
-      newcap: true,
-      noarg: true,
-      sub: true,
-      undef: true,
-      boss: true,
-      eqnull: true,
-      node: true,
-      es5: true
-    },
-    globals: {
-      exports: true,
-      grunt: true,
-      utils: true,
-      task: true,
-      file: true,
-      fail: true,
-      config: true,
-      option: true,
-      template: true,
-      log: true,
-      verbose: true
-    }
-  }
-});
+/*
+ * grunt
+ * https://github.com/cowboy/grunt
+ *
+ * Copyright (c) 2012 "Cowboy" Ben Alman
+ * Licensed under the MIT license.
+ * http://benalman.com/about/license/
+ */
 
-// Default task.
-task.registerTask('default', 'lint test');
+module.exports = function(grunt) {
+  // Grunt utilities.
+  var task = grunt.task;
+  var file = grunt.file;
+  var utils = grunt.utils;
+  var log = grunt.log;
+  var verbose = grunt.verbose;
+  var fail = grunt.fail;
+  var option = grunt.option;
+  var config = grunt.config;
+  var template = grunt.template;
+
+  // Initialize config.
+  grunt.initConfig({
+    pkg: '<json:package.json>',
+    test: {
+      all: ['test/**/*.js']
+    },
+    lint: {
+      all: ['grunt.js', 'lib/**/*.js', 'tasks/*.js', 'tasks/*/*.js', 'test/**/*.js']
+    },
+    watch: {
+      files: '<config:lint.all>',
+      tasks: 'default'
+    },
+    jshint: {
+      options: {
+        curly: true,
+        eqeqeq: true,
+        immed: true,
+        latedef: true,
+        newcap: true,
+        noarg: true,
+        sub: true,
+        undef: true,
+        boss: true,
+        eqnull: true,
+        node: true,
+        es5: true
+      },
+      globals: {}
+    }
+  });
+
+  // Default task.
+  grunt.registerTask('default', 'lint test');
+
+};

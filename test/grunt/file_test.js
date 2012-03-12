@@ -1,3 +1,8 @@
+var grunt = require('../../lib/grunt');
+var file = grunt.file;
+var template = grunt.template;
+var utils = grunt.utils;
+
 var fs = require('fs');
 var path = require('path');
 

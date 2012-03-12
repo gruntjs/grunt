@@ -7,22 +7,33 @@
  * http://benalman.com/about/license/
  */
 
-module.exports = function(init, done) {
-  task.helper('prompt', {type: 'node'}, [
+module.exports = function(grunt, init, done) {
+  // Grunt utilities.
+  var task = grunt.task;
+  var file = grunt.file;
+  var utils = grunt.utils;
+  var log = grunt.log;
+  var verbose = grunt.verbose;
+  var fail = grunt.fail;
+  var option = grunt.option;
+  var config = grunt.config;
+  var template = grunt.template;
+
+  grunt.helper('prompt', {type: 'node'}, [
     // Prompt for these values.
-    task.helper('prompt_for', 'name'),
-    task.helper('prompt_for', 'description'),
-    task.helper('prompt_for', 'version'),
-    task.helper('prompt_for', 'repository'),
-    task.helper('prompt_for', 'homepage'),
-    task.helper('prompt_for', 'bugs'),
-    task.helper('prompt_for', 'licenses'),
-    task.helper('prompt_for', 'author_name'),
-    task.helper('prompt_for', 'author_email'),
-    task.helper('prompt_for', 'author_url'),
-    task.helper('prompt_for', 'node_version'),
-    task.helper('prompt_for', 'node_main'),
-    task.helper('prompt_for', 'node_test')
+    grunt.helper('prompt_for', 'name'),
+    grunt.helper('prompt_for', 'description'),
+    grunt.helper('prompt_for', 'version'),
+    grunt.helper('prompt_for', 'repository'),
+    grunt.helper('prompt_for', 'homepage'),
+    grunt.helper('prompt_for', 'bugs'),
+    grunt.helper('prompt_for', 'licenses'),
+    grunt.helper('prompt_for', 'author_name'),
+    grunt.helper('prompt_for', 'author_email'),
+    grunt.helper('prompt_for', 'author_url'),
+    grunt.helper('prompt_for', 'node_version'),
+    grunt.helper('prompt_for', 'node_main'),
+    grunt.helper('prompt_for', 'node_test')
   ], function(err, props) {
     // Files to copy (and process).
     var files = init.filesToCopy(props);
@@ -39,4 +50,5 @@ module.exports = function(init, done) {
     // All done!
     done();
   });
+
 };

@@ -1,3 +1,6 @@
+var grunt = require('../../lib/grunt');
+var utils = grunt.utils;
+
 exports['utils'] = {
   'linefeed': function(test) {
     test.expect(1);

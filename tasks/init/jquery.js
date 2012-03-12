@@ -7,20 +7,31 @@
  * http://benalman.com/about/license/
  */
 
-module.exports = function(init, done) {
-  task.helper('prompt', {type: 'jquery'}, [
+module.exports = function(grunt, init, done) {
+  // Grunt utilities.
+  var task = grunt.task;
+  var file = grunt.file;
+  var utils = grunt.utils;
+  var log = grunt.log;
+  var verbose = grunt.verbose;
+  var fail = grunt.fail;
+  var option = grunt.option;
+  var config = grunt.config;
+  var template = grunt.template;
+
+  grunt.helper('prompt', {type: 'jquery'}, [
     // Prompt for these values.
-    task.helper('prompt_for', 'name'),
-    task.helper('prompt_for', 'title'),
-    task.helper('prompt_for', 'description', 'The best jQuery plugin ever.'),
-    task.helper('prompt_for', 'version'),
-    task.helper('prompt_for', 'repository'),
-    task.helper('prompt_for', 'homepage'),
-    task.helper('prompt_for', 'bugs'),
-    task.helper('prompt_for', 'licenses'),
-    task.helper('prompt_for', 'author_name'),
-    task.helper('prompt_for', 'author_email'),
-    task.helper('prompt_for', 'author_url')
+    grunt.helper('prompt_for', 'name'),
+    grunt.helper('prompt_for', 'title'),
+    grunt.helper('prompt_for', 'description', 'The best jQuery plugin ever.'),
+    grunt.helper('prompt_for', 'version'),
+    grunt.helper('prompt_for', 'repository'),
+    grunt.helper('prompt_for', 'homepage'),
+    grunt.helper('prompt_for', 'bugs'),
+    grunt.helper('prompt_for', 'licenses'),
+    grunt.helper('prompt_for', 'author_name'),
+    grunt.helper('prompt_for', 'author_email'),
+    grunt.helper('prompt_for', 'author_url')
   ], function(err, props) {
     // Files to copy (and process).
     var files = init.filesToCopy(props);
@@ -37,4 +48,5 @@ module.exports = function(init, done) {
     // All done!
     done();
   });
+
 };

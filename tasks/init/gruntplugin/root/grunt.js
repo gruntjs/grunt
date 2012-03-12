@@ -1,49 +1,51 @@
-/*global config:true, task:true*/
-config.init({
-  pkg: '<json:package.json>',
-  test: {
-    files: ['test/**/*.js']
-  },
-  lint: {
-    files: ['grunt.js', 'tasks/**/*.js', 'test/**/*.js']
-  },
-  watch: {
-    files: '<config:lint.files>',
-    tasks: 'default'
-  },
-  jshint: {
-    options: {
-      curly: true,
-      eqeqeq: true,
-      immed: true,
-      latedef: true,
-      newcap: true,
-      noarg: true,
-      sub: true,
-      undef: true,
-      boss: true,
-      eqnull: true,
-      node: true,
-      es5: true
+module.exports = function(grunt) {
+  // Grunt utilities.
+  var task = grunt.task;
+  var file = grunt.file;
+  var utils = grunt.utils;
+  var log = grunt.log;
+  var verbose = grunt.verbose;
+  var fail = grunt.fail;
+  var option = grunt.option;
+  var config = grunt.config;
+  var template = grunt.template;
+
+  // Initialize config.
+  grunt.initConfig({
+    pkg: '<json:package.json>',
+    test: {
+      files: ['test/**/*.js']
     },
-    globals: {
-      exports: true,
-      grunt: true,
-      utils: true,
-      task: true,
-      file: true,
-      fail: true,
-      config: true,
-      option: true,
-      template: true,
-      log: true,
-      verbose: true
+    lint: {
+      files: ['grunt.js', 'tasks/**/*.js', 'test/**/*.js']
+    },
+    watch: {
+      files: '<config:lint.files>',
+      tasks: 'default'
+    },
+    jshint: {
+      options: {
+        curly: true,
+        eqeqeq: true,
+        immed: true,
+        latedef: true,
+        newcap: true,
+        noarg: true,
+        sub: true,
+        undef: true,
+        boss: true,
+        eqnull: true,
+        node: true,
+        es5: true
+      },
+      globals: {}
     }
-  }
-});
+  });
 
-// Load local tasks.
-task.loadTasks('tasks');
+  // Load local tasks.
+  grunt.loadTasks('tasks');
 
-// Default task.
-task.registerTask('default', 'lint test');
+  // Default task.
+  grunt.registerTask('default', 'lint test');
+
+};

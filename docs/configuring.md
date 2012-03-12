@@ -26,7 +26,7 @@ config.init({
 });
 ```
 
-_Note: you can run all targets of any [basic task](tasks_builtin.md) by just specifying the name of the task. In this case, running `grunt lint` would automatically run the `all` target and any others that might exist under `lint`._
+_Note: you can run all targets of any [multi task](tasks_builtin.md) by just specifying the name of the task. In this case, running `grunt lint` would automatically run the `all` target and any others that might exist under `lint`._
 
 In another example, this very simple configuration saved in the root of a [jQuery repository](https://github.com/jquery/jquery) clone allows the jQuery QUnit unit tests to be run via grunt with `grunt qunit:index`.
 

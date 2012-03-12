@@ -113,7 +113,7 @@ var phantomHandlers = {
 // TASKS
 // ============================================================================
 
-task.registerBasicTask('qunit', 'Run QUnit unit tests in a headless PhantomJS instance.', function(target) {
+task.registerMultiTask('qunit', 'Run QUnit unit tests in a headless PhantomJS instance.', function(target) {
   // Get files as URLs.
   var urls = file.expandToUrls(this.file.src);
 

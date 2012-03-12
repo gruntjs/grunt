@@ -11,7 +11,7 @@
 // TASKS
 // ============================================================================
 
-task.registerBasicTask('concat', 'Concatenate files.', function(target) {
+task.registerMultiTask('concat', 'Concatenate files.', function(target) {
   // Concat specified files.
   var files = file.expand(this.file.src);
   file.write(this.file.dest, task.helper('concat', files));

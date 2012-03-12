@@ -30,10 +30,10 @@ task.registerTask('default', 'lint qunit concat min');
 
 _In case it's not obvious, defining a `default` task is helpful because it runs by default, whenever you run `grunt` without explicitly specifying tasks._
 
-## Basic tasks
-A basic task is a task that implicitly iterates over all of its targets if no target is specified. For example, in the following, while `grunt lint:test` or `grunt lint:lib` will lint only those specific sets of files, `grunt lint` will automatically run the `test`, `lib` and `grunt` targets for you. It's super convenient.
+## Multi tasks
+A multi task is a task that implicitly iterates over all of its targets if no target is specified. For example, in the following, while `grunt lint:test` or `grunt lint:lib` will lint only those specific sets of files, `grunt lint` will automatically run the `test`, `lib` and `grunt` targets for you. It's super convenient.
 
-_Note: basic tasks will ignore any config sub-properties beginning with `_` (underscore)._
+_Note: multi tasks will ignore any config sub-properties beginning with `_` (underscore)._
 
 ```javascript
 /*global config:true, task:true*/
@@ -46,7 +46,7 @@ config.init({
 });
 ```
 
-While it's probably most useful for you to check out the JavaScript source of the [built-in tasks](https://github.com/cowboy/grunt/tree/master/tasks), this example shows how you might define your own Basic task:
+While it's probably most useful for you to check out the JavaScript source of the [built-in tasks](https://github.com/cowboy/grunt/tree/master/tasks), this example shows how you might define your own multi task:
 
 ```javascript
 /*global config:true, task:true*/
@@ -58,7 +58,7 @@ config.init({
   }
 });
 
-task.registerBasicTask('logstuff', 'This task logs stuff.', function(target) {
+task.registerMultiTask('logstuff', 'This task logs stuff.', function(target) {
   // target === the name of the target
   // this.data === the target's value in the config object
   // this.name === the task name
@@ -120,7 +120,7 @@ Aborted due to warnings.
 ```
 
 ## Custom tasks
-You can go crazy with tasks. They don't have to be basic. If your tasks don't follow the "basic task" structure, use a custom task.
+You can go crazy with tasks. If your tasks don't follow the "multi task" structure, use a custom task.
 
 ```javascript
 task.registerTask('default', 'My "default" task description.', function() {

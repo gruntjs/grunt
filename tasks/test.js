@@ -142,7 +142,7 @@ nodeunit.reporters.grunt = {
 // TASKS
 // ============================================================================
 
-task.registerBasicTask('test', 'Run unit tests with nodeunit.', function(target) {
+task.registerMultiTask('test', 'Run unit tests with nodeunit.', function(target) {
   // File paths.
   var filepaths = file.expand(this.file.src);
   // Clear all tests' cached require data, in case this task is run inside a

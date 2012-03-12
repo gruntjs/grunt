@@ -5,7 +5,7 @@ Concatenate one or more input files (and/or [directives](helpers_directives.md) 
 
 ## About
 
-This task is a [basic task](tasks_creating.md), meaning that grunt will automatically iterate over all `concat` targets if no specific target is specified.
+This task is a [multi task](tasks_creating.md), meaning that grunt will automatically iterate over all `concat` targets if no specific target is specified.
 
 For more information on general configuration options, see the [configuring grunt](configuring.md) page.
 
@@ -13,7 +13,7 @@ For more information on general configuration options, see the [configuring grun
 
 ### Concatenating multiple files
 
-In this example, `grunt concat:dist` (or `grunt concat` because it's a [basic task](tasks_creating.md)) will simply concatenate three source files, in order, writing the output to `dist/built.js`.
+In this example, `grunt concat:dist` (or `grunt concat` because it's a [multi task](tasks_creating.md)) will simply concatenate three source files, in order, writing the output to `dist/built.js`.
 
 ```javascript
 /*global config:true, task:true*/
@@ -29,7 +29,7 @@ config.init({
 
 ### Banner comments
 
-In this example, `grunt concat:dist` (or `grunt concat` because it's a [basic task](tasks_creating.md)) will first strip any pre-existing banner comment from the `src/project.js` file, then concatenate that with a newly-generated banner comment, writing the output to `dist/built.js`.
+In this example, `grunt concat:dist` (or `grunt concat` because it's a [multi task](tasks_creating.md)) will first strip any pre-existing banner comment from the `src/project.js` file, then concatenate that with a newly-generated banner comment, writing the output to `dist/built.js`.
 
 This generated banner will be the contents of the `meta.banner` underscore template string interpolated (in this case) with values imported from the `package.json` file (which are available via the `pkg` config property) plus today's date.
 
@@ -55,7 +55,7 @@ config.init({
 
 In this example, `grunt concat` will build two separate files. One "basic" version, with the main file essentially just copied to `dist/basic.js`, and another "with_extras" concatenated version written to `dist/with_extras.js`.
 
-While each concat target can be built individually by running `grunt concat:basic` or `grunt concat:extras`, running `grunt concat` will build all concat targets. This is because concat is a [basic task](tasks_creating.md).
+While each concat target can be built individually by running `grunt concat:basic` or `grunt concat:extras`, running `grunt concat` will build all concat targets. This is because concat is a [multi task](tasks_creating.md).
 
 ```javascript
 /*global config:true, task:true*/

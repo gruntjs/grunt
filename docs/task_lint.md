@@ -5,7 +5,7 @@ Validate one or more input files with JSHint.
 
 ## About
 
-This task is a [basic task](tasks_creating.md), meaning that grunt will automatically iterate over all `lint` targets if no specific target is specified.
+This task is a [multi task](tasks_creating.md), meaning that grunt will automatically iterate over all `lint` targets if no specific target is specified.
 
 For more information on general configuration options, see the [configuring grunt](configuring.md) page.
 
@@ -37,7 +37,7 @@ config.init({
 
 ### Linting before and after concat
 
-In this example, `grunt lint` will lint two separate sets of files using the default JSHint `options` and `globals`, one "beforeconcat" set, and one "afterconcat" set. Running `grunt lint` will lint both sets of files all at once, because lint is a [basic task](tasks_creating.md). This is not ideal, because `dist/output.js` might get linted before it gets created!
+In this example, `grunt lint` will lint two separate sets of files using the default JSHint `options` and `globals`, one "beforeconcat" set, and one "afterconcat" set. Running `grunt lint` will lint both sets of files all at once, because lint is a [multi task](tasks_creating.md). This is not ideal, because `dist/output.js` might get linted before it gets created!
 
 You really need to lint the "beforeconcat" set first, then concat, then lint the "afterconcat" set, by doing `grunt lint:beforeconcat concat lint:afterconcat`.
 

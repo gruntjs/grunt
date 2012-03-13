@@ -46,6 +46,7 @@ For example, this very simple configuration defines a list of files to be linted
 ```javascript
 exports.config = function(grunt) {
 
+  // Project configuration.
   grunt.initConfig({
     lint: {
       all: ['lib/*.js', 'test/*.js', 'grunt.js']
@@ -62,6 +63,7 @@ In another example, this very simple configuration saved in the root of a [jQuer
 ```javascript
 exports.config = function(grunt) {
 
+  // Project configuration.
   grunt.initConfig({
     qunit: {
       index: ['test/index.html']
@@ -78,6 +80,7 @@ You can store any arbitrary information inside of the configuration object, and 
 ```javascript
 exports.config = function(grunt) {
 
+  // Project configuration.
   grunt.initConfig({
     // Generic project information used by some helpers and tasks.
     meta: {},

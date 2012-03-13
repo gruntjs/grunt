@@ -26,4 +26,4 @@ config.init({
 });
 ```
 
-See the [server task source](https://github.com/cowboy/grunt/blob/master/tasks/server.js) for more information.
+See the [server task source](../tasks/server.js) for more information.

@@ -108,4 +108,4 @@ The `phantomjs` executable needs to be in the system `PATH` for grunt to see it.
 
 Running grunt with the `--debug` flag will output a lot of PhantomJS-specific debugging information. This can be very helpful in seeing what actual URIs are being requested and received by PhantomJS.
 
-See the [qunit task source](https://github.com/cowboy/grunt/blob/master/tasks/qunit.js) for more information.
+See the [qunit task source](../tasks/qunit.js) for more information.

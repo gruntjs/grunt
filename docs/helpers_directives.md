@@ -15,14 +15,14 @@ task.registerHelper('foo', function(a, b) {
 task.helper('foo', 2, 3) // 5
 ```
 
-For example, in the [min](https://github.com/cowboy/grunt/blob/master/tasks/min.js) task, the majority of the actual minification work is done in an `uglify` helper, so that other tasks can utilize that code if they need to.
+For example, in the [min task](../tasks/min.js), the majority of the actual minification work is done in an `uglify` helper, so that other tasks can utilize that code if they need to.
 
 Take a look at the [built-in tasks source code](https://github.com/cowboy/grunt/tree/master/tasks) for more examples.
 
 ## Directives
 Directives are essentially string placeholders for helper functions, specified as values in the [configuration object](configuring.md). It sounds crazy, but it's not as crazy as it sounds.
 
-A good example of directives would be the `<json:package.json>` and `<config:lint.all>` directives in grunt's own [grunt.js gruntfile](https://github.com/cowboy/grunt/blob/master/grunt.js). Or the `<banner>` and `<file_strip_banner:src/grunt-jquery-example.js>` directives in the [sample jQuery plugin gruntfile](https://github.com/cowboy/grunt-jquery-example/blob/master/grunt.js).
+A good example of directives would be the `<json:package.json>` and `<config:lint.all>` directives in grunt's own [grunt.js gruntfile](../grunt.js). Or the `<banner>` and `<file_strip_banner:src/grunt-jquery-example.js>` directives in the [sample jQuery plugin gruntfile](https://github.com/cowboy/grunt-jquery-example/blob/master/grunt.js).
 
 In brief, when a directive like `<foo>` is encountered, the `foo` helper is executed, and its return value is substituted in place of the directive string. If `<foo:bar:baz>` is encountered, the `foo` helper is executed, with arguments `"bar"` and `"baz"` passed in.
 

@@ -29,4 +29,4 @@ For each, you can view a sample repository as well as a transcript of the comman
 
 _TODO: write this_
 
-See the [init task source](https://github.com/cowboy/grunt/blob/master/tasks/init.js) for more information.
+See the [init task source](../tasks/init.js) for more information.

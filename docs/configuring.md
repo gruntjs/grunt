@@ -2,7 +2,7 @@
 
 # Configuring grunt
 
-**If you're starting from scratch, use the [init task](task_init.md) to have grunt set up a project for you. Even if you don't ultimately use the files that are generated, you can very quickly learn how grunt works.**
+**If you're starting from scratch, try the [init task](task_init.md), which will set up a new grunt-based project for you. Even if you don't ultimately use the files that are generated, you can very quickly learn how grunt works.**
 
 ## The config file, aka "gruntfile"
 Each time grunt is run, it looks in the current directory for a file named `grunt.js`. If this file is not found, grunt continues looking in parent directories until that file is found. This file is typically placed in the root of your project repository, and is a valid JavaScript file comprised of these parts:
@@ -11,7 +11,7 @@ Each time grunt is run, it looks in the current directory for a file named `grun
 * Loading grunt plugins or tasks folders
 * [Tasks](tasks_creating.md) and [helpers](helpers_directives.md)
 
-This is an example of a very basic sample gruntfile, that defines a project configuration and a default task:
+This is an example of a very basic sample gruntfile that does all three of these things:
 
 ```javascript
 exports.config = function(grunt) {
@@ -21,26 +21,27 @@ exports.config = function(grunt) {
     lint: {
       all: ['grunt.js', 'lib/**/*.js''test/**/*.js']
     },
-    test: {
-      all: ['test/**/*.js']
-    },
     jshint: {
-      options: {},
-      globals: {}
+      options: {
+        browser: true
+      }
     }
   });
 
+  // Load tasks from sample grunt plugin.
+  grunt.loadNpmTasks('grunt-sample');
+
   // Default task.
-  grunt.registerTask('default', 'lint test');
+  grunt.registerTask('default', 'lint sample');
 
 };
 ```
 
 ## Project configuration
 
-Each grunt task relies on configuration information defined in an object passed to `grunt.initConfig()` in the gruntfile.
+Each grunt task relies on configuration information defined in an object passed to `grunt.initConfig()`.
 
-For example, this very simple configuration defines a list of files to be linted when the [lint](task_lint.md) task is run on the command line via `grunt lint`.
+For example, this very simple configuration defines a list of files to be linted when the [lint task](task_lint.md) is run on the command line via `grunt lint`.
 
 ```javascript
 exports.config = function(grunt) {
@@ -54,7 +55,7 @@ exports.config = function(grunt) {
 };
 ```
 
-_Note: the [lint](task_lint.md) is an example of a [multi task](tasks_builtin.md). You can run all targets of any multi task by just specifying the name of the task. In this case, running `grunt lint` would automatically run the `all` target and any others that might exist under `lint` instead of having to run `grunt lint:all` explicitly._
+_Note: the [lint task](task_lint.md) is an example of a [multi task](tasks_builtin.md). You can run all targets of any multi task by just specifying the name of the task. In this case, running `grunt lint` would automatically run the `all` target and any others that might exist under `lint` instead of having to run `grunt lint:all` explicitly._
 
 In another example, this very simple configuration saved in the root of a [jQuery repository](https://github.com/jquery/jquery) clone allows the jQuery QUnit unit tests to be run via grunt with `grunt qunit`.
 

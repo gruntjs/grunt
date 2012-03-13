@@ -19,7 +19,7 @@ module.exports = function(grunt) {
   var config = grunt.config;
   var template = grunt.template;
 
-  // Initialize config.
+  // Project configuration.
   grunt.initConfig({
     pkg: '<json:package.json>',
     test: {

@@ -35,9 +35,9 @@ exports.config = function(grunt) {
 
 Given this example [gruntfile](configuring.md), running `grunt concat:dist` (or `grunt concat` because `concat` is a [multi task](tasks_creating.md)) will first strip any preexisting banner comment from the `src/project.js` file, then concatenate the result with a newly-generated banner comment, writing the output to `dist/built.js`.
 
-This generated banner will be the contents of the `meta.banner` underscore template string interpolated with the specified config object. In this case, those properties are the values imported from the `package.json` file, which are available via the `pkg` config property, plus today's date.
+This generated banner will be the contents of the `meta.banner` underscore template string interpolated with the config object. In this case, those properties are the values imported from the `package.json` file, which are available via the `pkg` config property, plus today's date.
 
-_Note: you don't have to use an external JSON file. It's completely valid to create the `pkg` object inline in the config. That being said, if you already have a JSON file, you might as well reference it. See the [directives](helpers_directives.md) page for more information on directives and their options._
+_Note: you don't have to use an external JSON file. It's completely valid to create the `pkg` object inline in the config. That being said, if you already have a JSON file, you might as well reference it. See the [directives](helpers_directives.md) page for more information on the `<banner>` and `<json>` directives and their options._
 
 ```javascript
 exports.config = function(grunt) {

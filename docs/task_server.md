@@ -9,6 +9,22 @@ This task starts a static web server on a specified port, at a specified path, w
 
 _Need some help getting started with grunt? See the [configuring grunt](configuring.md) page._
 
+## Project configuration
+
+This example [gruntfile](configuring.md) shows a brief overview of the [config](api_config.md) properties used by the `server` task. For a more in-depth explanation, see the usage examples.
+
+```javascript
+exports.config = function(grunt) {
+
+  // Project configuration.
+  grunt.initConfig({
+    // Configuration options.
+    server: {}
+  });
+
+};
+```
+
 ## Usage examples
 
 In this example, `grunt server` will start a static web server at `http://localhost:8000/`, with its base path set to the gruntfile's directory. Of course, it will then immediately stop serving files, because grunt exits automatically when there are no more tasks to run.

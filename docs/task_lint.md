@@ -19,7 +19,7 @@ exports.config = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     // Lists of files to be linted with JSHint.
-    lint: {},
+    lint: {}
   });
 
 };

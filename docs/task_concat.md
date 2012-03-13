@@ -109,6 +109,8 @@ exports.config = function(grunt) {
 };
 ```
 
+### Advanced dynamic filenames
+
 Given this more involved example [gruntfile](configuring.md), running `grunt concat` will build two separate files (because `concat` is a [multi task](tasks_creating.md)). The destination file paths will be expanded dynamically based on the specified underscore templates, recursively if necessary.
 
 For example, if the `package.json` file contained `{"name": "awesome", "version": "1.0.0"}`, the files `dist/awesome/1.0.0/basic.js` and `dist/awesome/1.0.0/with_extras.js` would be generated.

@@ -16,14 +16,17 @@ In this example, `grunt server` will start a static web server at `http://localh
 The `server` task is most useful when used in conjunction with another task, like the [qunit](task_qunit.md) task.
 
 ```javascript
-/*global config:true, task:true*/
-config.init({
-  server: {
-    port: 8000,
-    base: '.'
-  }
-}
-});
+exports.config = function(grunt) {
+
+  // Project configuration.
+  grunt.initConfig({
+    server: {
+      port: 8000,
+      base: '.'
+    }
+  });
+
+};
 ```
 
 See the [server task source](../tasks/server.js) for more information.

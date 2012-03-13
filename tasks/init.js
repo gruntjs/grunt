@@ -26,9 +26,9 @@ module.exports = function(grunt) {
   // External libs.
   var semver = require('semver');
 
-  var prmpt = require('prompt');
-  prmpt.message = '[' + '?'.green + ']';
-  prmpt.delimiter = ' ';
+  var prompt = require('prompt');
+  prompt.message = '[' + '?'.green + ']';
+  prompt.delimiter = ' ';
 
   // ==========================================================================
   // TASKS
@@ -282,8 +282,8 @@ module.exports = function(grunt) {
           // Handle errors (there should never be errors).
           option.default = defaultValue;
           // Actually get user input.
-          prmpt.start();
-          prmpt.getInput(option, function(err, line) {
+          prompt.start();
+          prompt.getInput(option, function(err, line) {
             if (err) { return done(err); }
             result[option.name] = line;
             done();
@@ -293,7 +293,7 @@ module.exports = function(grunt) {
         // After all prompt questions have been answered...
         if (/y/i.test(result.ANSWERS_VALID)) {
           // User accepted all answers. Suspend prompt.
-          prmpt.pause();
+          prompt.pause();
           // Clean up.
           delete result.ANSWERS_VALID;
           // Iterate over all results.

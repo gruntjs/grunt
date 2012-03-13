@@ -18,14 +18,10 @@ exports.config = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
-    // Generic project metadata.
-    meta: {
-      // This key is used by the <banner> directive.
-      banner: '/*! some template string */'
-    },
-    concat: {
-      // Lists of files to be concatenated.
-    },
+    // Project metadata, used by the <banner> directive.
+    meta: {},
+    // Lists of files to be concatenated.
+    concat: {}
   });
 
 };

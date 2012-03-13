@@ -7,7 +7,7 @@
  * http://benalman.com/about/license/
  */
 
- module.exports = function(grunt) {
+exports.tasks = function(grunt) {
   // Grunt utilities.
   var task = grunt.task;
   var file = grunt.file;
@@ -53,4 +53,4 @@
     connect.apply(null, middleware).listen(port);
   });
 
- };
+};

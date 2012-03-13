@@ -1,4 +1,4 @@
-module.exports = function(grunt) {
+exports.config = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({

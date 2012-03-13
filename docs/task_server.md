@@ -7,7 +7,7 @@ Start a static web server.
 
 This task starts a static web server on a specified port, at a specified path, which runs as long as grunt is running. Once grunt's tasks have completed, the web server stops.
 
-For more information on general configuration options, see the [configuring grunt](configuring.md) page.
+_Need some help getting started with grunt? See the [configuring grunt](configuring.md) page._
 
 ## Usage examples
 

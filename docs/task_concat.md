@@ -7,7 +7,7 @@ Concatenate one or more input files (and/or [directives](helpers_directives.md) 
 
 This task is a [multi task](tasks_creating.md), meaning that grunt will automatically iterate over all `concat` targets if no specific target is specified.
 
-**Need some help getting started? See the [configuring grunt](configuring.md) page.**
+_Need some help getting started with grunt? See the [configuring grunt](configuring.md) page._
 
 ## Usage examples
 
@@ -115,4 +115,4 @@ A generic `concat` helper is available for use in any other task where file and/
 var fooPlusBar = grunt.helper('concat', ['foo.txt', 'bar.txt']);
 ```
 
-See the [concat task source](https://github.com/cowboy/grunt/blob/master/tasks/concat.js) for more information.
+See the [concat task source](../tasks/concat.js) for more information.

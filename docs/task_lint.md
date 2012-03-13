@@ -5,7 +5,7 @@ Validate one or more input files with JSHint.
 
 ## About
 
-This task is a [multi task](tasks_creating.md), meaning that grunt will automatically iterate over all `lint` targets if no specific target is specified.
+This task is a [multi task](tasks_creating.md), meaning that grunt will automatically iterate over all `lint` targets if a target is not specified.
 
 _Need some help getting started with grunt? See the [configuring grunt](configuring.md) page._
 

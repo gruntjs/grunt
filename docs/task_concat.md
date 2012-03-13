@@ -7,7 +7,7 @@ Concatenate one or more input files (and/or [directives](helpers_directives.md) 
 
 This task is a [multi task](tasks_creating.md), meaning that grunt will automatically iterate over all `concat` targets if no specific target is specified.
 
-For more information on general configuration options, see the [configuring grunt](configuring.md) page.
+**Need some help getting started? See the [configuring grunt](configuring.md) page.**
 
 ## Usage examples
 
@@ -46,7 +46,8 @@ exports.config = function(grunt) {
   grunt.initConfig({
     pkg: '<json:package.json>',
     meta: {
-      banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= template.today("m/d/yyyy") %> */'
+      banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
+        '<%= grunt.template.today("m/d/yyyy") %> */'
     },
     concat: {
       dist: {

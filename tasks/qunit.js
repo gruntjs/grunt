@@ -22,7 +22,6 @@ module.exports = function(grunt) {
   // Nodejs libs.
   var fs = require('fs');
   var path = require('path');
-  var spawn = require('child_process').spawn;
 
   // External libs.
   var Tempfile = require('temporary/lib/file');

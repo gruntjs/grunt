@@ -13,7 +13,7 @@ _Need some help getting started with grunt? See the [configuring grunt](configur
 
 ### Wildcards
 
-In this example, `grunt lint` will lint the project's gruntfile as well as all JavaScript files in the `lib` and `test` directories, using the default JSHint `options` and `globals`.
+Given this example [gruntfile](configuring.md), running `grunt lint` will lint the project's gruntfile as well as all JavaScript files in the `lib` and `test` directories, using the default JSHint `options` and `globals`.
 
 ```javascript
 exports.config = function(grunt) {
@@ -28,7 +28,7 @@ exports.config = function(grunt) {
 };
 ```
 
-With a slight modification, `grunt lint` will also lint all JavaScript files in the `lib` and `test` directories _and all subdirectories_. See the [minimatch](https://github.com/isaacs/minimatch) module's documentation for more details on wildcard patterns.
+With a slight modification, running `grunt lint` will also lint all JavaScript files in the `lib` and `test` directories _and all subdirectories_. See the [minimatch](https://github.com/isaacs/minimatch) module documentation for more details on wildcard patterns.
 
 ```javascript
 exports.config = function(grunt) {
@@ -45,9 +45,9 @@ exports.config = function(grunt) {
 
 ### Linting before and after concat
 
-In this example, `grunt lint` will lint two separate sets of files using the default JSHint `options` and `globals`, one "beforeconcat" set, and one "afterconcat" set. Running `grunt lint` will lint both sets of files all at once, because lint is a [multi task](tasks_creating.md). This is not ideal, because `dist/output.js` might get linted before it gets created!
+Given this example [gruntfile](configuring.md), running `grunt lint` will lint two separate sets of files using the default JSHint `options` and `globals`: one "beforeconcat" set, and one "afterconcat" set. Running `grunt lint` will lint both sets of files all at once, because lint is a [multi task](tasks_creating.md). This is not ideal, because `dist/output.js` may get linted before it gets created via the [concat task](task_concat.md)!
 
-You really need to lint the "beforeconcat" set first, then concat, then lint the "afterconcat" set, by doing `grunt lint:beforeconcat concat lint:afterconcat`.
+In this case, you should lint the "beforeconcat" set first, then concat, then lint the "afterconcat" set, by running `grunt lint:beforeconcat concat lint:afterconcat`.
 
 ```javascript
 exports.config = function(grunt) {
@@ -66,14 +66,13 @@ exports.config = function(grunt) {
     }
   });
 
+  // Default task.
+  grunt.registerTask('default', 'lint:beforeconcat concat lint:afterconcat');
+
 };
 ```
 
-If this build process was something you did frequently, it would make sense to create an [alias task](tasks_creating.md) for it with a short name like "build" so that it can be run as `grunt build`. To make life even easier, naming that alias task "default" would allow you to run it with the command `grunt`.
-
-```javascript
-grunt.registerTask('default', 'lint:beforeconcat concat lint:afterconcat');
-```
+_Note: in the above example, a default [alias task](tasks_creating.md) was created that runs the 'lint:beforeconcat', 'concat' and 'lint:afterconcat' tasks. If you didn't want this to be the default grunt task, you could give it a different name._
 
 ### Dynamic filenames
 
@@ -130,7 +129,7 @@ exports.config = function(grunt) {
       globals: {
         jQuery: true
       }
-    }
+    },
   });
 
 };

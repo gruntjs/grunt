@@ -37,7 +37,7 @@ Given this example [gruntfile](configuring.md), running `grunt concat:dist` (or 
 
 This generated banner will be the contents of the `meta.banner` underscore template string interpolated with the specified config object. In this case, those properties are the values imported from the `package.json` file, which are available via the `pkg` config property, plus today's date.
 
-_Note: you don't have to use an external `.json` file. It's completely valid to create the `pkg` object inline, in the config. See the [directives](helpers_directives.md) page for more information on directives and their options._
+_Note: you don't have to use an external JSON file. It's completely valid to create the `pkg` object inline in the config. That being said, if you already have a JSON file, you might as well reference it. See the [directives](helpers_directives.md) page for more information on directives and their options._
 
 ```javascript
 exports.config = function(grunt) {

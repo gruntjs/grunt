@@ -11,7 +11,7 @@ _Need some help getting started with grunt? See the [configuring grunt](configur
 
 ## Project configuration
 
-This is a brief overview of the `config` properties used by the `concat` task. For more in-depth explanation, see the usage examples listed below.
+This example [gruntfile](configuring.md) shows a brief overview of the [config](api_config.md) properties used by the `concat` task. For a more in-depth explanation, see the usage examples.
 
 ```javascript
 exports.config = function(grunt) {

@@ -9,6 +9,28 @@ This task is a [multi task](tasks_creating.md), meaning that grunt will automati
 
 _Need some help getting started with grunt? See the [configuring grunt](configuring.md) page._
 
+## Project configuration
+
+This is a brief overview of the `config` properties used by the `concat` task:
+
+```javascript
+exports.config = function(grunt) {
+
+  // Project configuration.
+  grunt.initConfig({
+    // Generic project metadata.
+    meta: {
+      // This key is used by the <banner> directive.
+      banner: '/*! some template string */'
+    },
+    concat: {
+      // Lists of files to be concatenated.
+    },
+  });
+
+};
+```
+
 ## Usage examples
 
 ### Concatenating multiple files

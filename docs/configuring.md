@@ -82,7 +82,7 @@ exports.config = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
-    // Generic project information used by some helpers and tasks.
+    // Project metadata, used by some directives, helpers and tasks.
     meta: {},
     // Lists of files to be concatenated, used by the "concat" task.
     concat: {},

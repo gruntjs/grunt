@@ -12,6 +12,22 @@ This task is a [multi task](tasks_creating.md), meaning that grunt will automati
 
 _Need some help getting started with grunt? See the [configuring grunt](configuring.md) page._
 
+## Project configuration
+
+This example [gruntfile](configuring.md) shows a brief overview of the [config](api_config.md) properties used by the `qunit` task. For a more in-depth explanation, see the usage examples.
+
+```javascript
+exports.config = function(grunt) {
+
+  // Project configuration.
+  grunt.initConfig({
+    // Lists of files or URLs to be unit tested with QUnit.
+    qunit: {},
+  });
+
+};
+```
+
 ## Usage examples
 
 ### Wildcards

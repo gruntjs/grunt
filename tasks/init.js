@@ -217,7 +217,7 @@ module.exports = function(grunt) {
 
     // Execute template code, passing in the init object, done function, and any
     // other arguments specified after the init:name:???.
-    require(templates[name]).apply(null, [grunt, init, function() {
+    require(templates[name]).apply(this, [grunt, init, function() {
       // Fail task if errors were logged.
       if (task.hadErrors()) { taskDone(false); }
       // Otherwise, print a success message.

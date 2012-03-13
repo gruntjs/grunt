@@ -22,7 +22,7 @@ exports.config = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     // Lists of files or URLs to be unit tested with QUnit.
-    qunit: {},
+    qunit: {}
   });
 
 };

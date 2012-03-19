@@ -209,7 +209,7 @@ In a multi task, this is the actual data stored in the grunt config object for t
 ### this.file
 In a multi task, target data can be stored in two different formats. A relatively basic "compact" format and a much more flexible "full" format. When the compact format is used, that key and value are made available as `this.file.dest` and `this.file.src`, respectively. When the full format is used, the specified `src` and `dest` values are used for `this.file.dest` and `this.file.src`.
 
-Note that while grunt supports expanding [templates](api_template.md) for both `src` and `dest`, they only work for `dest` when the _full_ format is used.
+Note that while grunt supports expanding [templates](api_template.md) for both `src` and `dest`, they only work for the `dest` file path when the _full_ format is used.
 
 ```javascript
 grunt.initConfig({

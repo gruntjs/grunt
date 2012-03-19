@@ -24,7 +24,7 @@ exports.tasks = function(grunt) {
 
 
 ### grunt.initConfig
-Initialize a configuration object for the current project. The specified `configObject` is used by tasks and helpers and can also be accessed using the [grunt.config](api_config.md) method. Nearly every project's [config.js gruntfile](configuring.md) will need config data specified via this method.
+Initialize a configuration object for the current project. The specified `configObject` is used by tasks and helpers and can also be accessed using the [grunt.config](api_config.md) method. Nearly every project's [config.js gruntfile](configuring.md) will use this.
 
 ```javascript
 grunt.initConfig(configObject)

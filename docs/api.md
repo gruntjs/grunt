@@ -82,6 +82,8 @@ _This method is an alias for the [config.init](api_config.md) method._
 ### grunt.registerTask
 Register an "alias task" or a task function. This method supports the following two signatures:
 
+#### Alias task
+
 If a string `taskList` is specified, the new task will be an alias for one or more other tasks. Whenever this "alias task" is run, every specified task in `taskList` will be run, in the order specified.
 
 ```javascript
@@ -93,6 +95,8 @@ This example alias task defines a "default" task whereby the "lint", "qunit", "c
 ```javascript
 task.registerTask('default', 'lint qunit concat min');
 ```
+
+#### Function task
 
 If a `description` and `taskFunction` are passed, the specified function will be executed whenever the task is run. In addition, the specified description will be shown when `grunt --help` is run. Task-specific properties and methods are available inside the task function as properties of the `this` object.
 

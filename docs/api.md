@@ -207,7 +207,7 @@ In a multi task, this is the name of the target currently being iterated over. F
 In a multi task, this is the actual data stored in the grunt config object for the given target. For example, if a "sample" multi task was run as `grunt sample:foo` with the config data `{sample: {foo: "bar"}}`, inside the task function, `this.data` would be `"bar"`.
 
 ### this.file
-In a multi task, target data can be stored in two different formats. A relatively basic "compact" format and a much more flexible "full" format. When the compact format is used, the key and value are made available as specified, as `this.file.dest` and `this.file.src` (respectively). When the full format is used, the `src` and `dest` values are used as specified.
+In a multi task, target data can be stored in two different formats. A relatively basic "compact" format and a much more flexible "full" format. When the compact format is used, the key and value are made available as `this.file.dest` and `this.file.src` (respectively). When the full format is used, the specified `src` and `dest` values are used.
 
 Note that while grunt supports expanding [templates](api_template.md) for both `src` and `dest`, they only work when used for `dest` in the __full__ format.
 

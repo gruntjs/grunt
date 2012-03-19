@@ -55,7 +55,7 @@ But these are just examples. For more information, take a look at the API docume
 
 
 ### grunt.initConfig
-Initialize a configuration object for the current project. The specified `configObject` is used by tasks and helpers and can also be accessed using the [grunt.config](api_config.md) method. Nearly every project's [config.js gruntfile](configuring.md) will use this.
+Initialize a configuration object for the current project. The specified `configObject` is used by tasks and helpers and can also be accessed using the [grunt.config](api_config.md) method. Nearly every project's [config.js gruntfile](configuring.md) will call this method.
 
 ```javascript
 grunt.initConfig(configObject)
@@ -80,12 +80,18 @@ _This method is an alias for the [config.init](api_config.md) method._
 
 
 ### grunt.registerTask
-Register a task or an "alias task." This method supports the following two signatures:
+Register an "alias task" or a task function. This method supports the following two signatures:
 
 If a string `taskList` is specified, the new task will be an alias for one or more other tasks. Whenever this "alias task" is run, every specified task in `taskList` will be run, in the order specified.
 
 ```javascript
 grunt.registerTask(taskName, taskList)
+```
+
+This example alias task defines a "default" task whereby the "lint", "qunit", "concat" and "min" tasks are run automatically if grunt is executed without any tasks specified:
+
+```javascript
+task.registerTask('default', 'lint qunit concat min');
 ```
 
 If a `description` and `taskFunction` are passed, the specified function will be executed whenever the task is run. In addition, the specified description will be shown when `grunt --help` is run. Task-specific properties and methods are available inside the task function as properties of the `this` object.

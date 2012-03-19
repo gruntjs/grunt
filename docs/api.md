@@ -34,7 +34,7 @@ See the [configuring grunt](configuring.md) documentation for more information a
 _This method is an alias for the [config.init](api_config.md) method._
 
 
-## Tasks: Creating
+## Creating Tasks
 
 ### grunt.registerTask
 Register a named task that will be run when specified on the command-line after `grunt`. This method supports the following two signatures:
@@ -74,7 +74,7 @@ Usage:
 grunt.registerInitTask(taskName, description, taskFunction);
 ```
 
-## Tasks: Loading
+## Loading Externally-Defined Tasks
 
 ### grunt.loadTasks
 This method is an alias for the [task.loadTasks](api_task.md) method.
@@ -94,7 +94,7 @@ Usage:
 grunt.loadNpmTasks();
 ```
 
-## Helpers
+## Defining and Executing Helpers
 
 ### grunt.registerHelper
 This method is an alias for the [task.registerHelper](api_task.md) method.

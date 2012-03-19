@@ -21,7 +21,7 @@ exports.config = function(grunt) {
     }
   });
 
-  // Load tasks from sample grunt plugin.
+  // Load tasks from "grunt-sample" grunt plugin installed via Npm.
   grunt.loadNpmTasks('grunt-sample');
 
   // Default task.

@@ -2,7 +2,7 @@
 
 # The grunt API - grunt.utils
 
-Miscellaneous utilities.
+Miscellaneous utilities, including Underscore.js, Async and Hooker.
 
 ## Internal methods
 

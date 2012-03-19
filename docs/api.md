@@ -287,7 +287,7 @@ _This method is an alias for the [task.helper](api_task.md) method._
 
 ## Internals
 
-* [grunt.utils](api_utils.md) - Miscellaneous utilities.
+* [grunt.utils](api_utils.md) - Miscellaneous utilities, including Underscore.js, Async and Hooker.
 * [grunt.template](api_template.md) - Template methods.
 * [grunt.task](api_task.md) - The entire task interface
 * [grunt.file](api_file.md) - Glob expansion, file reading, writing, directory traversing.
@@ -296,11 +296,5 @@ _This method is an alias for the [task.helper](api_task.md) method._
 * [grunt.option](api_option.md) - Reading values from the command-line options.
 * [grunt.log](api_log.md) - Don't use `console.log`, use `log.writeln` instead!
 * [grunt.verbose](api_verbose.md) - Just like `log`, but only logs if `--verbose` was specified.
-
-## External libraries, exposed
-
-* [utils.async](api_utils.md) - [Async utilities](https://github.com/caolan/async)
-* [utils._](api_utils.md) - [Underscore.js](http://underscorejs.org/), including [Underscore.string](https://github.com/epeli/underscore.string)
-* [utils.hooker](api_utils.md) - [JavaScript hooker](https://github.com/cowboy/javascript-hooker)
 
 Unfortunately, I haven't documented everything yet. Fortunately, the source is open and browsable. Have fun!

@@ -183,10 +183,10 @@ setTimeout(function() {
 ```
 
 ### this.name
-The name of the task, as-specified in `grunt.registerTask`. For example, if the [min task](task_min.md) was run as `grunt min` or `grunt min:foo`, inside the task function, `this.name === "min"`.
+The name of the task, as defined in `grunt.registerTask`. For example, if the [min task](task_min.md) was run as `grunt min` or `grunt min:foo`, inside the task function, `this.name` would be `"min"`.
 
 ### this.nameArgs
-The name of the task, as-specified with any colon-separated arguments or flags on the command-line. For example, if the [min task](task_min.md) was run as `grunt min:foo`, inside the task function, `this.nameArgs === "min:foo"`.
+The name of the task, as specified with any colon-separated arguments or flags on the command-line. For example, if the [min task](task_min.md) was run as `grunt min:foo`, inside the task function, `this.nameArgs` would be `"min:foo"`.
 
 ### this.args
 

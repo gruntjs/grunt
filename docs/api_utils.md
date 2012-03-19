@@ -24,7 +24,11 @@ grunt.utils.normalizelf(string)
 ```
 
 ### grunt.utils.recurse
+Recurse through nested objects and arrays, executing `callbackFunction` for each non-object value. If `continueFunction` returns `false`, a given object or value will be skipped.
 
+```javascript
+grunt.utils.recurse(object, callbackFunction, continueFunction)
+```
 
 ### grunt.utils.repeat
 Return a string repeated n times.
@@ -66,11 +70,12 @@ function doneFunction(error, result, code) {
   // The result object is an object with the properties .stdout, .stderr, and
   // .code (exit code).
   result
-  // When coerced to a string, the result is the stdout if the exit code was
-  // zero, the fallback if the exit code was non-zero but a fallback was
-  // specified, or stderr if a fallback was not specified.
+  // When result is coerced to a string, the value is stdout if the exit code
+  // was zero, the fallback if the exit code was non-zero and a fallback was
+  // specified, or stderr if the exit code was non-zero and a fallback was
+  // not specified.
   String(result)
-  // The numeric exit code
+  // The numeric exit code.
   code
 }
 ```

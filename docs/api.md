@@ -2,9 +2,9 @@
 
 # The grunt API
 
-Grunt exposes all of its methods and properties on the `grunt` object that gets passed into the `exports.config` function exported in your [config.js gruntfile](configuring.md) or the `exports.tasks` function exported in your [tasks file](tasks_creating.md).
+Grunt exposes all of its methods and properties on the `grunt` object that gets passed into the `exports.config` function exported in your [grunt.js gruntfile](configuring.md) or the `exports.tasks` function exported in your [tasks file](tasks_creating.md).
 
-For example, your project's [config.js gruntfile](configuring.md) might look like this:
+For example, your project's [grunt.js gruntfile](configuring.md) might look like this:
 
 ```javascript
 exports.config = function(grunt) {
@@ -55,7 +55,7 @@ But these are just examples. For more information, take a look at the API docume
 
 
 ### grunt.initConfig
-Initialize a configuration object for the current project. The specified `configObject` is used by tasks and helpers and can also be accessed using the [grunt.config](api_config.md) method. Nearly every project's [config.js gruntfile](configuring.md) will call this method.
+Initialize a configuration object for the current project. The specified `configObject` is used by tasks and helpers and can also be accessed using the [grunt.config](api_config.md) method. Nearly every project's [grunt.js gruntfile](configuring.md) will call this method.
 
 ```javascript
 grunt.initConfig(configObject)
@@ -118,7 +118,7 @@ grunt.registerTask('foo', 'A sample task that logs stuff.', function(arg1, arg2)
 });
 ```
 
-See the [creating tasks](tasks_creating.md) documentation for examples of tasks and alias tasks.
+See the [creating tasks](tasks_creating.md) documentation for more examples of tasks and alias tasks.
 
 _This method is an alias for the [task.registerTask](api_task.md) method._
 
@@ -132,7 +132,7 @@ Many of the built-in tasks, including the [lint task](task_lint.md), [concat tas
 grunt.registerMultiTask(taskName, description, taskFunction)
 ```
 
-Given the specified configuration, this example multi task would log `foo: 1,2,3` if grunt was run via `grunt log:foo`, or it would log `bar: hello world` if grunt was run via `grunt log:bar`. If grunt was run as `grunt log` however, it would log `foo: 1,2,3`, `bar: hello world` and `grunt baz: false`.
+Given the specified configuration, this example multi task would log `foo: 1,2,3` if grunt was run via `grunt log:foo`, or it would log `bar: hello world` if grunt was run via `grunt log:bar`. If grunt was run as `grunt log` however, it would log `foo: 1,2,3` then `bar: hello world` then `grunt baz: false`.
 
 ```javascript
 grunt.initConfig({
@@ -148,19 +148,19 @@ grunt.registerMultiTask('log', 'Log stuff.', function(target) {
 });
 ```
 
-See the [creating tasks](tasks_creating.md) documentation for examples of multi tasks.
+See the [creating tasks](tasks_creating.md) documentation for more examples of multi tasks.
 
 _This method is an alias for the [task.registerMultiTask](api_task.md) method._
 
 
 ### grunt.registerInitTask
-XXX
-
-Usage:
+Register an "init task." An init task is a task that doesn't require any configuration data, and as such doesn't require grunt to load a [grunt.js gruntfile](configuring.md). The [init task](task_init.md) is an example of an init task.
 
 ```javascript
 grunt.registerInitTask(taskName, description, taskFunction)
 ```
+
+For an example init task, see the [init task source](../tasks/init.js).
 
 _This method is an alias for the [task.registerInitTask](api_task.md) method._
 

@@ -165,7 +165,7 @@ For an init task example, see the [init task source](../tasks/init.js).
 _This method is an alias for the [task.registerInitTask](api_task.md) method._
 
 
-## Inside All Tasks
+## Inside Tasks
 
 ### this.async
 If a task is asynchronous, this method must be invoked to instruct grunt to wait. It returns a handle to a "done" function that should be called when the task has completed. `false` can be passed to the done function to indicate that the task has failed. If this method isn't invoked, the task executes synchronously.
@@ -195,10 +195,10 @@ An array of arguments passed to the task. For example, if a "sample" task was ru
 An object generated from the arguments passed to the task. For example, if a "sample" task was run as `grunt sample:foo:bar`, inside the task function, `this.flags` would be `{foo: true, bar: true}`. In a multi task, the target name is not set as a flag.
 
 ### this.extraspaths
+TODO: re-evaluate
 
 
 ## Inside Multi Tasks
-
 
 ### this.target
 In a multi task, this is the name of the target currently being iterated over. For example, if a "sample" multi task was run as `grunt sample:foo` with the config data `{sample: {foo: "bar"}}`, inside the task function, `this.target` would be `"foo"`.
@@ -207,8 +207,23 @@ In a multi task, this is the name of the target currently being iterated over. F
 In a multi task, this is the actual data stored in the grunt config object for the given target. For example, if a "sample" multi task was run as `grunt sample:foo` with the config data `{sample: {foo: "bar"}}`, inside the task function, `this.data` would be `"bar"`.
 
 ### this.file
+In a multi task, target data can be stored in two different formats. A relatively basic "compact" format and a much more flexible "full" format. When the compact format is used, the key and value are made available as specified, as `this.file.dest` and `this.file.src` (respectively). When the full format is used, the `src` and `dest` values are used as specified.
 
+Note that while grunt supports expanding [templates](api_template.md) for both `src` and `dest`, they only work when used for `dest` in the __full__ format.
 
+```javascript
+grunt.initConfig({
+  concat: {
+    // This is the "compact" format.
+    'dist/built.js': ['src/file1.js', 'src/file2.js'],
+    // This is the "full" format.
+    built: {
+      src: ['src/file1.js', 'src/file2.js'],
+      dest: 'dist/built.js'
+    }
+  }
+});
+```
 
 
 ## Loading Externally-Defined Tasks

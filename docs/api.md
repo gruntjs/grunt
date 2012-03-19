@@ -175,11 +175,7 @@ The name of the task, as-specified in `grunt.registerTask`.
 this.name
 ```
 
-For example, if the [min task](task_min.md) was run as `grunt min` or `grunt min:foo`, inside the task function...
-
-```javascript
-this.name // "min"
-```
+For example, if the [min task](task_min.md) was run as `grunt min` or `grunt min:foo`, inside the task function, `this.name === "min"`.
 
 ### this.nameArgs
 The name of the task, as-specified with any colon-separated arguments or flags on the command-line.

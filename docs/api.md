@@ -102,6 +102,18 @@ Note that the `grunt.registerMultiTask` method, explained below, can be used to 
 grunt.registerTask(taskName, description, taskFunction)
 ```
 
+This example task logs "foo, testing 123" if grunt is run via `grunt foo:testing:123`. If the task was run without arguments, as `grunt foo` it logs "foo, no args".
+
+```javascript
+grunt.registerTask('foo', 'A sample task that logs stuff.', function(arg1, arg2) {
+  if (arguments.length === 0) {
+    grunt.log.writeln(this.name + ", no args");
+  } else {
+    grunt.log.writeln(this.name + ", " + arg1 + " " + arg2);
+  }
+});
+```
+
 See the [creating tasks](tasks_creating.md) documentation for examples of tasks and alias tasks.
 
 _This method is an alias for the [task.registerTask](api_task.md) method._

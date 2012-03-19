@@ -2,9 +2,9 @@
 
 # The grunt API
 
-Grunt exposes all of its methods and properties on the `grunt` object which is passed into the function defined in your [config.js gruntfile](configuring.md) or [tasks file](tasks_creating.md).
+Grunt exposes all of its methods and properties on the `grunt` object that gets passed into the `exports.config` function exported in your [config.js gruntfile](configuring.md) or the `exports.tasks` function exported in your [tasks file](tasks_creating.md).
 
-In a [gruntfile](configuring.md):
+For example, your [config.js gruntfile](configuring.md) might look like this:
 
 ```javascript
 exports.config = function(grunt) {
@@ -12,7 +12,7 @@ exports.config = function(grunt) {
 };
 ```
 
-In a [custom tasks file](tasks_creating.md):
+And if you're creating a [grunt plugin](plugins.md) or just organizing tasks into a folder, a [custom tasks file](tasks_creating.md) might look like this:
 
 ```javascript
 exports.tasks = function(grunt) {

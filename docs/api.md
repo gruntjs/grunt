@@ -123,6 +123,13 @@ Usage:
 grunt.helper(helperName [, arguments...]);
 ```
 
+## Inside Tasks
+
+### this.foo
+EXPLAIN
+
+
+
 ## Internals
 
 * [grunt.utils](api_utils.md) - miscellaneous utilities

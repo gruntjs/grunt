@@ -2,13 +2,13 @@
 
 # The grunt API
 
-Grunt exposes a lot of its functionality on the `grunt` object passed into a [config.js gruntfile](configuring.md) or [tasks file](tasks_creating.md).
+Grunt exposes all of its functionality as properties and methods of the `grunt` object passed into a [config.js gruntfile](configuring.md) or [tasks file](tasks_creating.md) function.
 
 In a [gruntfile](configuring.md):
 
 ```javascript
 exports.config = function(grunt) {
-  // Tons o' stuff is available on the grunt object.
+  // Initialize configuration object, define tasks and helpers (etc) here...
 };
 ```
 
@@ -16,7 +16,7 @@ In a [custom tasks file](tasks_creating.md):
 
 ```javascript
 exports.tasks = function(grunt) {
-  // Tons o' stuff is available on the grunt object.
+  // Define tasks and helpers here...
 };
 ```
 
@@ -40,7 +40,7 @@ grunt.initConfig({
 });
 ```
 
-See the [configuring grunt](configuring.md) documentation for more information and examples.
+See the [configuring grunt](configuring.md) page for more configuration examples.
 
 _This method is an alias for the [config.init](api_config.md) method._
 

@@ -49,6 +49,7 @@ exports.tasks = function(grunt) {
 };
 ```
 
+But these are just examples. For more information, take a look at the API documentation:
 
 ## Config
 

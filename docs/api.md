@@ -22,8 +22,9 @@ exports.tasks = function(grunt) {
 
 ## Config
 
+
 ### grunt.initConfig
-Initialize a configuration object for the current project. The passed-in `configObject` is used by tasks and helpers and can also be accessed using the [grunt.config](api_config.md) method. Nearly every project's [config.js gruntfile](configuring.md) will need this.
+Initialize a configuration object for the current project. The specified `configObject` is used by tasks and helpers and can also be accessed using the [grunt.config](api_config.md) method. Nearly every project's [config.js gruntfile](configuring.md) will need this.
 
 ```javascript
 grunt.initConfig(configObject);
@@ -36,34 +37,42 @@ _This method is an alias for the [config.init](api_config.md) method._
 
 ## Creating Tasks
 
-### grunt.registerTask
-Register a named task that will be run when specified on the command-line after `grunt`. This method supports the following two signatures:
 
-If a string `taskList` is specified, the new task will be an alias for one or more other tasks. Whenever this alias task is run, every specified task in `taskList` will be run, in the order specified.
+### grunt.registerTask
+Register a task or an "alias task." This method supports the following two signatures:
+
+If a string `taskList` is specified, the new task will be an alias for one or more other tasks. Whenever this "alias task" is run, every specified task in `taskList` will be run, in the order specified.
 
 ```javascript
 grunt.registerTask(taskName, taskList);
 ```
 
-If a `description` and `taskFunction` are passed, the specified function will be executed whenever the task is run. In addition, `description` will be shown when `grunt --help` is run.
+If a `description` and `taskFunction` are passed, the specified function will be executed whenever the task is run. In addition, the specified description will be shown when `grunt --help` is run. Task-specific properties and methods are available inside the task function as properties of the `this` object.
+
+Note that the `grunt.registerMultiTask` method, explained below, can be used to define a special type of task known as a "multi task."
 
 ```javascript
 grunt.registerTask(taskName, description, taskFunction);
 ```
 
-See the [creating tasks](tasks_creating.md) documentation for more information and examples.
+See the [creating tasks](tasks_creating.md) documentation for examples of tasks and alias tasks.
 
 _This method is an alias for the [task.registerTask](api_task.md) method._
 
 
 ### grunt.registerMultiTask
-This method is an alias for the [task.registerMultiTask](api_task.md) method.
+Register a "multi task." A multi task is a task that implicitly iterates over all of its named sub-properties (AKA targets) if none was specified. In addition to the default properties and methods, extra multi task-specific properties are available inside the task function as properties of the `this` object.
 
-Usage:
+Many of the built-in tasks, including the [lint](task_lint.md), [concat](task_concat.md) and [min](task_min.md) are multi tasks.
 
 ```javascript
 grunt.registerMultiTask(taskName, description, taskFunction);
 ```
+
+See the [creating tasks](tasks_creating.md) documentation for examples of multi tasks.
+
+_This method is an alias for the [task.registerMultiTask](api_task.md) method._
+
 
 ### grunt.registerInitTask
 This method is an alias for the [task.registerInitTask](api_task.md) method.

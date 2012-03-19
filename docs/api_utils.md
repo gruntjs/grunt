@@ -14,27 +14,84 @@ grunt.utils.kindOf(value)
 ```
 
 ### grunt.utils.linefeed
-
-
-### grunt.utils.namespace
-
+The linefeed character, normalized for the current operating system. (`\r\n` on Windows, `\n` otherwise)
 
 ### grunt.utils.normalizelf
+Given a string, return a new string with all the linefeeds normalized for the current operating system. (`\r\n` on Windows, `\n` otherwise)
 
+```javascript
+grunt.utils.normalizelf(string)
+```
 
 ### grunt.utils.recurse
 
 
 ### grunt.utils.repeat
+Return a string repeated n times.
 
+```javascript
+grunt.utils.repeat(n, str)
+```
 
 ### grunt.utils.spawn
+Spawn a child process, keeping track of its stdout, stderr and exit code. The method returns a reference to the spawned child. When the child exits, the done function is called.
 
+```javascript
+grunt.utils.spawn(options, doneFunction)
+```
 
-### grunt.utils.task
+The options object has these possible properties:
+
+```javascript
+var options = {
+  // The command to execute. It should be in the system path.
+  cmd: commandToExecute,
+  // An array of arguments to pass to the command.
+  args: arrayOfArguments,
+  // Additional options for the Node.js child_process spawn method.
+  opts: nodeSpawnOptions,
+  // If this value is set and an error occurs, it will be used as the value
+  // and null will be passed as the error value.
+  fallback: fallbackValue
+};
+```
+
+The done function accepts these arguments:
+
+```javascript
+function doneFunction(error, result, code) {
+  // If the exit code was non-zero and a fallback wasn't specified, the error
+  // object is the same as the result object.
+  error
+  // The result object is an object with the properties .stdout, .stderr, and
+  // .code (exit code).
+  result
+  // When coerced to a string, the result is the stdout if the exit code was
+  // zero, the fallback if the exit code was non-zero but a fallback was
+  // specified, or stderr if a fallback was not specified.
+  String(result)
+  // The numeric exit code
+  code
+}
+```
+
+See the [init task source](../tasks/init.js) and the [qunit task source](../tasks/qunit.js) for usage examples.
 
 
 ### grunt.utils.toArray
+Given an array or array-like object, return an array. Great for converting `arguments` objects into arrays.
+
+```javascript
+grunt.utils.toArray(arrayLikeObject)
+```
+
+## Internal libraries
+
+### grunt.utils.namespace
+An internal library for resolving deeply-nested properties in objects.
+
+### grunt.utils.task
+An internal library for task running.
 
 
 ## External libraries

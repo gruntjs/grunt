@@ -31,21 +31,21 @@ grunt.initConfig(configObject);
 
 See the [configuring grunt](configuring.md) documentation for more information and examples.
 
-_This method is a convenient shortcut for the [config.init](api_config.md) method._
+_This method is an alias for the [config.init](api_config.md) method._
 
 
 ## Tasks: Creating
 
 ### grunt.registerTask
-Register a named task that will be run when specified on the command-line after `grunt`.
+Register a named task that will be run when specified on the command-line after `grunt`. This method supports the following two signatures:
 
-If a string `taskList` is specified, the new task will be an alias for one or more other tasks. Whenever the alias task is run, every specified task in the list will be run in the order specified.
+If a string `taskList` is specified, the new task will be an alias for one or more other tasks. Whenever this alias task is run, every specified task in `taskList` will be run, in the order specified.
 
 ```javascript
 grunt.registerTask(taskName, taskList);
 ```
 
-If a `description` and `taskFunction` are passed, the specified function will be executed whenever the task is run.
+If a `description` and `taskFunction` are passed, the specified function will be executed whenever the task is run. In addition, `description` will be shown when `grunt --help` is run.
 
 ```javascript
 grunt.registerTask(taskName, description, taskFunction);
@@ -53,11 +53,11 @@ grunt.registerTask(taskName, description, taskFunction);
 
 See the [creating tasks](tasks_creating.md) documentation for more information and examples.
 
-_This method is a convenient shortcut for the [task.registerTask](api_task.md) method._
+_This method is an alias for the [task.registerTask](api_task.md) method._
 
 
 ### grunt.registerMultiTask
-This method is a convenient shortcut for the [task.registerMultiTask](api_task.md) method.
+This method is an alias for the [task.registerMultiTask](api_task.md) method.
 
 Usage:
 
@@ -66,7 +66,7 @@ grunt.registerMultiTask(taskName, description, taskFunction);
 ```
 
 ### grunt.registerInitTask
-This method is a convenient shortcut for the [task.registerInitTask](api_task.md) method.
+This method is an alias for the [task.registerInitTask](api_task.md) method.
 
 Usage:
 
@@ -77,7 +77,7 @@ grunt.registerInitTask(taskName, description, taskFunction);
 ## Tasks: Loading
 
 ### grunt.loadTasks
-This method is a convenient shortcut for the [task.loadTasks](api_task.md) method.
+This method is an alias for the [task.loadTasks](api_task.md) method.
 
 Usage:
 
@@ -86,7 +86,7 @@ grunt.loadTasks();
 ```
 
 ### grunt.loadNpmTasks
-This method is a convenient shortcut for the [task.loadNpmTasks](api_task.md) method.
+This method is an alias for the [task.loadNpmTasks](api_task.md) method.
 
 Usage:
 
@@ -97,7 +97,7 @@ grunt.loadNpmTasks();
 ## Helpers
 
 ### grunt.registerHelper
-This method is a convenient shortcut for the [task.registerHelper](api_task.md) method.
+This method is an alias for the [task.registerHelper](api_task.md) method.
 
 Usage:
 
@@ -106,7 +106,7 @@ grunt.registerHelper(helperName, helperFunction);
 ```
 
 ### grunt.helper
-This method is a convenient shortcut for the [task.helper](api_task.md) method.
+This method is an alias for the [task.helper](api_task.md) method.
 
 Usage:
 

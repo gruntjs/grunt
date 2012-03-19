@@ -37,14 +37,24 @@ _This method is a convenient shortcut for the [config.init](api_config.md) metho
 ## Tasks: Creating
 
 ### grunt.registerTask
-This method is a convenient shortcut for the [task.registerTask](api_task.md) method.
+Register a named task that will be run when specified on the command-line after `grunt`.
 
-Usage:
+If a string `taskList` is specified, the new task will be an alias for one or more other tasks. Whenever the alias task is run, every specified task in the list will be run in the order specified.
 
 ```javascript
 grunt.registerTask(taskName, taskList);
+```
+
+If a `description` and `taskFunction` are passed, the specified function will be executed whenever the task is run.
+
+```javascript
 grunt.registerTask(taskName, description, taskFunction);
 ```
+
+See the [creating tasks](tasks_creating.md) documentation for more information and examples.
+
+_This method is a convenient shortcut for the [task.registerTask](api_task.md) method._
+
 
 ### grunt.registerMultiTask
 This method is a convenient shortcut for the [task.registerMultiTask](api_task.md) method.

@@ -132,7 +132,7 @@ Many of the built-in tasks, including the [lint task](task_lint.md), [concat tas
 grunt.registerMultiTask(taskName, description, taskFunction)
 ```
 
-This example multi task would log `foo: 1,2,3` if grunt was run via `grunt log:foo`, or it would log `bar: hello world` if grunt was run via `grunt log:bar`. If grunt was run as `grunt log` however, it would log _both of those_ lines as well as `grunt baz: false`.
+Given the specified configuration, this example multi task would log `foo: 1,2,3` if grunt was run via `grunt log:foo`, or it would log `bar: hello world` if grunt was run via `grunt log:bar`. If grunt was run as `grunt log` however, it would log `foo: 1,2,3`, `bar: hello world` and `grunt baz: false`.
 
 ```javascript
 grunt.initConfig({
@@ -154,7 +154,7 @@ _This method is an alias for the [task.registerMultiTask](api_task.md) method._
 
 
 ### grunt.registerInitTask
-This method is an alias for the [task.registerInitTask](api_task.md) method.
+XXX
 
 Usage:
 
@@ -162,7 +162,18 @@ Usage:
 grunt.registerInitTask(taskName, description, taskFunction)
 ```
 
+_This method is an alias for the [task.registerInitTask](api_task.md) method._
+
+
+## Inside Tasks
+
+
+### this.foo
+EXPLAIN
+
+
 ## Loading Externally-Defined Tasks
+
 
 ### grunt.loadTasks
 This method is an alias for the [task.loadTasks](api_task.md) method.
@@ -202,10 +213,7 @@ Usage:
 grunt.helper(helperName [, arguments...])
 ```
 
-## Inside Tasks
 
-### this.foo
-EXPLAIN
 
 
 

@@ -230,24 +230,27 @@ grunt.initConfig({
 
 
 ### grunt.loadTasks
-This method is an alias for the [task.loadTasks](api_task.md) method.
-
-Usage:
+Load tasks and helpers from tasks files in the the specified directory, relative to the [grunt.js gruntfile](configuring.md).
 
 ```javascript
-grunt.loadTasks()
+grunt.loadTasks(tasksPath)
 ```
+
+_This method is an alias for the [task.loadTasks](api_task.md) method._
+
 
 ### grunt.loadNpmTasks
-This method is an alias for the [task.loadNpmTasks](api_task.md) method.
-
-Usage:
+Load tasks and helpers from the specified grunt plugin. Because grunt plugins are Npm modules, if grunt is installed globally, this method will load a global Npm module. If grunt is installed locally, this will load a local Npm module.
 
 ```javascript
-grunt.loadNpmTasks()
+grunt.loadNpmTasks(pluginName)
 ```
 
+_This method is an alias for the [task.loadNpmTasks](api_task.md) method._
+
+
 ## Defining and Executing Helpers
+
 
 ### grunt.registerHelper
 This method is an alias for the [task.registerHelper](api_task.md) method.

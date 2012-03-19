@@ -168,17 +168,19 @@ _This method is an alias for the [task.registerInitTask](api_task.md) method._
 ## Inside Tasks
 
 ### this.async
-If a task is asynchronous, this method must be invoked. It returns a handle to a "done" function that can be called when the task has completed. If this method isn't invoked, the task executes synchronously.
+If a task is asynchronous, this method must be invoked. It returns a handle to a "done" function that can be called when the task has completed. `false` can be passed to this done function to indicate that the task has failed.
 
 ```javascript
 // Tell grunt this task is asynchronous.
 var done = this.async();
 // Your async code.
 setTimeout(function() {
-  // All done? tell grunt!
-  done();
+  var success = Math.random() > 0.5;
+  done(success);
 }, 1000);
 ```
+
+_If this method isn't invoked, the task executes synchronously._
 
 ### this.name
 The name of the task, as-specified in `grunt.registerTask`. For example, if the [min task](task_min.md) was run as `grunt min` or `grunt min:foo`, inside the task function, `this.name === "min"`.

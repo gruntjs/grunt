@@ -27,7 +27,17 @@ exports.tasks = function(grunt) {
 Initialize a configuration object for the current project. The specified `configObject` is used by tasks and helpers and can also be accessed using the [grunt.config](api_config.md) method. Nearly every project's [config.js gruntfile](configuring.md) will need this.
 
 ```javascript
-grunt.initConfig(configObject);
+grunt.initConfig(configObject)
+```
+
+*Example*
+
+```javascript
+grunt.initConfig({
+  lint: {
+    all: ['lib/*.js', 'test/*.js', 'grunt.js']
+  }
+});
 ```
 
 See the [configuring grunt](configuring.md) documentation for more information and examples.
@@ -44,7 +54,7 @@ Register a task or an "alias task." This method supports the following two signa
 If a string `taskList` is specified, the new task will be an alias for one or more other tasks. Whenever this "alias task" is run, every specified task in `taskList` will be run, in the order specified.
 
 ```javascript
-grunt.registerTask(taskName, taskList);
+grunt.registerTask(taskName, taskList)
 ```
 
 If a `description` and `taskFunction` are passed, the specified function will be executed whenever the task is run. In addition, the specified description will be shown when `grunt --help` is run. Task-specific properties and methods are available inside the task function as properties of the `this` object.
@@ -52,7 +62,7 @@ If a `description` and `taskFunction` are passed, the specified function will be
 Note that the `grunt.registerMultiTask` method, explained below, can be used to define a special type of task known as a "multi task."
 
 ```javascript
-grunt.registerTask(taskName, description, taskFunction);
+grunt.registerTask(taskName, description, taskFunction)
 ```
 
 See the [creating tasks](tasks_creating.md) documentation for examples of tasks and alias tasks.
@@ -66,7 +76,7 @@ Register a "multi task." A multi task is a task that implicitly iterates over al
 Many of the built-in tasks, including the [lint](task_lint.md), [concat](task_concat.md) and [min](task_min.md) are multi tasks.
 
 ```javascript
-grunt.registerMultiTask(taskName, description, taskFunction);
+grunt.registerMultiTask(taskName, description, taskFunction)
 ```
 
 See the [creating tasks](tasks_creating.md) documentation for examples of multi tasks.
@@ -80,7 +90,7 @@ This method is an alias for the [task.registerInitTask](api_task.md) method.
 Usage:
 
 ```javascript
-grunt.registerInitTask(taskName, description, taskFunction);
+grunt.registerInitTask(taskName, description, taskFunction)
 ```
 
 ## Loading Externally-Defined Tasks
@@ -91,7 +101,7 @@ This method is an alias for the [task.loadTasks](api_task.md) method.
 Usage:
 
 ```javascript
-grunt.loadTasks();
+grunt.loadTasks()
 ```
 
 ### grunt.loadNpmTasks
@@ -100,7 +110,7 @@ This method is an alias for the [task.loadNpmTasks](api_task.md) method.
 Usage:
 
 ```javascript
-grunt.loadNpmTasks();
+grunt.loadNpmTasks()
 ```
 
 ## Defining and Executing Helpers
@@ -111,7 +121,7 @@ This method is an alias for the [task.registerHelper](api_task.md) method.
 Usage:
 
 ```javascript
-grunt.registerHelper(helperName, helperFunction);
+grunt.registerHelper(helperName, helperFunction)
 ```
 
 ### grunt.helper
@@ -120,7 +130,7 @@ This method is an alias for the [task.helper](api_task.md) method.
 Usage:
 
 ```javascript
-grunt.helper(helperName [, arguments...]);
+grunt.helper(helperName [, arguments...])
 ```
 
 ## Inside Tasks

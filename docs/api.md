@@ -287,15 +287,15 @@ _This method is an alias for the [task.helper](api_task.md) method._
 
 ## Internals
 
-* [grunt.utils](api_utils.md) - miscellaneous utilities
-* [grunt.template](api_template.md) - template methods
-* [grunt.task](api_task.md) - the entire task interface
-* [grunt.file](api_file.md) - glob expansion, file reading, writing, directory traversing
-* [grunt.fail](api_fail.md) - more serious than error logging, `fail.warn` and `fail.fatal` will halt everything
-* [grunt.config](api_config.md) - reading values from the grunt configuration
-* [grunt.option](api_option.md) - reading values from the command-line options
-* [grunt.log](api_log.md) - don't use `console.log`, use `log.writeln` instead!
-* [grunt.verbose](api_verbose.md) - just like `log`, but only logs if `--verbose` was specified.
+* [grunt.utils](api_utils.md) - Miscellaneous utilities.
+* [grunt.template](api_template.md) - Template methods.
+* [grunt.task](api_task.md) - The entire task interface
+* [grunt.file](api_file.md) - Glob expansion, file reading, writing, directory traversing.
+* [grunt.fail](api_fail.md) - More serious than error logging, `fail.warn` and `fail.fatal` will halt everything
+* [grunt.config](api_config.md) - Reading values from the grunt configuration.
+* [grunt.option](api_option.md) - Reading values from the command-line options.
+* [grunt.log](api_log.md) - Don't use `console.log`, use `log.writeln` instead!
+* [grunt.verbose](api_verbose.md) - Just like `log`, but only logs if `--verbose` was specified.
 
 ## External libraries, exposed
 

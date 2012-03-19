@@ -4,11 +4,29 @@
 
 Grunt exposes all of its methods and properties on the `grunt` object that gets passed into the `exports.config` function exported in your [config.js gruntfile](configuring.md) or the `exports.tasks` function exported in your [tasks file](tasks_creating.md).
 
-For example, your [config.js gruntfile](configuring.md) might look like this:
+For example, your project's [config.js gruntfile](configuring.md) might look like this:
 
 ```javascript
 exports.config = function(grunt) {
-  // Initialize configuration object, define tasks and helpers (etc) here...
+
+  // Project configuration.
+  grunt.initConfig({
+    lint: {
+      all: ['grunt.js', 'lib/**/*.js''test/**/*.js']
+    },
+    jshint: {
+      options: {
+        browser: true
+      }
+    }
+  });
+
+  // Load tasks from sample grunt plugin.
+  grunt.loadNpmTasks('grunt-sample');
+
+  // Default task.
+  grunt.registerTask('default', 'lint sample');
+
 };
 ```
 
@@ -16,7 +34,18 @@ And if you're creating a [grunt plugin](plugins.md) or just organizing tasks int
 
 ```javascript
 exports.tasks = function(grunt) {
-  // Define tasks and helpers here...
+
+  // Create a new task.
+  grunt.registerTask('awesome', 'Print out "awesome!!!"', function() {
+    var awesome = grunt.helper('awesome');
+    log.write(awesome);
+  });
+
+  // Register a helper.
+  grunt.registerHelper('awesome', function() {
+    return 'awesome!!!';
+  });
+
 };
 ```
 

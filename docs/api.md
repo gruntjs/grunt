@@ -175,7 +175,7 @@ If a task is asynchronous, this method must be invoked to instruct grunt to wait
 var done = this.async();
 // Your async code.
 setTimeout(function() {
-  // Let's simulate an error.. sometimes.
+  // Let's simulate an error, sometimes.
   var success = Math.random() > 0.5;
   // All done!
   done(success);

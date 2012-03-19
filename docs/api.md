@@ -30,7 +30,7 @@ Initialize a configuration object for the current project. The specified `config
 grunt.initConfig(configObject)
 ```
 
-This example contains configuration data for the lint task:
+This example contains sample config data for the [lint task](task_lint.md):
 
 ```javascript
 grunt.initConfig({
@@ -73,7 +73,7 @@ _This method is an alias for the [task.registerTask](api_task.md) method._
 ### grunt.registerMultiTask
 Register a "multi task." A multi task is a task that implicitly iterates over all of its named sub-properties (AKA targets) if none was specified. In addition to the default properties and methods, extra multi task-specific properties are available inside the task function as properties of the `this` object.
 
-Many of the built-in tasks, including the [lint](task_lint.md), [concat](task_concat.md) and [min](task_min.md) are multi tasks.
+Many of the built-in tasks, including the [lint task](task_lint.md), [concat task](task_concat.md) and [min task](task_min.md) are multi tasks.
 
 ```javascript
 grunt.registerMultiTask(taskName, description, taskFunction)

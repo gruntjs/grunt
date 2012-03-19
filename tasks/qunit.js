@@ -126,7 +126,7 @@ exports.tasks = function(grunt) {
   // TASKS
   // ==========================================================================
 
-  grunt.registerMultiTask('qunit', 'Run QUnit unit tests in a headless PhantomJS instance.', function(target) {
+  grunt.registerMultiTask('qunit', 'Run QUnit unit tests in a headless PhantomJS instance.', function() {
     // Get files as URLs.
     var urls = file.expandToUrls(this.file.src);
 

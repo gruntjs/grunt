@@ -157,7 +157,7 @@ exports.tasks = function(grunt) {
   // TASKS
   // ==========================================================================
 
-  grunt.registerMultiTask('test', 'Run unit tests with nodeunit.', function(target) {
+  grunt.registerMultiTask('test', 'Run unit tests with nodeunit.', function() {
     // File paths.
     var filepaths = file.expand(this.file.src);
     // Clear all tests' cached require data, in case this task is run inside a

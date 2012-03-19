@@ -26,14 +26,14 @@ exports.tasks = function(grunt) {
   // TASKS
   // ==========================================================================
 
-  grunt.registerMultiTask('lint', 'Validate files with JSHint.', function(target) {
+  grunt.registerMultiTask('lint', 'Validate files with JSHint.', function() {
     // Get flags and globals, allowing target-specific options and globals to
     // override the default options and globals.
     var options, globals, tmp;
 
-    tmp = config(['jshint', target, 'options']);
+    tmp = config(['jshint', this.target, 'options']);
     if (typeof tmp === 'object') {
-      verbose.writeln('Using "' + target + '" JSHint options.');
+      verbose.writeln('Using "' + this.target + '" JSHint options.');
       options = tmp;
     } else {
       verbose.writeln('Using master JSHint options.');
@@ -41,9 +41,9 @@ exports.tasks = function(grunt) {
     }
     verbose.writeflags(options, 'Options');
 
-    tmp = config(['jshint', target, 'globals']);
+    tmp = config(['jshint', this.target, 'globals']);
     if (typeof tmp === 'object') {
-      verbose.writeln('Using "' + target + '" JSHint globals.');
+      verbose.writeln('Using "' + this.target + '" JSHint globals.');
       globals = tmp;
     } else {
       verbose.writeln('Using master JSHint globals.');

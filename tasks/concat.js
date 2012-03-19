@@ -23,7 +23,7 @@ exports.tasks = function(grunt) {
   // TASKS
   // ==========================================================================
 
-  grunt.registerMultiTask('concat', 'Concatenate files.', function(target) {
+  grunt.registerMultiTask('concat', 'Concatenate files.', function() {
     // Concat specified files.
     var files = file.expand(this.file.src);
     file.write(this.file.dest, grunt.helper('concat', files));

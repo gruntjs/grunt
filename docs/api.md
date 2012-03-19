@@ -20,12 +20,12 @@ exports.tasks = function(grunt) {
 };
 ```
 
-## Methods
+## Config
 
-### Config
+### grunt.initConfig
+Initialize a configuration object for the current project. The passed-in `configObject` is used by tasks and helpers and can also be accessed using the [grunt.config](api_config.md) method. Nearly every project's [config.js gruntfile](configuring.md) will need this.
 
-#### grunt.initConfig
-This method is a convenient shortcut for the [config.init](api_config.md) method.
+See the [configuring grunt](configuring.md) documentation for more information.
 
 Usage:
 
@@ -33,9 +33,12 @@ Usage:
 grunt.initConfig(configObject);
 ```
 
-### Tasks: Creating
+_This method is a convenient shortcut for the [config.init](api_config.md) method._
 
-#### grunt.registerTask
+
+## Tasks: Creating
+
+### grunt.registerTask
 This method is a convenient shortcut for the [task.registerTask](api_task.md) method.
 
 Usage:
@@ -45,7 +48,7 @@ grunt.registerTask(taskName, taskList);
 grunt.registerTask(taskName, description, taskFunction);
 ```
 
-#### grunt.registerMultiTask
+### grunt.registerMultiTask
 This method is a convenient shortcut for the [task.registerMultiTask](api_task.md) method.
 
 Usage:
@@ -54,7 +57,7 @@ Usage:
 grunt.registerMultiTask(taskName, description, taskFunction);
 ```
 
-#### grunt.registerInitTask
+### grunt.registerInitTask
 This method is a convenient shortcut for the [task.registerInitTask](api_task.md) method.
 
 Usage:
@@ -63,9 +66,9 @@ Usage:
 grunt.registerInitTask(taskName, description, taskFunction);
 ```
 
-### Tasks: Loading
+## Tasks: Loading
 
-#### grunt.loadTasks
+### grunt.loadTasks
 This method is a convenient shortcut for the [task.loadTasks](api_task.md) method.
 
 Usage:
@@ -74,7 +77,7 @@ Usage:
 grunt.loadTasks();
 ```
 
-#### grunt.loadNpmTasks
+### grunt.loadNpmTasks
 This method is a convenient shortcut for the [task.loadNpmTasks](api_task.md) method.
 
 Usage:
@@ -83,9 +86,9 @@ Usage:
 grunt.loadNpmTasks();
 ```
 
-### Helpers
+## Helpers
 
-#### grunt.registerHelper
+### grunt.registerHelper
 This method is a convenient shortcut for the [task.registerHelper](api_task.md) method.
 
 Usage:
@@ -94,7 +97,7 @@ Usage:
 grunt.registerHelper(helperName, helperFunction);
 ```
 
-#### grunt.helper
+### grunt.helper
 This method is a convenient shortcut for the [task.helper](api_task.md) method.
 
 Usage:

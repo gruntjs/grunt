@@ -165,7 +165,7 @@ For an init task example, see the [init task source](../tasks/init.js).
 _This method is an alias for the [task.registerInitTask](api_task.md) method._
 
 
-## Inside Tasks
+## Inside All Tasks
 
 ### this.async
 If a task is asynchronous, this method must be invoked to instruct grunt to wait. It returns a handle to a "done" function that should be called when the task has completed. `false` can be passed to the done function to indicate that the task has failed. If this method isn't invoked, the task executes synchronously.
@@ -183,22 +183,31 @@ setTimeout(function() {
 ```
 
 ### this.name
-The name of the task, as defined in `grunt.registerTask`. For example, if the [min task](task_min.md) was run as `grunt min` or `grunt min:foo`, inside the task function, `this.name` would be `"min"`.
+The name of the task, as defined in `grunt.registerTask`. For example, if a "sample" task was run as `grunt sample` or `grunt sample:foo`, inside the task function, `this.name` would be `"sample"`.
 
 ### this.nameArgs
-The name of the task, as specified with any colon-separated arguments or flags on the command-line. For example, if the [min task](task_min.md) was run as `grunt min:foo`, inside the task function, `this.nameArgs` would be `"min:foo"`.
+The name of the task, as specified with any colon-separated arguments or flags on the command-line. For example, if a "sample" task was run as `grunt sample:foo`, inside the task function, `this.nameArgs` would be `"sample:foo"`.
 
 ### this.args
-An array of arguments passed to the task. For example, if the [min task](task_min.md) was run as `grunt min:foo:bar`, inside the task function, `this.args` would be `["foo", "bar"]`.
+An array of arguments passed to the task. For example, if a "sample" task was run as `grunt sample:foo:bar`, inside the task function, `this.args` would be `["foo", "bar"]`. Note that in multi tasks, the target is removed from the `this.args` array and is not passed into the task function.
 
 ### this.flags
-An object generated from the arguments passed to the task. For example, if the [min task](task_min.md) was run as `grunt min:foo:bar`, inside the task function, `this.flags` would be `{foo: true, bar: true}`.
+An object generated from the arguments passed to the task. For example, if a "sample" task was run as `grunt sample:foo:bar`, inside the task function, `this.flags` would be `{foo: true, bar: true}`. In a multi task, the target name is not set as a flag.
+
+### this.extraspaths
+
+
+## Inside Multi Tasks
+
+
+### this.target
+In a multi task, this is the name of the target currently being iterated over. For example, if a "sample" multi task was run as `grunt sample:foo` with the config data `{sample: {foo: "bar"}}`, inside the task function, `this.target` would be `"foo"`.
 
 ### this.data
+In a multi task, this is the actual data stored in the grunt config object for the given target. For example, if a "sample" multi task was run as `grunt sample:foo` with the config data `{sample: {foo: "bar"}}`, inside the task function, `this.data` would be `"bar"`.
 
 ### this.file
 
-### this.extraspaths
 
 
 

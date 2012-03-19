@@ -230,7 +230,7 @@ grunt.initConfig({
 
 
 ### grunt.loadTasks
-Load task-related files from the specified directory, relative to the [grunt.js gruntfile](configuring.md). This method can be used to load task-related files from a locally-installed grunt plugin by specifying the path to that plugin's "tasks" subdirectory.
+Load task-related files from the specified directory, relative to the [grunt.js gruntfile](configuring.md). This method can be used to load task-related files from a local grunt plugin by specifying the path to that plugin's "tasks" subdirectory.
 
 ```javascript
 grunt.loadTasks(tasksPath)
@@ -251,27 +251,38 @@ _This method is an alias for the [task.loadNpmTasks](api_task.md) method._
 
 ## Defining and Executing Helpers
 
-
 ### grunt.registerHelper
-This method is an alias for the [task.registerHelper](api_task.md) method.
-
-Usage:
+Register a helper function that can be used by any task.
 
 ```javascript
 grunt.registerHelper(helperName, helperFunction)
 ```
 
-### grunt.helper
-This method is an alias for the [task.helper](api_task.md) method.
+In this example helper, the numbers `1` and `2` are passed in and the value `3` is returned.
 
-Usage:
+```javascript
+grunt.registerHelper("add_two_nums", function(a, b) {
+  return a + b;
+});
+```
+
+_This method is an alias for the [task.registerHelper](api_task.md) method._
+
+
+### grunt.helper
+Invoke a registered helper function.
 
 ```javascript
 grunt.helper(helperName [, arguments...])
 ```
 
+In this example, the previously defined `add_two_nums` helper is invoked.
 
+```javascript
+grunt.helper("add_two_nums", 1, 2) // 3
+```
 
+_This method is an alias for the [task.helper](api_task.md) method._
 
 
 ## Internals

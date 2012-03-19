@@ -106,7 +106,7 @@ Note that the `grunt.registerMultiTask` method, explained below, can be used to 
 grunt.registerTask(taskName, description, taskFunction)
 ```
 
-This example task logs "foo, testing 123" if grunt is run via `grunt foo:testing:123`. If the task was run without arguments, as `grunt foo` it logs "foo, no args".
+This example task logs `foo, testing 123` if grunt is run via `grunt foo:testing:123`. If the task is run without arguments as `grunt foo` the task logs `foo, no args`.
 
 ```javascript
 grunt.registerTask('foo', 'A sample task that logs stuff.', function(arg1, arg2) {
@@ -124,12 +124,28 @@ _This method is an alias for the [task.registerTask](api_task.md) method._
 
 
 ### grunt.registerMultiTask
-Register a "multi task." A multi task is a task that implicitly iterates over all of its named sub-properties (AKA targets) if none was specified. In addition to the default properties and methods, extra multi task-specific properties are available inside the task function as properties of the `this` object.
+Register a "multi task." A multi task is a task that implicitly iterates over all of its named sub-properties (AKA targets) if no target was specified. In addition to the default properties and methods, extra multi task-specific properties are available inside the task function as properties of the `this` object.
 
 Many of the built-in tasks, including the [lint task](task_lint.md), [concat task](task_concat.md) and [min task](task_min.md) are multi tasks.
 
 ```javascript
 grunt.registerMultiTask(taskName, description, taskFunction)
+```
+
+This example multi task would log `foo: 1,2,3` if grunt was run via `grunt log:foo`, or it would log `bar: hello world` if grunt was run via `grunt log:bar`. If grunt was run as `grunt log` however, it would log _both of those_ lines as well as `grunt baz: false`.
+
+```javascript
+grunt.initConfig({
+  log: {
+    foo: [1, 2, 3],
+    bar: 'hello world',
+    baz: false
+  }
+});
+
+grunt.registerMultiTask('log', 'Log stuff.', function(target) {
+  grunt.log.writeln(target + ': ' + this.data);
+});
 ```
 
 See the [creating tasks](tasks_creating.md) documentation for examples of multi tasks.

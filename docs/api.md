@@ -154,13 +154,13 @@ _This method is an alias for the [task.registerMultiTask](api_task.md) method._
 
 
 ### grunt.registerInitTask
-Register an "init task." An init task is a task that doesn't require any configuration data, and as such doesn't require grunt to load a [grunt.js gruntfile](configuring.md). The [init task](task_init.md) is an example of an init task.
+Register an "init task." An init task is a task that doesn't require any configuration data, and as such will still run even if grunt can't find a [grunt.js gruntfile](configuring.md). The [init task](task_init.md) is an example of an init task.
 
 ```javascript
 grunt.registerInitTask(taskName, description, taskFunction)
 ```
 
-For an example init task, see the [init task source](../tasks/init.js).
+For an init task example, see the [init task source](../tasks/init.js).
 
 _This method is an alias for the [task.registerInitTask](api_task.md) method._
 

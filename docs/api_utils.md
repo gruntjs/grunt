@@ -2,6 +2,7 @@
 
 # The grunt API - grunt.utils
 
+Miscellaneous utilities.
 
 ## Internal methods
 

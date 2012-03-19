@@ -30,7 +30,7 @@ Initialize a configuration object for the current project. The specified `config
 grunt.initConfig(configObject)
 ```
 
-*Example*
+This example contains configuration data for the lint task:
 
 ```javascript
 grunt.initConfig({

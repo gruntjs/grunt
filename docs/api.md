@@ -230,7 +230,7 @@ grunt.initConfig({
 
 
 ### grunt.loadTasks
-Load tasks and helpers from tasks files in the the specified directory, relative to the [grunt.js gruntfile](configuring.md).
+Load task-related files from the specified directory, relative to the [grunt.js gruntfile](configuring.md). This method can be used to load task-related files from a locally-installed grunt plugin by specifying the path to that plugin's "tasks" subdirectory.
 
 ```javascript
 grunt.loadTasks(tasksPath)
@@ -240,7 +240,7 @@ _This method is an alias for the [task.loadTasks](api_task.md) method._
 
 
 ### grunt.loadNpmTasks
-Load tasks and helpers from the specified grunt plugin. Because grunt plugins are Npm modules, if grunt is installed globally, this method will load a global Npm module. If grunt is installed locally, this will load a local Npm module.
+Load tasks and helpers from the specified Npm-installed grunt plugin. If the verion of grunt being run was installed globally via Npm, this will load a global Npm module. If the verion of grunt being run was installed locally via Npm, this will load a local Npm module.
 
 ```javascript
 grunt.loadNpmTasks(pluginName)

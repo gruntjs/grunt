@@ -5,38 +5,38 @@
 ## grunt.utils
 
 
-## grunt.utils._
+### grunt.utils._
 [Underscore.js](http://underscorejs.org/), including [Underscore.string](https://github.com/epeli/underscore.string) which is also available as `grunt.utils._.str`
 
-## grunt.utils.async
+### grunt.utils.async
 [Async utilities](https://github.com/caolan/async)
 
-## grunt.utils.hooker
+### grunt.utils.hooker
 [JavaScript hooker](https://github.com/cowboy/javascript-hooker)
 
-## grunt.utils.kindOf
+### grunt.utils.kindOf
 
 
-## grunt.utils.linefeed
+### grunt.utils.linefeed
 
 
-## grunt.utils.namespace
+### grunt.utils.namespace
 
 
-## grunt.utils.normalizelf
+### grunt.utils.normalizelf
 
 
-## grunt.utils.recurse
+### grunt.utils.recurse
 
 
-## grunt.utils.repeat
+### grunt.utils.repeat
 
 
-## grunt.utils.spawn
+### grunt.utils.spawn
 
 
-## grunt.utils.task
+### grunt.utils.task
 
 
-## grunt.utils.toArray
+### grunt.utils.toArray
 

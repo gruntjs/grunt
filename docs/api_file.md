@@ -130,6 +130,8 @@ This method behaves the same as `grunt.file.expand` except it only returns file 
 grunt.file.expandFiles(patterns)
 ```
 
+This method is used by many built-in tasks to handle wildcard expansion of its source files. See the [concat task source](../tasks/concat.md) for an example.
+
 ### grunt.file.expandFileURLs
 Return a unique array of all `file://` URLs for files that match the given wildcard pattern(s). Any absolute `file://`, `http://` or `https://` URLs specified will be passed through. This method accepts one or more comma separated wildcard patterns (or URLs), as well as an array of wildcard patterns (or URLs).
 
@@ -138,6 +140,8 @@ Patterns are resolved relative to the [grunt.js gruntfile](configuring.md). See 
 ```javascript
 grunt.file.expandFileURLs(patternsOrURLs)
 ```
+
+See the [qunit task source](../tasks/qunit.js) for an example.
 
 ## Something Something
 

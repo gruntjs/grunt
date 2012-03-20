@@ -7,10 +7,12 @@ Wildcard expansion, file reading, writing, directory traversing.
 See the [file lib source](../lib/grunt/file.js) for more information.
 
 ## The file API
-Grunt provides many methods for reading and writing files, as well as traversing the filesystem and resolving wildcards. _All file paths are relative to the [grunt.js gruntfile](configuring.md)._
+Grunt provides many methods for reading and writing files, as well as traversing the filesystem and resolving wildcards. Many of these methods are wrappers around core Node.js file functionality with built-in error handling and logging.
+
+_Note: all file paths are relative to the [grunt.js gruntfile](configuring.md)._
 
 ### grunt.file.read
-Read and return a file's contents. If `encoding` isn't specified, default to `utf8`.
+Read and return a file's contents. If `encoding` isn't specified, defaults to `utf8`.
 
 ```javascript
 grunt.file.read(filepath, encoding)
@@ -66,11 +68,10 @@ grunt.file.isPathAbsolute(pathParts)
 ```
 
 ## File Lists and Wildcards
+Wildcard patterns are resolved relative to the [grunt.js gruntfile](configuring.md) using the [glob-whatev library](https://github.com/cowboy/node-glob-whatev). See the [minimatch](https://github.com/isaacs/minimatch) module documentation for more details on supported wildcard patterns.
 
 ### grunt.file.expand
 Return a unique array of all file or directory paths that match the given wildcard pattern(s). This method accepts one or more comma separated wildcard patterns as well as an array of wildcard patterns.
-
-Patterns are resolved relative to the [grunt.js gruntfile](configuring.md). See the [minimatch](https://github.com/isaacs/minimatch) module documentation for more details on wildcard patterns.
 
 ```javascript
 grunt.file.expand(patterns)
@@ -94,8 +95,6 @@ This method is used by many built-in tasks to handle wildcard expansion of its s
 
 ### grunt.file.expandFileURLs
 Return a unique array of all `file://` URLs for files that match the given wildcard pattern(s). Any absolute `file://`, `http://` or `https://` URLs specified will be passed through. This method accepts one or more comma separated wildcard patterns (or URLs), as well as an array of wildcard patterns (or URLs).
-
-Patterns are resolved relative to the [grunt.js gruntfile](configuring.md). See the [minimatch](https://github.com/isaacs/minimatch) module documentation for more details on wildcard patterns.
 
 ```javascript
 grunt.file.expandFileURLs(patternsOrURLs)

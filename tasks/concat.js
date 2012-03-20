@@ -25,7 +25,7 @@ module.exports = function(grunt) {
 
   grunt.registerMultiTask('concat', 'Concatenate files.', function() {
     // Concat specified files.
-    var files = file.expand(this.file.src);
+    var files = file.expandFiles(this.file.src);
     file.write(this.file.dest, grunt.helper('concat', files));
 
     // Fail task if errors were logged.

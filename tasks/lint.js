@@ -52,7 +52,7 @@ module.exports = function(grunt) {
     verbose.writeflags(globals, 'Globals');
 
     // Lint specified files.
-    file.expand(this.file.src).forEach(function(filepath) {
+    file.expandFiles(this.file.src).forEach(function(filepath) {
       grunt.helper('lint', file.read(filepath), options, globals, filepath);
     });
 

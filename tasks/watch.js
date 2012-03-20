@@ -48,7 +48,7 @@ module.exports = function(grunt) {
     // This task is asynchronous.
     var taskDone = this.async();
     // Get a list of ffles to be watched.
-    var getFiles = file.expand.bind(file, config(filesProp));
+    var getFiles = file.expandFiles.bind(file, config(filesProp));
     // The tasks to be run.
     var tasks = config(tasksProp);
     // This task's name + optional args, in string format.

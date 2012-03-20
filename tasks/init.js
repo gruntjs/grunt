@@ -36,7 +36,7 @@ module.exports = function(grunt) {
 
   // An array of all available license files.
   function availableLicenses() {
-    return file.taskpaths('init/licenses').reduce(function(arr, filepath) {
+    return file.taskDirs('init/licenses').reduce(function(arr, filepath) {
       return arr.concat(fs.readdirSync(filepath).map(function(filename) {
         return filename.replace(/^LICENSE-/, '');
       }));
@@ -88,9 +88,9 @@ module.exports = function(grunt) {
     // Useful init sub-task-specific utilities.
     var init = {
       // Expose any user-specified default init values.
-      defaults: file.taskfileReadJSON('init/defaults.json'),
+      defaults: file.taskFileDefaults('init/defaults.json'),
       // Expose rename rules for this template.
-      renames: file.taskfileReadJSON('init', name, 'rename.json'),
+      renames: file.taskFileDefaults('init', name, 'rename.json'),
       // Return an object containing files to copy with their absolute source path
       // and relative destination path, renamed (or omitted) according to rules in
       // rename.json (if it exists).
@@ -98,7 +98,7 @@ module.exports = function(grunt) {
         var files = {};
         var prefix = 'init/' + name + '/root/';
         // Iterate over all source files.
-        file.taskfiles('init', name, 'root', '**').forEach(function(obj) {
+        file.taskFiles('init', name, 'root', '**').forEach(function(obj) {
           // Get the path relative to the template root.
           var relpath = obj.rel.slice(prefix.length);
           var rule = init.renames[relpath];
@@ -116,7 +116,7 @@ module.exports = function(grunt) {
       // Search init template paths for filename.
       srcpath: function() {
         var args = ['init', name, 'root'].concat(utils.toArray(arguments));
-        var obj = file.taskfile.apply(file, args);
+        var obj = file.taskFile.apply(file, args);
         return obj ? String(obj) : null;
       },
       // Determine absolute destination file path.
@@ -126,7 +126,7 @@ module.exports = function(grunt) {
       addLicenseFiles: function(files, licenses) {
         var available = availableLicenses();
         licenses.forEach(function(license) {
-          var srcpath = file.taskfile('init/licenses/LICENSE-' + license);
+          var srcpath = file.taskFile('init/licenses/LICENSE-' + license);
           files['LICENSE-' + license] = {
             src: srcpath ? String(srcpath) : null,
             dest: 'LICENSE-' + license
@@ -144,7 +144,7 @@ module.exports = function(grunt) {
         var abssrcpath = file.isPathAbsolute(srcpath) ? srcpath : init.srcpath(srcpath);
         var absdestpath = init.destpath(destpath);
         if (!path.existsSync(abssrcpath)) {
-          abssrcpath = file.taskfile('init/misc/placeholder');
+          abssrcpath = file.taskFile('init/misc/placeholder');
         }
         verbose.or.write('Writing ' + destpath + '...');
         try {
@@ -512,7 +512,7 @@ module.exports = function(grunt) {
     var option = utils._.clone(prompts[name]);
     option.name = name;
 
-    var defaults = file.taskfileReadJSON('init/defaults.json');
+    var defaults = file.taskFileDefaults('init/defaults.json');
     if (name in defaults) {
       // A user default was specified for this option, so use its value.
       option.default = defaults[name];

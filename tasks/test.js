@@ -159,7 +159,7 @@ module.exports = function(grunt) {
 
   grunt.registerMultiTask('test', 'Run unit tests with nodeunit.', function() {
     // File paths.
-    var filepaths = file.expand(this.file.src);
+    var filepaths = file.expandFiles(this.file.src);
     // Clear all tests' cached require data, in case this task is run inside a
     // "watch" task loop.
     file.clearRequireCache(filepaths);

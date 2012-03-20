@@ -28,7 +28,7 @@ module.exports = function(grunt) {
   // ==========================================================================
 
   grunt.registerMultiTask('min', 'Minify files with UglifyJS.', function() {
-    var files = file.expand(this.file.src);
+    var files = file.expandFiles(this.file.src);
     // Get banner, if specified. It would be nice if UglifyJS supported ignoring
     // all comments matching a certain pattern, like /*!...*/, but it doesn't.
     var banner = task.directive(files[0], function() { return null; });

@@ -128,7 +128,7 @@ module.exports = function(grunt) {
 
   grunt.registerMultiTask('qunit', 'Run QUnit unit tests in a headless PhantomJS instance.', function() {
     // Get files as URLs.
-    var urls = file.expandToUrls(this.file.src);
+    var urls = file.expandFileURLs(this.file.src);
 
     // This task is asynchronous.
     var done = this.async();
@@ -198,15 +198,15 @@ module.exports = function(grunt) {
       // Launch PhantomJS.
       var args = [
         // The main script file.
-        file.taskfile('qunit/phantom.js'),
+        file.taskFile('qunit/phantom.js'),
         // The temporary file used for communications.
         tempfile.path,
         // The QUnit helper file to be injected.
-        file.taskfile('qunit/qunit.js'),
+        file.taskFile('qunit/qunit.js'),
         // URL to the QUnit .html test file to run.
         url,
         // PhantomJS options.
-        '--config=' + file.taskfile('qunit/phantom.json')
+        '--config=' + file.taskFile('qunit/phantom.json')
       ];
 
       utils.spawn({

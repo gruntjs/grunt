@@ -6,33 +6,6 @@ Underscore.js template processing and other template-related methods.
 
 See the [task lib source](../lib/grunt/task.js) for more information.
 
-task.registerTask
-task.registerMultiTask
-task.registerInitTask
-task.renameTask
-
-task.current
-
-task.registerHelper
-task.renameHelper
-task.helper
-
-task.loadTasks
-task.loadNpmTasks
-
-
-task.directive
-task.getDirectiveParts
-
-task.run
-task.clearQueue
-task.requires
-task.runAllTargets
-
-task.hadErrors
-
-
-
 ## The task API
 
 Note that any method marked with a ☃ (unicode snowman) is available directly on the `grunt` object in addition to being available on the `grunt.task` object. Just so you know. See the [API main page](api.md) for more usage information.
@@ -46,7 +19,7 @@ Register an "alias task" or a task function. This method supports the following 
 
 **Alias task**
 
-If a string `taskList` is specified, the new task will be an alias for one or more other tasks. Whenever this "alias task" is run, every specified task in `taskList` will be run, in the order specified.
+If a task list is specified, the new task will be an alias for one or more other tasks. Whenever this "alias task" is run, every specified task in `taskList` will be run, in the order specified. The `taskList` argument can be a space-separated string or an array of task names.
 
 ```javascript
 grunt.task.registerTask(taskName, taskList)
@@ -155,6 +128,13 @@ setTimeout(function() {
 }, 1000);
 ```
 
+### this.requires / grunt.task.current.requires
+If one task depends on the successful completion of another task (or tasks), this method can be used to force grunt to abort if the other task didn't run, or if the other task failed. The task list can be a space-separated string, an array of task names, or individual task name arguments.
+
+```javascript
+this.requires(taskList)
+```
+
 ### this.name / grunt.task.current.name
 The name of the task, as defined in `grunt.registerTask`. For example, if a "sample" task was run as `grunt sample` or `grunt sample:foo`, inside the task function, `this.name` would be `"sample"`.
 
@@ -166,6 +146,9 @@ An array of arguments passed to the task. For example, if a "sample" task was ru
 
 ### this.flags / grunt.task.current.flags
 An object generated from the arguments passed to the task. For example, if a "sample" task was run as `grunt sample:foo:bar`, inside the task function, `this.flags` would be `{foo: true, bar: true}`. In a multi task, the target name is not set as a flag.
+
+### this.errorCount / grunt.task.current.errorCount
+The number of [log.error](api_log.md) calls that occurred during this task. This can be used to fail a task if errors occurred during the task.
 
 ### this.extraspaths / grunt.task.current.extraspaths
 TODO: re-evaluate
@@ -265,13 +248,13 @@ grunt.task.helper("add_two_nums", 1, 2) // 3
 
 _This method is also available as [grunt.helper](api.md)._
 
+## Directives
 
-
-### grunt.task.XXX
+### grunt.task.directive
 DESCRIPTION
 
 ```javascript
-grunt.task.XXX()
+grunt.task.directive()
 ```
 
 In this example, DESCRIPTION
@@ -279,11 +262,11 @@ In this example, DESCRIPTION
 ```javascript
 ```
 
-### grunt.task.XXX
+### grunt.task.getDirectiveParts
 DESCRIPTION
 
 ```javascript
-grunt.task.XXX()
+grunt.task.getDirectiveParts()
 ```
 
 In this example, DESCRIPTION
@@ -291,11 +274,14 @@ In this example, DESCRIPTION
 ```javascript
 ```
 
-### grunt.task.XXX
+
+## Queueing Tasks
+
+### grunt.task.run
 DESCRIPTION
 
 ```javascript
-grunt.task.XXX()
+grunt.task.run()
 ```
 
 In this example, DESCRIPTION
@@ -303,11 +289,11 @@ In this example, DESCRIPTION
 ```javascript
 ```
 
-### grunt.task.XXX
+### grunt.task.clearQueue
 DESCRIPTION
 
 ```javascript
-grunt.task.XXX()
+grunt.task.clearQueue()
 ```
 
 In this example, DESCRIPTION
@@ -315,87 +301,14 @@ In this example, DESCRIPTION
 ```javascript
 ```
 
-### grunt.task.XXX
+### grunt.task.runAllTargets
 DESCRIPTION
 
 ```javascript
-grunt.task.XXX()
+grunt.task.runAllTargets()
 ```
 
 In this example, DESCRIPTION
 
 ```javascript
 ```
-
-### grunt.task.XXX
-DESCRIPTION
-
-```javascript
-grunt.task.XXX()
-```
-
-In this example, DESCRIPTION
-
-```javascript
-```
-
-### grunt.task.XXX
-DESCRIPTION
-
-```javascript
-grunt.task.XXX()
-```
-
-In this example, DESCRIPTION
-
-```javascript
-```
-
-### grunt.task.XXX
-DESCRIPTION
-
-```javascript
-grunt.task.XXX()
-```
-
-In this example, DESCRIPTION
-
-```javascript
-```
-
-### grunt.task.XXX
-DESCRIPTION
-
-```javascript
-grunt.task.XXX()
-```
-
-In this example, DESCRIPTION
-
-```javascript
-```
-
-### grunt.task.XXX
-DESCRIPTION
-
-```javascript
-grunt.task.XXX()
-```
-
-In this example, DESCRIPTION
-
-```javascript
-```
-
-### grunt.task.XXX
-DESCRIPTION
-
-```javascript
-grunt.task.XXX()
-```
-
-In this example, DESCRIPTION
-
-```javascript
-```
-

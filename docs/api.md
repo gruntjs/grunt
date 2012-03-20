@@ -53,7 +53,7 @@ But these are just examples. For more information, take a look at the API docume
 
 ## Config
 
-_Note that the method listed below is also available on the [grunt.config](api_config.md) object in addition to being available on the `grunt` object._
+_Note that the method listed below is also available on the [grunt.config](api_config.md) object in addition to the `grunt` object._
 
 
 ### grunt.initConfig
@@ -79,6 +79,8 @@ _This method is an alias for the [config.init](api_config.md) method._
 
 
 ## Creating Tasks
+
+_Note that the methods listed below are also available on the [grunt.task](api_task.md) object in addition to the `grunt` object._
 
 
 ### grunt.registerTask

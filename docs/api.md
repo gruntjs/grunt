@@ -288,7 +288,7 @@ _This method is an alias for the [task.helper](api_task.md) method._
 ## Internals
 
 * [grunt.utils](api_utils.md) - Miscellaneous utilities, including Underscore.js, Async and Hooker.
-* [grunt.template](api_template.md) - Template methods.
+* [grunt.template](api_template.md) - Underscore.js template processing and other template-related methods.
 * [grunt.task](api_task.md) - The entire task interface
 * [grunt.file](api_file.md) - Glob expansion, file reading, writing, directory traversing.
 * [grunt.fail](api_fail.md) - More serious than error logging, `fail.warn` and `fail.fatal` will halt everything

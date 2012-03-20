@@ -2,7 +2,7 @@
 
 # [The grunt API](api.md) / grunt.template
 
-Miscellaneous utilities, including Underscore.js, Async and Hooker.
+Underscore.js template processing and other template-related methods.
 
 See the [template lib source](../lib/grunt/template.js) for more information.
 

@@ -41,7 +41,7 @@ Note that many of these methods are available directly on the `grunt` object.
 ## Creating Tasks
 
 
-### grunt.task.registerTask
+### grunt.task.registerTask *
 Register an "alias task" or a task function. This method supports the following two signatures:
 
 **Alias task**

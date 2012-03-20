@@ -40,7 +40,7 @@ grunt.file.copy(srcpath, destpath [, callback])
 ```
 
 ### grunt.file.mkdir
-Works like `mkdir -p`. Create a directory along with any intermediate directories.
+Works like `mkdir -p`. Create a directory along with any intermediate directories. If the `--no-write` command-line option is specified, directories won't actually be created.
 
 ```javascript
 grunt.file.mkdir(dirpath)
@@ -122,15 +122,65 @@ grunt.file.expandFileURLs(patternsOrURLs)
 
 See the [qunit task source](../tasks/qunit.js) for an example.
 
-## Something Something
+## Task-Related Files
+
+
+### grunt.file.taskDirs
+DESCRIPTION
+
+```javascript
+grunt.file.taskDirs()
+```
+
+In this example, DESCRIPTION
+
+```javascript
+```
+
+### grunt.file.taskDirs
+DESCRIPTION
+
+```javascript
+grunt.file.taskDirs()
+```
+
+In this example, DESCRIPTION
+
+```javascript
+```
+
+### grunt.file.taskFile
+DESCRIPTION
+
+```javascript
+grunt.file.taskFile()
+```
+
+In this example, DESCRIPTION
+
+```javascript
+```
+
+### grunt.file.taskFileDefaults
+DESCRIPTION
+
+```javascript
+grunt.file.taskFileDefaults()
+```
+
+In this example, DESCRIPTION
+
+```javascript
+```
+
+
+
+
+
 
 file.npmTaskDir
 file.userDir
 
-file.taskDirs
-file.taskFiles
-file.taskFile
-file.taskFileDefaults
 
 file.clearRequireCache
 

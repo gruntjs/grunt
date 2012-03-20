@@ -78,6 +78,10 @@ _This method is an alias for the [config.init](api_config.md) method._
 
 
 ## Creating Tasks
+Tasks are grunt's bread and butter. The stuff you do most often, like `lint` or `test`. Every time grunt is run, you specify one more more tasks to run, which tells grunt what you'd like it to do.
+
+If you don't specify a task, but a task named "default" has been defined, that task will run (unsurprisingly) by default.
+
 _Note that the methods listed below are also available on the [grunt.task](api_task.md) object in addition to the `grunt` object._
 
 

@@ -12,7 +12,7 @@ Note that any method marked with a ☃ (unicode snowman) is available directly o
 
 
 ## Creating Tasks
-Tasks are grunt's bread and butter. The stuff you do most often, like `concat` or `test`. Every time grunt is run, you specify one more more tasks to run, which tells grunt what you'd like it to do.
+Tasks are grunt's bread and butter. The stuff you do most often, like `lint` or `test`. Every time grunt is run, you specify one more more tasks to run, which tells grunt what you'd like it to do.
 
 If you don't specify a task, but a task named "default" has been defined, that task will run (unsurprisingly) by default.
 

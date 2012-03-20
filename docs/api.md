@@ -278,7 +278,7 @@ _This method is an alias for the [grunt.task.loadNpmTasks](api_task.md) method._
 _Note that the methods listed below are also available on the [grunt.task](api_task.md) object in addition to the `grunt` object._
 
 ### grunt.registerHelper
-Register a helper function that can be used by any task.
+Register a helper function that can be used by any task. When called as a directive, `this.directive` will be true inside of the helper.
 
 ```javascript
 grunt.registerHelper(helperName, helperFunction)

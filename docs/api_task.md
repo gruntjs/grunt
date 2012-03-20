@@ -213,7 +213,7 @@ Helpers are utility functions that can be used by any task.
 For example, in the [min task](../tasks/min.js), the majority of the actual minification work is done in an `uglify` helper, so that other tasks can utilize that minification code if they want to.
 
 ### grunt.task.registerHelper ☃
-Register a helper function that can be used by any task.
+Register a helper function that can be used by any task. When called as a directive, `this.directive` will be true inside of the helper.
 
 ```javascript
 grunt.task.registerHelper(helperName, helperFunction)
@@ -259,7 +259,7 @@ Directives are essentially string placeholders for helper functions, specified a
 A good example of directives would be the `<json:package.json>` and `<config:lint.all>` directives in grunt's own [grunt.js gruntfile](../grunt.js). Or the `<banner>` and `<file_strip_banner:src/grunt-jquery-example.js>` directives in the [sample jQuery plugin gruntfile](https://github.com/cowboy/grunt-jquery-example/blob/master/grunt.js).
 
 ### grunt.task.directive
-Manually execute a helper based on the passed string directive, returning its value.
+Manually execute a helper based on the passed string directive, returning its value. Note that this only works for synchronous helpers. When called as a directive, `this.directive` will be true inside of the helper.
 
 ```javascript
 grunt.task.directive(directive)
@@ -276,15 +276,19 @@ grunt.task.directive('<add_two_numbers:1:2>') // 3
 ```
 
 ### grunt.task.getDirectiveParts
-DESCRIPTION
+Split a valid directive into its components. Returns `null` if the string can't be parsed as a directive or if the directive doesn't match an existing helper.
 
 ```javascript
-grunt.task.getDirectiveParts()
+grunt.task.getDirectiveParts(directive)
 ```
 
-In this example, DESCRIPTION
+In this example, the directive can't be parsed initially because the appropriate helper hasn't been defined. Once the helper has been defined, the directive can be parsed.
 
 ```javascript
+grunt.task.getDirectiveParts('<foo:bar:baz>') // null
+
+grunt.task.registerHelper('foo', function() {});
+grunt.task.getDirectiveParts('<foo:bar:baz>') // ['foo', 'bar', 'baz']
 ```
 
 

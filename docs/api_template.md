@@ -6,7 +6,7 @@ Underscore.js template processing and other template-related methods.
 
 See the [template lib source](../lib/grunt/template.js) for more information.
 
-## Internal methods
+## The template API
 
 ### grunt.template.process
 Process an [Underscore.js template](http://underscorejs.org/#template) string. If `data` is omitted, the entire [config object](api_config.md) is used. Templates are processed recursively until there are no more templates to process.

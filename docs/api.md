@@ -167,7 +167,7 @@ _This method is an alias for the [task.registerInitTask](api_task.md) method._
 
 ## Inside Tasks
 
-### this.async
+### this.async / grunt.task.current.async
 If a task is asynchronous, this method must be invoked to instruct grunt to wait. It returns a handle to a "done" function that should be called when the task has completed. `false` can be passed to the done function to indicate that the task has failed. If this method isn't invoked, the task executes synchronously.
 
 ```javascript
@@ -182,31 +182,31 @@ setTimeout(function() {
 }, 1000);
 ```
 
-### this.name
+### this.name / grunt.task.current.name
 The name of the task, as defined in `grunt.registerTask`. For example, if a "sample" task was run as `grunt sample` or `grunt sample:foo`, inside the task function, `this.name` would be `"sample"`.
 
-### this.nameArgs
+### this.nameArgs / grunt.task.current.nameArgs
 The name of the task, as specified with any colon-separated arguments or flags on the command-line. For example, if a "sample" task was run as `grunt sample:foo`, inside the task function, `this.nameArgs` would be `"sample:foo"`.
 
-### this.args
+### this.args / grunt.task.current.args
 An array of arguments passed to the task. For example, if a "sample" task was run as `grunt sample:foo:bar`, inside the task function, `this.args` would be `["foo", "bar"]`. Note that in multi tasks, the target is removed from the `this.args` array and is not passed into the task function.
 
-### this.flags
+### this.flags / grunt.task.current.flags
 An object generated from the arguments passed to the task. For example, if a "sample" task was run as `grunt sample:foo:bar`, inside the task function, `this.flags` would be `{foo: true, bar: true}`. In a multi task, the target name is not set as a flag.
 
-### this.extraspaths
+### this.extraspaths / grunt.task.current.extraspaths
 TODO: re-evaluate
 
 
 ## Inside Multi Tasks
 
-### this.target
+### this.target / grunt.task.current.target
 In a multi task, this is the name of the target currently being iterated over. For example, if a "sample" multi task was run as `grunt sample:foo` with the config data `{sample: {foo: "bar"}}`, inside the task function, `this.target` would be `"foo"`.
 
-### this.data
+### this.data / grunt.task.current.data
 In a multi task, this is the actual data stored in the grunt config object for the given target. For example, if a "sample" multi task was run as `grunt sample:foo` with the config data `{sample: {foo: "bar"}}`, inside the task function, `this.data` would be `"bar"`.
 
-### this.file
+### this.file / grunt.task.current.file
 In a multi task, target data can be stored in two different formats. A relatively basic "compact" format and a much more flexible "full" format. When the compact format is used, that key and value are made available as `this.file.dest` and `this.file.src`, respectively. When the full format is used, the specified `src` and `dest` values are used for `this.file.dest` and `this.file.src`.
 
 Note that while grunt supports expanding [templates](api_template.md) for both `src` and `dest`, they only work for the `dest` file path when the _full_ format is used.

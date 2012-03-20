@@ -27,7 +27,7 @@ var obj = {
   bar: 'b<%= foo %>d',
   baz: 'a<%= bar %>e'
 };
-template.process('<%= baz %>', obj) // 'abcde'
+grunt.template.process('<%= baz %>', obj) // 'abcde'
 ```
 
 ### grunt.template.delimiters

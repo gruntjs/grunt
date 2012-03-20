@@ -61,14 +61,18 @@ grunt.file.findup(rootdir, filename)
 ```
 
 ### grunt.file.isPathAbsolute
-Is a given file path absolute? Note that `pathParts` can be........
+Is a given file path absolute?
+
+_Note that like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path._
 
 ```javascript
-grunt.file.isPathAbsolute(pathParts)
+grunt.file.isPathAbsolute(path1 [, path2 [, ...]])
 ```
 
 ## File Lists and Wildcards
-Wildcard patterns are resolved relative to the [grunt.js gruntfile](configuring.md) using the [glob-whatev library](https://github.com/cowboy/node-glob-whatev). See the [minimatch](https://github.com/isaacs/minimatch) module documentation for more details on supported wildcard patterns.
+Wildcard patterns are resolved using the [glob-whatev library](https://github.com/cowboy/node-glob-whatev). See the [minimatch](https://github.com/isaacs/minimatch) module documentation for more details on supported wildcard patterns.
+
+_Note: all file paths and wildcard patterns are relative to the [grunt.js gruntfile](configuring.md)._
 
 ### grunt.file.expand
 Return a unique array of all file or directory paths that match the given wildcard pattern(s). This method accepts one or more comma separated wildcard patterns as well as an array of wildcard patterns.

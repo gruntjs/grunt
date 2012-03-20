@@ -53,6 +53,8 @@ But these are just examples. For more information, take a look at the API docume
 
 ## Config
 
+Note that the method listed below is also available on the [grunt.config](api_config.md) object in addition to being available on the `grunt` object.
+
 
 ### grunt.initConfig
 Initialize a configuration object for the current project. The specified `configObject` is used by tasks and helpers and can also be accessed using the [grunt.config](api_config.md) method. Nearly every project's [grunt.js gruntfile](configuring.md) will call this method.

@@ -35,7 +35,7 @@ task.hadErrors
 
 ## The task API
 
-Note that many of these methods are available directly on the `grunt` object.
+Note that any method marked with a ☃ (unicode snowman) is available directly on the `grunt` object. See the [API main page](api.md) for usage information.
 
 
 ## Creating Tasks
@@ -85,7 +85,7 @@ See the [creating tasks](tasks_creating.md) documentation for more examples of t
 _This method is an alias for the [grunt.registerTask](api.md) method._
 
 
-### grunt.task.registerMultiTask
+### grunt.task.registerMultiTask ☃
 Register a "multi task." A multi task is a task that implicitly iterates over all of its named sub-properties (AKA targets) if no target was specified. In addition to the default properties and methods, extra multi task-specific properties are available inside the task function as properties of the `this` object.
 
 Many of the built-in tasks, including the [lint task](task_lint.md), [concat task](task_concat.md) and [min task](task_min.md) are multi tasks.
@@ -115,7 +115,7 @@ See the [creating tasks](tasks_creating.md) documentation for more examples of m
 _This method is an alias for the [grunt.registerMultiTask](api.md) method._
 
 
-### grunt.task.registerInitTask
+### grunt.task.registerInitTask ☃
 Register an "init task." An init task is a task that doesn't require any configuration data, and as such will still run even if grunt can't find a [grunt.js gruntfile](configuring.md). The [init task](task_init.md) is an example of an init task.
 
 ```javascript
@@ -126,7 +126,7 @@ For an init task example, see the [init task source](../tasks/init.js).
 
 _This method is an alias for the [grunt.registerInitTask](api.md) method._
 
-### grunt.task.renameTask
+### grunt.task.renameTask ☃
 Rename a task. This might be useful if you want to override the default behavior of a task, while retaining the old name.
 
 ```javascript
@@ -202,7 +202,7 @@ grunt.initConfig({
 ## Loading Externally-Defined Tasks
 
 
-### grunt.task.loadTasks
+### grunt.task.loadTasks ☃
 Load task-related files from the specified directory, relative to the [grunt.js gruntfile](configuring.md). This method can be used to load task-related files from a local grunt plugin by specifying the path to that plugin's "tasks" subdirectory.
 
 ```javascript
@@ -212,7 +212,7 @@ grunt.task.loadTasks(tasksPath)
 _This method is an alias for the [grunt.loadTasks](api.md) method._
 
 
-### grunt.task.loadNpmTasks
+### grunt.task.loadNpmTasks ☃
 Load tasks and helpers from the specified Npm-installed grunt plugin. If the verion of grunt being run was installed globally via Npm, this will load a global Npm module. If the verion of grunt being run was installed locally via Npm, this will load a local Npm module.
 
 ```javascript
@@ -224,7 +224,7 @@ _This method is an alias for the [grunt.loadNpmTasks](api.md) method._
 
 ## Defining and Executing Helpers
 
-### grunt.task.registerHelper
+### grunt.task.registerHelper ☃
 Register a helper function that can be used by any task.
 
 ```javascript
@@ -241,7 +241,7 @@ grunt.task.registerHelper("add_two_nums", function(a, b) {
 
 _This method is an alias for the [grunt.registerHelper](api.md) method._
 
-### grunt.task.renameHelper
+### grunt.task.renameHelper ☃
 Rename a helper. This might be useful if you want to override the default behavior of a helper, while retaining the old name (to avoid having to completely recreate an already-made task just because you needed to override or extend a built-in helper).
 
 ```javascript
@@ -250,7 +250,7 @@ grunt.task.renameHelper(oldname, newname)
 
 _This method is an alias for the [grunt.renameHelper](api.md) method._
 
-### grunt.task.helper
+### grunt.task.helper ☃
 Invoke a registered helper function.
 
 ```javascript

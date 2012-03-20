@@ -100,7 +100,7 @@ task.registerTask('default', 'lint qunit concat min');
 
 **Function task**
 
-If a `description` and `taskFunction` are passed, the specified function will be executed whenever the task is run. In addition, the specified description will be shown when `grunt --help` is run. Task-specific properties and methods are available inside the task function as properties of the `this` object.
+If a `description` and `taskFunction` are passed, the specified function will be executed whenever the task is run. In addition, the specified description will be shown when `grunt --help` is run. Task-specific properties and methods are available inside the task function as properties of the `this` object. The task function can return `false` to indicate that the task has failed.
 
 Note that the `grunt.registerMultiTask` method, explained below, can be used to define a special type of task known as a "multi task."
 

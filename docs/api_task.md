@@ -131,6 +131,8 @@ setTimeout(function() {
 ### this.requires / grunt.task.current.requires
 If one task depends on the successful completion of another task (or tasks), this method can be used to force grunt to abort if the other task didn't run, or if the other task failed. The task list can be a space-separated string, an array of task names, or individual task name arguments.
 
+Note that this won't actually run the specified task(s), it will just fail the current task if they haven't run successfully.
+
 ```javascript
 this.requires(taskList)
 ```

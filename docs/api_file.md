@@ -117,18 +117,14 @@ grunt.file.expand(patterns)
 ```
 
 ### grunt.file.expandDirs
-Return a unique array of all directory paths that match the given wildcard pattern(s). This method accepts one or more comma separated wildcard patterns as well as an array of wildcard patterns.
-
-Patterns are resolved relative to the [grunt.js gruntfile](configuring.md). See the [minimatch](https://github.com/isaacs/minimatch) module documentation for more details on wildcard patterns.
+This method behaves the same as `grunt.file.expand` except it only returns directory paths.
 
 ```javascript
 grunt.file.expandDirs(patterns)
 ```
 
 ### grunt.file.expandFiles
-Return a unique array of all file paths that match the given wildcard pattern(s). This method accepts one or more comma separated wildcard patterns as well as an array of wildcard patterns.
-
-Patterns are resolved relative to the [grunt.js gruntfile](configuring.md). See the [minimatch](https://github.com/isaacs/minimatch) module documentation for more details on wildcard patterns.
+This method behaves the same as `grunt.file.expand` except it only returns file paths.
 
 ```javascript
 grunt.file.expandFiles(patterns)

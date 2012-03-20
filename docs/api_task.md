@@ -185,7 +185,7 @@ grunt.initConfig({
 
 
 ## Loading Externally-Defined Tasks
-
+For most projects, tasks and helpers will be defined in the [grunt.js gruntfile](configuring.md). For larger projects, or in cases where tasks and helpers need to be shared across projects, tasks can be loaded from one or more external directories or Npm-installed grunt plugins.
 
 ### grunt.task.loadTasks ☃
 Load task-related files from the specified directory, relative to the [grunt.js gruntfile](configuring.md). This method can be used to load task-related files from a local grunt plugin by specifying the path to that plugin's "tasks" subdirectory.

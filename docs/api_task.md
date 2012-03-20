@@ -210,7 +210,7 @@ _This method is also available as [grunt.loadNpmTasks](api.md)._
 ## Helpers
 Helpers are utility functions that can be used by any task.
 
-For example, in the [min task](../tasks/min.js), the majority of the actual minification work is done in an `uglify` helper, so that other tasks can utilize that code if they need to.
+For example, in the [min task](../tasks/min.js), the majority of the actual minification work is done in an `uglify` helper, so that other tasks can utilize that minification code if they want to.
 
 ### grunt.task.registerHelper ☃
 Register a helper function that can be used by any task.
@@ -254,23 +254,25 @@ grunt.task.helper("add_two_nums", 1, 2) // 3
 _This method is also available as [grunt.helper](api.md)._
 
 ## Directives
-
-Directives are essentially string placeholders for helper functions, specified as values in the [configuration object](configuring.md). It sounds crazy, but it's not as crazy as it sounds.
+Directives are essentially string placeholders for helper functions, specified as values in the [config object](configuring.md).
 
 A good example of directives would be the `<json:package.json>` and `<config:lint.all>` directives in grunt's own [grunt.js gruntfile](../grunt.js). Or the `<banner>` and `<file_strip_banner:src/grunt-jquery-example.js>` directives in the [sample jQuery plugin gruntfile](https://github.com/cowboy/grunt-jquery-example/blob/master/grunt.js).
 
-In brief, when a directive like `<foo>` is encountered, the `foo` helper is executed, and its return value is substituted in place of the directive string. If `<foo:bar:baz>` is encountered, the `foo` helper is executed, with arguments `"bar"` and `"baz"` passed in.
-
 ### grunt.task.directive
-DESCRIPTION
+Manually execute a helper based on the passed string directive, returning its value.
 
 ```javascript
-grunt.task.directive()
+grunt.task.directive(directive)
 ```
 
-In this example, DESCRIPTION
+In this example, note that the arguments passed into the `add_two_numbers` helper must be coerced into numbers because all directive arguments are processed as strings.
 
 ```javascript
+grunt.task.registerHelper('add_two_numbers', function(a, b) {
+  return Number(a) + Number(b);
+});
+
+grunt.task.directive('<add_two_numbers:1:2>') // 3
 ```
 
 ### grunt.task.getDirectiveParts

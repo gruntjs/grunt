@@ -4,6 +4,8 @@
 
 Miscellaneous utilities, including Underscore.js, Async and Hooker.
 
+See the [utils lib source](../lib/grunt/utils.js) for more information.
+
 ## Internal methods
 
 
@@ -30,6 +32,8 @@ Recurse through nested objects and arrays, executing `callbackFunction` for each
 ```javascript
 grunt.utils.recurse(object, callbackFunction, continueFunction)
 ```
+
+See the [config lib source](../lib/grunt/config.js) for usage examples.
 
 ### grunt.utils.repeat
 Return a string repeated n times.

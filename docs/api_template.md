@@ -11,12 +11,23 @@ See the [template lib source](../lib/grunt/template.js) for more information.
 ### grunt.template.process
 Process an [Underscore.js template](http://underscorejs.org/#template) string. If `data` is omitted, the entire [config object](api_config.md) is used. Templates are processed recursively until there are no more templates to process.
 
-Inside templates, the `grunt` object is exposed as `grunt` so that you can do things like `<%= grunt.template.today('mm/dd/yyyy') %>`. Note that if the `data` object has a `grunt` property, it will prevent this from working!
+Inside templates, the `grunt` object is exposed as `grunt` so that you can do things like `<%= grunt.template.today('yyyy') %>`. _Note that if the `data` object has a `grunt` property, it will prevent this from working._
 
 If `mode` is omitted, `<% %>` style template delimiters will be used. If `mode` is `'init'`, `{% %}` style template delimiters will be used (this is specifically used by the [init task](task_init.md)).
 
 ```javascript
 grunt.template.process(template, data, mode)
+```
+
+In this example, the `baz` property is processed recursively until there are no more `<% %>` templates to process.
+
+```javascript
+var obj = {
+  foo: 'c',
+  bar: 'b<%= foo %>d',
+  baz: 'a<%= bar %>e'
+};
+template.process('<%= baz %>', obj) // 'abcde'
 ```
 
 ### grunt.template.delimiters

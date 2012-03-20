@@ -2,7 +2,7 @@
 
 # [The grunt API](api.md) / grunt.task
 
-Underscore.js template processing and other template-related methods.
+Register and run tasks and helpers, load external tasks.
 
 See the [task lib source](../lib/grunt/task.js) for more information.
 

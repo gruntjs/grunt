@@ -13,7 +13,7 @@ See the [utils lib source](../lib/grunt/utils.js) for more information.
 Return the "kind" of a value. Like `typeof` but returns the internal `[[Class]]` value. Possible results are `"number"`, `"string"`, `"boolean"`, `"function"`, `"regexp"`, `"array"`, `"date"`, `"error"`, `"null"`, `"undefined"` and the catch-all `"object"`.
 
 ```javascript
-grunt.utils.kindOf(value)
+var kind = grunt.utils.kindOf(value)
 ```
 
 ### grunt.utils.linefeed
@@ -23,7 +23,7 @@ The linefeed character, normalized for the current operating system. (`\r\n` on 
 Given a string, return a new string with all the linefeeds normalized for the current operating system. (`\r\n` on Windows, `\n` otherwise)
 
 ```javascript
-grunt.utils.normalizelf(string)
+var normalizedString = grunt.utils.normalizelf(string)
 ```
 
 ### grunt.utils.recurse
@@ -39,14 +39,14 @@ See the [config lib source](../lib/grunt/config.js) for usage examples.
 Return a string repeated n times.
 
 ```javascript
-grunt.utils.repeat(n, str)
+var repeatedString = grunt.utils.repeat(n, str)
 ```
 
 ### grunt.utils.spawn
 Spawn a child process, keeping track of its stdout, stderr and exit code. The method returns a reference to the spawned child. When the child exits, the done function is called.
 
 ```javascript
-grunt.utils.spawn(options, doneFunction)
+var child = grunt.utils.spawn(options, doneFunction)
 ```
 
 The options object has these possible properties:
@@ -92,7 +92,7 @@ See the [init task source](../tasks/init.js) and the [qunit task source](../task
 Given an array or array-like object, return an array. Great for converting `arguments` objects into arrays.
 
 ```javascript
-grunt.utils.toArray(arrayLikeObject)
+var newArray = grunt.utils.toArray(arrayLikeObject)
 ```
 
 ## Internal libraries

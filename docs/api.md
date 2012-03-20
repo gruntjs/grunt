@@ -168,7 +168,7 @@ _This method is an alias for the [task.registerInitTask](api_task.md) method._
 ## Inside Tasks
 
 ### this / grunt.task.current
-An object is made available as `this` inside each task function that contains a number of useful task-specific properties and methods. It is also exposed as `grunt.task.current` for use in [templates](api_templates.md).
+An object is made available as `this` inside each task function that contains a number of useful task-specific properties and methods. It is also exposed as `grunt.task.current` for use in [templates](api_template.md).
 
 ### this.async / grunt.task.current.async
 If a task is asynchronous, this method must be invoked to instruct grunt to wait. It returns a handle to a "done" function that should be called when the task has completed. `false` can be passed to the done function to indicate that the task has failed. If this method isn't invoked, the task executes synchronously.

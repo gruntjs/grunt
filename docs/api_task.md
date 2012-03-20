@@ -12,7 +12,9 @@ Note that any method marked with a ☃ (unicode snowman) is available directly o
 
 
 ## Creating Tasks
+Tasks are grunt's bread and butter. The stuff you do most often, like `concat` or `test`. Every time grunt is run, you specify one more more tasks to run, which tells grunt what you'd like it to do.
 
+If you don't specify a task, but a task named "default" has been defined, that task will run (unsurprisingly) by default.
 
 ### grunt.task.registerTask ☃
 Register an "alias task" or a task function. This method supports the following two signatures:
@@ -109,7 +111,7 @@ grunt.task.renameTask(oldname, newname)
 _This method is also available as [grunt.renameTask](api.md)._
 
 ## Inside Tasks
-An object is made available as `this` inside each task function that contains a number of useful task-specific properties and methods. It is also exposed as `grunt.task.current` for use in [templates](api_template.md).
+An object is made available as `this` inside each task function that contains a number of useful task-specific properties and methods. This same object is also exposed as `grunt.task.current` for use in [templates](api_template.md).
 
 ### this.async / grunt.task.current.async
 If a task is asynchronous, this method must be invoked to instruct grunt to wait. It returns a handle to a "done" function that should be called when the task has completed. `false` can be passed to the done function to indicate that the task has failed. If this method isn't invoked, the task executes synchronously.

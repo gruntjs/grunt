@@ -31,19 +31,25 @@ template.process('<%= baz %>', obj) // 'abcde'
 ```
 
 ### grunt.template.delimiters
-FOO
+Set [Underscore.js template](http://underscorejs.org/#template) delimiters manually, in case you need to use `grunt.utils._.template` manually. You probably won't need this, because you'll be using `grunt.template.process` which does this internally.
 
 ```javascript
-grunt.template.delimiters()
+grunt.template.delimiters(mode)
 ```
 
 ## Template Helpers
 
-### grunt.template.stripBanner
-FOO
+### grunt.template.date
+Format a date using the [dateformat](https://github.com/felixge/node-dateformat) library.
 
 ```javascript
-grunt.template.stripBanner()
+grunt.template.date(date, format)
+```
+
+In this example, a specific date is formatted as month/day/year.
+
+```javascript
+grunt.template.date(847602000000, 'mm/dd/yyyy') // '11/10/1996'
 ```
 
 ### grunt.template.today
@@ -53,7 +59,7 @@ Format today's date using the [dateformat](https://github.com/felixge/node-datef
 grunt.template.today(format)
 ```
 
-In this example, today's date is formatted as a 4-digit year. Great for copyright notices in generated banners!
+In this example, today's date is formatted as a 4-digit year.
 
 ```javascript
 grunt.template.today('yyyy') // '2012'

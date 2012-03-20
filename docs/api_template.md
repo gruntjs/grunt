@@ -13,7 +13,7 @@ Process an [Underscore.js template](http://underscorejs.org/#template) string. I
 
 Inside templates, the `grunt` object is exposed as `grunt` so that you can do things like `<%= grunt.template.today('yyyy') %>`. _Note that if the `data` object has a `grunt` property, it will prevent this from working._
 
-If `mode` is omitted, `<% %>` style template delimiters will be used. If `mode` is `'init'`, `{% %}` style template delimiters will be used (this is specifically used by the [init task](task_init.md)).
+If `mode` is omitted, `<% %>` style template delimiters will be used. If `mode` is "init", `{% %}` style template delimiters will be used (this is specifically used by the [init task](task_init.md)).
 
 ```javascript
 grunt.template.process(template, data, mode)
@@ -47,8 +47,14 @@ grunt.template.stripBanner()
 ```
 
 ### grunt.template.today
-FOO
+Format today's date using the [dateformat](https://github.com/felixge/node-dateformat) library.
 
 ```javascript
-grunt.template.today()
+grunt.template.today(format)
+```
+
+In this example, today's date is formatted as a 4-digit year. Great for copyright notices in generated banners!
+
+```javascript
+grunt.template.today('yyyy') // '2012'
 ```

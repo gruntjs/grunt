@@ -120,7 +120,7 @@ grunt.registerTask('foo', 'A sample task that logs stuff.', function(arg1, arg2)
 
 See the [creating tasks](tasks_creating.md) documentation for more examples of tasks and alias tasks.
 
-_This method is an alias for the [task.registerTask](api_task.md) method._
+_This method is an alias for the [grunt.task.registerTask](api_task.md) method._
 
 
 ### grunt.registerMultiTask
@@ -150,7 +150,7 @@ grunt.registerMultiTask('log', 'Log stuff.', function(target) {
 
 See the [creating tasks](tasks_creating.md) documentation for more examples of multi tasks.
 
-_This method is an alias for the [task.registerMultiTask](api_task.md) method._
+_This method is an alias for the [grunt.task.registerMultiTask](api_task.md) method._
 
 
 ### grunt.registerInitTask
@@ -162,8 +162,16 @@ grunt.registerInitTask(taskName, description, taskFunction)
 
 For an init task example, see the [init task source](../tasks/init.js).
 
-_This method is an alias for the [task.registerInitTask](api_task.md) method._
+_This method is an alias for the [grunt.task.registerInitTask](api_task.md) method._
 
+### grunt.renameTask
+Rename a task. This might be useful if you want to override the default behavior of a task, while retaining the old name.
+
+```javascript
+grunt.renameTask(oldname, newname)
+```
+
+_This method is an alias for the [grunt.task.renameTask](api_task.md) method._
 
 ## Inside Tasks
 
@@ -239,7 +247,7 @@ Load task-related files from the specified directory, relative to the [grunt.js 
 grunt.loadTasks(tasksPath)
 ```
 
-_This method is an alias for the [task.loadTasks](api_task.md) method._
+_This method is an alias for the [grunt.task.loadTasks](api_task.md) method._
 
 
 ### grunt.loadNpmTasks
@@ -249,7 +257,7 @@ Load tasks and helpers from the specified Npm-installed grunt plugin. If the ver
 grunt.loadNpmTasks(pluginName)
 ```
 
-_This method is an alias for the [task.loadNpmTasks](api_task.md) method._
+_This method is an alias for the [grunt.task.loadNpmTasks](api_task.md) method._
 
 
 ## Defining and Executing Helpers
@@ -269,8 +277,16 @@ grunt.registerHelper("add_two_nums", function(a, b) {
 });
 ```
 
-_This method is an alias for the [task.registerHelper](api_task.md) method._
+_This method is an alias for the [grunt.task.registerHelper](api_task.md) method._
 
+### grunt.renameHelper
+Rename a helper. This might be useful if you want to override the default behavior of a helper, while retaining the old name (to avoid having to completely recreate an already-made task just because you needed to override or extend a built-in helper).
+
+```javascript
+grunt.renameHelper(oldname, newname)
+```
+
+_This method is an alias for the [grunt.task.renameHelper](api_task.md) method._
 
 ### grunt.helper
 Invoke a registered helper function.
@@ -285,7 +301,7 @@ In this example, the previously defined `add_two_nums` helper is invoked.
 grunt.helper("add_two_nums", 1, 2) // 3
 ```
 
-_This method is an alias for the [task.helper](api_task.md) method._
+_This method is an alias for the [grunt.task.helper](api_task.md) method._
 
 
 ## Internals

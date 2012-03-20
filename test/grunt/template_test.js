@@ -5,17 +5,17 @@ exports['template'] = {
   'process': function(test) {
     test.expect(4);
     var obj = {
-      foo: 'b',
-      bar: 'a<%= foo %>c',
-      baz: 'x<%= bar %>z'
+      foo: 'c',
+      bar: 'b<%= foo %>d',
+      baz: 'a<%= bar %>e'
     };
 
-    test.equal(template.process('<%= foo %>', obj), 'b', 'should retrieve value.');
-    test.equal(template.process('<%= bar %>', obj), 'abc', 'should recurse.');
-    test.equal(template.process('<%= baz %>', obj), 'xabcz', 'should recurse.');
+    test.equal(template.process('<%= foo %>', obj), 'c', 'should retrieve value.');
+    test.equal(template.process('<%= bar %>', obj), 'bcd', 'should recurse.');
+    test.equal(template.process('<%= baz %>', obj), 'abcde', 'should recurse.');
 
     obj.foo = '<% oops %';
-    test.equal(template.process('<%= baz %>', obj), 'xa<% oops %cz', 'should not explode.');
+    test.equal(template.process('<%= baz %>', obj), 'ab<% oops %de', 'should not explode.');
     test.done();
   }
 };

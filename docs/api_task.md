@@ -109,8 +109,6 @@ grunt.task.renameTask(oldname, newname)
 _This method is also available as [grunt.renameTask](api.md)._
 
 ## Inside Tasks
-
-### this / grunt.task.current
 An object is made available as `this` inside each task function that contains a number of useful task-specific properties and methods. It is also exposed as `grunt.task.current` for use in [templates](api_template.md).
 
 ### this.async / grunt.task.current.async
@@ -265,7 +263,7 @@ Manually execute a helper based on the passed string directive, returning its va
 grunt.task.directive(directive)
 ```
 
-In this example, note that the arguments passed into the `add_two_numbers` helper must be coerced into numbers because all directive arguments are processed as strings.
+In this example, note that the arguments passed into the helper must be coerced into numbers because all directive arguments are passed into the helper as strings.
 
 ```javascript
 grunt.task.registerHelper('add_two_numbers', function(a, b) {

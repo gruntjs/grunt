@@ -17,7 +17,7 @@ _Need some help getting started with grunt? See the [configuring grunt](configur
 This example [gruntfile](configuring.md) shows a brief overview of the [config](api_config.md) properties used by the `qunit` task. For a more in-depth explanation, see the usage examples.
 
 ```javascript
-exports.config = function(grunt) {
+module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
@@ -35,7 +35,7 @@ exports.config = function(grunt) {
 In this example, `grunt qunit` will test all `.html` files in the test directory. First, the wildcard is expanded to match each individual file. Then, each matched filename is converted to the appropriate `file://` URI. Finally, [QUnit][qunit] is run for each URI.
 
 ```javascript
-exports.config = function(grunt) {
+module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
@@ -50,7 +50,7 @@ exports.config = function(grunt) {
 With a slight modification, `grunt qunit` will test all `.html` files in the test directory _and all subdirectories_. See the [minimatch](https://github.com/isaacs/minimatch) module's documentation for more details on wildcard patterns.
 
 ```javascript
-exports.config = function(grunt) {
+module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
@@ -69,7 +69,7 @@ In circumstances where running unit tests from `file://` URIs is inadequate, you
 In this example, `grunt qunit` will test two files, served from the server running at `localhost:8000`.
 
 ```javascript
-exports.config = function(grunt) {
+module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
@@ -90,7 +90,7 @@ If a web server isn't running at `localhost:8000`, running `grunt qunit` with `h
 In this example, running `grunt server qunit` will first start a static web server on `localhost:8000`, with its base path set to the gruntfile's directory. Then, the `qunit` task will be run, requesting the specified URIs from that server.
 
 ```javascript
-exports.config = function(grunt) {
+module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({

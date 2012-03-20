@@ -7,7 +7,7 @@
  * http://benalman.com/about/license/
  */
 
-exports.tasks = function(grunt) {
+module.exports = function(grunt) {
   // Grunt utilities.
   var task = grunt.task;
   var file = grunt.file;

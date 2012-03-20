@@ -14,7 +14,7 @@ _Need some help getting started with grunt? See the [configuring grunt](configur
 This example [gruntfile](configuring.md) shows a brief overview of the [config](api_config.md) properties used by the `lint` task. For a more in-depth explanation, see the usage examples.
 
 ```javascript
-exports.config = function(grunt) {
+module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
@@ -32,7 +32,7 @@ exports.config = function(grunt) {
 Given this example [gruntfile](configuring.md), running `grunt lint` will lint the project's gruntfile as well as all JavaScript files in the `lib` and `test` directories, using the default JSHint `options` and `globals`.
 
 ```javascript
-exports.config = function(grunt) {
+module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
@@ -47,7 +47,7 @@ exports.config = function(grunt) {
 With a slight modification, running `grunt lint` will also lint all JavaScript files in the `lib` and `test` directories _and all subdirectories_. See the [minimatch](https://github.com/isaacs/minimatch) module documentation for more details on wildcard patterns.
 
 ```javascript
-exports.config = function(grunt) {
+module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
@@ -66,7 +66,7 @@ Given this example [gruntfile](configuring.md), running `grunt lint` will lint t
 In this case, you should lint the "beforeconcat" set first, then concat, then lint the "afterconcat" set, by running `grunt lint:beforeconcat concat lint:afterconcat`.
 
 ```javascript
-exports.config = function(grunt) {
+module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
@@ -95,7 +95,7 @@ _Note: in the above example, a default [alias task](tasks_creating.md) was creat
 Building on the previous example, if you want to avoid duplication, you can use a [directive](helpers_directives.md) like `'<config:concat.dist.dest>'` in place of `'dist/output.js'` in the `afterconcat` lint target. This allows you to generate the output filename dynamically. In this example, the `concat:dist` destination filename is generated from the `name` and `version` properties of the referenced `package.json` file through the `pkg` config property.
 
 ```javascript
-exports.config = function(grunt) {
+module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
@@ -122,7 +122,7 @@ In this example, taken from the [Sample jQuery plugin gruntfile](https://github.
 _Note: config `jshint.options` and `jshint.globals` apply to the entire project, but can be overridden with per-file comments like `/*global exports:false*/`._
 
 ```javascript
-exports.config = function(grunt) {
+module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
@@ -158,7 +158,7 @@ For each `lint` target, grunt looks for a target-named object underneath the `js
 In this example, there are default JSHint settings, as well as per-target overrides:
 
 ```javascript
-exports.config = function(grunt) {
+module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({

@@ -14,7 +14,7 @@ Each time grunt is run, it looks in the current directory for a file named `grun
 This is an example of a very basic sample gruntfile that does all three of these things:
 
 ```javascript
-exports.config = function(grunt) {
+module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
@@ -44,7 +44,7 @@ Each grunt task relies on configuration information defined in an object passed 
 For example, this very simple configuration defines a list of files to be linted when the [lint task](task_lint.md) is run on the command line via `grunt lint`.
 
 ```javascript
-exports.config = function(grunt) {
+module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
@@ -61,7 +61,7 @@ _Note: the [lint task](task_lint.md) is an example of a [multi task](tasks_built
 In another example, this very simple configuration saved in the root of a [jQuery repository](https://github.com/jquery/jquery) clone allows the jQuery QUnit unit tests to be run via grunt with `grunt qunit`.
 
 ```javascript
-exports.config = function(grunt) {
+module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
@@ -78,7 +78,7 @@ _Note: even though jQuery's unit tests run in grunt doesn't mean they're going t
 You can store any arbitrary information inside of the configuration object, and as long as it doesn't conflict with a property one of your tasks is using, it will be ignored. Also, because this is JavaScript and not JSON, you can use any valid JavaScript here. This allows you to programatically generate the configuration object, if necessary.
 
 ```javascript
-exports.config = function(grunt) {
+module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
@@ -114,7 +114,7 @@ _Note: you don't need to specify configuration settings for tasks that you don't
 While you can define [tasks](tasks_builtin.md) and [helpers](helpers_directives.md) in your project's gruntfile, you can also load tasks from external sources.
 
 ```javascript
-exports.config = function(grunt) {
+module.exports = function(grunt) {
 
   // Load tasks and helpers from the "tasks" directory, relative to grunt.js.
   grunt.loadTasks('tasks');
@@ -139,7 +139,7 @@ The easiest way to define the default task is to create an [alias task](tasks_cr
 In the following example, a default task is defined that, when invoked by specifying `grunt` or `grunt default` on the command line, will execute the `lint`, `qunit`, `concat` and `min` tasks in-order. It behaves exactly as if `grunt lint qunit concat min` was run on the command line.
 
 ```javascript
-exports.config = function(grunt) {
+module.exports = function(grunt) {
 
   // Default task.
   task.registerTask('default', 'lint qunit concat min');

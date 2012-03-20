@@ -14,7 +14,7 @@ _Need some help getting started with grunt? See the [configuring grunt](configur
 This example [gruntfile](configuring.md) shows a brief overview of the [config](api_config.md) properties used by the `server` task. For a more in-depth explanation, see the usage examples.
 
 ```javascript
-exports.config = function(grunt) {
+module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
@@ -32,7 +32,7 @@ In this example, `grunt server` will start a static web server at `http://localh
 The `server` task is most useful when used in conjunction with another task, like the [qunit](task_qunit.md) task.
 
 ```javascript
-exports.config = function(grunt) {
+module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({

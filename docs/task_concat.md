@@ -14,7 +14,7 @@ _Need some help getting started with grunt? See the [configuring grunt](configur
 This example [gruntfile](configuring.md) shows a brief overview of the [config](api_config.md) properties used by the `concat` task. For a more in-depth explanation, see the usage examples.
 
 ```javascript
-exports.config = function(grunt) {
+module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
@@ -34,7 +34,7 @@ exports.config = function(grunt) {
 Given this example [gruntfile](configuring.md), running `grunt concat:dist` (or `grunt concat` because `concat` is a [multi task](tasks_creating.md)) will simply concatenate the three specified source files, in order, writing the output to `dist/built.js`.
 
 ```javascript
-exports.config = function(grunt) {
+module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
@@ -58,7 +58,7 @@ This generated banner will be the contents of the `meta.banner` underscore templ
 _Note: you don't have to use an external JSON file. It's completely valid to create the `pkg` object inline in the config. That being said, if you already have a JSON file, you might as well reference it. See the [directives](helpers_directives.md) page for more information on the `<banner>` and `<json>` directives and their options._
 
 ```javascript
-exports.config = function(grunt) {
+module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
@@ -85,7 +85,7 @@ Given this example [gruntfile](configuring.md), running `grunt concat` will buil
 While each concat target can be built individually by running `grunt concat:basic` or `grunt concat:extras`, running `grunt concat` will build all concat targets. This is because `concat` is a [multi task](tasks_creating.md).
 
 ```javascript
-exports.config = function(grunt) {
+module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
@@ -111,7 +111,7 @@ Filenames can be generated dynamically by using `<%= %>` delimited underscore te
 Given this example [gruntfile](configuring.md), running `grunt concat:dist` generates a destination file whose name is generated from the `name` and `version` properties of the referenced `package.json` file (via the `pkg` config property).
 
 ```javascript
-exports.config = function(grunt) {
+module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
@@ -134,7 +134,7 @@ Given this more involved example [gruntfile](configuring.md), running `grunt con
 For example, if the `package.json` file contained `{"name": "awesome", "version": "1.0.0"}`, the files `dist/awesome/1.0.0/basic.js` and `dist/awesome/1.0.0/with_extras.js` would be generated.
 
 ```javascript
-exports.config = function(grunt) {
+module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({

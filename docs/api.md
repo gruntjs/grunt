@@ -53,7 +53,7 @@ But these are just examples. For more information, take a look at the API docume
 
 ## Config
 
-Note that the method listed below is also available on the [grunt.config](api_config.md) object in addition to being available on the `grunt` object.
+_Note that the method listed below is also available on the [grunt.config](api_config.md) object in addition to being available on the `grunt` object._
 
 
 ### grunt.initConfig

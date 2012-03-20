@@ -295,18 +295,16 @@ grunt.task.getDirectiveParts('<foo:bar:baz>') // ['foo', 'bar', 'baz']
 
 
 ## Queueing Tasks
+Grunt automatically enqueues and runs all tasks specified on the command line, but individual tasks can enqueue additional tasks to be run.
 
 ### grunt.task.run
-DESCRIPTION
+Enqueue one or more tasks. Every specified task in `taskList` will be run immediately after the current task completes, in the order specified. The `taskList` argument can be a space-separated string or an array of task names.
 
 ```javascript
-grunt.task.run()
+grunt.task.run(taskList)
 ```
 
-In this example, DESCRIPTION
-
-```javascript
-```
+See the [watch task source](../tasks/watch.js) for an example.
 
 ### grunt.task.clearQueue
 DESCRIPTION

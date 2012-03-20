@@ -2,7 +2,7 @@
 
 # [The grunt API](api.md) / grunt.template
 
-Underscore.js template processing and other template-related methods.
+Underscore.js template processing and other template-related methods. While templates can be processed manually using the provided template functions, many tasks and helpers automatically expand template strings specified inside the [grunt.js gruntfile](configuring.md) when used as file paths and banners.
 
 See the [template lib source](../lib/grunt/template.js) for more information.
 

@@ -2,33 +2,110 @@
 
 # [The grunt API](api.md) / grunt.file
 
-Glob expansion, file reading, writing, directory traversing.
+Wildcard expansion, file reading, writing, directory traversing.
 
 See the [file lib source](../lib/grunt/file.js) for more information.
 
-file.mkdir
-file.recurse
-file.findup
-
-file.write
-file.read
-file.readJSON
-file.copy
-
-file.isPathAbsolute
-
-file.npmTaskDir
-file.userDir
-
-file.taskDirs
-file.taskFiles
-file.taskFile
-file.taskFileDefaults
-
-file.clearRequireCache
-
-
 ## The file API
+Grunt provides many methods for reading and writing files, as well as traversing the filesystem and resolving wildcards.
+
+### grunt.file.read
+DESCRIPTION
+
+```javascript
+grunt.file.read()
+```
+
+In this example, DESCRIPTION
+
+```javascript
+```
+
+### grunt.file.readJSON
+DESCRIPTION
+
+```javascript
+grunt.file.readJSON()
+```
+
+In this example, DESCRIPTION
+
+```javascript
+```
+
+### grunt.file.write
+DESCRIPTION
+
+```javascript
+grunt.file.write()
+```
+
+In this example, DESCRIPTION
+
+```javascript
+```
+
+### grunt.file.copy
+DESCRIPTION
+
+```javascript
+grunt.file.copy()
+```
+
+In this example, DESCRIPTION
+
+```javascript
+```
+
+### grunt.file.mkdir
+DESCRIPTION
+
+```javascript
+grunt.file.mkdir()
+```
+
+In this example, DESCRIPTION
+
+```javascript
+```
+
+### grunt.file.recurse
+DESCRIPTION
+
+```javascript
+grunt.file.recurse()
+```
+
+In this example, DESCRIPTION
+
+```javascript
+```
+
+### grunt.file.findup
+DESCRIPTION
+
+```javascript
+grunt.file.findup()
+```
+
+In this example, DESCRIPTION
+
+```javascript
+```
+
+### grunt.file.isPathAbsolute
+DESCRIPTION
+
+```javascript
+grunt.file.isPathAbsolute()
+```
+
+In this example, DESCRIPTION
+
+```javascript
+```
+
+## File Lists and Wildcards
 
 ### grunt.file.expand
 Return a unique array of all file or directory paths that match the given wildcard pattern(s). This method accepts one or more comma separated wildcard patterns as well as an array of wildcard patterns.
@@ -66,41 +143,18 @@ Patterns are resolved relative to the [grunt.js gruntfile](configuring.md). See 
 grunt.file.expandFileURLs(patternsOrURLs)
 ```
 
-### grunt.file.XXX
-DESCRIPTION
+## Something Something
 
-```javascript
-grunt.file.XXX()
-```
+file.npmTaskDir
+file.userDir
 
-In this example, DESCRIPTION
+file.taskDirs
+file.taskFiles
+file.taskFile
+file.taskFileDefaults
 
-```javascript
-```
+file.clearRequireCache
 
-### grunt.file.XXX
-DESCRIPTION
-
-```javascript
-grunt.file.XXX()
-```
-
-In this example, DESCRIPTION
-
-```javascript
-```
-
-### grunt.file.XXX
-DESCRIPTION
-
-```javascript
-grunt.file.XXX()
-```
-
-In this example, DESCRIPTION
-
-```javascript
-```
 
 ### grunt.file.XXX
 DESCRIPTION

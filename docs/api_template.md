@@ -66,3 +66,5 @@ In this example, today's date is formatted as a 4-digit year.
 ```javascript
 grunt.template.today('yyyy') // '2012'
 ```
+
+_Note to self: update this date every year._

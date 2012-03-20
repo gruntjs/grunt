@@ -67,4 +67,4 @@ In this example, today's date is formatted as a 4-digit year.
 grunt.template.today('yyyy') // '2012'
 ```
 
-_(note to self: update this date every year)_
+_(somebody remind me to update this date every year so the docs appear current)_

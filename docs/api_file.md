@@ -7,7 +7,7 @@ Wildcard expansion, file reading, writing, directory traversing.
 See the [file lib source](../lib/grunt/file.js) for more information.
 
 ## The file API
-Grunt provides many methods for reading and writing files, as well as traversing the filesystem and resolving wildcards. Many of these methods are wrappers around core Node.js file functionality with built-in error handling and logging.
+Grunt provides many methods for reading and writing files, as well as traversing the filesystem and resolving wildcards. Many of these methods are wrappers around core Node.js file functionality, but with additional error handling and logging.
 
 _Note: all file paths are relative to the [grunt.js gruntfile](configuring.md)._
 
@@ -63,7 +63,7 @@ grunt.file.findup(rootdir, filename)
 ### grunt.file.isPathAbsolute
 Is a given file path absolute?
 
-_Note that like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path._
+Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
 
 ```javascript
 grunt.file.isPathAbsolute(path1 [, path2 [, ...]])

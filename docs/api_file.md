@@ -7,102 +7,62 @@ Wildcard expansion, file reading, writing, directory traversing.
 See the [file lib source](../lib/grunt/file.js) for more information.
 
 ## The file API
-Grunt provides many methods for reading and writing files, as well as traversing the filesystem and resolving wildcards.
+Grunt provides many methods for reading and writing files, as well as traversing the filesystem and resolving wildcards. _All file paths are relative to the [grunt.js gruntfile](configuring.md)._
 
 ### grunt.file.read
-DESCRIPTION
+Read and return a file's contents. If `encoding` isn't specified, default to `utf8`.
 
 ```javascript
-grunt.file.read()
-```
-
-In this example, DESCRIPTION
-
-```javascript
+grunt.file.read(filepath, encoding)
 ```
 
 ### grunt.file.readJSON
-DESCRIPTION
+Read a file's contents, parsing them as JSON and returning the result.
 
 ```javascript
-grunt.file.readJSON()
-```
-
-In this example, DESCRIPTION
-
-```javascript
+grunt.file.readJSON(filepath)
 ```
 
 ### grunt.file.write
-DESCRIPTION
+Write the specified contents to a file, creating interim directories if necessary. If the `--no-write` command-line option is specified, the file won't actually be written.
 
 ```javascript
-grunt.file.write()
-```
-
-In this example, DESCRIPTION
-
-```javascript
+grunt.file.write(filepath, contents)
 ```
 
 ### grunt.file.copy
-DESCRIPTION
+Copy a source file to a destination path, creating interim directories if necessary. If `callback` is specified, the file contents will be parsed as `utf8` and passed into that function, whose result will be used instead. If the `--no-write` command-line option is specified, the file won't actually be written.
 
 ```javascript
-grunt.file.copy()
-```
-
-In this example, DESCRIPTION
-
-```javascript
+grunt.file.copy(srcpath, destpath [, callback])
 ```
 
 ### grunt.file.mkdir
-DESCRIPTION
+Works like `mkdir -p`. Create a directory and any intermediary directories.
 
 ```javascript
-grunt.file.mkdir()
-```
-
-In this example, DESCRIPTION
-
-```javascript
+grunt.file.mkdir(dirpath)
 ```
 
 ### grunt.file.recurse
-DESCRIPTION
+Recurse into a directory, executing callback for each file.
 
 ```javascript
-grunt.file.recurse()
-```
-
-In this example, DESCRIPTION
-
-```javascript
+grunt.file.recurse(rootdir, callback)
 ```
 
 ### grunt.file.findup
-DESCRIPTION
+Search for a filename in the given directory or all parent directories.
 
 ```javascript
-grunt.file.findup()
-```
-
-In this example, DESCRIPTION
-
-```javascript
+grunt.file.findup(rootdir, filename)
 ```
 
 ### grunt.file.isPathAbsolute
-DESCRIPTION
+Is a given file path absolute? Note that `pathParts` can be........
 
 ```javascript
-grunt.file.isPathAbsolute()
-```
-
-In this example, DESCRIPTION
-
-```javascript
+grunt.file.isPathAbsolute(pathParts)
 ```
 
 ## File Lists and Wildcards

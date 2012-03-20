@@ -52,7 +52,6 @@ exports.tasks = function(grunt) {
 But these are just examples. For more information, take a look at the API documentation:
 
 ## Config
-
 _Note that the method listed below is also available on the [grunt.config](api_config.md) object in addition to the `grunt` object._
 
 
@@ -79,7 +78,6 @@ _This method is an alias for the [config.init](api_config.md) method._
 
 
 ## Creating Tasks
-
 _Note that the methods listed below are also available on the [grunt.task](api_task.md) object in addition to the `grunt` object._
 
 
@@ -242,7 +240,7 @@ grunt.initConfig({
 
 
 ## Loading Externally-Defined Tasks
-
+_Note that the methods listed below are also available on the [grunt.task](api_task.md) object in addition to the `grunt` object._
 
 ### grunt.loadTasks
 Load task-related files from the specified directory, relative to the [grunt.js gruntfile](configuring.md). This method can be used to load task-related files from a local grunt plugin by specifying the path to that plugin's "tasks" subdirectory.
@@ -265,6 +263,7 @@ _This method is an alias for the [grunt.task.loadNpmTasks](api_task.md) method._
 
 
 ## Defining and Executing Helpers
+_Note that the methods listed below are also available on the [grunt.task](api_task.md) object in addition to the `grunt` object._
 
 ### grunt.registerHelper
 Register a helper function that can be used by any task.

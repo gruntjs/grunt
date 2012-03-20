@@ -131,7 +131,7 @@ setTimeout(function() {
 ### this.requires / grunt.task.current.requires
 If one task depends on the successful completion of another task (or tasks), this method can be used to force grunt to abort if the other task didn't run, or if the other task failed. The task list can be a space-separated string, an array of task names, or individual task name arguments.
 
-Note that this won't actually run the specified task(s), it will just fail the current task if they haven't run successfully.
+Note that this won't actually run the specified task(s), it will just fail the current task if they haven't already run successfully.
 
 ```javascript
 this.requires(taskList)
@@ -207,7 +207,10 @@ grunt.task.loadNpmTasks(pluginName)
 _This method is also available as [grunt.loadNpmTasks](api.md)._
 
 
-## Defining and Executing Helpers
+## Helpers
+Helpers are utility functions that can be used by any task.
+
+For example, in the [min task](../tasks/min.js), the majority of the actual minification work is done in an `uglify` helper, so that other tasks can utilize that code if they need to.
 
 ### grunt.task.registerHelper ☃
 Register a helper function that can be used by any task.
@@ -251,6 +254,12 @@ grunt.task.helper("add_two_nums", 1, 2) // 3
 _This method is also available as [grunt.helper](api.md)._
 
 ## Directives
+
+Directives are essentially string placeholders for helper functions, specified as values in the [configuration object](configuring.md). It sounds crazy, but it's not as crazy as it sounds.
+
+A good example of directives would be the `<json:package.json>` and `<config:lint.all>` directives in grunt's own [grunt.js gruntfile](../grunt.js). Or the `<banner>` and `<file_strip_banner:src/grunt-jquery-example.js>` directives in the [sample jQuery plugin gruntfile](https://github.com/cowboy/grunt-jquery-example/blob/master/grunt.js).
+
+In brief, when a directive like `<foo>` is encountered, the `foo` helper is executed, and its return value is substituted in place of the directive string. If `<foo:bar:baz>` is encountered, the `foo` helper is executed, with arguments `"bar"` and `"baz"` passed in.
 
 ### grunt.task.directive
 DESCRIPTION

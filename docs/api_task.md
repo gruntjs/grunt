@@ -4,7 +4,7 @@
 
 Register and run tasks and helpers, load external tasks.
 
-See the [task lib source](../lib/grunt/task.js) for more information.
+See the [task lib source](../lib/grunt/task.js) and [util task lib source](../lib/grunt/util/task.js) for more information.
 
 ## The task API
 

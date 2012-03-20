@@ -26,42 +26,58 @@ grunt.file.readJSON(filepath)
 ```
 
 ### grunt.file.write
-Write the specified contents to a file, creating interim directories if necessary. If the `--no-write` command-line option is specified, the file won't actually be written.
+Write the specified contents to a file, creating intermediate directories if necessary. If the `--no-write` command-line option is specified, the file won't actually be written.
 
 ```javascript
 grunt.file.write(filepath, contents)
 ```
 
 ### grunt.file.copy
-Copy a source file to a destination path, creating interim directories if necessary. If `callback` is specified, the file contents will be parsed as `utf8` and passed into that function, whose result will be used instead. If the `--no-write` command-line option is specified, the file won't actually be written.
+Copy a source file to a destination path, creating intermediate directories if necessary. If `callback` is specified, the file contents will be parsed as `utf8` and passed into that function, whose result will be used instead. If the `--no-write` command-line option is specified, the file won't actually be written.
 
 ```javascript
 grunt.file.copy(srcpath, destpath [, callback])
 ```
 
 ### grunt.file.mkdir
-Works like `mkdir -p`. Create a directory and any intermediary directories.
+Works like `mkdir -p`. Create a directory along with any intermediate directories.
 
 ```javascript
 grunt.file.mkdir(dirpath)
 ```
 
 ### grunt.file.recurse
-Recurse into a directory, executing callback for each file.
+Recurse into a directory, executing `callback` for each file.
 
 ```javascript
 grunt.file.recurse(rootdir, callback)
 ```
 
+The callback function receives the following arguments:
+
+```javascript
+function callback(abspath, rootdir, subdir, filename) {
+  // The full path to the current file, which is nothing more than
+  // the rootdir + subdir + filename arguments, joined.
+  abspath
+  // The root director, as originally specified.
+  rootdir
+  // The current file's directory, relative to rootdir.
+  subdir
+  // The filename of the current file, without any directory parts.
+  filename
+}
+```
+
 ### grunt.file.findup
-Search for a filename in the given directory or all parent directories.
+Search for a filename in the given directory followed by all parent directories. Returns the first matching filepath found, otherwise returns `null`.
 
 ```javascript
 grunt.file.findup(rootdir, filename)
 ```
 
 ### grunt.file.isPathAbsolute
-Is a given file path absolute?
+Is a given file path absolute? Returns a boolean.
 
 Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
 
@@ -95,7 +111,7 @@ This method behaves the same as `grunt.file.expand` except it only returns file 
 grunt.file.expandFiles(patterns)
 ```
 
-This method is used by many built-in tasks to handle wildcard expansion of its source files. See the [concat task source](../tasks/concat.js) for an example.
+This method is used by many built-in tasks to handle wildcard expansion of the specified source files. See the [concat task source](../tasks/concat.js) for an example.
 
 ### grunt.file.expandFileURLs
 Return a unique array of all `file://` URLs for files that match the given wildcard pattern(s). Any absolute `file://`, `http://` or `https://` URLs specified will be passed through. This method accepts one or more comma separated wildcard patterns (or URLs), as well as an array of wildcard patterns (or URLs).

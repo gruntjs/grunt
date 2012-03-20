@@ -88,9 +88,9 @@ module.exports = function(grunt) {
     // Useful init sub-task-specific utilities.
     var init = {
       // Expose any user-specified default init values.
-      defaults: file.taskfileDefaults('init/defaults.json'),
+      defaults: file.taskfileReadJSON('init/defaults.json'),
       // Expose rename rules for this template.
-      renames: file.taskfileDefaults('init', name, 'rename.json'),
+      renames: file.taskfileReadJSON('init', name, 'rename.json'),
       // Return an object containing files to copy with their absolute source path
       // and relative destination path, renamed (or omitted) according to rules in
       // rename.json (if it exists).
@@ -512,7 +512,7 @@ module.exports = function(grunt) {
     var option = utils._.clone(prompts[name]);
     option.name = name;
 
-    var defaults = file.taskfileDefaults('init/defaults.json');
+    var defaults = file.taskfileReadJSON('init/defaults.json');
     if (name in defaults) {
       // A user default was specified for this option, so use its value.
       option.default = defaults[name];

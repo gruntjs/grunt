@@ -31,7 +31,7 @@ module.exports = function(grunt) {
   grunt.registerHelper('json', function(filepath) {
     // Don't re-fetch if being called as a directive and JSON is already cached.
     if (!this.directive || !(filepath in jsons)) {
-      jsons[filepath] = file.readJson(filepath);
+      jsons[filepath] = file.readJSON(filepath);
     }
     return jsons[filepath];
   });

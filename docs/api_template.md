@@ -31,7 +31,9 @@ template.process('<%= baz %>', obj) // 'abcde'
 ```
 
 ### grunt.template.delimiters
-Set [Underscore.js template](http://underscorejs.org/#template) delimiters manually, in case you need to use `grunt.utils._.template` manually. You probably won't need this, because you'll be using `grunt.template.process` which does this internally.
+Set [Underscore.js template](http://underscorejs.org/#template) delimiters manually, in case you need to use `grunt.utils._.template` manually. You probably won't need to call this, because you'll be using `grunt.template.process` which calls this internally.
+
+If `mode` is omitted, `<% %>` style template delimiters will be used. If `mode` is "init", `{% %}` style template delimiters will be used (this is specifically used by the [init task](task_init.md)).
 
 ```javascript
 grunt.template.delimiters(mode)

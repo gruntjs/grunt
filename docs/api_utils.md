@@ -6,8 +6,7 @@ Miscellaneous utilities, including Underscore.js, Async and Hooker.
 
 See the [utils lib source](../lib/grunt/utils.js) for more information.
 
-## Internal methods
-
+## The utils API
 
 ### grunt.utils.kindOf
 Return the "kind" of a value. Like `typeof` but returns the internal `[[Class]]` value. Possible results are `"number"`, `"string"`, `"boolean"`, `"function"`, `"regexp"`, `"array"`, `"date"`, `"error"`, `"null"`, `"undefined"` and the catch-all `"object"`.

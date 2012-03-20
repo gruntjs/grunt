@@ -1,6 +1,6 @@
 [Grunt homepage](https://github.com/cowboy/grunt) | [Documentation table of contents](toc.md) | [Grunt API](api.md)
 
-# The grunt API - grunt.utils
+# [The grunt API](api.md) - grunt.utils
 
 Miscellaneous utilities, including Underscore.js, Async and Hooker.
 

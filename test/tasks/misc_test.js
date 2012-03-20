@@ -1,4 +1,5 @@
 var grunt = require('../../lib/grunt');
+var task = grunt.task;
 var file = grunt.file;
 var utils = grunt.utils;
 var config = grunt.config;
@@ -20,20 +21,40 @@ exports['json'] = function(test) {
 };
 
 exports['strip_banner'] = function(test) {
-  test.expect(2);
+  test.expect(7);
   var src = file.read('test/fixtures/banner.js');
-  test.equal(grunt.helper('strip_banner', src), '// Comment\n\n/* Comment */\n', 'It should strip only the top banner.');
+  test.equal(grunt.helper('strip_banner', src), '// Comment\n\n/* Comment */\n', 'It should strip the top banner.');
+  test.equal(grunt.helper('strip_banner', src, {bang: true}), '// Comment\n\n/* Comment */\n', 'It should strip the top banner.');
   src = file.read('test/fixtures/banner2.js');
-  test.equal(grunt.helper('strip_banner', src), '\n/*! SAMPLE\n * BANNER */\n\n// Comment\n\n/* Comment */\n', 'It should strip only the top banner.');
+  test.equal(grunt.helper('strip_banner', src), '\n/*! SAMPLE\n * BANNER */\n\n// Comment\n\n/* Comment */\n', 'It should not strip the top banner.');
+  test.equal(grunt.helper('strip_banner', src, {bang: true}), '// Comment\n\n/* Comment */\n', 'It should strip the top banner.');
+  src = file.read('test/fixtures/banner3.js');
+  test.equal(grunt.helper('strip_banner', src), '\n// This is\n// A sample\n// Banner\n\n// But this is not\n\n/* And neither\n * is this\n */\n', 'It should not strip the top banner.');
+  test.equal(grunt.helper('strip_banner', src, {bang: true}), '\n// This is\n// A sample\n// Banner\n\n// But this is not\n\n/* And neither\n * is this\n */\n', 'It should not strip the top banner.');
+  test.equal(grunt.helper('strip_banner', src, {line: true}), '// But this is not\n\n/* And neither\n * is this\n */\n', 'It should strip the top banner.');
   test.done();
 };
 
 exports['file_strip_banner'] = function(test) {
-  test.expect(2);
+  test.expect(14);
   var filepath = 'test/fixtures/banner.js';
-  test.equal(grunt.helper('file_strip_banner', filepath), '// Comment\n\n/* Comment */\n', 'It should strip only the top banner.');
+  test.equal(grunt.helper('file_strip_banner', filepath), '// Comment\n\n/* Comment */\n', 'It should strip the top banner.');
+  test.equal(grunt.helper('file_strip_banner', filepath, {bang: true}), '// Comment\n\n/* Comment */\n', 'It should strip the top banner.');
   filepath = 'test/fixtures/banner2.js';
-  test.equal(grunt.helper('file_strip_banner', filepath), '\n/*! SAMPLE\n * BANNER */\n\n// Comment\n\n/* Comment */\n', 'It should not strip a top banner beginning with /*!.');
+  test.equal(grunt.helper('file_strip_banner', filepath), '\n/*! SAMPLE\n * BANNER */\n\n// Comment\n\n/* Comment */\n', 'It should not strip the top banner.');
+  test.equal(grunt.helper('file_strip_banner', filepath, {bang: true}), '// Comment\n\n/* Comment */\n', 'It should strip the top banner.');
+  filepath = 'test/fixtures/banner3.js';
+  test.equal(grunt.helper('file_strip_banner', filepath), '\n// This is\n// A sample\n// Banner\n\n// But this is not\n\n/* And neither\n * is this\n */\n', 'It should not strip the top banner.');
+  test.equal(grunt.helper('file_strip_banner', filepath, {bang: true}), '\n// This is\n// A sample\n// Banner\n\n// But this is not\n\n/* And neither\n * is this\n */\n', 'It should not strip the top banner.');
+  test.equal(grunt.helper('file_strip_banner', filepath, {line: true}), '// But this is not\n\n/* And neither\n * is this\n */\n', 'It should strip the top banner.');
+
+  test.equal(task.directive('<file_strip_banner:test/fixtures/banner.js>'), '// Comment\n\n/* Comment */\n', 'It should strip the top banner.');
+  test.equal(task.directive('<file_strip_banner:test/fixtures/banner.js:bang>'), '// Comment\n\n/* Comment */\n', 'It should strip the top banner.');
+  test.equal(task.directive('<file_strip_banner:test/fixtures/banner2.js>'), '\n/*! SAMPLE\n * BANNER */\n\n// Comment\n\n/* Comment */\n', 'It should not strip the top banner.');
+  test.equal(task.directive('<file_strip_banner:test/fixtures/banner2.js:bang>'), '// Comment\n\n/* Comment */\n', 'It should strip the top banner.');
+  test.equal(task.directive('<file_strip_banner:test/fixtures/banner3.js>'), '\n// This is\n// A sample\n// Banner\n\n// But this is not\n\n/* And neither\n * is this\n */\n', 'It should not strip the top banner.');
+  test.equal(task.directive('<file_strip_banner:test/fixtures/banner3.js:bang>'), '\n// This is\n// A sample\n// Banner\n\n// But this is not\n\n/* And neither\n * is this\n */\n', 'It should not strip the top banner.');
+  test.equal(task.directive('<file_strip_banner:test/fixtures/banner3.js:line>'), '// But this is not\n\n/* And neither\n * is this\n */\n', 'It should strip the top banner.');
   test.done();
 };
 

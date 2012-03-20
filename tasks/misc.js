@@ -37,11 +37,29 @@ exports.tasks = function(grunt) {
   });
 
   // Return the given source coude with any leading banner comment stripped.
-  grunt.registerHelper('strip_banner', template.stripBanner);
+  grunt.registerHelper('strip_banner', function(src, options) {
+    if (!options) { options = {}; }
+    var m = [];
+    if (options.line) {
+      // Strip // ... leading banners.
+      m.push('(?:.*\\/\\/.*\\n)*\\s*');
+    }
+    if (options.bang) {
+      // Strips /* ... */ leading banners.
+      m.push('\\/\\*[\\s\\S]*?\\*\\/');
+    } else {
+      // Strips /* ... */ banners, excluding /*! ... */ banners.
+      m.push('\\/\\*[^!][\\s\\S]*?\\*\\/');
+    }
+    var re = new RegExp('^\\s*(?:' + m.join('|') + ')\\s*', '');
+    return src.replace(re, '');
+  });
 
-  // Get a source file's contents with any leading banner comment stripped.
-  grunt.registerHelper('file_strip_banner', function(filepath) {
-    return template.stripBanner(file.read(filepath));
+  // Get a source file's contents with any leading banner comment stripped. If
+  // used as a directive, get options from the flags object.
+  grunt.registerHelper('file_strip_banner', function(filepath, opts) {
+    var src = file.read(filepath);
+    return grunt.helper('strip_banner', src, this.directive ? this.flags : opts);
   });
 
   // Generate banner from template.

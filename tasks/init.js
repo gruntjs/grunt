@@ -219,7 +219,7 @@ exports.tasks = function(grunt) {
     // other arguments specified after the init:name:???.
     require(templates[name]).apply(this, [grunt, init, function() {
       // Fail task if errors were logged.
-      if (task.hadErrors()) { taskDone(false); }
+      if (task.current.errorCount) { taskDone(false); }
       // Otherwise, print a success message.
       log.writeln().writeln('Initialized from template "' + name + '".');
       // All done!

@@ -57,7 +57,7 @@ exports.tasks = function(grunt) {
     });
 
     // Fail task if errors were logged.
-    if (task.hadErrors()) { return false; }
+    if (this.errorCount) { return false; }
 
     // Otherwise, print a success message.
     log.writeln('Lint free.');

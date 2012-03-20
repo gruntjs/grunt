@@ -29,7 +29,7 @@ exports.tasks = function(grunt) {
     file.write(this.file.dest, grunt.helper('concat', files));
 
     // Fail task if errors were logged.
-    if (task.hadErrors()) { return false; }
+    if (this.errorCount) { return false; }
 
     // Otherwise, print a success message.
     log.writeln('File "' + this.file.dest + '" created.');

@@ -129,7 +129,7 @@ For a given `.js` tasks file or related "extra" file, these paths will be search
 2. Npm-installed grunt plugins or tasks directories specified on the command-line via `--tasks`.
 3. Task directories built-in to a Npm-installed grunt plugin run via its `grunt-` named binary.
 4. Npm-installed grunt plugins or tasks directories specified in the [grunt.js gruntfile](configuring.md).
-5. The built-in grunt tasks directory.
+5. The [built-in grunt tasks directory](../tasks).
 
 _Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, these methods will join all arguments together and normalize the resulting path._
 

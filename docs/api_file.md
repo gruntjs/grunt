@@ -7,40 +7,46 @@ Wildcard expansion, file reading, writing, directory traversing.
 See the [file lib source](../lib/grunt/file.js) for more information.
 
 ## The file API
-Grunt provides many methods for reading and writing files, as well as traversing the filesystem and resolving wildcards. Many of these methods are wrappers around core Node.js file functionality, but with additional error handling and logging.
+There are many provided methods for reading and writing files, as well as traversing the filesystem and finding files by wildcard patterns. Many of these methods are wrappers around core Node.js file functionality, but with additional error handling and logging.
 
 _Note: all file paths are relative to the [grunt.js gruntfile](configuring.md)._
 
 ### grunt.file.read
-Read and return a file's contents. If `encoding` isn't specified, defaults to `utf8`.
+Read and return a file's contents. The `encoding` argument defaults to `utf8` if unspecified.
 
 ```javascript
 grunt.file.read(filepath, encoding)
 ```
 
 ### grunt.file.readJSON
-Read a file's contents, parsing them as JSON and returning the result.
+Read a file's contents, parsing the data as JSON and returning the result.
 
 ```javascript
 grunt.file.readJSON(filepath)
 ```
 
 ### grunt.file.write
-Write the specified contents to a file, creating intermediate directories if necessary. If the `--no-write` command-line option is specified, the file won't actually be written.
+Write the specified contents to a file, creating intermediate directories if necessary.
+
+_If the `--no-write` command-line option is specified, the file won't actually be written._
 
 ```javascript
 grunt.file.write(filepath, contents)
 ```
 
 ### grunt.file.copy
-Copy a source file to a destination path, creating intermediate directories if necessary. If `callback` is specified, the file contents will be parsed as `utf8` and passed into that function, whose return value will be used as the destination file's contents. If the `--no-write` command-line option is specified, the file won't actually be written.
+Copy a source file to a destination path, creating intermediate directories if necessary. If `callback` is specified, the file contents will be parsed as `utf8` and passed into that function, whose return value will be used as the destination file's contents.
+
+_If the `--no-write` command-line option is specified, the file won't actually be written._
 
 ```javascript
 grunt.file.copy(srcpath, destpath [, callback])
 ```
 
 ### grunt.file.mkdir
-Works like `mkdir -p`. Create a directory along with any intermediate directories. If the `--no-write` command-line option is specified, directories won't actually be created.
+Works like `mkdir -p`. Create a directory along with any intermediate directories.
+
+_If the `--no-write` command-line option is specified, directories won't actually be created._
 
 ```javascript
 grunt.file.mkdir(dirpath)

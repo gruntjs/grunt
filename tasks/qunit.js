@@ -198,15 +198,15 @@ module.exports = function(grunt) {
       // Launch PhantomJS.
       var args = [
         // The main script file.
-        file.taskFile('qunit/phantom.js'),
+        task.getFile('qunit/phantom.js'),
         // The temporary file used for communications.
         tempfile.path,
         // The QUnit helper file to be injected.
-        file.taskFile('qunit/qunit.js'),
+        task.getFile('qunit/qunit.js'),
         // URL to the QUnit .html test file to run.
         url,
         // PhantomJS options.
-        '--config=' + file.taskFile('qunit/phantom.json')
+        '--config=' + task.getFile('qunit/phantom.json')
       ];
 
       utils.spawn({

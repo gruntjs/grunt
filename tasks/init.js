@@ -36,11 +36,9 @@ module.exports = function(grunt) {
 
   // An array of all available license files.
   function availableLicenses() {
-    return file.taskDirs('init/licenses').reduce(function(arr, filepath) {
-      return arr.concat(fs.readdirSync(filepath).map(function(filename) {
-        return filename.replace(/^LICENSE-/, '');
-      }));
-    }, []);
+    return grunt.task.expandFiles('init/licenses/*').map(function(obj) {
+      return path.basename(String(obj)).replace(/^LICENSE-/, '');
+    });
   }
 
   grunt.registerInitTask('init', 'Generate project scaffolding from a predefined template.', function() {
@@ -50,24 +48,9 @@ module.exports = function(grunt) {
     var name = args.shift();
     // Valid init templates (.js files).
     var templates = {};
-    // Template-related search paths.
-    var searchpaths = [];
-    // Iterate over all available init-specific extras paths, building templates
-    // object and searchpaths index.
-    this.extraspaths().reverse().forEach(function(dirpath) {
-      var obj = {path: dirpath, subdirs: []};
-      searchpaths.unshift(obj);
-      // Iterate over all files inside init-specific extras paths.
-      fs.readdirSync(dirpath).forEach(function(filename) {
-        var filepath = path.join(dirpath, filename);
-        if (fs.statSync(filepath).isDirectory()) {
-          // Push init subdirs into searchpaths subdirs array for later use.
-          obj.subdirs.push(filename);
-        } else if (fs.statSync(filepath).isFile() && path.extname(filepath) === '.js') {
-          // Add template (plus its path) to the templates object.
-          templates[path.basename(filename, '.js')] = path.join(dirpath, filename);
-        }
-      });
+    task.expandFiles('init/*.js').forEach(function(fileobj) {
+      // Add template (plus its path) to the templates object.
+      templates[path.basename(fileobj.abs, '.js')] = fileobj.abs;
     });
 
     // Abort if a valid template was not specified.
@@ -88,9 +71,9 @@ module.exports = function(grunt) {
     // Useful init sub-task-specific utilities.
     var init = {
       // Expose any user-specified default init values.
-      defaults: file.taskFileDefaults('init/defaults.json'),
+      defaults: task.readDefaults('init/defaults.json'),
       // Expose rename rules for this template.
-      renames: file.taskFileDefaults('init', name, 'rename.json'),
+      renames: task.readDefaults('init', name, 'rename.json'),
       // Return an object containing files to copy with their absolute source path
       // and relative destination path, renamed (or omitted) according to rules in
       // rename.json (if it exists).
@@ -98,7 +81,7 @@ module.exports = function(grunt) {
         var files = {};
         var prefix = 'init/' + name + '/root/';
         // Iterate over all source files.
-        file.taskFiles('init', name, 'root', '**').forEach(function(obj) {
+        task.expandFiles(prefix + '**').forEach(function(obj) {
           // Get the path relative to the template root.
           var relpath = obj.rel.slice(prefix.length);
           var rule = init.renames[relpath];
@@ -114,10 +97,10 @@ module.exports = function(grunt) {
         return files;
       },
       // Search init template paths for filename.
-      srcpath: function() {
+      srcpath: function(arg1) {
+        if (arg1 == null) { return null; }
         var args = ['init', name, 'root'].concat(utils.toArray(arguments));
-        var obj = file.taskFile.apply(file, args);
-        return obj ? String(obj) : null;
+        return task.getFile.apply(file, args);
       },
       // Determine absolute destination file path.
       destpath: path.join.bind(path, process.cwd()),
@@ -126,9 +109,8 @@ module.exports = function(grunt) {
       addLicenseFiles: function(files, licenses) {
         var available = availableLicenses();
         licenses.forEach(function(license) {
-          var srcpath = file.taskFile('init/licenses/LICENSE-' + license);
           files['LICENSE-' + license] = {
-            src: srcpath ? String(srcpath) : null,
+            src: task.getFile('init/licenses/LICENSE-' + license),
             dest: 'LICENSE-' + license
           };
         });
@@ -141,14 +123,16 @@ module.exports = function(grunt) {
           callback = destpath;
           destpath = srcpath;
         }
-        var abssrcpath = file.isPathAbsolute(srcpath) ? srcpath : init.srcpath(srcpath);
-        var absdestpath = init.destpath(destpath);
-        if (!path.existsSync(abssrcpath)) {
-          abssrcpath = file.taskFile('init/misc/placeholder');
+        if (!file.isPathAbsolute(srcpath)) {
+          srcpath = init.srcpath(srcpath);
         }
+        if (!srcpath) {
+          srcpath = task.getFile('init/misc/placeholder');
+        }
+        var absdestpath = init.destpath(destpath);
         verbose.or.write('Writing ' + destpath + '...');
         try {
-          file.copy(abssrcpath, absdestpath, callback);
+          file.copy(srcpath, absdestpath, callback);
           verbose.or.ok();
         } catch(e) {
           verbose.or.error();
@@ -512,7 +496,7 @@ module.exports = function(grunt) {
     var option = utils._.clone(prompts[name]);
     option.name = name;
 
-    var defaults = file.taskFileDefaults('init/defaults.json');
+    var defaults = task.readDefaults('init/defaults.json');
     if (name in defaults) {
       // A user default was specified for this option, so use its value.
       option.default = defaults[name];

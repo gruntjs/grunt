@@ -126,18 +126,18 @@ See the [qunit task source](../tasks/qunit.js) for an example.
 For a given `.js` tasks file or related "extra" file, these paths will be searched in "task path order" until the first matching file is found. This allows a user to override task-related files in any number of ways.
 
 1. The grunt user tasks directory, ie. `grunt.file.userDir('tasks')`
-2. Npm-installed grunt plugins or tasks directories specified on the command-line via `--tasks`.
+2. Npm-installed [grunt plugins](plugins.md) or tasks directories specified on the command-line via `--tasks`.
 3. Task directories built-in to a Npm-installed grunt plugin run via its `grunt-` named binary.
 4. Npm-installed grunt plugins or tasks directories specified in the [grunt.js gruntfile](configuring.md).
 5. The [built-in grunt tasks directory](../tasks).
 
 _Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, these methods will join all arguments together and normalize the resulting path._
 
-### grunt.file.taskDirs
-Search tasks directories for a given subdirectory path, returning an array of all matching subdirectory paths in "task path order." If no path is specified, the base tasks directories will be returned in "task path order."
+### grunt.file.taskFile
+Search tasks directories in "task path order" for a given file path, returning the path of the first matching file. **This is the primary method used to locate tasks files and extras files.**
 
 ```javascript
-grunt.file.taskDirs([path1, [, path2 [, ...]]])
+grunt.file.taskFile(path1, [, path2 [, ...]])
 ```
 
 ### grunt.file.taskFiles
@@ -147,19 +147,20 @@ Search tasks directories for a given file path, returning an array of all matchi
 grunt.file.taskFiles(path1, [, path2 [, ...]])
 ```
 
-### grunt.file.taskFile
-Search tasks directories in "task path order" for a given file path, returning the path of the first matching file.
-
-```javascript
-grunt.file.taskFile(path1, [, path2 [, ...]])
-```
-
 ### grunt.file.taskFileDefaults
-Search tasks directories for a given JSON file path, merging the parsed data objects in "task path order" and returning the final merged object.
+Search tasks directories for a given JSON file path, merging the parsed data objects in "task path order" and returning the final merged object. **This is the primary method used to load task-related JSON default data.**
 
 ```javascript
 grunt.file.taskFileDefaults(path1, [, path2 [, ...]])
 ```
+
+### grunt.file.taskDirs
+Search tasks directories for a given subdirectory path, returning an array of all matching subdirectory paths in "task path order." If no path is specified, the base tasks directories will be returned in "task path order."
+
+```javascript
+grunt.file.taskDirs([path1, [, path2 [, ...]]])
+```
+
 
 
 ## Miscellaneous

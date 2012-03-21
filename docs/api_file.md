@@ -134,15 +134,13 @@ Need to explain all this in a sensible way:
 * Same-named tasks files or extra files will override built-in tasks files or extras files, in this order: the grunt user tasks directory -> tasks directories -> grunt plugins -> grunt built-ins.
 * The grunt user tasks directory is `%USERPROFILE%\.grunt\tasks\` on Windows, and `~/.grunt/tasks/` on OS X or Linux.
 
-Task search paths: for each tasks file or extra file, the first file found when searching the applicable directories in this order will be used.
+For a given `.js` tasks file or related "extra" file, these paths will be searched in order, as applicable, until the first matching file is found. This allows a user to override task-related files in any number of ways.
 
-1. The grunt user tasks directory
-2. Npm-installed grunt plugins specified on the command-line via `--tasks`
-3. Task directories specified on the command-line via `--tasks`
-4. Task directories included in a Npm-installed grunt plugin run via its `grunt-` named binary
-5. Npm-installed grunt plugins specified in the [grunt.js gruntfile](configuring.md)
-6. Task directories specified in the [grunt.js gruntfile](configuring.md)
-7. The built-in grunt tasks directory
+1. The grunt user tasks directory, `%USERPROFILE%\.grunt\tasks\` on Windows, `~/.grunt/tasks/` on OS X or Linux
+2. Npm-installed grunt plugins or tasks directories specified on the command-line via `--tasks`
+3. Task directories built-in to a Npm-installed grunt plugin run via its `grunt-` named binary
+4. Npm-installed grunt plugins or tasks directories specified in the [grunt.js gruntfile](configuring.md)
+5. The built-in grunt tasks directory
 
 
 ### grunt.file.taskDirs

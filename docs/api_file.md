@@ -123,16 +123,6 @@ grunt.file.expandFileURLs(patternsOrURLs)
 See the [qunit task source](../tasks/qunit.js) for an example.
 
 ## Task Directories and Files
-
-Need to explain all this in a sensible way:
-
-* Grunt contains some number of built-in tasks files, defined as `.js` files inside of its `tasks` directory.
-* Tasks and helpers defined in these files are loaded when grunt starts.
-* Some tasks, like the [init task](task_init.md) have task-specific "extra files" in a task-named subdirectory next to the `.js` task file.
-* Any number of grunt plugins or tasks directories can be loaded via the [grunt.loadTasks](api.md) and [grunt.loadNpmTasks](api.md) methods, or specified on the command-line using the `--tasks` option.
-* Tasks and extra files follow the exact same directory structure regardless of where they're loaded from.
-
-#### Search Paths
 For a given `.js` tasks file or related "extra" file, these paths will be searched in order, as applicable, until the first matching file is found. This allows a user to override task-related files in any number of ways.
 
 1. The grunt user tasks directory, `%USERPROFILE%\.grunt\tasks\` on Windows, `~/.grunt/tasks/` on OS X or Linux.

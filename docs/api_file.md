@@ -134,7 +134,9 @@ For a given `.js` tasks file or related "extra" file, these paths will be search
 _Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, these methods will join all arguments together and normalize the resulting path._
 
 ### grunt.file.taskFile
-Search tasks directories in "task path order" for a given file path, returning the path of the first matching file. **This is the primary method used to locate tasks files and extras files.**
+Search tasks directories in "task path order" for a given file path, returning the path of the first matching file.
+
+**This is the primary method used to locate tasks files and extras files.**
 
 ```javascript
 grunt.file.taskFile(path1, [, path2 [, ...]])
@@ -148,7 +150,9 @@ grunt.file.taskFiles(path1, [, path2 [, ...]])
 ```
 
 ### grunt.file.taskFileDefaults
-Search tasks directories for a given JSON file path, merging the parsed data objects in "task path order" and returning the final merged object. **This is the primary method used to load task-related JSON default data.**
+Search tasks directories for a given JSON file path, merging the parsed data objects in "task path order" and returning the final merged object.
+
+**This is the primary method used to load task-related JSON default data.**
 
 ```javascript
 grunt.file.taskFileDefaults(path1, [, path2 [, ...]])

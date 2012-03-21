@@ -131,17 +131,15 @@ Need to explain all this in a sensible way:
 * Some tasks, like the [init task](task_init.md) have task-specific "extra files" in a task-named subdirectory next to the `.js` task file.
 * Any number of grunt plugins or tasks directories can be loaded via the [grunt.loadTasks](api.md) and [grunt.loadNpmTasks](api.md) methods, or specified on the command-line using the `--tasks` option.
 * Tasks and extra files follow the exact same directory structure regardless of where they're loaded from.
-* Same-named tasks files or extra files will override built-in tasks files or extras files, in this order: the grunt user tasks directory -> tasks directories -> grunt plugins -> grunt built-ins.
-* The grunt user tasks directory is `%USERPROFILE%\.grunt\tasks\` on Windows, and `~/.grunt/tasks/` on OS X or Linux.
 
 #### Search Paths
 For a given `.js` tasks file or related "extra" file, these paths will be searched in order, as applicable, until the first matching file is found. This allows a user to override task-related files in any number of ways.
 
-1. The grunt user tasks directory, `%USERPROFILE%\.grunt\tasks\` on Windows, `~/.grunt/tasks/` on OS X or Linux
-2. Npm-installed grunt plugins or tasks directories specified on the command-line via `--tasks`
-3. Task directories built-in to a Npm-installed grunt plugin run via its `grunt-` named binary
-4. Npm-installed grunt plugins or tasks directories specified in the [grunt.js gruntfile](configuring.md)
-5. The built-in grunt tasks directory
+1. The grunt user tasks directory, `%USERPROFILE%\.grunt\tasks\` on Windows, `~/.grunt/tasks/` on OS X or Linux.
+2. Npm-installed grunt plugins or tasks directories specified on the command-line via `--tasks`.
+3. Task directories built-in to a Npm-installed grunt plugin run via its `grunt-` named binary.
+4. Npm-installed grunt plugins or tasks directories specified in the [grunt.js gruntfile](configuring.md).
+5. The built-in grunt tasks directory.
 
 
 ### grunt.file.taskDirs
@@ -154,41 +152,31 @@ grunt.file.taskDirs([path1, [, path2 [, ...]]])
 ```
 
 ### grunt.file.taskFiles
-DESCRIPTION
+Search tasks directories in "Search Paths" order for a given file, returning an array of all matching paths in preferred search order.
+
+Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
 
 ```javascript
-grunt.file.taskFiles()
-```
-
-In this example, DESCRIPTION
-
-```javascript
+grunt.file.taskFiles(path1, [, path2 [, ...]])
 ```
 
 ### grunt.file.taskFile
-DESCRIPTION
+Search tasks directories in "Search Paths" order for a given file, returning the first matching file.
+
+Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
 
 ```javascript
-grunt.file.taskFile()
-```
-
-In this example, DESCRIPTION
-
-```javascript
+grunt.file.taskFile(path1, [, path2 [, ...]])
 ```
 
 ### grunt.file.taskFileDefaults
-DESCRIPTION
+Search tasks directories in "Search Paths" order for a JSON data file, returning the merged data object, allowing default data to be progressively overridden.
+
+Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
 
 ```javascript
-grunt.file.taskFileDefaults()
+grunt.file.taskFileDefaults(path1, [, path2 [, ...]])
 ```
-
-In this example, DESCRIPTION
-
-```javascript
-```
-
 
 
 

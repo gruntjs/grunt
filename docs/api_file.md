@@ -145,32 +145,19 @@ For a given `.js` tasks file or related "extra" file, these paths will be search
 
 
 ### grunt.file.taskDirs
-Search the tasks directories for a given subdirectory, returning an array of all matching paths in order of "most" override to "least" override.
+Search tasks directories in "Search Paths" order for a given subdirectory, returning an array of all matching paths in preferred search order. If no path is specified, the base tasks directories will be returned.
 
-
-Search the grunt user tasks directory
+Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
 
 ```javascript
 grunt.file.taskDirs([path1, [, path2 [, ...]]])
 ```
 
-Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
-
-```javascript
-grunt.file.isPathAbsolute(path1 [, path2 [, ...]])
-```
-
-
-In this example, DESCRIPTION
-
-```javascript
-```
-
-### grunt.file.taskDirs
+### grunt.file.taskFiles
 DESCRIPTION
 
 ```javascript
-grunt.file.taskDirs()
+grunt.file.taskFiles()
 ```
 
 In this example, DESCRIPTION

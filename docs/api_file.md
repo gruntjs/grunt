@@ -104,7 +104,7 @@ grunt.file.userDir([path1, [, path2 [, ...]]])
 ## File Lists and Wildcards
 Wildcard patterns are resolved using the [glob-whatev library](https://github.com/cowboy/node-glob-whatev). See the [minimatch](https://github.com/isaacs/minimatch) module documentation for more details on supported wildcard patterns.
 
-There are also a number of [task-specific](api_task.md) file listing methods, that find files relative to grunt plugins and task directories.
+There are also a number of [task-specific](api_task.md) file listing methods, that find files inside grunt plugins and task directories.
 
 _Note: all file paths and wildcard patterns are relative to the [grunt.js gruntfile](configuring.md)._
 

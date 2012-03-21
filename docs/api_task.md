@@ -393,7 +393,7 @@ grunt.task.expandFiles(patterns)
 ## JSON Defaults
 
 ### grunt.task.readDefaults
-Search tasks directories for a given JSON file path, merging the parsed data objects in "task path order" and returning the final merged object.
+Search tasks directories for a given JSON file, merging the parsed data objects in "task path order" and returning the final merged object.
 
 **This is the primary method used to load task-related JSON default data.**
 

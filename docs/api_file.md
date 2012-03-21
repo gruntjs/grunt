@@ -134,6 +134,7 @@ Need to explain all this in a sensible way:
 * Same-named tasks files or extra files will override built-in tasks files or extras files, in this order: the grunt user tasks directory -> tasks directories -> grunt plugins -> grunt built-ins.
 * The grunt user tasks directory is `%USERPROFILE%\.grunt\tasks\` on Windows, and `~/.grunt/tasks/` on OS X or Linux.
 
+#### Search Paths
 For a given `.js` tasks file or related "extra" file, these paths will be searched in order, as applicable, until the first matching file is found. This allows a user to override task-related files in any number of ways.
 
 1. The grunt user tasks directory, `%USERPROFILE%\.grunt\tasks\` on Windows, `~/.grunt/tasks/` on OS X or Linux

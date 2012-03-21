@@ -138,7 +138,7 @@ Many of the built-in tasks, including the [lint task](task_lint.md), [concat tas
 grunt.registerMultiTask(taskName, description, taskFunction)
 ```
 
-Given the specified configuration, this example multi task would log `foo: 1,2,3` if grunt was run via `grunt log:foo`, or it would log `bar: hello world` if grunt was run via `grunt log:bar`. If grunt was run as `grunt log` however, it would log `foo: 1,2,3` then `bar: hello world` then `grunt baz: false`.
+Given the specified configuration, this example multi task would log `foo: 1,2,3` if grunt was run via `grunt log:foo`, or it would log `bar: hello world` if grunt was run via `grunt log:bar`. If grunt was run as `grunt log` however, it would log `foo: 1,2,3` then `bar: hello world` then `baz: false`.
 
 ```javascript
 grunt.initConfig({

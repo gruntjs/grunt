@@ -317,15 +317,17 @@ See the [watch task source](../tasks/watch.js) for an example.
 
 
 ## Search Directories
-For a given `.js` tasks file or related "extra" file, these paths will be searched in "task path order" until the first matching file is found. This allows a user to override task-related files in any number of ways.
+For a given tasks file or related task "extra" file, these paths will be searched in this order, aka "task path order," until the first matching file is found.
 
-1. The grunt user tasks directory, ie. `grunt.file.userDir('tasks')`. Note that "extra" files can be overridden here, but `.js` tasks files cannot.
+1. The grunt user tasks directory, ie. `grunt.file.userDir('tasks')`.
 2. Npm-installed [grunt plugins](plugins.md) or tasks directories specified on the command-line via the `--tasks` option.
-3. Task directories built-in to a Npm-installed grunt plugin run via its `grunt-` named binary.
-4. Npm-installed grunt plugins, tasks directories or individual tasks and helpers specified in the [grunt.js gruntfile](configuring.md).
+3. Npm-installed grunt plugins, tasks directories or individual tasks and helpers specified in the [grunt.js gruntfile](configuring.md).
+4. Task directories built-in to a Npm-installed grunt plugin run via its `grunt-` named binary.
 5. The [built-in grunt tasks directory](../tasks).
 
-For example, a grunt plugin may add a new "foo" task in `tasks/foo.js`, completely override an existing task like the [concat task](task_concat.md) in `tasks/concat.js` or add a new "bar" [init task](task_init.md) template with `tasks/init/bar.js` and "extra" files in `tasks/init/bar/`. In your user tasks directory, you can create your own "baz" init task template with `tasks/init/baz.js` or even just override individual init template "extra" files like `tasks/init/jquery/root/README.md`.
+This allows referenced Npm-installed grunt plugins, tasks directories, the [grunt.js gruntfile](configuring.md) and even the user to override grunt functionality as needed.
+
+For example, a grunt plugin may add a new "foo" task in its `tasks/foo.js`, completely override an existing task like the [concat task](task_concat.md) in its `tasks/concat.js` or add a new "bar" [init task](task_init.md) template with its `tasks/init/bar.js` and "extra" files in its `tasks/init/bar/` directory. In your personal user tasks directory, you can create your own "baz" init task template with a `tasks/init/baz.js` file or even override individual init template "extra" files like `tasks/init/jquery/root/README.md` just by creating them.
 
 **When defining project-specific tasks or "extra" files, it's always a good idea to include those files in a grunt plugin or tasks directory referenced in the [grunt.js gruntfile](configuring.md), and committed with the project when possible. This will help to guarantee consistent grunt behavior for all contributors to that project.**
 

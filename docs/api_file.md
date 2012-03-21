@@ -91,6 +91,23 @@ Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_pa
 grunt.file.isPathAbsolute(path1 [, path2 [, ...]])
 ```
 
+### grunt.file.npmTaskDir
+Get the path to the "tasks" directory inside an Npm-installed grunt plugin. If the specified plugin is not found, returns `null`.
+
+```javascript
+grunt.file.npmTaskDir(pluginName)
+```
+
+### grunt.file.userDir
+Return a file path relative to the user's `.grunt` directory, which is `%USERPROFILE%\.grunt\` on Windows, and `~/.grunt/` on OS X or Linux. If no file path is specified, the base user `.grunt` directory path will be returned.
+
+_Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path._
+
+```javascript
+grunt.file.userDir([path1, [, path2 [, ...]]])
+```
+
+
 ## File Lists and Wildcards
 Wildcard patterns are resolved using the [glob-whatev library](https://github.com/cowboy/node-glob-whatev). See the [minimatch](https://github.com/isaacs/minimatch) module documentation for more details on supported wildcard patterns.
 
@@ -169,24 +186,4 @@ Search tasks directories for a given subdirectory path, returning an array of al
 
 ```javascript
 grunt.file.taskDirs([path1, [, path2 [, ...]]])
-```
-
-
-
-## Miscellaneous
-
-### grunt.file.npmTaskDir
-Get the path to the "tasks" directory inside an Npm-installed grunt plugin. If the specified plugin is not found, returns `null`.
-
-```javascript
-grunt.file.npmTaskDir(pluginName)
-```
-
-### grunt.file.userDir
-Return a file path relative to the user's `.grunt` directory, which is `%USERPROFILE%\.grunt\` on Windows, and `~/.grunt/` on OS X or Linux. If no file path is specified, the base user `.grunt` directory path will be returned.
-
-_Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path._
-
-```javascript
-grunt.file.userDir([path1, [, path2 [, ...]]])
 ```

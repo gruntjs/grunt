@@ -132,14 +132,35 @@ Need to explain all this in a sensible way:
 * Any number of grunt plugins or tasks directories can be loaded via the [grunt.loadTasks](api.md) and [grunt.loadNpmTasks](api.md) methods, or specified on the command-line using the `--tasks` option.
 * Tasks and extra files follow the exact same directory structure regardless of where they're loaded from.
 * Same-named tasks files or extra files will override built-in tasks files or extras files, in this order: the grunt user tasks directory -> tasks directories -> grunt plugins -> grunt built-ins.
-* The grunt user tasks directory is `%USERPROFILE%\.grunt\tasks` on Windows, and `%HOME%/.grunt/tasks` on OS X or Linux.
+* The grunt user tasks directory is `%USERPROFILE%\.grunt\tasks\` on Windows, and `~/.grunt/tasks/` on OS X or Linux.
+
+Task search paths: for each tasks file or extra file, the first file found when searching the applicable directories in this order will be used.
+
+1. The grunt user tasks directory
+2. Npm-installed grunt plugins specified on the command-line via `--tasks`
+3. Task directories specified on the command-line via `--tasks`
+4. Task directories included in a Npm-installed grunt plugin run via its `grunt-` named binary
+5. Npm-installed grunt plugins specified in the [grunt.js gruntfile](configuring.md)
+6. Task directories specified in the [grunt.js gruntfile](configuring.md)
+7. The built-in grunt tasks directory
+
 
 ### grunt.file.taskDirs
-DESCRIPTION
+Search the tasks directories for a given subdirectory, returning an array of all matching paths in order of "most" override to "least" override.
+
+
+Search the grunt user tasks directory
 
 ```javascript
-grunt.file.taskDirs()
+grunt.file.taskDirs([path1, [, path2 [, ...]]])
 ```
+
+Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
+
+```javascript
+grunt.file.isPathAbsolute(path1 [, path2 [, ...]])
+```
+
 
 In this example, DESCRIPTION
 

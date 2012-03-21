@@ -314,3 +314,89 @@ grunt.task.clearQueue()
 ```
 
 See the [watch task source](../tasks/watch.js) for an example.
+
+
+## Search Directories
+For a given `.js` tasks file or related "extra" file, these paths will be searched in "task path order" until the first matching file is found. This allows a user to override task-related files in any number of ways.
+
+1. The grunt user tasks directory, ie. `grunt.file.userDir('tasks')`. Note that "extra" files can be overridden here, but `.js` tasks files cannot.
+2. Npm-installed [grunt plugins](plugins.md) or tasks directories specified on the command-line via the `--tasks` option.
+3. Task directories built-in to a Npm-installed grunt plugin run via its `grunt-` named binary.
+4. Npm-installed grunt plugins, tasks directories or individual tasks and helpers specified in the [grunt.js gruntfile](configuring.md).
+5. The [built-in grunt tasks directory](../tasks).
+
+For example, a grunt plugin may add a new "foo" task in `tasks/foo.js`, completely override an existing task like the [concat task](task_concat.md) in `tasks/concat.js` or add a new "bar" [init task](task_init.md) template with `tasks/init/bar.js` and "extra" files in `tasks/init/bar/`. In your user tasks directory, you can create your own "baz" init task template with `tasks/init/baz.js` or even just override individual init template "extra" files like `tasks/init/jquery/root/README.md`.
+
+**When defining project-specific tasks or "extra" files, it's always a good idea to include those files in a grunt plugin or tasks directory referenced in the [grunt.js gruntfile](configuring.md), and committed with the project when possible. This will help to guarantee consistent grunt behavior for all contributors to that project.**
+
+### grunt.task.searchDirs
+An array of directory paths that grunt uses to search for task-related files, in "task path order." This array is used when task-specific file listing methods are used.
+
+```javascript
+grunt.task.searchDirs
+```
+
+
+## File Lists and Wildcards
+Wildcard patterns are resolved using the [glob-whatev library](https://github.com/cowboy/node-glob-whatev). See the [minimatch](https://github.com/isaacs/minimatch) module documentation for more details on supported wildcard patterns.
+
+There are also a number of [generic file listing methods](api_file.md) that list files relative to the [grunt.js gruntfile](configuring.md).
+
+### grunt.task.getFile
+Search tasks directories in "task path order" for a given file path, returning the path of the first matching file.
+
+**This is the primary method used to locate tasks files and extras files.**
+
+_Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path._
+
+```javascript
+grunt.task.getFile(path1 [, path2 [, ...]])
+```
+
+### grunt.task.expand
+Search task "search directories" for the given wildcard pattern(s), returning a unique array of all matching file paths as "file objects" in "task path order." This method accepts one or more comma separated wildcard patterns as well as an array of wildcard patterns.
+
+```javascript
+grunt.task.expand(patterns)
+```
+
+Each "file object" item in the returned array has the following properties, and if coerced to string via `String(fileobj)` or `fileObj.toString()` returns the absolute file path `fileobj.abs`. In this way, `.map(String)` can be called on the resulting array to return an array of absolute filepaths.
+
+```javascript
+var fileobj = {
+  // The absolute path of the matched file or directory.
+  abs: absolutePath,
+  // The path of the matched file or directory, relative to the search
+  // directory in which it was found.
+  rel: relativePath,
+  // The search directory in which this file was found.
+  base: basePath
+}
+```
+
+### grunt.task.expandDirs
+This method behaves the same as `grunt.task.expand` except it only returns directory paths.
+
+```javascript
+grunt.task.expandDirs(patterns)
+```
+
+### grunt.task.expandFiles
+This method behaves the same as `grunt.task.expand` except it only returns file paths.
+
+```javascript
+grunt.task.expandFiles(patterns)
+```
+
+## JSON Defaults
+
+### grunt.task.readDefaults
+Search tasks directories for a given JSON file path, merging the parsed data objects in "task path order" and returning the final merged object.
+
+**This is the primary method used to load task-related JSON default data.**
+
+_Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path._
+
+```javascript
+grunt.task.readDefaults(path1 [, path2 [, ...]])
+```

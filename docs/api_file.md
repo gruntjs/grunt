@@ -133,7 +133,7 @@ For a given `.js` tasks file or related "extra" file, these paths will be search
 
 
 ### grunt.file.taskDirs
-Search tasks directories in "Search Paths" order for a given subdirectory, returning an array of all matching paths in preferred search order. If no path is specified, the base tasks directories will be returned.
+Search tasks directories in the above order for a given subdirectory, returning an array of all matching paths in preferred search order. If no path is specified, the base tasks directories will be returned.
 
 Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
 
@@ -142,7 +142,7 @@ grunt.file.taskDirs([path1, [, path2 [, ...]]])
 ```
 
 ### grunt.file.taskFiles
-Search tasks directories in "Search Paths" order for a given file, returning an array of all matching paths in preferred search order.
+Search tasks directories in the above order for a given file, returning an array of all matching paths in preferred search order.
 
 Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
 
@@ -151,7 +151,7 @@ grunt.file.taskFiles(path1, [, path2 [, ...]])
 ```
 
 ### grunt.file.taskFile
-Search tasks directories in "Search Paths" order for a given file, returning the first matching file.
+Search tasks directories in the above order for a given file, returning the first matching file.
 
 Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
 
@@ -160,7 +160,7 @@ grunt.file.taskFile(path1, [, path2 [, ...]])
 ```
 
 ### grunt.file.taskFileDefaults
-Search tasks directories in "Search Paths" order for a JSON data file, returning the merged data object, allowing default data to be progressively overridden.
+Search tasks directories in the above order for a JSON data file, returning the merged data object, allowing default data to be progressively overridden.
 
 Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
 

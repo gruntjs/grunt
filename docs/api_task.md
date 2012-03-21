@@ -332,7 +332,7 @@ For example, a grunt plugin may add a new "foo" task in its `tasks/foo.js`, comp
 **When defining project-specific tasks or "extra" files, it's always a good idea to include those files in a grunt plugin or tasks directory referenced in the [grunt.js gruntfile](configuring.md), and committed with the project when possible. This will help to guarantee consistent grunt behavior for all contributors to that project.**
 
 ### grunt.task.searchDirs
-An array of directory paths that grunt uses to search for task-related files, in "task path order." This array is used when task-specific file listing methods are used.
+An array of directory paths that grunt uses to search for task-related files, in "task path order." This array is used by all task-specific file listing methods.
 
 ```javascript
 grunt.task.searchDirs

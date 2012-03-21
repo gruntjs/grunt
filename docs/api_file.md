@@ -148,8 +148,8 @@ See the [qunit task source](../tasks/qunit.js) for an example.
 ## Task Directories and Files
 For a given `.js` tasks file or related "extra" file, these paths will be searched in "task path order" until the first matching file is found. This allows a user to override task-related files in any number of ways.
 
-1. The grunt user tasks directory, ie. `grunt.file.userDir('tasks')`
-2. Npm-installed [grunt plugins](plugins.md) or tasks directories specified on the command-line via `--tasks`.
+1. The grunt user tasks directory, ie. `grunt.file.userDir('tasks')`. Note that "extra" files can be overridden here, but `.js` tasks files cannot.
+2. Npm-installed [grunt plugins](plugins.md) or tasks directories specified on the command-line via the `--tasks` option.
 3. Task directories built-in to a Npm-installed grunt plugin run via its `grunt-` named binary.
 4. Npm-installed grunt plugins or tasks directories specified in the [grunt.js gruntfile](configuring.md).
 5. The [built-in grunt tasks directory](../tasks).

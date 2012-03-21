@@ -156,7 +156,7 @@ For a given `.js` tasks file or related "extra" file, these paths will be search
 
 For example, a grunt plugin may add a new "foo" task in `tasks/foo.js`, completely override an existing task like the [concat task](task_concat.md) in `tasks/concat.js` or add a new "bar" [init task](task_init.md) template with `tasks/init/bar.js` and "extra" files in `tasks/init/bar/`. In your user tasks directory, you can create your own "baz" init task template with `tasks/init/baz.js` or even just override individual init template "extra" files like `tasks/init/jquery/root/README.md`.
 
-**When defining project-specific tasks or "extra" files, it's always a good idea to include those files in a grunt plugin or tasks directory referenced in the [grunt.js gruntfile](configuring.md), and committed with the project when possible. This will guarantee consistent behavior across all contributors to a given project.**
+**When defining project-specific tasks or "extra" files, it's always a good idea to include those files in a grunt plugin or tasks directory referenced in the [grunt.js gruntfile](configuring.md), and committed with the project when possible. This will help to guarantee consistent grunt behavior for all contributors to that project.**
 
 _Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, these methods will join all arguments together and normalize the resulting path._
 

@@ -345,7 +345,7 @@ Wildcard patterns are resolved using the [glob-whatev library](https://github.co
 There are also a number of [generic file listing methods](api_file.md) that list files relative to the [grunt.js gruntfile](configuring.md).
 
 ### grunt.task.getFile
-Search tasks directories in "task path order" for a given file path, returning the path of the first matching file.
+Search tasks directories in "task path order" (via `grunt.task.searchDirs`) for a given file path, returning the path of the first matching file.
 
 **This is the primary method used to locate tasks files and extras files.**
 
@@ -356,13 +356,13 @@ grunt.task.getFile(path1 [, path2 [, ...]])
 ```
 
 ### grunt.task.expand
-Search task "search directories" for the given wildcard pattern(s), returning a unique array of all matching file paths as "file objects" in "task path order." This method accepts one or more comma separated wildcard patterns as well as an array of wildcard patterns.
+Search task "search directories" for the given wildcard pattern(s), returning a unique array of all matching file paths as "file objects" in `grunt.task.searchDirs` "task path order." This method accepts one or more comma separated wildcard patterns as well as an array of wildcard patterns.
 
 ```javascript
 grunt.task.expand(patterns)
 ```
 
-Each "file object" item in the returned array has the following properties, and if coerced to string via `String(fileobj)` or `fileObj.toString()` returns the absolute file path `fileobj.abs`. In this way, `.map(String)` can be called on the resulting array to return an array of absolute filepaths.
+Each "file object" item in the returned array has the following properties, and if coerced to string via `String(fileobj)` or `fileObj.toString()` returns the absolute file path value. In this way, `.map(String)` can be called on the resulting array to return an array of absolute file path strings.
 
 ```javascript
 var fileobj = {

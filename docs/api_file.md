@@ -123,9 +123,9 @@ grunt.file.expandFileURLs(patternsOrURLs)
 See the [qunit task source](../tasks/qunit.js) for an example.
 
 ## Task Directories and Files
-For a given `.js` tasks file or related "extra" file, these paths will be searched in order, as applicable, until the first matching file is found. This allows a user to override task-related files in any number of ways.
+For a given `.js` tasks file or related "extra" file, these paths will be searched in "task path order" until the first matching file is found. This allows a user to override task-related files in any number of ways.
 
-1. The grunt user tasks directory, `%USERPROFILE%\.grunt\tasks\` on Windows, `~/.grunt/tasks/` on OS X or Linux.
+1. The grunt user tasks directory, ie. `grunt.file.userDir('tasks')`
 2. Npm-installed grunt plugins or tasks directories specified on the command-line via `--tasks`.
 3. Task directories built-in to a Npm-installed grunt plugin run via its `grunt-` named binary.
 4. Npm-installed grunt plugins or tasks directories specified in the [grunt.js gruntfile](configuring.md).
@@ -134,28 +134,28 @@ For a given `.js` tasks file or related "extra" file, these paths will be search
 _Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, these methods will join all arguments together and normalize the resulting path._
 
 ### grunt.file.taskDirs
-Search tasks directories in the above order for a given subdirectory, returning an array of all matching paths in preferred search order. If no path is specified, the base tasks directories will be returned.
+Search tasks directories for a given subdirectory path, returning an array of all matching subdirectory paths in "task path order." If no path is specified, the base tasks directories will be returned in "task path order."
 
 ```javascript
 grunt.file.taskDirs([path1, [, path2 [, ...]]])
 ```
 
 ### grunt.file.taskFiles
-Search tasks directories in the above order for a given file, returning an array of all matching paths in preferred search order.
+Search tasks directories for a given file path, returning an array of all matching file paths in "task path order."
 
 ```javascript
 grunt.file.taskFiles(path1, [, path2 [, ...]])
 ```
 
 ### grunt.file.taskFile
-Search tasks directories in the above order for a given file, returning the first matching file.
+Search tasks directories in "task path order" for a given file path, returning the path of the first matching file.
 
 ```javascript
 grunt.file.taskFile(path1, [, path2 [, ...]])
 ```
 
 ### grunt.file.taskFileDefaults
-Search tasks directories in the above order for a JSON data file, returning the merged data object, allowing default data to be progressively overridden.
+Search tasks directories for a given JSON file path, merging the parsed data objects in "task path order" and returning the final merged object.
 
 ```javascript
 grunt.file.taskFileDefaults(path1, [, path2 [, ...]])
@@ -172,9 +172,9 @@ grunt.file.npmTaskDir(pluginName)
 ```
 
 ### grunt.file.userDir
-Access files in the user's `.grunt` directory, which is `%USERPROFILE%\.grunt\` on Windows, and `~/.grunt/` on OS X or Linux. If no path is specified, the base user `.grunt` directory will be returned.
+Return a file path relative to the user's `.grunt` directory, which is `%USERPROFILE%\.grunt\` on Windows, and `~/.grunt/` on OS X or Linux. If no file path is specified, the base user `.grunt` directory path will be returned.
 
-_Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this methods will join all arguments together and normalize the resulting path._
+_Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path._
 
 ```javascript
 grunt.file.userDir([path1, [, path2 [, ...]]])

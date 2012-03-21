@@ -162,84 +162,20 @@ grunt.file.taskFileDefaults(path1, [, path2 [, ...]])
 ```
 
 
+## Miscellaneous
 
-
-
-file.npmTaskDir
-file.userDir
-
-
-file.clearRequireCache
-
-
-### grunt.file.XXX
-DESCRIPTION
+### grunt.file.npmTaskDir
+Get the path to the "tasks" directory inside an Npm-installed grunt plugin. If the specified plugin is not found, returns `null`.
 
 ```javascript
-grunt.file.XXX()
+grunt.file.npmTaskDir(pluginName)
 ```
 
-In this example, DESCRIPTION
+### grunt.file.userDir
+Access files in the user's `.grunt` directory, which is `%USERPROFILE%\.grunt\` on Windows, and `~/.grunt/` on OS X or Linux. If no path is specified, the base user `.grunt` directory will be returned.
+
+_Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this methods will join all arguments together and normalize the resulting path._
 
 ```javascript
-```
-
-### grunt.file.XXX
-DESCRIPTION
-
-```javascript
-grunt.file.XXX()
-```
-
-In this example, DESCRIPTION
-
-```javascript
-```
-
-### grunt.file.XXX
-DESCRIPTION
-
-```javascript
-grunt.file.XXX()
-```
-
-In this example, DESCRIPTION
-
-```javascript
-```
-
-### grunt.file.XXX
-DESCRIPTION
-
-```javascript
-grunt.file.XXX()
-```
-
-In this example, DESCRIPTION
-
-```javascript
-```
-
-### grunt.file.XXX
-DESCRIPTION
-
-```javascript
-grunt.file.XXX()
-```
-
-In this example, DESCRIPTION
-
-```javascript
-```
-
-### grunt.file.XXX
-DESCRIPTION
-
-```javascript
-grunt.file.XXX()
-```
-
-In this example, DESCRIPTION
-
-```javascript
+grunt.file.userDir([path1, [, path2 [, ...]]])
 ```

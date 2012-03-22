@@ -40,7 +40,7 @@ _This method is also available as [grunt.initConfig](api.md)._
 ## Accessing Config Data
 The following methods allow grunt configuration data to be accessed either via dot-delimited string like `'pkg.author.name'` or via array of property name parts like `['pkg', 'author', 'name']`.
 
-Note that if a property name contains a `.` dot, it should be escaped with a literal backslash, like `\\.`. Internally, if an array of parts is specified, each part will first be escaped with `grunt.config.escape` before being joined on `.`.
+Note that if a property name contains a `.` dot, it should be escaped with a literal backslash, eg `'concat.dist/built\\.js'`. If an array of parts is specified, each part will first be escaped by grunt with `grunt.config.escape` before being joined on `.`.
 
 ### grunt.config
 Get or set a value from the project's grunt configuration. This method serves as an alias to other methods; if two arguments are passed, `grunt.config.set` is called, otherwise `grunt.config.get` is called.

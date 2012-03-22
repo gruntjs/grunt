@@ -32,6 +32,8 @@ grunt.initConfig({
 
 ## Usage examples
 
+### Basic Use
+
 In this example, `grunt server` will start a static web server at `http://localhost:8000/`, with its base path set to the gruntfile's directory. Of course, it will then immediately stop serving files, because grunt exits automatically when there are no more tasks to run.
 
 The `server` task is most useful when used in conjunction with another task, like the [qunit](task_qunit.md) task.
@@ -43,6 +45,30 @@ grunt.initConfig({
     port: 8000,
     base: '.'
   }
+});
+```
+
+### Roll Your Own
+
+Unlike the previous example, in this example the `grunt server` command will run a completely custom `server` task, because it has been overridden. This version is hard-coded to start a static web server at `http://localhost:1234/`, with its base path set to `www-root` subdirectory.
+
+Like the previous example, it will then immediately stop serving files, because grunt exits automatically when there are no more tasks to run, but you'll undoubtedly be running additional tasks after this one.
+
+```javascript
+// Project configuration.
+grunt.initConfig({
+  // This custom server task doesn't care about config options!
+});
+
+// Of course, you'd need to have connect installed locally via npm for
+// this to work... but it works just fine :)
+var connect = require('connect');
+
+// Redefining the "server" task for this project. Note that the output
+// displayed by --help will reflect this task's description.
+grunt.registerTask('server', 'Start a custom static web server.', function() {
+  log.writeln('Starting static web server in "www-root" on port 1234.');
+  connect(connect.static('www-root')).listen(1234);
 });
 ```
 

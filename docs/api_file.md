@@ -35,12 +35,23 @@ grunt.file.write(filepath, contents)
 ```
 
 ### grunt.file.copy
-Copy a source file to a destination path, creating intermediate directories if necessary. If `callback` is specified, the file contents will be parsed as `utf8` and passed into that function, whose return value will be used as the destination file's contents.
+Copy a source file to a destination path, creating intermediate directories if necessary.
 
 _If the `--no-write` command-line option is specified, the file won't actually be written._
 
 ```javascript
-grunt.file.copy(srcpath, destpath [, callback])
+grunt.file.copy(srcpath, destpath [, options])
+```
+
+The `options` object has these possible properties:
+
+```javascript
+var options = {
+  // If specified, the file contents will be parsed as `utf8` and passed into
+  // the function, whose return value will be used as the destination file's
+  // contents.
+  process: processFunction
+};
 ```
 
 ### grunt.file.mkdir

@@ -118,9 +118,9 @@ module.exports = function(grunt) {
       // Given an absolute or relative source path, and an optional relative
       // destination path, copy a file, optionally processing it through the
       // passed callback.
-      copy: function(srcpath, destpath, callback) {
+      copy: function(srcpath, destpath, process) {
         if (typeof destpath !== 'string') {
-          callback = destpath;
+          process = destpath;
           destpath = srcpath;
         }
         if (!file.isPathAbsolute(srcpath)) {
@@ -132,7 +132,7 @@ module.exports = function(grunt) {
         var absdestpath = init.destpath(destpath);
         verbose.or.write('Writing ' + destpath + '...');
         try {
-          file.copy(srcpath, absdestpath, callback);
+          file.copy(srcpath, absdestpath, {process: process});
           verbose.or.ok();
         } catch(e) {
           verbose.or.error();

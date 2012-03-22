@@ -55,7 +55,7 @@ grunt.task.registerTask('foo', 'A sample task that logs stuff.', function(arg1, 
 });
 ```
 
-See the [creating tasks](tasks_creating.md) documentation for more examples of tasks and alias tasks.
+See the [creating tasks](types_of_tasks.md) documentation for more examples of tasks and alias tasks.
 
 _This method is also available as [grunt.registerTask](api.md)._
 
@@ -85,7 +85,7 @@ grunt.task.registerMultiTask('log', 'Log stuff.', function(target) {
 });
 ```
 
-See the [creating tasks](tasks_creating.md) documentation for more examples of multi tasks.
+See the [creating tasks](types_of_tasks.md) documentation for more examples of multi tasks.
 
 _This method is also available as [grunt.registerMultiTask](api.md)._
 

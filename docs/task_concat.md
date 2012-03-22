@@ -5,7 +5,7 @@ Concatenate one or more input files (and/or [directives](helpers_directives.md) 
 
 ## About
 
-This task is a [multi task](tasks_creating.md), meaning that grunt will automatically iterate over all `concat` targets if a target is not specified.
+This task is a [multi task](types_of_tasks.md), meaning that grunt will automatically iterate over all `concat` targets if a target is not specified.
 
 _Need some help getting started with grunt? Visit the [getting started](getting_started.md) page. Are you creating your own tasks or helpers? Check out the [complete API documentation](api.md)._
 
@@ -20,7 +20,7 @@ module.exports = function(grunt) {
 
 ## Project configuration
 
-This example shows a brief overview of the [config](api_config.md) properties used by the `concat` task. For a more in-depth explanation, see the usage examples.
+This example shows a brief overview of the [grunt.js gruntfile](getting_started.md) config properties used by the `concat` task. For a more in-depth explanation, see the usage examples.
 
 ```javascript
 // Project configuration.
@@ -36,7 +36,7 @@ grunt.initConfig({
 
 ### Concatenating multiple files
 
-Given this example, running `grunt concat:dist` (or `grunt concat` because `concat` is a [multi task](tasks_creating.md)) will simply concatenate the three specified source files, in order, writing the output to `dist/built.js`.
+Given this example, running `grunt concat:dist` (or `grunt concat` because `concat` is a [multi task](types_of_tasks.md)) will simply concatenate the three specified source files, in order, writing the output to `dist/built.js`.
 
 ```javascript
 // Project configuration.
@@ -52,7 +52,7 @@ grunt.initConfig({
 
 ### Banner comments
 
-Given this example, running `grunt concat:dist` (or `grunt concat` because `concat` is a [multi task](tasks_creating.md)) will first strip any preexisting banner comment from the `src/project.js` file, then concatenate the result with a newly-generated banner comment, writing the output to `dist/built.js`.
+Given this example, running `grunt concat:dist` (or `grunt concat` because `concat` is a [multi task](types_of_tasks.md)) will first strip any preexisting banner comment from the `src/project.js` file, then concatenate the result with a newly-generated banner comment, writing the output to `dist/built.js`.
 
 This generated banner will be the contents of the `meta.banner` underscore template string interpolated with the config object. In this case, those properties are the values imported from the `package.json` file (which are available via the `pkg` config property) plus today's date.
 
@@ -79,7 +79,7 @@ grunt.initConfig({
 
 Given this example, running `grunt concat` will build two separate files. One "basic" version, with the main file essentially just copied to `dist/basic.js`, and another "with_extras" concatenated version written to `dist/with_extras.js`.
 
-While each concat target can be built individually by running `grunt concat:basic` or `grunt concat:extras`, running `grunt concat` will build all concat targets. This is because `concat` is a [multi task](tasks_creating.md).
+While each concat target can be built individually by running `grunt concat:basic` or `grunt concat:extras`, running `grunt concat` will build all concat targets. This is because `concat` is a [multi task](types_of_tasks.md).
 
 ```javascript
 // Project configuration.
@@ -118,7 +118,7 @@ grunt.initConfig({
 
 ### Advanced dynamic filenames
 
-Given this more involved example, running `grunt concat` will build two separate files (because `concat` is a [multi task](tasks_creating.md)). The destination file paths will be expanded dynamically based on the specified underscore templates, recursively if necessary.
+Given this more involved example, running `grunt concat` will build two separate files (because `concat` is a [multi task](types_of_tasks.md)). The destination file paths will be expanded dynamically based on the specified underscore templates, recursively if necessary.
 
 For example, if the `package.json` file contained `{"name": "awesome", "version": "1.0.0"}`, the files `dist/awesome/1.0.0/basic.js` and `dist/awesome/1.0.0/with_extras.js` would be generated.
 

@@ -5,7 +5,7 @@ Validate one or more input files with JSHint.
 
 ## About
 
-This task is a [multi task](tasks_creating.md), meaning that grunt will automatically iterate over all `lint` targets if a target is not specified.
+This task is a [multi task](types_of_tasks.md), meaning that grunt will automatically iterate over all `lint` targets if a target is not specified.
 
 _Need some help getting started with grunt? Visit the [getting started](getting_started.md) page. Are you creating your own tasks or helpers? Check out the [complete API documentation](api.md)._
 
@@ -58,7 +58,7 @@ grunt.initConfig({
 
 ### Linting before and after concat
 
-Given this example, running `grunt lint` will lint two separate sets of files using the default JSHint `options` and `globals`: one "beforeconcat" set, and one "afterconcat" set. Running `grunt lint` will lint both sets of files all at once, because lint is a [multi task](tasks_creating.md). This is not ideal, because `dist/output.js` may get linted before it gets created via the [concat task](task_concat.md)!
+Given this example, running `grunt lint` will lint two separate sets of files using the default JSHint `options` and `globals`: one "beforeconcat" set, and one "afterconcat" set. Running `grunt lint` will lint both sets of files all at once, because lint is a [multi task](types_of_tasks.md). This is not ideal, because `dist/output.js` may get linted before it gets created via the [concat task](task_concat.md)!
 
 In this case, you should lint the "beforeconcat" set first, then concat, then lint the "afterconcat" set, by running `grunt lint:beforeconcat concat lint:afterconcat`.
 
@@ -81,7 +81,7 @@ grunt.initConfig({
 grunt.registerTask('default', 'lint:beforeconcat concat lint:afterconcat');
 ```
 
-_Note: in the above example, a default [alias task](tasks_creating.md) was created that runs the 'lint:beforeconcat', 'concat' and 'lint:afterconcat' tasks. If you didn't want this to be the default grunt task, you could give it a different name._
+_Note: in the above example, a default [alias task](types_of_tasks.md) was created that runs the 'lint:beforeconcat', 'concat' and 'lint:afterconcat' tasks. If you didn't want this to be the default grunt task, you could give it a different name._
 
 ### Dynamic filenames
 

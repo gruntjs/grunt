@@ -2,7 +2,7 @@
 
 # The grunt API
 
-Grunt exposes all of its methods and properties on the `grunt` object that gets passed into the `module.exports` function exported in your [grunt.js gruntfile](getting_started.md) or in your [tasks file](tasks_creating.md).
+Grunt exposes all of its methods and properties on the `grunt` object that gets passed into the `module.exports` function exported in your [grunt.js gruntfile](getting_started.md) or in your [tasks file](types_of_tasks.md).
 
 For example, your project's [grunt.js gruntfile](getting_started.md) might look like this:
 
@@ -30,7 +30,7 @@ module.exports = function(grunt) {
 };
 ```
 
-And if you're creating a [grunt plugin](plugins.md) or just organizing tasks into a folder, a [custom tasks file](tasks_creating.md) might look like this:
+And if you're creating a [grunt plugin](plugins.md) or just organizing tasks into a folder, a [custom tasks file](types_of_tasks.md) might look like this:
 
 ```javascript
 module.exports = function(grunt) {
@@ -135,7 +135,7 @@ grunt.registerTask('foo', 'A sample task that logs stuff.', function(arg1, arg2)
 });
 ```
 
-See the [creating tasks](tasks_creating.md) documentation for more examples of tasks and alias tasks.
+See the [creating tasks](types_of_tasks.md) documentation for more examples of tasks and alias tasks.
 
 _This method is an alias for the [grunt.task.registerTask](api_task.md) method._
 
@@ -165,7 +165,7 @@ grunt.registerMultiTask('log', 'Log stuff.', function(target) {
 });
 ```
 
-See the [creating tasks](tasks_creating.md) documentation for more examples of multi tasks.
+See the [creating tasks](types_of_tasks.md) documentation for more examples of multi tasks.
 
 _This method is an alias for the [grunt.task.registerMultiTask](api_task.md) method._
 

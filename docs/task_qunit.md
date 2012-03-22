@@ -8,7 +8,7 @@ Run [QUnit][qunit] unit tests in a headless [PhantomJS][phantom] instance.
 
 ## About
 
-This task is a [multi task](tasks_creating.md), meaning that grunt will automatically iterate over all `qunit` targets if a target is not specified.
+This task is a [multi task](types_of_tasks.md), meaning that grunt will automatically iterate over all `qunit` targets if a target is not specified.
 
 _Need some help getting started with grunt? Visit the [getting started](getting_started.md) page. Are you creating your own tasks or helpers? Check out the [complete API documentation](api.md)._
 
@@ -98,7 +98,7 @@ grunt.initConfig({
 grunt.registerTask('test', 'server qunit');
 ```
 
-_Note: in the above example, an [alias task](tasks_creating.md) called `test` was created that runs both the `server` and `qunit` tasks._
+_Note: in the above example, an [alias task](types_of_tasks.md) called `test` was created that runs both the `server` and `qunit` tasks._
 
 ## QUnit
 

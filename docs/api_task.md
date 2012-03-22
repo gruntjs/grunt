@@ -152,9 +152,6 @@ An object generated from the arguments passed to the task. For example, if a "sa
 ### this.errorCount / grunt.task.current.errorCount
 The number of [log.error](api_log.md) calls that occurred during this task. This can be used to fail a task if errors occurred during the task.
 
-### this.extraspaths / grunt.task.current.extraspaths
-TODO: re-evaluate
-
 
 ## Inside Multi Tasks
 

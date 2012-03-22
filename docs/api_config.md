@@ -84,12 +84,10 @@ grunt.config.process([prop])
 ## Requiring Config Data
 
 ### grunt.config.requires
-Fail the current task if one or more required [config](api_config.md) properties is missing. One or more string or array config properties may be specified.
+Fail the current task if one or more required config properties is missing. One or more string or array config properties may be specified.
 
 ```javascript
 grunt.config.requires(prop [, prop [, ...]])
 ```
 
-See the [grunt.config documentation](api_config.md) for more information about config properties.
-
-_This method is also available as [grunt.task.current.requiresConfig](api.md) or inside tasks as [this.requiresConfig](api.md)._
+_This method is also available inside tasks as [this.requiresConfig](api.md)._

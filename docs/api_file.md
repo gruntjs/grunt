@@ -7,9 +7,22 @@ Wildcard expansion, file reading, writing, directory traversing.
 See the [file lib source](../lib/grunt/file.js) for more information.
 
 ## The file API
+Note that any method marked with a ☃ (unicode snowman) is also available directly on the `grunt` object. Just so you know. See the [API main page](api.md) for more usage information.
+
 There are many provided methods for reading and writing files, as well as traversing the filesystem and finding files by wildcard patterns. Many of these methods are wrappers around core Node.js file functionality, but with additional error handling and logging.
 
-_Note: all file paths are relative to the [grunt.js gruntfile](configuring.md)._
+_Note: all file paths are relative to the [grunt.js gruntfile](configuring.md) unless the current working directory is changed with `grunt.file.setBasePath` or the `--base` command-line option._
+
+### grunt.file.setBasePath ☃
+Change grunt's current working directory. By default, all file paths are relative to the [grunt.js gruntfile](configuring.md). This works just like the `--base` command-line option.
+
+```javascript
+grunt.file.setBasePath(path1 [, path2 [, ...]])
+```
+
+Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
+
+_This method is also available as [grunt.setBasePath](api.md)._
 
 ### grunt.file.read
 Read and return a file's contents. The `encoding` argument defaults to `utf8` if unspecified.
@@ -106,7 +119,7 @@ Wildcard patterns are resolved using the [glob-whatev library](https://github.co
 
 There are also a number of [task-specific file listing methods](api_task.md) that find files inside grunt plugins and task directories.
 
-_Note: all file paths and wildcard patterns are relative to the [grunt.js gruntfile](configuring.md)._
+_Note: all file paths are relative to the [grunt.js gruntfile](configuring.md) unless the current working directory is changed with `grunt.file.setBasePath` or the `--base` command-line option._
 
 ### grunt.file.expand
 Return a unique array of all file or directory paths that match the given wildcard pattern(s). This method accepts one or more comma separated wildcard patterns as well as an array of wildcard patterns.

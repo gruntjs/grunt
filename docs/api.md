@@ -337,11 +337,22 @@ _This method is an alias for the [grunt.task.helper](api_task.md) method._
 
 ## Miscellaneous
 
-### grunt.option
-Retrieve the value of a command-line option, eg. `debug`. Note that for each command-line option, a negative calue can be tested, eg. `no-debug`.
+### grunt.setBasePath
+Change grunt's current working directory. By default, all file paths are relative to the [grunt.js gruntfile](configuring.md). This works just like the `--base` command-line option.
 
 ```javascript
-grunt.option(name)
+grunt.file.setBasePath(path1 [, path2 [, ...]])
+```
+
+Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
+
+_This method is an alias for the [grunt.file.setBasePath](api_file.md) method._
+
+### grunt.option
+Retrieve the value of a command-line option, eg. `debug`. Note that for each command-line option, the inverse can be tested, eg. `no-debug`.
+
+```javascript
+grunt.option(optionName)
 ```
 
 ## Internals

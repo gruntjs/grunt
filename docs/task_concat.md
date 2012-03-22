@@ -7,7 +7,7 @@ Concatenate one or more input files (and/or [directives](helpers_directives.md) 
 
 This task is a [multi task](tasks_creating.md), meaning that grunt will automatically iterate over all `concat` targets if a target is not specified.
 
-_Need some help getting started with grunt? See the [configuring grunt](getting_started.md) page._
+_Need some help getting started with grunt? See the [getting started](getting_started.md) page. Are you creating your own tasks or helpers? See the [API documentation](api.md)._
 
 ## Project configuration
 

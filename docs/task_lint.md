@@ -7,11 +7,11 @@ Validate one or more input files with JSHint.
 
 This task is a [multi task](tasks_creating.md), meaning that grunt will automatically iterate over all `lint` targets if a target is not specified.
 
-_Need some help getting started with grunt? See the [configuring grunt](configuring.md) page._
+_Need some help getting started with grunt? See the [configuring grunt](getting_started.md) page._
 
 ## Project configuration
 
-This example [gruntfile](configuring.md) shows a brief overview of the [config](api_config.md) properties used by the `lint` task. For a more in-depth explanation, see the usage examples.
+This example [gruntfile](getting_started.md) shows a brief overview of the [config](api_config.md) properties used by the `lint` task. For a more in-depth explanation, see the usage examples.
 
 ```javascript
 module.exports = function(grunt) {
@@ -29,7 +29,7 @@ module.exports = function(grunt) {
 
 ### Wildcards
 
-Given this example [gruntfile](configuring.md), running `grunt lint` will lint the project's gruntfile as well as all JavaScript files in the `lib` and `test` directories, using the default JSHint `options` and `globals`.
+Given this example [gruntfile](getting_started.md), running `grunt lint` will lint the project's gruntfile as well as all JavaScript files in the `lib` and `test` directories, using the default JSHint `options` and `globals`.
 
 ```javascript
 module.exports = function(grunt) {
@@ -61,7 +61,7 @@ module.exports = function(grunt) {
 
 ### Linting before and after concat
 
-Given this example [gruntfile](configuring.md), running `grunt lint` will lint two separate sets of files using the default JSHint `options` and `globals`: one "beforeconcat" set, and one "afterconcat" set. Running `grunt lint` will lint both sets of files all at once, because lint is a [multi task](tasks_creating.md). This is not ideal, because `dist/output.js` may get linted before it gets created via the [concat task](task_concat.md)!
+Given this example [gruntfile](getting_started.md), running `grunt lint` will lint two separate sets of files using the default JSHint `options` and `globals`: one "beforeconcat" set, and one "afterconcat" set. Running `grunt lint` will lint both sets of files all at once, because lint is a [multi task](tasks_creating.md). This is not ideal, because `dist/output.js` may get linted before it gets created via the [concat task](task_concat.md)!
 
 In this case, you should lint the "beforeconcat" set first, then concat, then lint the "afterconcat" set, by running `grunt lint:beforeconcat concat lint:afterconcat`.
 

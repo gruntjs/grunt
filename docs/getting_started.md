@@ -1,6 +1,6 @@
 [Grunt homepage](https://github.com/cowboy/grunt) | [Documentation table of contents](toc.md)
 
-# Configuring grunt
+# Getting Started
 
 **If you're starting from scratch, check out the [init task](task_init.md), which will set up a new grunt-based project for you. Even if you don't ultimately use the files that are generated, you can very quickly learn how grunt works.**
 

@@ -5,7 +5,7 @@ Generate project scaffolding from a predefined template.
 
 ## About
 
-The `init` task initializes a new project, based on the current environment and the answers to a few questions. Once complete, a [grunt.js configuration file](configuring.md) will be generated along with a complete directory structure, including a basic readme, license, package.json, sample source files and unit tests (etc).
+The `init` task initializes a new project, based on the current environment and the answers to a few questions. Once complete, a [grunt.js configuration file](getting_started.md) will be generated along with a complete directory structure, including a basic readme, license, package.json, sample source files and unit tests (etc).
 
 The exact files and contents created depend on the template chosen along with the answers to the questions asked.
 

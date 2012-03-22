@@ -9,7 +9,7 @@ See the [file lib source](../lib/grunt/file.js) for more information.
 ## The file API
 There are many provided methods for reading and writing files, as well as traversing the filesystem and finding files by wildcard patterns. Many of these methods are wrappers around core Node.js file functionality, but with additional error handling and logging.
 
-_Note: all file paths are relative to the [grunt.js gruntfile](configuring.md) unless the current working directory is changed with `grunt.file.setBase` or the `--base` command-line option._
+_Note: all file paths are relative to the [grunt.js gruntfile](getting_started.md) unless the current working directory is changed with `grunt.file.setBase` or the `--base` command-line option._
 
 ### grunt.file.read
 Read and return a file's contents. The `encoding` argument defaults to `utf8` if unspecified.
@@ -112,7 +112,7 @@ grunt.file.userDir([path1, [, path2 [, ...]]])
 ```
 
 ### grunt.file.setBase
-Change grunt's current working directory. By default, all file paths are relative to the [grunt.js gruntfile](configuring.md). This works just like the `--base` command-line option.
+Change grunt's current working directory. By default, all file paths are relative to the [grunt.js gruntfile](getting_started.md). This works just like the `--base` command-line option.
 
 ```javascript
 grunt.file.setBase(path1 [, path2 [, ...]])
@@ -126,7 +126,7 @@ Wildcard patterns are resolved using the [glob-whatev library](https://github.co
 
 There are also a number of [task-specific file listing methods](api_task.md) that find files inside grunt plugins and task directories.
 
-_Note: all file paths are relative to the [grunt.js gruntfile](configuring.md) unless the current working directory is changed with `grunt.file.setBase` or the `--base` command-line option._
+_Note: all file paths are relative to the [grunt.js gruntfile](getting_started.md) unless the current working directory is changed with `grunt.file.setBase` or the `--base` command-line option._
 
 ### grunt.file.expand
 Return a unique array of all file or directory paths that match the given wildcard pattern(s). This method accepts one or more comma separated wildcard patterns as well as an array of wildcard patterns.

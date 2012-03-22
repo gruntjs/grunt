@@ -2,7 +2,7 @@
 
 # [The grunt API](api.md) / grunt.config
 
-Access project-specific configuration data defined in the [grunt.js gruntfile](configuring.md).
+Access project-specific configuration data defined in the [grunt.js gruntfile](getting_started.md).
 
 See the [config lib source](../lib/grunt/config.js) for more information.
 
@@ -14,7 +14,7 @@ Note that any method marked with a ☃ (unicode snowman) is also available direc
 _Note that the method listed below is also available on the `grunt` object as [grunt.initConfig](api.md)._
 
 ### grunt.config.init ☃
-Initialize a configuration object for the current project. The specified `configObject` is used by tasks and helpers and can also be accessed using the `grunt.config` method. Nearly every project's [grunt.js gruntfile](configuring.md) will call this method.
+Initialize a configuration object for the current project. The specified `configObject` is used by tasks and helpers and can also be accessed using the `grunt.config` method. Nearly every project's [grunt.js gruntfile](getting_started.md) will call this method.
 
 ```javascript
 grunt.config.init(configObject)
@@ -32,7 +32,7 @@ grunt.config.init({
 });
 ```
 
-See the [configuring grunt](configuring.md) page for more configuration examples.
+See the [configuring grunt](getting_started.md) page for more configuration examples.
 
 _This method is also available as [grunt.initConfig](api.md)._
 

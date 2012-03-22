@@ -7,11 +7,11 @@ Start a static web server.
 
 This task starts a static web server on a specified port, at a specified path, which runs as long as grunt is running. Once grunt's tasks have completed, the web server stops.
 
-_Need some help getting started with grunt? See the [configuring grunt](configuring.md) page._
+_Need some help getting started with grunt? See the [configuring grunt](getting_started.md) page._
 
 ## Project configuration
 
-This example [gruntfile](configuring.md) shows a brief overview of the [config](api_config.md) properties used by the `server` task. For a more in-depth explanation, see the usage examples.
+This example [gruntfile](getting_started.md) shows a brief overview of the [config](api_config.md) properties used by the `server` task. For a more in-depth explanation, see the usage examples.
 
 ```javascript
 module.exports = function(grunt) {

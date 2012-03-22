@@ -328,10 +328,10 @@ _This method is an alias for the [grunt.task.helper](api_task.md) method._
 * [grunt.template](api_template.md) - Underscore.js template processing and other template-related methods.
 * [grunt.task](api_task.md) - Register and run tasks and helpers, load external tasks.
 * [grunt.file](api_file.md) - Wildcard expansion, file reading, writing, directory traversing.
-* [grunt.fail](api_fail.md) - More serious than error logging, `fail.warn` and `fail.fatal` will halt everything
 * [grunt.config](api_config.md) - Reading values from the grunt configuration.
 * [grunt.option](api_option.md) - Reading values from the command-line options.
 * [grunt.log](api_log.md) - Don't use `console.log`, use `log.writeln` instead!
-* [grunt.verbose](api_verbose.md) - Just like `log`, but only logs if `--verbose` was specified.
+* [grunt.verbose](api_log.md) - Just like `log`, but only logs if `--verbose` was specified.
+* [grunt.fail](api_fail.md) - More serious than error logging, `fail.warn` and `fail.fatal` will halt everything
 
 Unfortunately, I haven't documented everything yet. Fortunately, the source is open and browsable. Have fun!

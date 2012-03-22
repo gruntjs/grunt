@@ -86,7 +86,7 @@ Returns a comma-separated list of `arr` array items.
 grunt.log.wordlist(arr)
 ```
 
-## Logging Patterns
+## An Example
 
 A common pattern is to only log when in `--verbose` mode OR if an error occurs, like so:
 
@@ -118,4 +118,4 @@ An explanation of the above code:
   3. `.error(e.message);` logs the actual error message (and returns the `notverbose` object).
 4. `grunt.fail.warn('Something went wrong.', 50);` logs a warning in bright yellow, exiting grunt with exit code 50, unless `--force` was specified.
 
-You can write crazy logging chains, omg!
+Take a look at the [built-in tasks source code](../tasks) for more examples.

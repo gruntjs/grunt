@@ -17,7 +17,7 @@ task.helper('foo', 2, 3) // 5
 
 For example, in the [min task](../tasks/min.js), the majority of the actual minification work is done in an `uglify` helper, so that other tasks can utilize that code if they need to.
 
-Take a look at the [built-in tasks source code](https://github.com/cowboy/grunt/tree/master/tasks) for more examples.
+Take a look at the [built-in tasks source code](../tasks) for more examples.
 
 ## Directives
 Directives are essentially string placeholders for helper functions, specified as values in the [configuration object](configuring.md). It sounds crazy, but it's not as crazy as it sounds.

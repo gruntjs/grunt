@@ -1,31 +1,31 @@
 [Grunt homepage](https://github.com/cowboy/grunt) | [Documentation table of contents](toc.md)
 
-# [The grunt API](api.md) / grunt.XXX
+# [The grunt API](api.md) / grunt.option
 
 SHORT_DESCRIPTION
 
-See the [XXX lib source](../lib/grunt/XXX.js) for more information.
+See the [option lib source](../lib/grunt/option.js) for more information.
 
-## The XXX API
+## The option API
 LONG_DESCRIPTION
 
-### grunt.XXX.YYY
+### grunt.option.YYY
 METHOD_DESCRIPTION
 
 ```javascript
-grunt.XXX.YYY()
+grunt.option.YYY()
 ```
 
-### grunt.XXX.YYY
+### grunt.option.YYY
 METHOD_DESCRIPTION
 
 ```javascript
-grunt.XXX.YYY()
+grunt.option.YYY()
 ```
 
-### grunt.XXX.YYY
+### grunt.option.YYY
 METHOD_DESCRIPTION
 
 ```javascript
-grunt.XXX.YYY()
+grunt.option.YYY()
 ```

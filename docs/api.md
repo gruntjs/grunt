@@ -58,6 +58,8 @@ _Note that the method listed below is also available on the [grunt.config](api_c
 ### grunt.initConfig
 Initialize a configuration object for the current project. The specified `configObject` is used by tasks and helpers and can also be accessed using the [grunt.config](api_config.md) method. Nearly every project's [grunt.js gruntfile](configuring.md) will call this method.
 
+Note that any specified `<config>` and `<json>` [directives](api_task.md) will be automatically processed when the config object is initialized.
+
 ```javascript
 grunt.initConfig(configObject)
 ```
@@ -328,7 +330,7 @@ _This method is an alias for the [grunt.task.helper](api_task.md) method._
 * [grunt.template](api_template.md) - Underscore.js template processing and other template-related methods.
 * [grunt.task](api_task.md) - Register and run tasks and helpers, load external tasks.
 * [grunt.file](api_file.md) - Wildcard expansion, file reading, writing, directory traversing.
-* [grunt.config](api_config.md) - Reading values from the grunt configuration.
+* [grunt.config](api_config.md) - Access project-specific configuration data defined in the [grunt.js gruntfile](configuring.md).
 * [grunt.option](api_option.md) - Reading values from the command-line options.
 * [grunt.log](api_log.md) - Don't use `console.log`, use `log.writeln` instead!
 * [grunt.verbose](api_log.md) - Just like `log`, but only logs if `--verbose` was specified.

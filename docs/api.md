@@ -49,7 +49,16 @@ module.exports = function(grunt) {
 };
 ```
 
-But these are just examples. For more information, take a look at the API documentation:
+But these are just examples. For more information, read on.
+
+## A Very Important Note
+Your `grunt.js` gruntfile or tasks file **must** contain this code, once and **only** once. If it doesn't, things won't work. For the sake of brevity, this "wrapper" code has been omitted from all future examples on this page, but it needs to be there. Like in the previous examples.
+
+```javascript
+module.exports = function(grunt) {
+  // Your grunt code goes in here.
+};
+```
 
 ## Config
 _Note that the method listed below is also available on the [grunt.config](api_config.md) object in addition to the `grunt` object._

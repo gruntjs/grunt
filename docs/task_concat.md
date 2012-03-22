@@ -9,153 +9,138 @@ This task is a [multi task](tasks_creating.md), meaning that grunt will automati
 
 _Need some help getting started with grunt? Visit the [getting started](getting_started.md) page. Are you creating your own tasks or helpers? Check out the [complete API documentation](api.md)._
 
-## Project configuration
-
-This example [gruntfile](getting_started.md) shows a brief overview of the [config](api_config.md) properties used by the `concat` task. For a more in-depth explanation, see the usage examples.
+## A Very Important Note
+Your `grunt.js` gruntfile **must** contain this code, once and **only** once. If it doesn't, grunt won't work. For the sake of brevity, this "wrapper" code has been omitted from all examples on this page, but it needs to be there.
 
 ```javascript
 module.exports = function(grunt) {
-
-  // Project configuration.
-  grunt.initConfig({
-    // Project metadata, used by the <banner> directive.
-    meta: {},
-    // Lists of files to be concatenated.
-    concat: {}
-  });
-
+  // Your grunt code goes in here.
 };
+```
+
+## Project configuration
+
+This example shows a brief overview of the [config](api_config.md) properties used by the `concat` task. For a more in-depth explanation, see the usage examples.
+
+```javascript
+// Project configuration.
+grunt.initConfig({
+  // Project metadata, used by the <banner> directive.
+  meta: {},
+  // Lists of files to be concatenated.
+  concat: {}
+});
 ```
 
 ## Usage examples
 
 ### Concatenating multiple files
 
-Given this example [gruntfile](getting_started.md), running `grunt concat:dist` (or `grunt concat` because `concat` is a [multi task](tasks_creating.md)) will simply concatenate the three specified source files, in order, writing the output to `dist/built.js`.
+Given this example, running `grunt concat:dist` (or `grunt concat` because `concat` is a [multi task](tasks_creating.md)) will simply concatenate the three specified source files, in order, writing the output to `dist/built.js`.
 
 ```javascript
-module.exports = function(grunt) {
-
-  // Project configuration.
-  grunt.initConfig({
-    concat: {
-      dist: {
-        src: ['src/intro.js', 'src/project.js', 'src/outro.js'],
-        dest: 'dist/built.js'
-      }
+// Project configuration.
+grunt.initConfig({
+  concat: {
+    dist: {
+      src: ['src/intro.js', 'src/project.js', 'src/outro.js'],
+      dest: 'dist/built.js'
     }
-  });
-
-};
+  }
+});
 ```
 
 ### Banner comments
 
-Given this example [gruntfile](getting_started.md), running `grunt concat:dist` (or `grunt concat` because `concat` is a [multi task](tasks_creating.md)) will first strip any preexisting banner comment from the `src/project.js` file, then concatenate the result with a newly-generated banner comment, writing the output to `dist/built.js`.
+Given this example, running `grunt concat:dist` (or `grunt concat` because `concat` is a [multi task](tasks_creating.md)) will first strip any preexisting banner comment from the `src/project.js` file, then concatenate the result with a newly-generated banner comment, writing the output to `dist/built.js`.
 
 This generated banner will be the contents of the `meta.banner` underscore template string interpolated with the config object. In this case, those properties are the values imported from the `package.json` file (which are available via the `pkg` config property) plus today's date.
 
 _Note: you don't have to use an external JSON file. It's completely valid to create the `pkg` object inline in the config. That being said, if you already have a JSON file, you might as well reference it. See the [directives](helpers_directives.md) page for more information on the `<banner>` and `<json>` directives and their options._
 
 ```javascript
-module.exports = function(grunt) {
-
-  // Project configuration.
-  grunt.initConfig({
-    pkg: '<json:package.json>',
-    meta: {
-      banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
-        '<%= grunt.template.today("m/d/yyyy") %> */'
-    },
-    concat: {
-      dist: {
-        src: ['<banner>', '<file_strip_banner:src/project.js>'],
-        dest: 'dist/built.js'
-      }
+// Project configuration.
+grunt.initConfig({
+  pkg: '<json:package.json>',
+  meta: {
+    banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
+      '<%= grunt.template.today("m/d/yyyy") %> */'
+  },
+  concat: {
+    dist: {
+      src: ['<banner>', '<file_strip_banner:src/project.js>'],
+      dest: 'dist/built.js'
     }
-  });
-
-};
+  }
+});
 ```
 
 ### Multiple build targets
 
-Given this example [gruntfile](getting_started.md), running `grunt concat` will build two separate files. One "basic" version, with the main file essentially just copied to `dist/basic.js`, and another "with_extras" concatenated version written to `dist/with_extras.js`.
+Given this example, running `grunt concat` will build two separate files. One "basic" version, with the main file essentially just copied to `dist/basic.js`, and another "with_extras" concatenated version written to `dist/with_extras.js`.
 
 While each concat target can be built individually by running `grunt concat:basic` or `grunt concat:extras`, running `grunt concat` will build all concat targets. This is because `concat` is a [multi task](tasks_creating.md).
 
 ```javascript
-module.exports = function(grunt) {
-
-  // Project configuration.
-  grunt.initConfig({
-    concat: {
-      basic: {
-        src: ['src/main.js'],
-        dest: 'dist/basic.js'
-      },
-      extras: {
-        src: ['src/main.js', 'src/extras.js'],
-        dest: 'dist/with_extras.js'
-      }
+// Project configuration.
+grunt.initConfig({
+  concat: {
+    basic: {
+      src: ['src/main.js'],
+      dest: 'dist/basic.js'
+    },
+    extras: {
+      src: ['src/main.js', 'src/extras.js'],
+      dest: 'dist/with_extras.js'
     }
-  });
-
-};
+  }
+});
 ```
 
 ### Dynamic filenames
 
 Filenames can be generated dynamically by using `<%= %>` delimited underscore templates as filenames.
 
-Given this example [gruntfile](getting_started.md), running `grunt concat:dist` generates a destination file whose name is generated from the `name` and `version` properties of the referenced `package.json` file (via the `pkg` config property).
+Given this example, running `grunt concat:dist` generates a destination file whose name is generated from the `name` and `version` properties of the referenced `package.json` file (via the `pkg` config property).
 
 ```javascript
-module.exports = function(grunt) {
-
-  // Project configuration.
-  grunt.initConfig({
-    pkg: '<json:package.json>',
-    concat: {
-      dist: {
-        src: ['src/main.js'],
-        dest: 'dist/<%= pkg.name %>-<%= pkg.version %>.js'
-      }
-    },
-  });
-
-};
+// Project configuration.
+grunt.initConfig({
+  pkg: '<json:package.json>',
+  concat: {
+    dist: {
+      src: ['src/main.js'],
+      dest: 'dist/<%= pkg.name %>-<%= pkg.version %>.js'
+    }
+  },
+});
 ```
 
 ### Advanced dynamic filenames
 
-Given this more involved example [gruntfile](getting_started.md), running `grunt concat` will build two separate files (because `concat` is a [multi task](tasks_creating.md)). The destination file paths will be expanded dynamically based on the specified underscore templates, recursively if necessary.
+Given this more involved example, running `grunt concat` will build two separate files (because `concat` is a [multi task](tasks_creating.md)). The destination file paths will be expanded dynamically based on the specified underscore templates, recursively if necessary.
 
 For example, if the `package.json` file contained `{"name": "awesome", "version": "1.0.0"}`, the files `dist/awesome/1.0.0/basic.js` and `dist/awesome/1.0.0/with_extras.js` would be generated.
 
 ```javascript
-module.exports = function(grunt) {
-
-  // Project configuration.
-  grunt.initConfig({
-    pkg: '<json:package.json>',
-    dirs: {
-      src: 'src/files',
-      dest: 'dist/<%= pkg.name %>/<%= pkg.version %>'
+// Project configuration.
+grunt.initConfig({
+  pkg: '<json:package.json>',
+  dirs: {
+    src: 'src/files',
+    dest: 'dist/<%= pkg.name %>/<%= pkg.version %>'
+  },
+  concat: {
+    basic: {
+      src: ['<%= dirs.src %>/main.js'],
+      dest: '<%= dirs.dest %>/basic.js'
     },
-    concat: {
-      basic: {
-        src: ['<%= dirs.src %>/main.js'],
-        dest: '<%= dirs.dest %>/basic.js'
-      },
-      extras: {
-        src: ['<%= dirs.src %>/main.js', '<%= dirs.src %>/extras.js'],
-        dest: '<%= dirs.dest %>/with_extras.js'
-      }
+    extras: {
+      src: ['<%= dirs.src %>/main.js', '<%= dirs.src %>/extras.js'],
+      dest: '<%= dirs.dest %>/with_extras.js'
     }
-  });
-
-};
+  }
+});
 ```
 
 ## Helpers

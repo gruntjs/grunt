@@ -7,22 +7,27 @@ Start a static web server.
 
 This task starts a static web server on a specified port, at a specified path, which runs as long as grunt is running. Once grunt's tasks have completed, the web server stops.
 
-_Need some help getting started with grunt? See the [configuring grunt](getting_started.md) page._
+_Need some help getting started with grunt? Visit the [getting started](getting_started.md) page. Are you creating your own tasks or helpers? Check out the [complete API documentation](api.md)._
 
-## Project configuration
-
-This example [gruntfile](getting_started.md) shows a brief overview of the [config](api_config.md) properties used by the `server` task. For a more in-depth explanation, see the usage examples.
+## A Very Important Note
+Your `grunt.js` gruntfile **must** contain this code, once and **only** once. If it doesn't, grunt won't work. For the sake of brevity, this "wrapper" code has been omitted from all examples on this page, but it needs to be there.
 
 ```javascript
 module.exports = function(grunt) {
-
-  // Project configuration.
-  grunt.initConfig({
-    // Configuration options.
-    server: {}
-  });
-
+  // Your grunt code goes in here.
 };
+```
+
+## Project configuration
+
+This example shows a brief overview of the [config](api_config.md) properties used by the `server` task. For a more in-depth explanation, see the usage examples.
+
+```javascript
+// Project configuration.
+grunt.initConfig({
+  // Configuration options.
+  server: {}
+});
 ```
 
 ## Usage examples
@@ -32,17 +37,13 @@ In this example, `grunt server` will start a static web server at `http://localh
 The `server` task is most useful when used in conjunction with another task, like the [qunit](task_qunit.md) task.
 
 ```javascript
-module.exports = function(grunt) {
-
-  // Project configuration.
-  grunt.initConfig({
-    server: {
-      port: 8000,
-      base: '.'
-    }
-  });
-
-};
+// Project configuration.
+grunt.initConfig({
+  server: {
+    port: 8000,
+    base: '.'
+  }
+});
 ```
 
 See the [server task source](../tasks/server.js) for more information.

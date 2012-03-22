@@ -10,22 +10,27 @@ Run [QUnit][qunit] unit tests in a headless [PhantomJS][phantom] instance.
 
 This task is a [multi task](tasks_creating.md), meaning that grunt will automatically iterate over all `qunit` targets if a target is not specified.
 
-_Need some help getting started with grunt? See the [configuring grunt](getting_started.md) page._
+_Need some help getting started with grunt? Visit the [getting started](getting_started.md) page. Are you creating your own tasks or helpers? Check out the [complete API documentation](api.md)._
 
-## Project configuration
-
-This example [gruntfile](getting_started.md) shows a brief overview of the [config](api_config.md) properties used by the `qunit` task. For a more in-depth explanation, see the usage examples.
+## A Very Important Note
+Your `grunt.js` gruntfile **must** contain this code, once and **only** once. If it doesn't, grunt won't work. For the sake of brevity, this "wrapper" code has been omitted from all examples on this page, but it needs to be there.
 
 ```javascript
 module.exports = function(grunt) {
-
-  // Project configuration.
-  grunt.initConfig({
-    // Lists of files or URLs to be unit tested with QUnit.
-    qunit: {}
-  });
-
+  // Your grunt code goes in here.
 };
+```
+
+## Project configuration
+
+This example shows a brief overview of the [config](api_config.md) properties used by the `qunit` task. For a more in-depth explanation, see the usage examples.
+
+```javascript
+// Project configuration.
+grunt.initConfig({
+  // Lists of files or URLs to be unit tested with QUnit.
+  qunit: {}
+});
 ```
 
 ## Usage examples
@@ -35,31 +40,23 @@ module.exports = function(grunt) {
 In this example, `grunt qunit` will test all `.html` files in the test directory. First, the wildcard is expanded to match each individual file. Then, each matched filename is converted to the appropriate `file://` URI. Finally, [QUnit][qunit] is run for each URI.
 
 ```javascript
-module.exports = function(grunt) {
-
-  // Project configuration.
-  grunt.initConfig({
-    qunit: {
-      all: ['test/*.html']
-    }
-  });
-
-};
+// Project configuration.
+grunt.initConfig({
+  qunit: {
+    all: ['test/*.html']
+  }
+});
 ```
 
 With a slight modification, `grunt qunit` will test all `.html` files in the test directory _and all subdirectories_. See the [minimatch](https://github.com/isaacs/minimatch) module's documentation for more details on wildcard patterns.
 
 ```javascript
-module.exports = function(grunt) {
-
-  // Project configuration.
-  grunt.initConfig({
-    qunit: {
-      all: ['test/**/*.html']
-    }
-  });
-
-};
+// Project configuration.
+grunt.initConfig({
+  qunit: {
+    all: ['test/**/*.html']
+  }
+});
 ```
 
 ### Testing via http:// or https://
@@ -69,16 +66,12 @@ In circumstances where running unit tests from `file://` URIs is inadequate, you
 In this example, `grunt qunit` will test two files, served from the server running at `localhost:8000`.
 
 ```javascript
-module.exports = function(grunt) {
-
-  // Project configuration.
-  grunt.initConfig({
-    qunit: {
-      all: ['http://localhost:8000/test/foo.html', 'http://localhost:8000/test/bar.html']
-    }
-  });
-
-};
+// Project configuration.
+grunt.initConfig({
+  qunit: {
+    all: ['http://localhost:8000/test/foo.html', 'http://localhost:8000/test/bar.html']
+  }
+});
 ```
 
 _Note: grunt does NOT start a server at `localhost:8000` automatically. While grunt DOES have a [server](task_server.md) task that can be run before the qunit task to serve files statically, it must be started manually..._
@@ -90,23 +83,19 @@ If a web server isn't running at `localhost:8000`, running `grunt qunit` with `h
 In this example, running `grunt server qunit` will first start a static web server on `localhost:8000`, with its base path set to the gruntfile's directory. Then, the `qunit` task will be run, requesting the specified URIs from that server.
 
 ```javascript
-module.exports = function(grunt) {
+// Project configuration.
+grunt.initConfig({
+  qunit: {
+    all: ['http://localhost:8000/test/foo.html', 'http://localhost:8000/test/bar.html']
+  },
+  server: {
+    port: 8000,
+    base: '.'
+  }
+});
 
-  // Project configuration.
-  grunt.initConfig({
-    qunit: {
-      all: ['http://localhost:8000/test/foo.html', 'http://localhost:8000/test/bar.html']
-    },
-    server: {
-      port: 8000,
-      base: '.'
-    }
-  });
-
-  // A convenient task alias.
-  grunt.registerTask('test', 'server qunit');
-
-};
+// A convenient task alias.
+grunt.registerTask('test', 'server qunit');
 ```
 
 _Note: in the above example, an [alias task](tasks_creating.md) called `test` was created that runs both the `server` and `qunit` tasks._

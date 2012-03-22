@@ -77,10 +77,10 @@ module.exports = function(grunt) {
       } catch(e) {
         banner = '';
         verbose.error();
-        fail.warn(e, 11);
+        grunt.warn(e, 11);
       }
     } else {
-      fail.warn('No "' + prop + '" banner template defined.', 11);
+      grunt.warn('No "' + prop + '" banner template defined.', 11);
       banner = '';
     }
     return banner;

@@ -80,7 +80,7 @@ module.exports = function(grunt) {
       verbose.or.write(msg);
       pos = '['.red + ('L' + e.line).yellow + ':'.red + ('C' + e.col).yellow + ']'.red;
       log.error().writeln(pos + ' ' + (e.message + ' (position: ' + e.pos + ')').yellow);
-      fail.warn('UglifyJS found errors.', 10);
+      grunt.warn('UglifyJS found errors.', 10);
     }
   });
 

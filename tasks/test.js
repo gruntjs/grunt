@@ -44,7 +44,7 @@ module.exports = function(grunt) {
       verbose.error().or.writeln('F'.red);
       log.error('Incomplete tests/setups/teardowns:');
       Object.keys(unfinished).forEach(log.error, log);
-      fail.fatal('A test was missing test.done(), so nodeunit exploded. Sorry!',
+      grunt.fatal('A test was missing test.done(), so nodeunit exploded. Sorry!',
         Math.min(99, 90 + len));
     }
   });
@@ -132,7 +132,7 @@ module.exports = function(grunt) {
         // Executed when everything is all done.
         done: function (assertions) {
           if (assertions.failures()) {
-            fail.warn(assertions.failures() + '/' + assertions.length +
+            grunt.warn(assertions.failures() + '/' + assertions.length +
               ' assertions failed (' + assertions.duration + 'ms)',
               Math.min(99, 90 + assertions.failures()));
           } else {

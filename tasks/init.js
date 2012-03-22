@@ -62,7 +62,7 @@ module.exports = function(grunt) {
 
     // Abort if a gruntfile was found (to avoid accidentally nuking it).
     if (path.existsSync(path.join(process.cwd(), 'grunt.js'))) {
-      fail.warn('Beware, grunt.js file already exists.');
+      grunt.warn('Beware, grunt.js file already exists.');
     }
 
     // This task is asynchronous.

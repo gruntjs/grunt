@@ -110,11 +110,11 @@ module.exports = function(grunt) {
     done_fail: function(url) {
       verbose.write('Running PhantomJS...').or.write('...');
       log.error();
-      fail.warn('PhantomJS unable to load "' + url + '" URI.', 90);
+      grunt.warn('PhantomJS unable to load "' + url + '" URI.', 90);
     },
     done_timeout: function() {
       log.writeln();
-      fail.warn('PhantomJS timed out, possibly due to a missing QUnit start() call.', 90);
+      grunt.warn('PhantomJS timed out, possibly due to a missing QUnit start() call.', 90);
     },
     // console.log pass-through.
     console: console.log.bind(console),
@@ -226,10 +226,10 @@ module.exports = function(grunt) {
             'npm or grunt. See the grunt qunit task documentation for more instructions at\n' +
             'https://github.com/cowboy/grunt/blob/master/docs/task_qunit.md'
           );
-          fail.warn('PhantomJS not found.', 90);
+          grunt.warn('PhantomJS not found.', 90);
         } else {
           result.split('\n').forEach(log.error, log);
-          fail.warn('PhantomJS exited unexpectedly with exit code ' + code + '.', 90);
+          grunt.warn('PhantomJS exited unexpectedly with exit code ' + code + '.', 90);
         }
         done();
       });
@@ -238,7 +238,7 @@ module.exports = function(grunt) {
 
       // Log results.
       if (status.failed > 0) {
-        fail.warn(status.failed + '/' + status.total + ' assertions failed (' +
+        grunt.warn(status.failed + '/' + status.total + ' assertions failed (' +
           status.duration + 'ms)', Math.min(99, 90 + status.failed));
       } else {
         verbose.writeln();

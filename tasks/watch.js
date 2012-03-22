@@ -61,7 +61,7 @@ module.exports = function(grunt) {
     var changedFiles = {};
 
     // Define an alternate fail "warn" behavior.
-    fail.warnAlternate = function() {
+    grunt.fail.warnAlternate = function() {
       task.clearQueue().run(nameArgs);
     };
 

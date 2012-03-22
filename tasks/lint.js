@@ -129,7 +129,7 @@ module.exports = function(grunt) {
         var character = e.character;
         if (evidence) {
           // Manually increment errorcount since we're not using log.error().
-          fail.errorcount++;
+          grunt.fail.errorcount++;
           // Descriptive code error.
           pos = '['.red + ('L' + e.line).yellow + ':'.red + ('C' + character).yellow + ']'.red;
           log.writeln(pos + ' ' + e.reason.yellow);

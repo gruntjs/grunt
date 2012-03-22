@@ -41,7 +41,7 @@ module.exports = function(grunt) {
     var tasksProp = props.concat('tasks');
 
     // Fail if any required config properties have been omitted.
-    config.requires(filesProp, tasksProp);
+    this.requiresConfig(filesProp, tasksProp);
 
     log.write('Waiting...');
 

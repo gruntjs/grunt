@@ -74,11 +74,11 @@ grunt.initConfig({
 });
 ```
 
-_Note: grunt does NOT start a server at `localhost:8000` automatically. While grunt DOES have a [server](task_server.md) task that can be run before the qunit task to serve files statically, it must be started manually..._
+_Note: grunt does NOT start a server at `localhost:8000` automatically. While grunt DOES have a [server task](task_server.md) that can be run before the qunit task to serve files statically, it must be started manually..._
 
 ### Using the built-in static webserver
 
-If a web server isn't running at `localhost:8000`, running `grunt qunit` with `http://localhost:8000/` URIs will fail because grunt won't be able to load those URIs. This can be easily rectified by starting the built-in static web server via the [server](task_server.md) task.
+If a web server isn't running at `localhost:8000`, running `grunt qunit` with `http://localhost:8000/` URIs will fail because grunt won't be able to load those URIs. This can be easily rectified by starting the built-in static web server via the [server task](task_server.md).
 
 In this example, running `grunt server qunit` will first start a static web server on `localhost:8000`, with its base path set to the gruntfile's directory. Then, the `qunit` task will be run, requesting the specified URIs from that server.
 

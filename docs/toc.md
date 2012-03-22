@@ -38,7 +38,6 @@
 * [Creating tasks](tasks_creating.md)
 * [Helpers and Directives](helpers_directives.md)
 * [The grunt API](api.md)
-* [Logging inside tasks and helpers](api_log.md)
 
 ## Contributing
 

@@ -351,8 +351,7 @@ grunt.option(optionName)
 * [grunt.task](api_task.md) - Register and run tasks and helpers, load external tasks.
 * [grunt.file](api_file.md) - Wildcard expansion, file reading, writing, directory traversing.
 * [grunt.config](api_config.md) - Access project-specific configuration data defined in the [grunt.js gruntfile](configuring.md).
-* [grunt.log](api_log.md) - Don't use `console.log`, use `log.writeln` instead!
-* [grunt.verbose](api_log.md) - Just like `log`, but only logs if `--verbose` was specified.
+* [grunt.log](api_log.md), [grunt.verbose](api_log.md) - Output messages to the console.
 * [grunt.fail](api_fail.md) - More serious than error logging, `fail.warn` and `fail.fatal` will halt everything
 
 Unfortunately, I haven't documented everything yet. Fortunately, the source is open and browsable. Have fun!

@@ -1,28 +1,98 @@
 [Grunt homepage](https://github.com/cowboy/grunt) | [Documentation table of contents](toc.md)
 
-# Logging inside tasks and helpers
+# [The grunt API](api.md) / grunt.log, grunt.verbose
 
-I wanted grunt to look pretty. As such, there are a LOT of logging methods, and a few useful patterns:
+Output messages to the console.
 
-Note, all of the methods that actually log something are chainable.
+See the [log lib source](../lib/grunt/log.js) for more information.
 
-* `log.write(msg)` - log msg, with no trailing newline
-* `log.writeln(msg)` - log msg, with trailing newline
-* `log.error(msg)` - if msg is omitted, logs ERROR in red, otherwise logs: >> msg, with trailing newline
-* `log.ok(msg)` - if msg is omitted, logs OK in green, otherwise logs: >> msg, with trailing newline
-* `log.subhead(msg)` - logs msg in bold, with trailing newline
-* `log.writeflags(obj, prefix)` - logs a list of obj properties (good for debugging flags)
-* `log.wordlist(arr)` - returns a comma-separated list of array items
-* `log.debug` - logs a debugging message, only if `--debug` was specified.
+## The log API
+Grunt output should look consistent, and maybe even pretty. As such, there is a plethora of logging methods, and a few useful patterns.
+
+Note that all of the methods that actually log something are chainable.
+
+_Note: all methods available under `grunt.verbose` work exactly like `grunt.log` methods, but only log if the `--verbose` command-line option was specified._
+
+### grunt.log.write / grunt.verbose.write
+Log the specified `msg` string, with no trailing newline.
+
+```javascript
+grunt.log.write(msg)
+```
+
+### grunt.log.writeln / grunt.verbose.writeln
+Log the specified `msg` string, with trailing newline.
+
+```javascript
+grunt.log.writeln([msg])
+```
+
+### grunt.log.error / grunt.verbose.error
+If `msg` string is omitted, logs `ERROR` in red, otherwise logs `>> msg`, with trailing newline.
+
+```javascript
+grunt.log.error([msg])
+```
+
+### grunt.log.ok / grunt.verbose.ok
+If `msg` string is omitted, logs `OK` in green, otherwise logs `>> msg`, with trailing newline.
+
+```javascript
+grunt.log.ok([msg])
+```
+
+### grunt.log.subhead / grunt.verbose.subhead
+Log the specified `msg` string in **bold**, with trailing newline.
+
+```javascript
+grunt.log.subhead(msg)
+```
+
+### grunt.log.writeflags / grunt.verbose.writeflags
+Log a list of `obj` properties (good for debugging flags).
+
+```javascript
+grunt.log.writeflags(obj, prefix)
+```
+
+### grunt.log.debug / grunt.verbose.debug
+Logs a debugging message, but only if the `--debug` command-line option was specified.
+
+```javascript
+grunt.log.debug(msg)
+```
+
+## Verbose and Notverbose
+All methods available under `grunt.verbose` work exactly like `grunt.log` methods, but only log if the `--verbose` command-line option was specified.
 
 Variations of `log`:
 
-* `log.verbose` - contains all methods of `log` but only logs if `--verbose` was specified.
-* `log.notverbose` - contains all methods of `log` but only logs if `--verbose` wasn't specified.
-* `log.verbose.or` - reference to `log.notverbose`
-* `log.notverbose.or` - reference to `log.verbose`
+### grunt.verbose / grunt.log.verbose
+This object contains all methods of `grunt.log` but only logs if the `--verbose` command-line option was specified.
 
-_Note: there are a few other internal logging methods, which have been omitted from this list._
+```javascript
+grunt.verbose
+```
+
+### grunt.verbose.or / grunt.log.notverbose
+This object contains all methods of `grunt.log` but only logs if the `--verbose` command-line option was _not_ specified.
+
+```javascript
+grunt.verbose.or
+```
+
+## Utility
+
+### grunt.log.wordlist
+Returns a comma-separated list of `arr` array items.
+
+```javascript
+grunt.log.wordlist(arr)
+```
+
+
+
+## Logging Patterns
 
 A common pattern is to only log when in `--verbose` mode OR if an error occurs, like so:
 

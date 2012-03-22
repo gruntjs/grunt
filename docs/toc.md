@@ -4,8 +4,10 @@
 
 ## Getting started
 
-* [Configuring grunt](configuring.md)
-* [Example gruntfiles](example_gruntfiles.md)
+* [Configuring grunt](configuring.md) - A good "getting started" guide.
+* [Example gruntfiles](example_gruntfiles.md) - A few samples, to help you get started.
+* [The grunt API](api.md) - Complete API documentation here!
+* [Exit codes](exit_codes.md) - A list of all built-in grunt exit codes.
 
 ## Built-in tasks
 
@@ -28,17 +30,11 @@
 [qunit]: http://docs.jquery.com/QUnit
 [phantom]: http://www.phantomjs.org/
 
-## More info
+## Other built-ins
 
-* [Directives](helpers_directives.md)
-* [Grunt exit codes](exit_codes.md)
+* [Helpers and Directives](helpers_directives.md) - Ones not specifically covered in other task documentation.
 
-## Creating tasks
+## Development
 
-* [Creating tasks](tasks_creating.md)
-* [Helpers and Directives](helpers_directives.md)
-* [The grunt API](api.md)
-
-## Contributing
-
-* [Contributing to grunt](contributing.md)
+* [Contributing to grunt](contributing.md) - Development advice.
+<!-- * [Grunt plugins](plugins.md) - -->

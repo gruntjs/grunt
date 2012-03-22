@@ -335,7 +335,7 @@ grunt.helper("add_two_nums", 1, 2) // 3
 _This method is an alias for the [grunt.task.helper](api_task.md) method._
 
 ## Warnings and Fatal Errors
-If something goes horribly wrong in a task, that task can force grunt to abort. See the [exit codes documentation](exit_codes.md) for a list of all built-in grunt exit codes.
+If something explodes (or is about to explode) inside a helper or task, it can force grunt to abort. See the [exit codes documentation](exit_codes.md) for a list of all built-in grunt exit codes.
 
 ### grunt.warn
 Display a warning and abort grunt immediately. Grunt will continue processing tasks if the `--force` command-line option was specified. The `error` argument can be a string message or an error object.

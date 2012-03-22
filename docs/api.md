@@ -334,8 +334,32 @@ grunt.helper("add_two_nums", 1, 2) // 3
 
 _This method is an alias for the [grunt.task.helper](api_task.md) method._
 
+## Warnings and Fatal Errors
+If something goes horribly wrong in a task, that task can force grunt to abort. See the [exit codes documentation](exit_codes.md) for a list of all built-in grunt exit codes.
 
-## Miscellaneous
+### grunt.warn
+Display a warning and abort grunt immediately. Grunt will continue processing tasks if the `--force` command-line option was specified. The `error` argument can be a string message or an error object.
+
+```javascript
+grunt.warn(error [, errorcode])
+```
+
+If `--debug 9` is specified on the command-line and an error object was specified, a stack trace will be logged.
+
+_This method is an alias for the [grunt.fail.warn](api_fail.md) method._
+
+### grunt.fatal
+Display a warning and abort grunt immediately. The `error` argument can be a string message or an error object.
+
+```javascript
+grunt.fail(error [, errorcode])
+```
+
+If `--debug 9` is specified on the command-line and an error object was specified, a stack trace will be logged.
+
+_This method is an alias for the [grunt.fail.fatal](api_fail.md) method._
+
+## Command-line Options
 
 ### grunt.option
 Retrieve the value of a command-line option, eg. `debug`. Note that for each command-line option, the inverse can be tested, eg. `no-debug`.
@@ -344,7 +368,7 @@ Retrieve the value of a command-line option, eg. `debug`. Note that for each com
 grunt.option(optionName)
 ```
 
-## Internals
+## Other Methods
 
 * [grunt.utils](api_utils.md) - Miscellaneous utilities, including Underscore.js, Async and Hooker.
 * [grunt.template](api_template.md) - Underscore.js template processing and other template-related methods.
@@ -352,6 +376,4 @@ grunt.option(optionName)
 * [grunt.file](api_file.md) - Wildcard expansion, file reading, writing, directory traversing.
 * [grunt.config](api_config.md) - Access project-specific configuration data defined in the [grunt.js gruntfile](configuring.md).
 * [grunt.log](api_log.md), [grunt.verbose](api_log.md) - Output messages to the console.
-* [grunt.fail](api_fail.md) - More serious than error logging, `fail.warn` and `fail.fatal` will halt everything
-
-Unfortunately, I haven't documented everything yet. Fortunately, the source is open and browsable. Have fun!
+* [grunt.fail](api_fail.md) - For when something goes horribly wrong.

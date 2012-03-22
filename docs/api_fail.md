@@ -2,30 +2,34 @@
 
 # [The grunt API](api.md) / grunt.fail
 
-SHORT_DESCRIPTION
+For when something goes horribly wrong.
 
 See the [fail lib source](../lib/grunt/fail.js) for more information.
 
 ## The fail API
-LONG_DESCRIPTION
 
-### grunt.fail.YYY
-METHOD_DESCRIPTION
+If something goes horribly wrong in a task, that task can force grunt to abort. See the [exit codes documentation](exit_codes.md) for a list of all built-in grunt exit codes.
 
-```javascript
-grunt.fail.YYY()
-```
+Note that any method marked with a ☃ (unicode snowman) is also available directly on the `grunt` object. Just so you know. See the [API main page](api.md) for more usage information.
 
-### grunt.fail.YYY
-METHOD_DESCRIPTION
+### grunt.warn ☃
+Display a warning and abort grunt immediately. Grunt will continue processing tasks if the `--force` command-line option was specified. The `error` argument can be a string message or an error object.
 
 ```javascript
-grunt.fail.YYY()
+grunt.warn(error [, errorcode])
 ```
 
-### grunt.fail.YYY
-METHOD_DESCRIPTION
+If `--debug 9` is specified on the command-line and an error object was specified, a stack trace will be logged.
+
+_This method is also available as [grunt.warn](api.md)._
+
+### grunt.fatal ☃
+Display a warning and abort grunt immediately. The `error` argument can be a string message or an error object.
 
 ```javascript
-grunt.fail.YYY()
+grunt.fail(error [, errorcode])
 ```
+
+If `--debug 9` is specified on the command-line and an error object was specified, a stack trace will be logged.
+
+_This method is also available as [grunt.fatal](api.md)._

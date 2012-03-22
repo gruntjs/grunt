@@ -137,6 +137,17 @@ Note that this won't actually run the specified task(s), it will just fail the c
 this.requires(taskList)
 ```
 
+### this.requiresConfig / grunt.task.current.requiresConfig
+Fail the current task if one or more required [config](api_config.md) properties is missing. One or more string or array config properties may be specified.
+
+```javascript
+this.requiresConfig(prop [, prop [, ...]])
+```
+
+See the [grunt.config documentation](api_config.md) for more information about config properties.
+
+_This method is an alias for the [grunt.config.requires](api_config.md) method._
+
 ### this.name / grunt.task.current.name
 The name of the task, as defined in `grunt.registerTask`. For example, if a "sample" task was run as `grunt sample` or `grunt sample:foo`, inside the task function, `this.name` would be `"sample"`.
 

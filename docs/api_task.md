@@ -222,6 +222,8 @@ Helpers are utility functions that can be used by any task.
 
 For example, in the [min task](../tasks/min.js), the majority of the actual minification work is done in an `uglify` helper, so that other tasks can utilize that minification code if they want to.
 
+See the list of [built-in helpers](helpers_directives.md) for examples.
+
 ### grunt.task.registerHelper ☃
 Register a helper function that can be used by any task. When called as a directive, `this.directive` will be true inside of the helper.
 
@@ -267,6 +269,8 @@ _This method is also available as [grunt.helper](api.md)._
 Directives are essentially string placeholders for helper functions, specified as values in the [config object](configuring.md).
 
 A good example of directives would be the `<json:package.json>` and `<config:lint.all>` directives in grunt's own [grunt.js gruntfile](../grunt.js). Or the `<banner>` and `<file_strip_banner:src/grunt-jquery-example.js>` directives in the [sample jQuery plugin gruntfile](https://github.com/cowboy/grunt-jquery-example/blob/master/grunt.js).
+
+See the list of [built-in directives](helpers_directives.md) for examples.
 
 ### grunt.task.directive
 Manually execute a helper based on the passed string directive, returning its value. Note that this only works for synchronous helpers. When called as a directive, `this.directive` will be true inside of the helper.

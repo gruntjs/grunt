@@ -7,7 +7,7 @@ Validate one or more input files with JSHint.
 
 This task is a [multi task](types_of_tasks.md), meaning that grunt will automatically iterate over all `lint` targets if a target is not specified.
 
-_Need some help getting started with grunt? Visit the [getting started](getting_started.md) page. Are you creating your own tasks or helpers? Check out the [types of tasks](types_of_tasks.md) page and the [API documentation](api.md)._
+_Need some help getting started with grunt? Visit the [getting started](getting_started.md) page. If you're creating your own tasks or helpers, be sure to check out the [types of tasks](types_of_tasks.md) page and the [API documentation](api.md)._
 
 ## A Very Important Note
 Your `grunt.js` gruntfile **must** contain this code, once and **only** once. If it doesn't, grunt won't work. For the sake of brevity, this "wrapper" code has been omitted from all examples on this page, but it needs to be there.

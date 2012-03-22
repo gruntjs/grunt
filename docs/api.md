@@ -291,6 +291,12 @@ _This method is an alias for the [grunt.task.loadNpmTasks](api_task.md) method._
 
 
 ## Defining and Executing Helpers
+Helpers are utility functions that can be used by any task.
+
+For example, in the [min task](../tasks/min.js), the majority of the actual minification work is done in an `uglify` helper, so that other tasks can utilize that minification code if they want to.
+
+See the list of [built-in helpers](helpers_directives.md) for examples.
+
 _Note that the methods listed below are also available on the [grunt.task](api_task.md) object in addition to the `grunt` object._
 
 ### grunt.registerHelper
@@ -334,6 +340,7 @@ grunt.helper("add_two_nums", 1, 2) // 3
 
 _This method is an alias for the [grunt.task.helper](api_task.md) method._
 
+
 ## Warnings and Fatal Errors
 If something explodes (or is about to explode) inside a helper or task, it can force grunt to abort. See the [exit codes documentation](exit_codes.md) for a list of all built-in grunt exit codes.
 
@@ -358,6 +365,7 @@ grunt.fail(error [, errorcode])
 If `--debug 9` is specified on the command-line and an error object was specified, a stack trace will be logged.
 
 _This method is an alias for the [grunt.fail.fatal](api_fail.md) method._
+
 
 ## Command-line Options
 

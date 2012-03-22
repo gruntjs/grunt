@@ -8,7 +8,7 @@ See the [task lib source](../lib/grunt/task.js) and [task util lib source](../li
 
 ## The task API
 
-Note that any method marked with a ☃ (unicode snowman) is available directly on the `grunt` object in addition to being available on the `grunt.task` object. Just so you know. See the [API main page](api.md) for more usage information.
+Note that any method marked with a ☃ (unicode snowman) is also available directly on the `grunt` object. Just so you know. See the [API main page](api.md) for more usage information.
 
 
 ## Creating Tasks

@@ -8,7 +8,7 @@ See the [config lib source](../lib/grunt/config.js) for more information.
 
 ## The config API
 
-Note that any method marked with a ☃ (unicode snowman) is available directly on the `grunt` object in addition to being available on the `grunt.config` object. Just so you know. See the [API main page](api.md) for more usage information.
+Note that any method marked with a ☃ (unicode snowman) is also available directly on the `grunt` object, and any method marked with a ☆ (white star) is also available inside tasks on the `this` object. Just so you know. See the [API main page](api.md) for more usage information.
 
 ## Initializing Config Data
 _Note that the method listed below is also available on the `grunt` object as [grunt.initConfig](api.md)._
@@ -82,8 +82,9 @@ grunt.config.process([prop])
 ```
 
 ## Requiring Config Data
+_Note that the method listed below is also available inside tasks on the `this` object as [this.requiresConfig](api.md)._
 
-### grunt.config.requires
+### grunt.config.requires ☆
 Fail the current task if one or more required config properties is missing. One or more string or array config properties may be specified.
 
 ```javascript

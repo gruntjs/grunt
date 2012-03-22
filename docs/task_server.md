@@ -60,12 +60,12 @@ grunt.initConfig({
   // This custom server task doesn't care about config options!
 });
 
-// Of course, you'd need to have connect installed locally via npm for
-// this to work... but it works just fine :)
+// Of course, you need to have the "connect" Npm module installed locally
+// for this to work. But assuming that's taken care of, this will work.
 var connect = require('connect');
 
 // Redefining the "server" task for this project. Note that the output
-// displayed by --help will reflect this task's description.
+// displayed by --help will reflect the new task description.
 grunt.registerTask('server', 'Start a custom static web server.', function() {
   log.writeln('Starting static web server in "www-root" on port 1234.');
   connect(connect.static('www-root')).listen(1234);

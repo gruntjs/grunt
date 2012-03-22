@@ -335,6 +335,15 @@ grunt.helper("add_two_nums", 1, 2) // 3
 _This method is an alias for the [grunt.task.helper](api_task.md) method._
 
 
+## Miscellaneous
+
+### grunt.option
+Retrieve the value of a command-line option, eg. `debug`. Note that for each command-line option, a negative calue can be tested, eg. `no-debug`.
+
+```javascript
+grunt.option(name)
+```
+
 ## Internals
 
 * [grunt.utils](api_utils.md) - Miscellaneous utilities, including Underscore.js, Async and Hooker.
@@ -342,7 +351,6 @@ _This method is an alias for the [grunt.task.helper](api_task.md) method._
 * [grunt.task](api_task.md) - Register and run tasks and helpers, load external tasks.
 * [grunt.file](api_file.md) - Wildcard expansion, file reading, writing, directory traversing.
 * [grunt.config](api_config.md) - Access project-specific configuration data defined in the [grunt.js gruntfile](configuring.md).
-* [grunt.option](api_option.md) - Reading values from the command-line options.
 * [grunt.log](api_log.md) - Don't use `console.log`, use `log.writeln` instead!
 * [grunt.verbose](api_log.md) - Just like `log`, but only logs if `--verbose` was specified.
 * [grunt.fail](api_fail.md) - More serious than error logging, `fail.warn` and `fail.fatal` will halt everything

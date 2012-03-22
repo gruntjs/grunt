@@ -61,7 +61,7 @@ grunt.initConfig({
 });
 
 // Of course, you need to have the "connect" Npm module installed locally
-// for this to work. But assuming that's taken care of, this will work.
+// for this to work. But that's just a matter of running: npm install connect
 var connect = require('connect');
 
 // Redefining the "server" task for this project. Note that the output

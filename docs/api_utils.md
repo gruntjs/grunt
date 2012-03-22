@@ -35,10 +35,17 @@ grunt.utils.recurse(object, callbackFunction, continueFunction)
 See the [config lib source](../lib/grunt/config.js) for usage examples.
 
 ### grunt.utils.repeat
-Return a string repeated n times.
+Return string `str` repeated `n` times.
 
 ```javascript
 grunt.utils.repeat(n, str)
+```
+
+### grunt.utils.pluralize
+Given `str` of `"a/b"`, If `n` is `1`, return `"a"` otherwise `"b"`. You can specify a custom separator if '/' doesn't work for you.
+
+```javascript
+grunt.utils.pluralize(n, str, separator)
 ```
 
 ### grunt.utils.spawn

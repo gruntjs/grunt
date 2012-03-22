@@ -56,13 +56,13 @@ Get a value from the project's grunt configuration. If `prop` is specified, that
 grunt.config.get([prop])
 ```
 
-Any `<% %>` templates in returned values will not be automatically processed, but can be processed afterwards using the [template.process](api_template.md) method. Or the `grunt.config.process` method can be used to do both at once.
+Any `<% %>` templates in returned values will not be automatically processed, but can be processed afterwards using the [grunt.template.process](api_template.md) method. If you want to do both at once, the `grunt.config.process` method can be used.
 
 ### grunt.config.set
 Set a value into the project's grunt configuration.
 
 ```javascript
-grunt.config.set()
+grunt.config.set(prop, value)
 ```
 
 Note that any specified `<config>` and `<json>` [directives](api_task.md) will be automatically processed when the config data is set.
@@ -75,16 +75,16 @@ grunt.config.escape(propString)
 ```
 
 ### grunt.config.process
-METHOD_DESCRIPTION
+Behaves like `grunt.config.get`, but additionally recursively processes all `<% %>` templates in the returned data.
 
 ```javascript
-grunt.config.process()
+grunt.config.process([prop])
 ```
 
 ## Requiring Config Data
 
 ### grunt.config.requires
-METHOD_DESCRIPTION
+Inside
 
 ```javascript
 grunt.config.requires()

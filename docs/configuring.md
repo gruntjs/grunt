@@ -9,7 +9,7 @@ Each time grunt is run, it looks in the current directory for a file named `grun
 
 * Project configuration
 * Loading grunt plugins or tasks folders
-* [Tasks](tasks_creating.md) and [helpers](helpers_directives.md)
+* Tasks and helpers
 
 This is an example of a very basic sample `grunt.js` gruntfile that does all three of these things.
 
@@ -38,7 +38,7 @@ module.exports = function(grunt) {
 ```
 
 ## A Very Important Note
-Your `grunt.js` gruntfile **must** contain this code, once and **only** once. If it doesn't, grunt won't work. For the sake of brevity, this "wrapper" code has been omitted from all future examples on this page.
+Your `grunt.js` gruntfile **must** contain this code, once and **only** once. If it doesn't, grunt won't work. For the sake of brevity, this "wrapper" code has been omitted from all future examples on this page, but it needs to be there. Like in the previous example.
 
 ```javascript
 module.exports = function(grunt) {

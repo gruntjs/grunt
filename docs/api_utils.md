@@ -55,7 +55,7 @@ Spawn a child process, keeping track of its stdout, stderr and exit code. The me
 grunt.utils.spawn(options, doneFunction)
 ```
 
-The options object has these possible properties:
+The `options` object has these possible properties:
 
 ```javascript
 var options = {

@@ -44,11 +44,11 @@ module.exports = function(grunt) {
       // Strip // ... leading banners.
       m.push('(?:.*\\/\\/.*\\n)*\\s*');
     }
-    if (options.bang) {
-      // Strips /* ... */ leading banners.
+    if (options.block) {
+      // Strips all /* ... */ block comment banners.
       m.push('\\/\\*[\\s\\S]*?\\*\\/');
     } else {
-      // Strips /* ... */ banners, excluding /*! ... */ banners.
+      // Strips only /* ... */ block comment banners, excluding /*! ... */.
       m.push('\\/\\*[^!][\\s\\S]*?\\*\\/');
     }
     var re = new RegExp('^\\s*(?:' + m.join('|') + ')\\s*', '');

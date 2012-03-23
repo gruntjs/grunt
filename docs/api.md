@@ -38,7 +38,7 @@ module.exports = function(grunt) {
   // Create a new task.
   grunt.registerTask('awesome', 'Print out "awesome!!!"', function() {
     var awesome = grunt.helper('awesome');
-    log.write(awesome);
+    grunt.log.write(awesome);
   });
 
   // Register a helper.

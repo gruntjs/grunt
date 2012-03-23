@@ -4,7 +4,7 @@ Grunt is a task-based command line build tool for JavaScript projects.
 _Grunt is currently in beta. While I'm already using it on multiple projects, it might have a minor issue or two. And things might change before its final release, based on your feedback. Please try it out in a project, and [make suggestions][issues] or [report bugs][issues]!_
 
 ## Getting started
-Be sure to read the [getting started guide](/cowboy/grunt/blob/master/docs/getting_started.md), which is a complete guide to configuring grunt for your project. In addition, check out the [example gruntfiles](/cowboy/grunt/blob/master/docs/example_gruntfiles.md) which contains a few samples.
+Be sure to read the [getting started guide](/cowboy/grunt/blob/master/docs/getting_started.md), which is a complete guide to configuring grunt for your project. In addition, check out the [example gruntfiles](/cowboy/grunt/blob/master/docs/example_gruntfiles.md) which highlight a number of fairly common configurations.
 
 ## Built-in tasks
 As of now, grunt has the following predefined tasks that you can use in your project:
@@ -17,6 +17,8 @@ As of now, grunt has the following predefined tasks that you can use in your pro
 * [server](/cowboy/grunt/blob/master/docs/task_server.md) - Start a static web server.
 * test - Run unit tests with [nodeunit][nodeunit].
 * watch - Run predefined tasks whenever watched files change.
+
+_(More documentation forthcoming)_
 
 ## Custom tasks
 In addition to the built-in tasks, you can create your own tasks. Don't like a built-in task's default behavior? Override it. Check out the [grunt API documentation](/cowboy/grunt/blob/master/docs/api.md) and the [built-in tasks source](/cowboy/grunt/blob/master/tasks) for everything you need to know about creating custom tasks.
@@ -31,13 +33,11 @@ Being primarily a JavaScript developer, I decided to use [Node.js][node] and [np
 
 ## Installing grunt
 
-Grunt is available as an [npm][npm] module. If you install grunt globally via `npm install -g grunt`, it will be available for use in all of your projects.
+Grunt is available as an [npm][npm] module. If you install grunt globally via `npm install -g grunt`, it will be available for use in all of your projects. Once grunt has been installed, you can type `grunt --help` at the command line for more information. And if you want to see grunt "grunt" itself, cd into grunt's directory and type `grunt`
 
-Once grunt has been installed, you can type `grunt --help` at the command line for more information. And if you want to see grunt "grunt" itself, cd into grunt's directory and type `grunt`
+_Note: in Windows, you may need to run grunt as `grunt.cmd`. See the [FAQ](/cowboy/grunt/blob/master/docs/faq.md) for more Windows-specific information._
 
-_Note: in Windows, you may need to run grunt as `grunt.cmd`._
-
-For projects already using grunt, you're done. Otherwise, if you're starting from scratch, check out the [init task](/cowboy/grunt/blob/master/docs/task_init.md), which will set up a new grunt-based project for you. Even if you don't ultimately use the files that are generated, you can very quickly learn how grunt works.
+For projects already using grunt, you're done. Otherwise, if you're adding grunt to an existing project or starting from scratch, check out the [getting started guide](/cowboy/grunt/blob/master/docs/getting_started.md), which is a complete guide to configuring grunt for your project.
 
 ## Release History
 _(Until v1.0.0, this will only be updated when major or breaking changes are made)_

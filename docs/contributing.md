@@ -10,11 +10,11 @@ Join the [freenode](http://freenode.net/) #grunt IRC channel. We've got a bot an
 
 ## Filing issues
 
-If something isn't working like you think it should, read the documentation. If it still isn't working like you think it should, [file an issue](https://github.com/cowboy/grunt/issues). If you'd like to chat directly, pop into IRC.
+If something isn't working like you think it should, read the [API documentation](api.md). If it still isn't working like you think it should, [file an issue](https://github.com/cowboy/grunt/issues). If you'd like to chat directly, pop into IRC.
 
 ## Cloning grunt
 
-Ensure that you have the latest [Node.js](http://nodejs.org/) and [npm](http://npmjs.org/) installed.
+first, ensure that you have the latest [Node.js](http://nodejs.org/) and [npm](http://npmjs.org/) installed.
 
 Fork grunt in GitHub, and clone it locally:
 
@@ -22,23 +22,19 @@ Fork grunt in GitHub, and clone it locally:
 git clone git://github.com/YOURUSERNAME/grunt.git && cd grunt
 ```
 
-To download grunt dependencies and add the development `grunt` script to your path:
+To download grunt dependencies and add the development `grunt` bin script to your path:
 
 ```bash
 npm install && npm link
 ```
 
-## Reverting back to production grunt
+## Reverting back to the "live" grunt
 
-If, for some reason, you need to revert back to the official grunt release, this will ensure that the `grunt` script links to the globally installed production release:
+If, for some reason, you need to revert back to the current npm grunt release, just reinstall grunt globally via:
 
 ```bash
 npm install -g grunt
 ```
-
-## Devloping grunt plugins
-
-_(Coming soon)_
 
 ## Actually contributing
 

@@ -2,4 +2,4 @@
 
 # Plugins
 
-_(coming soon)_
+_(This section is coming soon. Probably around v0.3.1 or so)_

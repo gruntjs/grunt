@@ -1,1 +1,1 @@
-View the [Documentation table of contents](https://github.com/cowboy/grunt/blob/master/docs/toc.md).
+[Grunt homepage](https://github.com/cowboy/grunt) | [Documentation table of contents](/cowboy/grunt/blob/master/docs/toc.md)

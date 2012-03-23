@@ -77,7 +77,8 @@ This object contains all methods of `grunt.log` but only logs if the `--verbose`
 grunt.verbose.or
 ```
 
-## Utility
+## Utility Methods
+These methods don't actually log, they just return strings that can be used in other methods.
 
 ### grunt.log.wordlist
 Returns a comma-separated list of `arr` array items.
@@ -85,6 +86,28 @@ Returns a comma-separated list of `arr` array items.
 ```javascript
 grunt.log.wordlist(arr)
 ```
+
+### grunt.log.uncolor
+Removes all color information from a string, making it suitable for testing `.length` or perhaps logging to a file.
+
+```javascript
+grunt.log.uncolor(str)
+```
+
+### grunt.log.wraptext
+Wrap `text` string to `width` characters with `\n`, ensuring that words are not split in the middle unless absolutely necessary.
+
+```javascript
+grunt.log.wraptext(width, text)
+```
+
+### grunt.log.table
+Wrap `texts` array of strings to columns `widths` characters wide. A wrapper for the `grunt.log.wraptext` method that can be used to generate output in columns.
+
+```javascript
+grunt.log.table(widths, texts)
+```
+
 
 ## An Example
 

@@ -37,7 +37,7 @@ Once grunt has been installed, you can type `grunt --help` at the command line f
 
 _Note: in Windows, you may need to run grunt as `grunt.cmd`._
 
-For projects already using grunt, you're done. Otherwise, if you're starting from scratch, check out the [init task](task_init.md), which will set up a new grunt-based project for you. Even if you don't ultimately use the files that are generated, you can very quickly learn how grunt works.
+For projects already using grunt, you're done. Otherwise, if you're starting from scratch, check out the [init task](/cowboy/grunt/blob/master/docs/task_init.md), which will set up a new grunt-based project for you. Even if you don't ultimately use the files that are generated, you can very quickly learn how grunt works.
 
 ## Release History
 _(Until v1.0.0, this will only be updated when major or breaking changes are made)_

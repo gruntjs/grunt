@@ -4,7 +4,7 @@ Grunt is a task-based command line build tool for JavaScript projects.
 _Grunt is currently in beta. While I'm already using it on multiple projects, it might have a minor issue or two. And things might change before its final release, based on your feedback. Please try it out in a project, and [make suggestions][issues] or [report bugs][issues]!_
 
 ## Getting started
-Be sure to read the [getting started guide](/cowboy/grunt/blob/master/docs/getting_started.md), which is a complete guide to configuring grunt for your project. In addition, check out the [example gruntfiles](/cowboy/grunt/blob/master/docs/example_gruntfiles.md) which contains a few samples, to help you get started.
+Be sure to read the [getting started guide](/cowboy/grunt/blob/master/docs/getting_started.md), which is a complete guide to configuring grunt for your project. In addition, check out the [example gruntfiles](/cowboy/grunt/blob/master/docs/example_gruntfiles.md) which contains a few samples.
 
 ## Built-in tasks
 As of now, grunt has the following predefined tasks that you can use in your project:
@@ -15,11 +15,11 @@ As of now, grunt has the following predefined tasks that you can use in your pro
 * [min](/cowboy/grunt/blob/master/docs/task_min.md) - Minify files with [UglifyJS][uglify].
 * [qunit](/cowboy/grunt/blob/master/docs/task_qunit.md) - Run [QUnit][qunit] unit tests in a headless [PhantomJS][phantom] instance.
 * [server](/cowboy/grunt/blob/master/docs/task_server.md) - Start a static web server.
-* **test** - Run unit tests with [nodeunit][nodeunit].
-* **watch** - Run predefined tasks whenever watched files change.
+* test - Run unit tests with [nodeunit][nodeunit].
+* watch - Run predefined tasks whenever watched files change.
 
 ## Custom tasks
-In addition to the built-in tasks, you can create your own tasks. Don't like the default task behavior? Override it. Check out the [grunt API documentation](/cowboy/grunt/blob/master/docs/api.md) and the [built-in tasks source](/cowboy/grunt/blob/master/tasks/) for everything you need to know about creating custom tasks.
+In addition to the built-in tasks, you can create your own tasks. Don't like a built-in task's default behavior? Override it. Check out the [grunt API documentation](/cowboy/grunt/blob/master/docs/api.md) and the [built-in tasks source](/cowboy/grunt/blob/master/tasks/) for everything you need to know about creating custom tasks.
 
 ## Documentation
 Take a look at [the documentation][docs] for all the things.
@@ -37,7 +37,7 @@ Once grunt has been installed, you can type `grunt --help` at the command line f
 
 _Note: in Windows, you may need to run grunt as `grunt.cmd`._
 
-For projects already using grunt, you're done. Otherwise, check out the [init task][docs-init].
+For projects already using grunt, you're done. Otherwise, if you're starting from scratch, check out the [init task](task_init.md), which will set up a new grunt-based project for you. Even if you don't ultimately use the files that are generated, you can very quickly learn how grunt works.
 
 ## Release History
 _(Until v1.0.0, this will only be updated when major or breaking changes are made)_
@@ -54,9 +54,9 @@ Licensed under the MIT license.
 <http://benalman.com/about/license/>
 
 
-[docs]: https://github.com/cowboy/grunt/blob/master/docs/toc.md
-[docs-init]: https://github.com/cowboy/grunt/blob/master/docs/task_init.md
-[issues]: https://github.com/cowboy/grunt/issues
+[docs]: /cowboy/grunt/blob/master/docs/toc.md
+[docs-init]: /cowboy/grunt/blob/master/docs/task_init.md
+[issues]: /cowboy/grunt/issues
 
 [node]: http://nodejs.org/
 [npm]: http://npmjs.org/

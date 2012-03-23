@@ -42,7 +42,7 @@ module.exports = function(grunt) {
 
   // Concat source files and/or directives.
   grunt.registerHelper('concat', function(files, options) {
-    options = utils._.defaults(options, {
+    options = utils._.defaults(options || {}, {
       separator: utils.linefeed
     });
     return files ? files.map(function(filepath) {

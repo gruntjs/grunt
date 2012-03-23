@@ -13,7 +13,7 @@ This is the `DOSKEY` command you'd use:
 DOSKEY grunt=grunt.cmd $*
 ```
 
-## Why does grunt complain that PhantomJS isn't intalled?
+## Why does grunt complain that PhantomJS isn't installed?
 In order for the [qunit task](task_qunit.md) to work properly, [PhantomJS](http://www.phantomjs.org/) must be installed and in the system PATH (if you can run "phantomjs" at the command line, this task should work).
 
 Unfortunately, PhantomJS cannot be installed automatically via npm or grunt, so you need to install it yourself. There are a number of ways to install PhantomJS.

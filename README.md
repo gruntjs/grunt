@@ -19,10 +19,10 @@ As of now, grunt has the following predefined tasks that you can use in your pro
 * watch - Run predefined tasks whenever watched files change.
 
 ## Custom tasks
-In addition to the built-in tasks, you can create your own tasks. Don't like a built-in task's default behavior? Override it. Check out the [grunt API documentation](/cowboy/grunt/blob/master/docs/api.md) and the [built-in tasks source](/cowboy/grunt/blob/master/tasks/) for everything you need to know about creating custom tasks.
+In addition to the built-in tasks, you can create your own tasks. Don't like a built-in task's default behavior? Override it. Check out the [grunt API documentation](/cowboy/grunt/blob/master/docs/api.md) and the [built-in tasks source](/cowboy/grunt/blob/master/tasks) for everything you need to know about creating custom tasks.
 
 ## Documentation
-Take a look at [the documentation][docs] for all the things.
+Take a look at the [documentation table of contents][docs] for all the things.
 
 ## Why does grunt exist?
 Doing all this stuff manually is a total pain, and building all this stuff into a gigantic Makefile / Jakefile / Cakefile / Rakefile / ?akefile that's maintained across all my projects was also becoming a total pain. Since I always found myself performing the same tasks over and over again, for every project, it made sense to build a task-based build tool.

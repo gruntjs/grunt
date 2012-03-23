@@ -72,6 +72,21 @@ grunt.initConfig({
 });
 ```
 
+With a slight modification, running `grunt min` will join the specified source files using `;` instead of the default newline character before minification.
+
+```javascript
+// Project configuration.
+grunt.initConfig({
+  min: {
+    dist: {
+      src: ['src/intro.js', 'src/project.js', 'src/outro.js'],
+      dest: 'dist/built.min.js',
+      separator: ';'
+    }
+  }
+});
+```
+
 ### Minifying and concatenating separately
 
 Often, it's desirable to create both unminified and minified distribution files. In these cases, the [concat task](task_concat.md) should be run first, followed by the `min` task.

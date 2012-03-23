@@ -50,6 +50,21 @@ grunt.initConfig({
 });
 ```
 
+With a slight modification, running `grunt concat` will join the specified source files using `;` instead of the default newline character.
+
+```javascript
+// Project configuration.
+grunt.initConfig({
+  concat: {
+    dist: {
+      src: ['src/intro.js', 'src/project.js', 'src/outro.js'],
+      dest: 'dist/built.js',
+      separator: ';'
+    }
+  }
+});
+```
+
 ### Banner comments
 
 In this example, running `grunt concat:dist` (or `grunt concat` because `concat` is a [multi task](types_of_tasks.md)) will first strip any preexisting banner comment from the `src/project.js` file, then concatenate the result with a newly-generated banner comment, writing the output to `dist/built.js`.
@@ -145,10 +160,10 @@ grunt.initConfig({
 
 ## Helpers
 
-A generic `concat` helper is available for use in any other task where file and/or [directive](helpers_directives.md) concatenation might be useful. For example:
+A generic `concat` helper is available for use in any other task where file and/or [directive](helpers_directives.md) concatenation might be useful. In this example, a `;` separator is specified, although it defaults to linefeed if omitted:
 
 ```javascript
-var fooPlusBar = grunt.helper('concat', ['foo.txt', 'bar.txt']);
+var fooPlusBar = grunt.helper('concat', ['foo.txt', 'bar.txt'], {separator: ';'});
 ```
 
 See the [concat task source](../tasks/concat.js) for more information.

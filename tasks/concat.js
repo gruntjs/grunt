@@ -24,9 +24,10 @@ module.exports = function(grunt) {
   // ==========================================================================
 
   grunt.registerMultiTask('concat', 'Concatenate files.', function() {
-    // Concat specified files.
     var files = file.expandFiles(this.file.src);
-    file.write(this.file.dest, grunt.helper('concat', files));
+    // Concat specified files.
+    var src = grunt.helper('concat', files, {separator: this.data.separator});
+    file.write(this.file.dest, src);
 
     // Fail task if errors were logged.
     if (this.errorCount) { return false; }
@@ -40,10 +41,13 @@ module.exports = function(grunt) {
   // ==========================================================================
 
   // Concat source files and/or directives.
-  grunt.registerHelper('concat', function(files) {
+  grunt.registerHelper('concat', function(files, options) {
+    options = utils._.defaults(options, {
+      separator: utils.linefeed
+    });
     return files ? files.map(function(filepath) {
       return task.directive(filepath, file.read);
-    }).join(utils.linefeed) : '';
+    }).join(utils.normalizelf(options.separator)) : '';
   });
 
 };

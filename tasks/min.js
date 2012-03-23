@@ -39,7 +39,7 @@ module.exports = function(grunt) {
     }
     // Concat specified files. This should really be a single, pre-built (and
     // linted) file, but it supports any number of files.
-    var max = grunt.helper('concat', files);
+    var max = grunt.helper('concat', files, {separator: this.data.separator});
 
     // Concat banner + minified source.
     var min = banner + grunt.helper('uglify', max, config('uglify'));

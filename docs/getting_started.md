@@ -89,7 +89,7 @@ grunt.initConfig({
   concat: {},
   // Lists of files to be linted with JSHint, used by the "lint" task.
   lint: {},
-  // Lists of files to be minififed with UglifyJS, used by the "min" task.
+  // Lists of files to be minified with UglifyJS, used by the "min" task.
   min: {},
   // Lists of files or URLs to be unit tested with QUnit, used by the "qunit" task.
   qunit: {},

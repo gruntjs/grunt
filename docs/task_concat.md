@@ -36,7 +36,7 @@ grunt.initConfig({
 
 ### Concatenating multiple files
 
-Given this example, running `grunt concat:dist` (or `grunt concat` because `concat` is a [multi task](types_of_tasks.md)) will simply concatenate the three specified source files, in order, writing the output to `dist/built.js`.
+In this example, running `grunt concat:dist` (or `grunt concat` because `concat` is a [multi task](types_of_tasks.md)) will simply concatenate the three specified source files, in order, writing the output to `dist/built.js`.
 
 ```javascript
 // Project configuration.
@@ -52,7 +52,7 @@ grunt.initConfig({
 
 ### Banner comments
 
-Given this example, running `grunt concat:dist` (or `grunt concat` because `concat` is a [multi task](types_of_tasks.md)) will first strip any preexisting banner comment from the `src/project.js` file, then concatenate the result with a newly-generated banner comment, writing the output to `dist/built.js`.
+In this example, running `grunt concat:dist` (or `grunt concat` because `concat` is a [multi task](types_of_tasks.md)) will first strip any preexisting banner comment from the `src/project.js` file, then concatenate the result with a newly-generated banner comment, writing the output to `dist/built.js`.
 
 This generated banner will be the contents of the `meta.banner` underscore template string interpolated with the config object. In this case, those properties are the values imported from the `package.json` file (which are available via the `pkg` config property) plus today's date.
 
@@ -77,7 +77,7 @@ grunt.initConfig({
 
 ### Multiple build targets
 
-Given this example, running `grunt concat` will build two separate files. One "basic" version, with the main file essentially just copied to `dist/basic.js`, and another "with_extras" concatenated version written to `dist/with_extras.js`.
+In this example, running `grunt concat` will build two separate files. One "basic" version, with the main file essentially just copied to `dist/basic.js`, and another "with_extras" concatenated version written to `dist/with_extras.js`.
 
 While each concat target can be built individually by running `grunt concat:basic` or `grunt concat:extras`, running `grunt concat` will build all concat targets. This is because `concat` is a [multi task](types_of_tasks.md).
 
@@ -101,7 +101,7 @@ grunt.initConfig({
 
 Filenames can be generated dynamically by using `<%= %>` delimited underscore templates as filenames.
 
-Given this example, running `grunt concat:dist` generates a destination file whose name is generated from the `name` and `version` properties of the referenced `package.json` file (via the `pkg` config property).
+In this example, running `grunt concat:dist` generates a destination file whose name is generated from the `name` and `version` properties of the referenced `package.json` file (via the `pkg` config property).
 
 ```javascript
 // Project configuration.
@@ -118,7 +118,7 @@ grunt.initConfig({
 
 ### Advanced dynamic filenames
 
-Given this more involved example, running `grunt concat` will build two separate files (because `concat` is a [multi task](types_of_tasks.md)). The destination file paths will be expanded dynamically based on the specified underscore templates, recursively if necessary.
+In this more involved example, running `grunt concat` will build two separate files (because `concat` is a [multi task](types_of_tasks.md)). The destination file paths will be expanded dynamically based on the specified underscore templates, recursively if necessary.
 
 For example, if the `package.json` file contained `{"name": "awesome", "version": "1.0.0"}`, the files `dist/awesome/1.0.0/basic.js` and `dist/awesome/1.0.0/with_extras.js` would be generated.
 

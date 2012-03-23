@@ -196,42 +196,26 @@ module.exports = function(grunt) {
       }());
 
       // Launch PhantomJS.
-      var args = [
-        // The main script file.
-        task.getFile('qunit/phantom.js'),
-        // The temporary file used for communications.
-        tempfile.path,
-        // The QUnit helper file to be injected.
-        task.getFile('qunit/qunit.js'),
-        // URL to the QUnit .html test file to run.
-        url,
-        // PhantomJS options.
-        '--config=' + task.getFile('qunit/phantom.json')
-      ];
-
-      utils.spawn({
-        cmd: 'phantomjs',
-        args: args
-      }, function(err, result, code) {
-        if (!err) { return; }
-        // Something went horribly wrong.
-        cleanup();
-        verbose.or.writeln();
-        log.write('Running PhantomJS...').error();
-        if (code === 127) {
-          log.error(
-            'In order for the qunit task to work properly, PhantomJS must be installed and\n' +
-            'in the system PATH (if you can run "phantomjs" at the command line, this task\n' +
-            'should work). Unfortunately, PhantomJS cannot be installed automatically via\n' +
-            'npm or grunt. See the grunt qunit task documentation for more instructions at\n' +
-            'https://github.com/cowboy/grunt/blob/master/docs/task_qunit.md'
-          );
-          grunt.warn('PhantomJS not found.', 90);
-        } else {
-          result.split('\n').forEach(log.error, log);
-          grunt.warn('PhantomJS exited unexpectedly with exit code ' + code + '.', 90);
-        }
-        done();
+      grunt.helper('phantomjs', {
+        code: 90,
+        args: [
+          // The main script file.
+          task.getFile('qunit/phantom.js'),
+          // The temporary file used for communications.
+          tempfile.path,
+          // The QUnit helper file to be injected.
+          task.getFile('qunit/qunit.js'),
+          // URL to the QUnit .html test file to run.
+          url,
+          // PhantomJS options.
+          '--config=' + task.getFile('qunit/phantom.json')
+        ],
+        done: function(err) {
+          if (err) {
+            cleanup();
+            done();
+          }
+        },
       });
     }, function(err) {
       // All tests have been run.
@@ -247,6 +231,37 @@ module.exports = function(grunt) {
 
       // All done!
       done();
+    });
+  });
+
+  // ==========================================================================
+  // HELPERS
+  // ==========================================================================
+
+  grunt.registerHelper('phantomjs', function(options) {
+    return utils.spawn({
+      cmd: 'phantomjs',
+      args: options.args
+    }, function(err, result, code) {
+      if (!err) { return options.done(null); }
+      // Something went horribly wrong.
+      verbose.or.writeln();
+      log.write('Running PhantomJS...').error();
+      if (code === 127) {
+        log.error(log.wraptext(77,
+          'In order for this task to work properly, PhantomJS must be ' +
+          'installed and in the system PATH (if you can run "phantomjs" at' +
+          ' the command line, this task should work). Unfortunately, ' +
+          'PhantomJS cannot be installed automatically via npm or grunt. ' +
+          'See the grunt FAQ for PhantomJS installation instructions: ' +
+          'https://github.com/cowboy/grunt/blob/master/docs/faq.md'
+        ));
+        grunt.warn('PhantomJS not found.', options.code);
+      } else {
+        result.split('\n').forEach(log.error, log);
+        grunt.warn('PhantomJS exited unexpectedly with exit code ' + code + '.', options.code);
+      }
+      options.done(code);
     });
   });
 

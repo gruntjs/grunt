@@ -96,9 +96,4 @@ module.exports = function(grunt) {
     log.writeln('Compressed size: ' + gzipSize.green + ' bytes gzipped (' + String(min.length).green + ' bytes minified).');
   });
 
-  // Strip /*...*/ comments from source.
-  grunt.registerHelper('strip_comments', function(src) {
-    return src.replace(/\/\*[\s\S]*?\*\/\n*/g, '\n');
-  });
-
 };

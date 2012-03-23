@@ -12,6 +12,17 @@ This task is a [multi task](types_of_tasks.md), meaning that grunt will automati
 
 _Need some help getting started with grunt? Visit the [getting started](getting_started.md) page. And if you're creating your own tasks or helpers, be sure to check out the [types of tasks](types_of_tasks.md) page as well as the [API documentation](api.md)._
 
+### QUnit
+
+[QUnit][qunit] is a powerful, easy-to-use, JavaScript test suite. It's used by the jQuery project to test its code and plugins but is capable of testing any generic JavaScript code.
+
+### PhantomJS
+
+[PhantomJS](http://www.phantomjs.org/) is a headless WebKit with JavaScript API. It has fast and native support for various web standards: DOM handling, CSS selector, JSON, Canvas, and SVG. PhantomJS is required for the `qunit` task to work.
+
+See the [FAQ](faq.md) for instructions on installing PhantomJS.
+
+
 ## A Very Important Note
 Your `grunt.js` gruntfile **must** contain this code, once and **only** once. If it doesn't, grunt won't work. For the sake of brevity, this "wrapper" code has been omitted from all examples on this page, but it needs to be there.
 
@@ -99,29 +110,6 @@ grunt.registerTask('test', 'server qunit');
 ```
 
 _Note: in the above example, an [alias task](types_of_tasks.md) called `test` was created that runs both the `server` and `qunit` tasks._
-
-## QUnit
-
-[QUnit][qunit] is a powerful, easy-to-use, JavaScript test suite. It's used by the jQuery project to test its code and plugins but is capable of testing any generic JavaScript code.
-
-## PhantomJS
-
-[PhantomJS](http://www.phantomjs.org/) is a headless WebKit with JavaScript API. It has fast and native support for various web standards: DOM handling, CSS selector, JSON, Canvas, and SVG. PhantomJS is required for the `qunit` task to work.
-
-### Installation
-
-There are a number of ways to install PhantomJS.
-
-* [PhantomJS and Mac OS X](http://ariya.ofilabs.com/2012/02/phantomjs-and-mac-os-x.html)
-* [PhantomJS Installation](http://code.google.com/p/phantomjs/wiki/Installation) (PhantomJS wiki)
-
-### Updating the system PATH
-
-The `phantomjs` executable needs to be in the system `PATH` for grunt to see it.
-
-* [How to set the path and environment variables in Windows](http://www.computerhope.com/issues/ch000549.htm)
-* [Where does $PATH get set in OS X 10.6 Snow Leopard?](http://superuser.com/questions/69130/where-does-path-get-set-in-os-x-10-6-snow-leopard)
-* [How do I change the PATH variable in Linux](https://www.google.com/search?q=How+do+I+change+the+PATH+variable+in+Linux)
 
 ## Debugging
 

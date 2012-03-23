@@ -3,21 +3,23 @@ Grunt is a task-based command line build tool for JavaScript projects.
 
 _Grunt is currently in beta. While I'm already using it on multiple projects, it might have a minor issue or two. And things might change before its final release, based on your feedback. Please try it out in a project, and [make suggestions][issues] or [report bugs][issues]!_
 
-## Tasks
-As of now, grunt has the following predefined tasks. For detailed usage information, see [the documentation][docs].
+## Getting started
+Be sure to read the [getting started guide](/cowboy/grunt/blob/master/docs/getting_started.md), which is a complete guide to configuring grunt for your project. In addition, check out the [example gruntfiles](/cowboy/grunt/blob/master/docs/example_gruntfiles.md) which contains a few samples, to help you get started.
 
- * **concat** - Concatenate files.
- * **init** - Generate project scaffolding from a predefined template.
- * **lint** - Validate files with [JSHint][jshint].
- * **min** - Minify files with [UglifyJS][uglify].
- * **qunit** - Run [QUnit][qunit] unit tests in a headless [PhantomJS][phantom] instance.
- * **server** - Start a static web server.
- * **test** - Run unit tests with [nodeunit][nodeunit].
- * **watch** - Run predefined tasks whenever watched files change.
+## Built-in tasks
+As of now, grunt has the following predefined tasks that you can use in your project:
 
-_(My TODO list includes more "project scaffolding" templates, among other things)_
+* [concat](/cowboy/grunt/blob/master/docs/task_concat.md) - Concatenate files.
+* [init](/cowboy/grunt/blob/master/docs/task_init.md) - Generate project scaffolding from a predefined template.
+* [lint](/cowboy/grunt/blob/master/docs/task_lint.md) - Validate files with [JSHint][jshint].
+* [min](/cowboy/grunt/blob/master/docs/task_min.md) - Minify files with [UglifyJS][uglify].
+* [qunit](/cowboy/grunt/blob/master/docs/task_qunit.md) - Run [QUnit][qunit] unit tests in a headless [PhantomJS][phantom] instance.
+* [server](/cowboy/grunt/blob/master/docs/task_server.md) - Start a static web server.
+* **test** - Run unit tests with [nodeunit][nodeunit].
+* **watch** - Run predefined tasks whenever watched files change.
 
-And in addition to the predefined tasks, you can define your own.
+## Custom tasks
+In addition to the built-in tasks, you can create your own tasks. Don't like the default task behavior? Override it. Check out the [grunt API documentation](/cowboy/grunt/blob/master/docs/api.md) and the [built-in tasks source](/cowboy/grunt/blob/master/tasks/) for everything you need to know about creating custom tasks.
 
 ## Documentation
 Take a look at [the documentation][docs] for all the things.

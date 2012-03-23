@@ -74,7 +74,9 @@ grunt.initConfig({
 
 ### Minifying and concatenating separately
 
-Often, it's desirable to create both unminified and minified distribution files. In these cases, the [concat task](task_concat.md) should be run first, followed by the `min` task. In this example, running `grunt concat:dist min:dist` (or `grunt concat min` because both `concat` and `min` are [multi tasks](types_of_tasks.md)) will first concatenate the three specified source files, in order, writing the output to `dist/built.js`. After that, grunt will minify the newly-created file, writing the output to `dist/built.min.js`.
+Often, it's desirable to create both unminified and minified distribution files. In these cases, the [concat task](task_concat.md) should be run first, followed by the `min` task.
+
+In this example, running `grunt concat:dist min:dist` (or `grunt concat min` because both `concat` and `min` are [multi tasks](types_of_tasks.md)) will first concatenate the three specified source files, in order, writing the output to `dist/built.js`. After that, grunt will minify the newly-created file, writing the output to `dist/built.min.js`.
 
 _Note that UglifyJS strips all comments from the source, including banner comments. See the "Banner comments" example for instructions on how to add a banner to the generated source._
 

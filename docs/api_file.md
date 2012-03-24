@@ -131,22 +131,24 @@ _Note: all file paths are relative to the [grunt.js gruntfile](getting_started.m
 ### grunt.file.expand
 Return a unique array of all file or directory paths that match the given wildcard pattern(s). This method accepts one or more comma separated wildcard patterns as well as an array of wildcard patterns.
 
+The `options` object supports all [minimatch](https://github.com/isaacs/minimatch) options.
+
 ```javascript
-grunt.file.expand(patterns)
+grunt.file.expand([options, ] patterns)
 ```
 
 ### grunt.file.expandDirs
 This method behaves the same as `grunt.file.expand` except it only returns directory paths.
 
 ```javascript
-grunt.file.expandDirs(patterns)
+grunt.file.expandDirs([options, ] patterns)
 ```
 
 ### grunt.file.expandFiles
 This method behaves the same as `grunt.file.expand` except it only returns file paths.
 
 ```javascript
-grunt.file.expandFiles(patterns)
+grunt.file.expandFiles([options, ] patterns)
 ```
 
 This method is used by many built-in tasks to handle wildcard expansion of the specified source files. See the [concat task source](../tasks/concat.js) for an example.

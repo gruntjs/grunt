@@ -370,8 +370,10 @@ grunt.task.getFile(path1 [, path2 [, ...]])
 ### grunt.task.expand
 Search task "search directories" for the given wildcard pattern(s), returning a unique array of all matching file paths as "file objects" in `grunt.task.searchDirs` "task path order." This method accepts one or more comma separated wildcard patterns as well as an array of wildcard patterns.
 
+The `options` object supports all [minimatch](https://github.com/isaacs/minimatch) options.
+
 ```javascript
-grunt.task.expand(patterns)
+grunt.task.expand([options, ] patterns)
 ```
 
 Each "file object" item in the returned array has the following properties, and if coerced to string via `String(fileobj)` or `fileObj.toString()` returns the absolute file path value. In this way, `.map(String)` can be called on the resulting array to return an array of absolute file path strings.
@@ -392,14 +394,14 @@ var fileobj = {
 This method behaves the same as `grunt.task.expand` except it only returns directory paths.
 
 ```javascript
-grunt.task.expandDirs(patterns)
+grunt.task.expandDirs([options, ] patterns)
 ```
 
 ### grunt.task.expandFiles
 This method behaves the same as `grunt.task.expand` except it only returns file paths.
 
 ```javascript
-grunt.task.expandFiles(patterns)
+grunt.task.expandFiles([options, ] patterns)
 ```
 
 ## JSON Defaults

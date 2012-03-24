@@ -81,7 +81,7 @@ module.exports = function(grunt) {
         var files = {};
         var prefix = 'init/' + name + '/root/';
         // Iterate over all source files.
-        task.expandFiles(prefix + '**').forEach(function(obj) {
+        task.expandFiles({dot: true}, prefix + '**').forEach(function(obj) {
           // Get the path relative to the template root.
           var relpath = obj.rel.slice(prefix.length);
           var rule = init.renames[relpath];

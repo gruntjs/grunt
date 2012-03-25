@@ -54,9 +54,17 @@ module.exports = function(grunt) {
     });
     var initTemplate = templates[name];
 
+    // Give the user a little help.
+    log.writelns(
+      'This task will create one or more files in the current directory, ' +
+      'based on the environment and the answers to a few questions. ' +
+      'Note that answering "?" to any question will show question-specific ' +
+      'help and answering "none" to most questions will leave its value blank.'
+    );
+
     // Abort if a valid template was not specified.
     if (!initTemplate) {
-      log.write('Loading' + (name ? ' "' + name + '"' : '') + ' init template...').error();
+      log.writeln().write('Loading' + (name ? ' "' + name + '"' : '') + ' init template...').error();
       log.errorlns('A valid template name must be specified, eg. "grunt ' +
         'init:commonjs". The currently-available init templates are: ');
       Object.keys(templates).forEach(function(name) {
@@ -206,14 +214,6 @@ module.exports = function(grunt) {
         if (props.devDependencies) { pkg.devDependencies = props.devDependencies; }
 
         pkg.keywords = [];
-
-    // Give the user a little help.
-    log.writelns(
-      'This task will create one or more files in the current directory, ' +
-      'based on the environment and the answers to a few questions. ' +
-      'Note that answering "?" to any question will show question-specific ' +
-      'help and answering "none" to most questions will leave its value blank.'
-    );
 
         // Allow final tweaks to the pkg object.
         if (callback) { pkg = callback(pkg, props); }

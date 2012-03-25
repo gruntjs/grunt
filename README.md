@@ -42,6 +42,7 @@ For projects already using grunt, you're done. Otherwise, if you're adding grunt
 ## Release History
 _(Until v1.0.0, this will only be updated when major or breaking changes are made)_
 
+* 2012/03/25 - v0.3.1 - Added a few methods. Substantially reworked the init task and templates.
 * 2012/03/23 - v0.3.0 - Too many changes to list. But in brief: completely reorganized the API, removed all globals, added docs and examples for nearly everything, built a preliminary plugin system (that still needs to be tested). PLEASE RTFM OK? THX U.
 * 2012/02/03 - v0.2.14 - Added a server task (which starts a static webserver for your tasks). The qunit task now uses PhantomJS instead of Zombie.js (4768 of 4971 jQuery unit test pass, neat), and supports both file wildcards as well as http:// or https:// urls. (static webserver, anyone?). Grunt should no longer "hang" when done.
 * 2012/01/29 - v0.2.5 - Added a "qunit" task as well as an init "jquery" template (as of now, there are also "node" and "commonjs" init templates).

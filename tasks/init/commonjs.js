@@ -8,7 +8,9 @@
  */
 
 exports.description = 'Create a commonjs module, including Nodeunit unit tests.';
+
 exports.notes = '';
+
 exports.template = function(grunt, init, done) {
   // Grunt utilities.
   var task = grunt.task;
@@ -43,11 +45,11 @@ exports.template = function(grunt, init, done) {
     // Add properly-named license files.
     init.addLicenseFiles(files, props.licenses);
 
-    // Actually copy (and process). files.
+    // Actually copy (and process) files.
     init.copyAndProcess(files, props);
 
     // Generate package.json file.
-    init.writePackage('package.json', props);
+    init.writePackageJSON('package.json', props);
 
     // All done!
     done();

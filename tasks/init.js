@@ -74,6 +74,8 @@ module.exports = function(grunt) {
     // This task is asynchronous.
     var taskDone = this.async();
 
+    var pathPrefix = 'init/' + name + '/root/';
+
     // Useful init sub-task-specific utilities.
     var init = {
       // Expose any user-specified default init values.
@@ -85,20 +87,15 @@ module.exports = function(grunt) {
       // rename.json (if it exists).
       filesToCopy: function(props) {
         var files = {};
-        var prefix = 'init/' + name + '/root/';
         // Iterate over all source files.
-        task.expandFiles({dot: true}, prefix + '**').forEach(function(obj) {
+        task.expandFiles({dot: true}, pathPrefix + '**').forEach(function(obj) {
           // Get the path relative to the template root.
-          var relpath = obj.rel.slice(prefix.length);
+          var relpath = obj.rel.slice(pathPrefix.length);
           var rule = init.renames[relpath];
           // Omit files that have an empty / false rule value.
           if (!rule && relpath in init.renames) { return; }
-          // Create an object for this file.
-          files[relpath] = {
-            src: obj.abs,
-            // Rename if a rule exists.
-            dest: rule ? template.process(rule, props, 'init') : relpath
-          };
+          // Create a property for this file.
+          files[rule ? template.process(rule, props, 'init') : relpath] = obj.rel;
         });
         return files;
       },
@@ -115,30 +112,30 @@ module.exports = function(grunt) {
       addLicenseFiles: function(files, licenses) {
         var available = availableLicenses();
         licenses.forEach(function(license) {
-          files['LICENSE-' + license] = {
-            src: task.getFile('init/licenses/LICENSE-' + license),
-            dest: 'LICENSE-' + license
-          };
+          var fileobj = task.expandFiles('init/licenses/LICENSE-' + license)[0];
+          files['LICENSE-' + license] = fileobj ? fileobj.rel : null;
         });
       },
       // Given an absolute or relative source path, and an optional relative
       // destination path, copy a file, optionally processing it through the
       // passed callback.
-      copy: function(srcpath, destpath, process) {
+      copy: function(srcpath, destpath, options) {
+        // Destpath is optional.
         if (typeof destpath !== 'string') {
-          process = destpath;
+          options = destpath;
           destpath = srcpath;
         }
+        // Ensure srcpath is absolute.
         if (!file.isPathAbsolute(srcpath)) {
           srcpath = init.srcpath(srcpath);
         }
+        // Use placeholder file if no src exists.
         if (!srcpath) {
           srcpath = task.getFile('init/misc/placeholder');
         }
-        var absdestpath = init.destpath(destpath);
         verbose.or.write('Writing ' + destpath + '...');
         try {
-          file.copy(srcpath, absdestpath, {process: process});
+          file.copy(srcpath, init.destpath(destpath), options);
           verbose.or.ok();
         } catch(e) {
           verbose.or.error();
@@ -147,17 +144,32 @@ module.exports = function(grunt) {
       },
       // Iterate over all files in the passed object, copying the source file to
       // the destination, processing the contents.
-      copyAndProcess: function(files, props) {
-        Object.keys(files).forEach(function(key) {
-          var obj = files[key];
-          init.copy(obj.src, obj.dest, function(contents) {
+      copyAndProcess: function(files, props, options) {
+        options = utils._.defaults(options || {}, {
+          process: function(contents) {
             return template.process(contents, props, 'init');
-          });
+          }
+        });
+        Object.keys(files).forEach(function(destpath) {
+          var o = Object.create(options);
+          var srcpath = files[destpath];
+          // If srcpath is relative, match it against options.noProcess if
+          // necessary, then make srcpath absolute.
+          var relpath;
+          if (srcpath && !file.isPathAbsolute(srcpath)) {
+            if (o.noProcess) {
+              relpath = srcpath.slice(pathPrefix.length);
+              o.noProcess = file.isMatch(o.noProcess, relpath);
+            }
+            srcpath = task.getFile(srcpath);
+          }
+          // Copy!
+          init.copy(srcpath, destpath, o);
         });
       },
       // Save a package.json file in the destination directory. The callback
       // can be used to post-process properties to add/remove/whatever.
-      writePackage: function(filename, props, callback) {
+      writePackageJSON: function(filename, props, callback) {
         var pkg = {};
         // Basic values.
         ['name', 'title', 'description', 'version', 'homepage'].forEach(function(prop) {
@@ -195,6 +207,14 @@ module.exports = function(grunt) {
 
         pkg.keywords = [];
 
+    // Give the user a little help.
+    log.writelns(
+      'This task will create one or more files in the current directory, ' +
+      'based on the environment and the answers to a few questions. ' +
+      'Note that answering "?" to any question will show question-specific ' +
+      'help and answering "none" to most questions will leave its value blank.'
+    );
+
         // Allow final tweaks to the pkg object.
         if (callback) { pkg = callback(pkg, props); }
 
@@ -206,14 +226,6 @@ module.exports = function(grunt) {
     // Make args available as flags.
     init.flags = {};
     args.forEach(function(flag) { init.flags[flag] = true; });
-
-    // Give the user a little help.
-    log.writelns(
-      'This task will create one or more files in the current directory, ' +
-      'based on the environment and the answers to a few questions. ' +
-      'Note that answering "?" to any question will show question-specific ' +
-      'help and answering "none" to most questions will leave its value blank.'
-    );
 
     // Show any template-specific notes.
     if (initTemplate.notes) {

@@ -8,11 +8,13 @@
  */
 
 exports.description = 'Create a jQuery plugin, including QUnit unit tests.';
+
 exports.notes = '_Project name_ must start with "jquery." and should be a ' +
   'unique ID not already in use at plugins.jquery.com. _Project title_ ' +
   'should be a human-readable title, and doesn\'t need to contain the word ' +
   '"jQuery", although it may. For example, a plugin titled "Awesome Plugin" ' +
   'might have the name "jquery.awesome-plugin".';
+
 exports.template = function(grunt, init, done) {
   // Grunt utilities.
   var task = grunt.task;
@@ -54,14 +56,14 @@ exports.template = function(grunt, init, done) {
     // Add properly-named license files.
     init.addLicenseFiles(files, props.licenses);
 
-    // Actually copy (and process). files.
-    init.copyAndProcess(files, props);
+    // Actually copy (and process) files.
+    init.copyAndProcess(files, props, {noProcess: 'libs/**'});
 
     // jQuery plugins depend on jQuery!
-    props.dependencies = {'jquery': props.jquery_version || '1'};
+    props.dependencies = {jquery: props.jquery_version || '1'};
 
     // Generate package.json file.
-    init.writePackage('package.json', props);
+    init.writePackageJSON('package.json', props);
 
     // All done!
     done();

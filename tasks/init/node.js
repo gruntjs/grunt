@@ -8,8 +8,10 @@
  */
 
 exports.description = 'Create a Node.js module, including Nodeunit unit tests.';
+
 exports.notes = '_Project name_ shouldn\'t contain "node" or "js" and should ' +
   'be a unique ID not already in use at search.npmjs.org.';
+
 exports.template = function(grunt, init, done) {
   // Grunt utilities.
   var task = grunt.task;
@@ -44,11 +46,11 @@ exports.template = function(grunt, init, done) {
     // Add properly-named license files.
     init.addLicenseFiles(files, props.licenses);
 
-    // Actually copy (and process). files.
+    // Actually copy (and process) files.
     init.copyAndProcess(files, props);
 
     // Generate package.json file.
-    init.writePackage('package.json', props);
+    init.writePackageJSON('package.json', props);
 
     // All done!
     done();

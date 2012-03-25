@@ -50,13 +50,19 @@ module.exports = function(grunt) {
     var templates = {};
     task.expandFiles('init/*.js').forEach(function(fileobj) {
       // Add template (plus its path) to the templates object.
-      templates[path.basename(fileobj.abs, '.js')] = fileobj.abs;
+      templates[path.basename(fileobj.abs, '.js')] = require(fileobj.abs);
     });
+    var initTemplate = templates[name];
 
     // Abort if a valid template was not specified.
-    if (!(name && name in templates)) {
-      log.error('A valid template name must be specified, eg. "grunt init:commonjs".' +
-        ' Valid templates are: ' + log.wordlist(Object.keys(templates)) + '.');
+    if (!initTemplate) {
+      log.write('Loading' + (name ? ' "' + name + '"' : '') + ' init template...').error();
+      log.errorlns('A valid template name must be specified, eg. "grunt ' +
+        'init:commonjs". The currently-available init templates are: ');
+      Object.keys(templates).forEach(function(name) {
+        var description = templates[name].description || '(no description)';
+        log.errorlns(name.cyan + ' - ' + description);
+      });
       return false;
     }
 
@@ -199,9 +205,22 @@ module.exports = function(grunt) {
     init.flags = {};
     args.forEach(function(flag) { init.flags[flag] = true; });
 
+    // Give the user a little help.
+    log.writelns(
+      'This task will create one or more files in the current directory, ' +
+      'based on the environment and the answers to a few questions. ' +
+      'Note that answering "?" to any question will show question-specific ' +
+      'help and answering "none" to most questions will leave its value blank.'
+    );
+
+    // Show any template-specific notes.
+    if (initTemplate.notes) {
+      log.subhead('"' + name + '" template notes:').writelns(initTemplate.notes);
+    }
+
     // Execute template code, passing in the init object, done function, and any
     // other arguments specified after the init:name:???.
-    require(templates[name]).apply(this, [grunt, init, function() {
+    initTemplate.template.apply(this, [grunt, init, function() {
       // Fail task if errors were logged.
       if (task.current.errorCount) { taskDone(false); }
       // Otherwise, print a success message.
@@ -234,9 +253,9 @@ module.exports = function(grunt) {
 
     // Add one final "are you sure?" prompt.
     options.push({
-      message: 'Are these answers correct?'.green,
+      message: 'Do you need to make any changes to the above before continuing?'.green,
       name: 'ANSWERS_VALID',
-      default: 'Y/n'
+      default: 'y/N'
     });
 
     // Ask user for input. This is in an IIFE because it has to execute at least
@@ -265,17 +284,32 @@ module.exports = function(grunt) {
         }, function() {
           // Handle errors (there should never be errors).
           option.default = defaultValue;
+          // Wrap validator so that answering '?' always fails.
+          var validator = option.validator;
+          option.validator = function(line, next) {
+            if (line === '?') {
+              return next(false);
+            } else if (validator) {
+              if (validator.test) {
+                return next(validator.test(line));
+              } else if (typeof validator === 'function') {
+                return validator.length < 2 ? next(validator(line)) : validator(line, next);
+              }
+            }
+            next(true);
+          };
           // Actually get user input.
           prompt.start();
           prompt.getInput(option, function(err, line) {
             if (err) { return done(err); }
+            option.validator = validator;
             result[option.name] = line;
             done();
           });
         });
       }, function(err) {
         // After all prompt questions have been answered...
-        if (/y/i.test(result.ANSWERS_VALID)) {
+        if (/n/i.test(result.ANSWERS_VALID)) {
           // User accepted all answers. Suspend prompt.
           prompt.pause();
           // Clean up.
@@ -293,6 +327,7 @@ module.exports = function(grunt) {
                 next();
               });
             } else {
+              if (result[name] === 'none') { result[name] = ''; }
               next();
             }
           }, function(err) {
@@ -334,7 +369,7 @@ module.exports = function(grunt) {
         done(null, name);
       },
       validator: /^[\w\-\.]+$/,
-      warning: 'Name must be only letters, numbers, dashes, dots or underscores.',
+      warning: 'Must be only letters, numbers, dashes, dots or underscores.',
       sanitize: function(value, data, done) {
         // An additional value, safe to use as a JavaScript identifier.
         data.js_safe_name = value.replace(/[\W_]+/g, '_').replace(/^(\d)/, '_$1');
@@ -350,13 +385,14 @@ module.exports = function(grunt) {
         title = title.replace(/\w+/g, function(word) {
           return word[0].toUpperCase() + word.slice(1).toLowerCase();
         });
-        title = title.replace(/jquery/i, 'jQuery');
         done(null, title);
-      }
+      },
+      warning: 'May consist of any characters.'
     },
     description: {
       message: 'Description',
-      default: 'The best project ever.'
+      default: 'The best project ever.',
+      warning: 'May consist of any characters.'
     },
     version: {
       message: 'Version',
@@ -372,7 +408,7 @@ module.exports = function(grunt) {
         });
       },
       validator: semver.valid,
-      warning: 'Must be a valid semantic version.'
+      warning: 'Must be a valid semantic version (semver.org).'
     },
     repository: {
       message: 'Project git repository',
@@ -408,28 +444,32 @@ module.exports = function(grunt) {
             done();
           });
         }
-      }
+      },
+      warning: 'Should be a public git:// URI.'
     },
     homepage: {
       message: 'Project homepage',
       // If GitHub is the origin, the (potential) homepage is easy to figure out.
       default: function(value, data, done) {
         done(null, grunt.helper('github_web_url', data.repository) || 'none');
-      }
+      },
+      warning: 'Should be a public URL.'
     },
     bugs: {
       message: 'Project issues tracker',
       // If GitHub is the origin, the issues tracker is easy to figure out.
       default: function(value, data, done) {
         done(null, grunt.helper('github_web_url', data.repository, 'issues') || 'none');
-      }
+      },
+      warning: 'Should be a public URL.'
     },
     licenses: {
       message: 'Licenses',
       default: 'MIT',
       validator: /^[\w\-]+(?:\s+[\w\-]+)*$/,
-      warning: 'Must be one or more space-separated licenses. (eg. ' +
-        availableLicenses().join(' ') + ')',
+      warning: 'Must be zero or more space-separated licenses. Built-in ' +
+        'licenses are: ' + availableLicenses().join(' ') + ', but you may ' +
+        'specify any number of custom licenses.',
       // Split the string on spaces.
       sanitize: function(value, data, done) { done(value.split(/\s+/)); }
     },
@@ -442,7 +482,8 @@ module.exports = function(grunt) {
           args: ['config', '--get', 'user.name'],
           fallback: 'none'
         }, done);
-      }
+      },
+      warning: 'May consist of any characters.'
     },
     author_email: {
       message: 'Author email',
@@ -453,35 +494,42 @@ module.exports = function(grunt) {
           args: ['config', '--get', 'user.email'],
           fallback: 'none'
         }, done);
-      }
+      },
+      warning: 'Should be a valid email address.'
     },
     author_url: {
       message: 'Author url',
-      default: 'none'
+      default: 'none',
+      warning: 'Should be a public URL.'
     },
     node_version: {
       message: 'What versions of node does it run on?',
-      default: '>= ' + process.versions.node
+      default: '>= ' + process.versions.node,
+      warning: 'Must be a valid semantic version range descriptor.'
     },
     node_main: {
       message: 'Main module/entry point',
       default: function(value, data, done) {
         done(null, 'lib/' + data.name);
-      }
+      },
+      warning: 'Must be a path relative to the project root.'
     },
     node_bin: {
       message: 'CLI script',
       default: function(value, data, done) {
         done(null, 'bin/' + data.name);
-      }
+      },
+      warning: 'Must be a path relative to the project root.'
     },
     node_test: {
       message: 'Test command',
-      default: 'grunt test'
+      default: 'grunt test',
+      warning: 'Must be an executable command.'
     },
     grunt_version: {
       message: 'What versions of grunt does it require?',
-      default: '~' + grunt.version
+      default: '~' + grunt.version,
+      warning: 'Must be a valid semantic version range descriptor.'
     }
   };
 

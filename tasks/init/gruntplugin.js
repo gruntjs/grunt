@@ -7,7 +7,10 @@
  * http://benalman.com/about/license/
  */
 
-module.exports = function(grunt, init, done) {
+exports.description = 'Create a grunt plugin, including Nodeunit unit tests.';
+exports.notes = 'The grunt plugin system is still under development. For ' +
+  'more information, see the docs at https://github.com/cowboy/grunt/blob/master/docs/plugins.md';
+exports.template = function(grunt, init, done) {
   // Grunt utilities.
   var task = grunt.task;
   var file = grunt.file;

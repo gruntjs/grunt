@@ -7,7 +7,9 @@
  * http://benalman.com/about/license/
  */
 
-module.exports = function(grunt, init, done) {
+exports.description = 'Create a commonjs module, including Nodeunit unit tests.';
+exports.notes = '';
+exports.template = function(grunt, init, done) {
   // Grunt utilities.
   var task = grunt.task;
   var file = grunt.file;

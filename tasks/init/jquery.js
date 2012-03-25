@@ -7,7 +7,13 @@
  * http://benalman.com/about/license/
  */
 
-module.exports = function(grunt, init, done) {
+exports.description = 'Create a jQuery plugin, including QUnit unit tests.';
+exports.notes = '_Project name_ must start with "jquery." and should be a ' +
+  'unique ID not already in use at plugins.jquery.com. _Project title_ ' +
+  'should be a human-readable title, and doesn\'t need to contain the word ' +
+  '"jQuery", although it may. For example, a plugin titled "Awesome Plugin" ' +
+  'might have the name "jquery.awesome-plugin".';
+exports.template = function(grunt, init, done) {
   // Grunt utilities.
   var task = grunt.task;
   var file = grunt.file;
@@ -21,8 +27,16 @@ module.exports = function(grunt, init, done) {
 
   grunt.helper('prompt', {type: 'jquery'}, [
     // Prompt for these values.
-    grunt.helper('prompt_for', 'name'),
-    grunt.helper('prompt_for', 'title'),
+    grunt.helper('prompt_for', 'name', function(value, data, done) {
+      // Prepend "jquery." to current name.
+      value = data.full_name = 'jquery.' + value;
+      done(null, value);
+    }),
+    grunt.helper('prompt_for', 'title', function(value, data, done) {
+      // Fix jQuery capitalization.
+      value = value.replace(/jquery/i, 'jQuery');
+      done(null, value);
+    }),
     grunt.helper('prompt_for', 'description', 'The best jQuery plugin ever.'),
     grunt.helper('prompt_for', 'version'),
     grunt.helper('prompt_for', 'repository'),

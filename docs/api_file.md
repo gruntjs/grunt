@@ -50,7 +50,12 @@ var options = {
   // If specified, the file contents will be parsed as `utf8` and passed into
   // the function, whose return value will be used as the destination file's
   // contents.
-  process: processFunction
+  process: processFunction,
+  // These optional wildcard patterns will be matched against the filepath using
+  // grunt.file.isMatch. If a specified wildcard pattern matches, the file will
+  // not be processed via `processFunction`. Note that `true` may also be
+  // specified to prvent processing.
+  noProcess: wildcardPatterns
 };
 ```
 
@@ -163,11 +168,13 @@ grunt.file.expandFileURLs(patternsOrURLs)
 See the [qunit task source](../tasks/qunit.js) for an example.
 
 ### grunt.file.isMatch
-Match one or more wildcard patterns against a file path. If any of the specified matches, return `true` otherwise return `false`. This method accepts a single string wildcard pattern as well as an array of wildcard patterns.
+Match one or more wildcard patterns against a file path. If any of the specified matches, return `true` otherwise return `false`. This method accepts a single string wildcard pattern as well as an array of wildcard patterns. Note that `true` may also be specified to prvent processing.
 
 ```javascript
 grunt.file.isMatch(patterns, filepath)
 ```
+
+Patterns without slashes will be matched against the basename of the path if it contains slashes, eg. pattern `*.js` will match filepath `path/to/file.js`.
 
 ## External libraries
 

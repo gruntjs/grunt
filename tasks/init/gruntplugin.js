@@ -44,10 +44,10 @@ exports.template = function(grunt, init, done) {
     grunt.helper('prompt_for', 'node_version', '*')
   ], function(err, props) {
     // Set a few grunt-plugin-specific properties.
-    props.node_main = 'grunt.js';
-    props.node_test = 'grunt test';
-    props.node_bin = 'bin/' + props.name;
-    props.node_dependencies = {grunt: props.grunt_version};
+    props.main = 'grunt.js';
+    props.npm_test = 'grunt test';
+    props.bin = 'bin/' + props.name;
+    props.dependencies = {grunt: props.grunt_version};
 
     // Files to copy (and process).
     var files = init.filesToCopy(props);

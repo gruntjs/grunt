@@ -45,7 +45,8 @@ exports.template = function(grunt, init, done) {
     grunt.helper('prompt_for', 'licenses'),
     grunt.helper('prompt_for', 'author_name'),
     grunt.helper('prompt_for', 'author_email'),
-    grunt.helper('prompt_for', 'author_url')
+    grunt.helper('prompt_for', 'author_url'),
+    grunt.helper('prompt_for', 'jquery_version')
   ], function(err, props) {
     // Files to copy (and process).
     var files = init.filesToCopy(props);
@@ -55,6 +56,9 @@ exports.template = function(grunt, init, done) {
 
     // Actually copy (and process). files.
     init.copyAndProcess(files, props);
+
+    // jQuery plugins depend on jQuery!
+    props.dependencies = {'jquery': props.jquery_version || '1'};
 
     // Generate package.json file.
     init.writePackage('package.json', props);

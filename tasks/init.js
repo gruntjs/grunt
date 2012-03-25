@@ -176,22 +176,24 @@ module.exports = function(grunt) {
         pkg.licenses = props.licenses.map(function(license) {
           return {type: license, url: props.homepage + '/blob/master/LICENSE-' + license};
         });
-        pkg.dependencies = {};
-        pkg.devDependencies = {};
-        pkg.keywords = [];
+
         // Node/npm-specific (?)
+        if (props.main) { pkg.main = props.main; }
+        if (props.bin) { pkg.bin = props.bin; }
         if (props.node_version) { pkg.engines = {node: props.node_version}; }
-        if (props.node_main) { pkg.main = props.node_main; }
-        if (props.node_bin) { pkg.bin = props.node_bin; }
-        if (props.node_test) {
-          pkg.scripts = {test: props.node_test};
-          if (props.node_test.split(' ')[0] === 'grunt') {
-            if (!props.node_devDependencies) { props.node_devDependencies = {}; }
-            props.node_devDependencies.grunt = '~' + grunt.version;
+        if (props.npm_test) {
+          pkg.scripts = {test: props.npm_test};
+          if (props.npm_test.split(' ')[0] === 'grunt') {
+            if (!props.devDependencies) { props.devDependencies = {}; }
+            props.devDependencies.grunt = '~' + grunt.version;
           }
         }
-        if (props.node_dependencies) { pkg.dependencies = props.node_dependencies; }
-        if (props.node_devDependencies) { pkg.devDependencies = props.node_devDependencies; }
+
+        pkg.dependencies = {};
+        if (props.dependencies) { pkg.dependencies = props.dependencies; }
+        if (props.devDependencies) { pkg.devDependencies = props.devDependencies; }
+
+        pkg.keywords = [];
 
         // Allow final tweaks to the pkg object.
         if (callback) { pkg = callback(pkg, props); }
@@ -502,27 +504,32 @@ module.exports = function(grunt) {
       default: 'none',
       warning: 'Should be a public URL.'
     },
-    node_version: {
-      message: 'What versions of node does it run on?',
-      default: '>= ' + process.versions.node,
+    jquery_version: {
+      message: 'Required jQuery version',
+      default: '~1.5',
       warning: 'Must be a valid semantic version range descriptor.'
     },
-    node_main: {
+    node_version: {
+      message: 'What versions of node does it run on?',
+      default: '~' + process.versions.node,
+      warning: 'Must be a valid semantic version range descriptor.'
+    },
+    main: {
       message: 'Main module/entry point',
       default: function(value, data, done) {
         done(null, 'lib/' + data.name);
       },
       warning: 'Must be a path relative to the project root.'
     },
-    node_bin: {
+    bin: {
       message: 'CLI script',
       default: function(value, data, done) {
         done(null, 'bin/' + data.name);
       },
       warning: 'Must be a path relative to the project root.'
     },
-    node_test: {
-      message: 'Test command',
+    npm_test: {
+      message: 'Npm test command',
       default: 'grunt test',
       warning: 'Must be an executable command.'
     },

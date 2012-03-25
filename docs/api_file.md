@@ -161,3 +161,15 @@ grunt.file.expandFileURLs(patternsOrURLs)
 ```
 
 See the [qunit task source](../tasks/qunit.js) for an example.
+
+### grunt.file.isMatch
+Match one or more wildcard patterns against a file path. If any of the specified matches, return `true` otherwise return `false`. This method accepts a single string wildcard pattern as well as an array of wildcard patterns.
+
+```javascript
+grunt.file.isMatch(patterns, filepath)
+```
+
+## External libraries
+
+### grunt.file.glob
+[glob-whatev](https://github.com/cowboy/node-glob-whatev) - Synchronous file globbing utility.

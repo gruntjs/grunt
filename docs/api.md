@@ -371,7 +371,7 @@ Display a warning and abort grunt immediately. The `error` argument can be a str
 grunt.fail(error [, errorcode])
 ```
 
-If `--debug 9` is specified on the command-line and an error object was specified, a stack trace will be logged.
+If `--debug=9` is specified on the command-line and an error object was specified, a stack trace will be logged.
 
 _This method is an alias for the [grunt.fail.fatal](api_fail.md) method._
 
@@ -383,6 +383,15 @@ Retrieve the value of a command-line option, eg. `debug`. Note that for each com
 
 ```javascript
 grunt.option(optionName)
+```
+
+## Miscellaneous
+
+### grunt.version
+The current grunt version, as a string.
+
+```javascript
+grunt.version
 ```
 
 ## Other Methods

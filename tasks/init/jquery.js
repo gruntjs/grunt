@@ -34,7 +34,7 @@ exports.template = function(grunt, init, done) {
     }),
     grunt.helper('prompt_for', 'title', function(value, data, done) {
       // Fix jQuery capitalization.
-      value = value.replace(/jquery/i, 'jQuery');
+      value = value.replace(/jquery/gi, 'jQuery');
       done(null, value);
     }),
     grunt.helper('prompt_for', 'description', 'The best jQuery plugin ever.'),

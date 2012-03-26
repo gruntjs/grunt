@@ -7,14 +7,20 @@
  * http://benalman.com/about/license/
  */
 
+// Basic template description.
 exports.description = 'Create a jQuery plugin, including QUnit unit tests.';
 
+// Template-specific notes to be displayed before question prompts.
 exports.notes = '_Project name_ must start with "jquery." and should be a ' +
   'unique ID not already in use at plugins.jquery.com. _Project title_ ' +
   'should be a human-readable title, and doesn\'t need to contain the word ' +
   '"jQuery", although it may. For example, a plugin titled "Awesome Plugin" ' +
   'might have the name "jquery.awesome-plugin".';
 
+// Any existing file matching this wildcard will cause a warning.
+exports.warnOn = '*';
+
+// The actual init template.
 exports.template = function(grunt, init, done) {
   // Grunt utilities.
   var task = grunt.task;

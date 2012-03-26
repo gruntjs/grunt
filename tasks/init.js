@@ -75,8 +75,9 @@ module.exports = function(grunt) {
     }
 
     // Abort if files were found (to avoid accidentally nuking them).
-    if (file.expandFiles('*').length > 0) {
-      grunt.warn('Current directory is not empty.');
+    if (initTemplate.warnOn && file.expandFiles(initTemplate.warnOn).length > 0) {
+      log.writeln();
+      grunt.warn('Existing files may be overwritten!');
     }
 
     // This task is asynchronous.

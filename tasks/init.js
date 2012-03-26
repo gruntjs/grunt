@@ -44,8 +44,8 @@ module.exports = function(grunt) {
   grunt.registerInitTask('init', 'Generate project scaffolding from a predefined template.', function() {
     // Extra arguments will be applied to the template file.
     var args = utils.toArray(arguments);
-    // Template name.
-    var name = args.shift();
+    // Template name. Default to plugin name if omitted.
+    var name = args.shift() || grunt._npmTask;
     // Valid init templates (.js files).
     var templates = {};
     task.expandFiles('init/*.js').forEach(function(fileobj) {

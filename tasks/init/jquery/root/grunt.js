@@ -43,6 +43,7 @@ module.exports = function(grunt) {
         noarg: true,
         sub: true,
         undef: true,
+        boss: true,
         eqnull: true,
         browser: true
       },

@@ -14,7 +14,7 @@ exports.description = 'Create a basic grunt.js gruntfile.';
 exports.notes = 'This template tries to guess file and directory paths, but ' +
   'you will most likely need to edit the generated grunt.js file before ' +
   'running grunt. _If you run grunt after generating grunt.js, and grunt ' +
-  'exits with errors, edit the grunt.js file._';
+  'exits with errors, edit the grunt.js file!_';
 
 // Any existing file matching this wildcard will cause a warning.
 exports.warnOn = 'grunt.js';

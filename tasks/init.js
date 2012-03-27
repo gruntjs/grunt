@@ -267,11 +267,13 @@ module.exports = function(grunt) {
     });
 
     // Add one final "are you sure?" prompt.
-    options.push({
-      message: 'Do you need to make any changes to the above before continuing?'.green,
-      name: 'ANSWERS_VALID',
-      default: 'y/N'
-    });
+    if (options.length > 0) {
+      options.push({
+        message: 'Do you need to make any changes to the above before continuing?'.green,
+        name: 'ANSWERS_VALID',
+        default: 'y/N'
+      });
+    }
 
     // Ask user for input. This is in an IIFE because it has to execute at least
     // once, and might be repeated.

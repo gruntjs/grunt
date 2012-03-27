@@ -60,8 +60,8 @@ config.init({
   }
 });
 
-task.registerMultiTask('logstuff', 'This task logs stuff.', function(target) {
-  // target === the name of the target
+task.registerMultiTask('logstuff', 'This task logs stuff.', function() {
+  // this.target === the name of the target
   // this.data === the target's value in the config object
   // this.name === the task name
   // this.args === an array of args specified after the target on the command-line
@@ -69,7 +69,7 @@ task.registerMultiTask('logstuff', 'This task logs stuff.', function(target) {
   // this.file === file-specific .src and .dest properties
 
   // Log some stuff.
-  log.writeln(target + ': ' + this.data);
+  log.writeln(this.target + ': ' + this.data);
 
   // If data was falsy, abort!!
   if (!this.data) { return false; }

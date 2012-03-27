@@ -4,7 +4,7 @@
 
 if {$argc == 0} {
   # No template specified, iterate over all templates.
-  set templates [list jquery commonjs node gruntplugin]
+  set templates [list jquery commonjs node gruntplugin gruntfile]
 } else {
   # One or more templates were specified, iterate over those.
   set templates [lrange $argv 0 end]
@@ -86,12 +86,6 @@ send "git add .\r"
 expect "$ "
 send "git commit -m 'Committing example \"grunt init:$template\" task output.'\r"
 
-# Push to GitHub
-if {$gitpush} {
-  expect "$ "
-  send "git push -uf origin master\r"
-}
-
 # Session logging stops here.
 expect "$ "
 send "# EOF\n"
@@ -145,7 +139,7 @@ send "git add .\r"
 expect "$ "
 send "git commit -m 'Adding project creation transcript.'\r"
 
-# Push to GitHub again.
+# Push to GitHub.
 if {$gitpush} {
   expect "$ "
   send "git push -uf origin master\r"

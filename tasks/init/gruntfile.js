@@ -11,8 +11,10 @@
 exports.description = 'Create a basic grunt.js gruntfile.';
 
 // Template-specific notes to be displayed before question prompts.
-exports.notes = 'This template tries to guess at some local paths, but you ' +
-  'will most likely need to edit the generated grunt.js gruntfile afterwards.';
+exports.notes = 'This template tries to guess file and directory paths, but ' +
+  'you will most likely need to edit the generated grunt.js file before ' +
+  'running grunt. _If you run grunt after generating grunt.js, and grunt ' +
+  'exits with errors, edit the grunt.js file._';
 
 // Any existing file matching this wildcard will cause a warning.
 exports.warnOn = 'grunt.js';
@@ -43,11 +45,19 @@ exports.template = function(grunt, init, done) {
       message: 'Will files be concatenated or minified?',
       default: 'Y/n',
       warning: 'Yes: min + concat tasks. No: nothing to see here.'
+    },
+    {
+      name: 'package_json',
+      message: 'Will you have a package.json file?',
+      default: 'Y/n',
+      warning: 'This changes how filenames are determined and banners are generated.'
     }
   ], function(err, props) {
     props.dom = /y/i.test(props.dom);
     props.min_concat = /y/i.test(props.min_concat);
+    props.package_json = /y/i.test(props.package_json);
     props.test_task = props.dom ? 'qunit' : 'test';
+    props.file_name = props.package_json ? '<%= pkg.name %>' : 'FILE_NAME';
 
     // Find the first `preferred` item existing in `arr`.
     function prefer(arr, preferred) {

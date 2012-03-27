@@ -2,7 +2,7 @@
 module.exports = function(grunt) {
 
   // Project configuration.
-  grunt.initConfig({{% if (min_concat) { %}
+  grunt.initConfig({{% if (min_concat) { if (package_json) { %}
     pkg: '<json:package.json>',
     meta: {
       banner: '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
@@ -10,7 +10,11 @@ module.exports = function(grunt) {
         '<%= pkg.homepage ? "* " + pkg.homepage + "\n" : "" %>' +
         '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
         ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */'
-    },{% } %}
+    },{% } else { %}
+    meta: {
+      banner: '/*! PROJECT_NAME - v0.1.0 - {%= grunt.template.today("m/d/yyyy") %}\n' +
+        '* Copyright (c) {%= grunt.template.today("yyyy") %} YOUR_NAME; Licensed MIT %> */'
+    },{% } } %}
     lint: {
       files: ['grunt.js', '{%= lib_dir %}/**/*.js', '{%= test_dir %}/**/*.js']
     },{% if (dom) { %}
@@ -22,14 +26,14 @@ module.exports = function(grunt) {
     },{% } %}{% if (min_concat) { %}
     concat: {
       dist: {
-        src: ['<banner>', '<file_strip_banner:{%= lib_dir %}/<%= pkg.name %>.js>'],
-        dest: 'dist/<%= pkg.name %>.js'
+        src: ['<banner>', '<file_strip_banner:{%= lib_dir %}/{%= file_name %}.js>'],
+        dest: 'dist/{%= file_name %}.js'
       }
     },
     min: {
       dist: {
         src: ['<banner>', '<config:concat.dist.dest>'],
-        dest: 'dist/<%= pkg.name %>.min.js'
+        dest: 'dist/{%= file_name %}.min.js'
       }
     },{% } %}
     watch: {

@@ -160,8 +160,8 @@ grunt.initConfig({
   }
 });
 
-grunt.registerMultiTask('log', 'Log stuff.', function(target) {
-  grunt.log.writeln(target + ': ' + this.data);
+grunt.registerMultiTask('log', 'Log stuff.', function() {
+  grunt.log.writeln(this.target + ': ' + this.data);
 });
 ```
 

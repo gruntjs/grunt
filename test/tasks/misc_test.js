@@ -74,8 +74,8 @@ exports['banner'] = function(test) {
   config('test_config.banner', '<%= _.pluck(test_config.d, "a").join(", ") %>');
   test.equal(grunt.helper('banner', 'test_config.banner'), utils.normalizelf('1, 2, 3\n'), 'It should join arrays.');
 
-  config('test_config.banner', '<%= grunt.template.today("m/d/yyyy") %>');
-  test.equal(grunt.helper('banner', 'test_config.banner'), utils.normalizelf(template.today('m/d/yyyy') + '\n'), 'It should parse the current date correctly.');
+  config('test_config.banner', '<%= grunt.template.today("yyyy-mm-dd") %>');
+  test.equal(grunt.helper('banner', 'test_config.banner'), utils.normalizelf(template.today('yyyy-mm-dd') + '\n'), 'It should parse the current date correctly.');
 
   test.done();
 };

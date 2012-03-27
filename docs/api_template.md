@@ -53,7 +53,7 @@ grunt.template.date(date, format)
 In this example, a specific date is formatted as month/day/year.
 
 ```javascript
-grunt.template.date(847602000000, 'mm/dd/yyyy') // '11/10/1996'
+grunt.template.date(847602000000, 'yyyy-mm-dd') // '1996-11-10'
 ```
 
 ### grunt.template.today

@@ -301,6 +301,7 @@ module.exports = function(grunt) {
         }, function() {
           // Handle errors (there should never be errors).
           option.default = defaultValue;
+          delete option.altDefault;
           // Wrap validator so that answering '?' always fails.
           var validator = option.validator;
           option.validator = function(line, next) {

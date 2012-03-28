@@ -12,7 +12,7 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     lint: {
-      all: ['grunt.js', 'lib/**/*.js''test/**/*.js']
+      all: ['grunt.js', 'lib/**/*.js', 'test/**/*.js']
     },
     jshint: {
       options: {
@@ -89,7 +89,7 @@ _This method is an alias for the [config.init](api_config.md) method._
 
 
 ## Creating Tasks
-Tasks are grunt's bread and butter. The stuff you do most often, like `lint` or `test`. Every time grunt is run, you specify one more more tasks to run, which tells grunt what you'd like it to do.
+Tasks are grunt's bread and butter. The stuff you do most often, like `lint` or `test`. Every time grunt is run, you specify one or more tasks to run, which tells grunt what you'd like it to do.
 
 If you don't specify a task, but a task named "default" has been defined, that task will run (unsurprisingly) by default.
 
@@ -318,7 +318,7 @@ grunt.registerHelper(helperName, helperFunction)
 In this example helper, the numbers `1` and `2` are passed in and the value `3` is returned.
 
 ```javascript
-grunt.registerHelper("add_two_nums", function(a, b) {
+grunt.registerHelper('add_two_nums', function(a, b) {
   return a + b;
 });
 ```
@@ -344,7 +344,7 @@ grunt.helper(helperName [, arguments...])
 In this example, the previously defined `add_two_nums` helper is invoked.
 
 ```javascript
-grunt.helper("add_two_nums", 1, 2) // 3
+grunt.helper('add_two_nums', 1, 2) // 3
 ```
 
 _This method is an alias for the [grunt.task.helper](api_task.md) method._
@@ -371,7 +371,7 @@ Display a warning and abort grunt immediately. The `error` argument can be a str
 grunt.fail(error [, errorcode])
 ```
 
-If `--debug=9` is specified on the command-line and an error object was specified, a stack trace will be logged.
+If `--debug 9` is specified on the command-line and an error object was specified, a stack trace will be logged.
 
 _This method is an alias for the [grunt.fail.fatal](api_fail.md) method._
 

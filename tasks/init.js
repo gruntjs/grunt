@@ -434,7 +434,7 @@ module.exports = function(grunt) {
         grunt.helper('git_origin', function(err, result) {
           if (err) {
             // Attempt to guess at the repo name. Maybe we'll get lucky!
-            result = 'git://github.com/' + (process.env.USER || '???') + '/' +
+            result = 'git://github.com/' + (process.env.USER || process.env.USERNAME || '???') + '/' +
               data.name + '.git';
           } else {
             result = result.replace(/^git@([^:]+):/, 'git://$1/');
@@ -457,7 +457,7 @@ module.exports = function(grunt) {
             args: ['config', '--get', 'github.user'],
             fallback: ''
           }, function(err, result, code) {
-            data.git_user = result || process.env.USER || '???';
+            data.git_user = result || process.env.USER || process.env.USERNAME || '???';
             done();
           });
         }

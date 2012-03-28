@@ -185,9 +185,9 @@ module.exports = function(grunt) {
           if (prop in props) { pkg[prop] = props[prop]; }
         });
         // Author.
+        pkg.author = {};
         ['name', 'email', 'url'].forEach(function(prop) {
           if (props['author_' + prop]) {
-            if (!pkg.author) { pkg.author = {}; }
             pkg.author[prop] = props['author_' + prop];
           }
         });

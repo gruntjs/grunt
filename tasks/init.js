@@ -147,7 +147,7 @@ module.exports = function(grunt) {
           file.copy(srcpath, init.destpath(destpath), options);
           verbose.or.ok();
         } catch(e) {
-          verbose.or.error();
+          verbose.or.error().error(e);
           throw e;
         }
       },

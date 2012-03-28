@@ -42,6 +42,7 @@ For projects already using grunt, you're done. Otherwise, if you're adding grunt
 ## Release History
 _(Until v1.0.0, this will only be updated when major or breaking changes are made)_
 
+* 2012/03/27 - v0.3.5 - Fixed a handful of weird Windows issues. Changed default m/d/yyyy dates to yyyy-mm-dd ISO 8601. Fixed some init task bugs, docs errata, and added a lot more content to the init task docs.
 * 2012/03/26 - v0.3.3 - Added a "gruntfile" init template. Create a basic gruntfile in seconds with `grunt init:gruntfile`. A few other minor fixes.
 * 2012/03/25 - v0.3.2 - Init tasks can now specify a file matching wildcard for the initial "files exist" warning. The jQuery init template now has jQuery 1.7.2. Fixed a bug in the `task.expand*` methods.
 * 2012/03/25 - v0.3.1 - Added a few methods. Substantially reworked the init task and templates.

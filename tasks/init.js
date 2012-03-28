@@ -288,7 +288,7 @@ module.exports = function(grunt) {
             // If the value is a function, execute that function, using the
             // value passed into the return callback as the new default value.
             option[prop](defaultValue, result, function(err, value) {
-              defaultValue = value;
+              defaultValue = String(value);
               next();
             });
           } else {

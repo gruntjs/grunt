@@ -1,8 +1,8 @@
 [Grunt homepage](https://github.com/cowboy/grunt) | [Documentation table of contents](toc.md)
 
-# Types of Tasks
+**Note: this document is a little out-of-date. You're better off starting with the "Creating Tasks" section of the [API documentation](api.md).**
 
-EXPLAIN BETTER
+# Types of Tasks
 
 Tasks are grunt's bread and butter. The stuff you do most often, like `concat` or `test`. Every time grunt is run, you specify one more more tasks, which tells grunt what you'd like it to do.
 

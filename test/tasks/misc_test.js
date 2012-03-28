@@ -5,6 +5,13 @@ var utils = grunt.utils;
 var config = grunt.config;
 var template = grunt.template;
 
+// In case the grunt being used to test is different than the grunt being
+// tested, initialize the task and config subsystems.
+if (grunt.task.searchDirs.length === 0) {
+  grunt.task.init([]);
+  grunt.config.init({});
+}
+
 exports['config'] = function(test) {
   test.expect(2);
   test.deepEqual(grunt.helper('config'), config(), 'It should just pass through to config.');

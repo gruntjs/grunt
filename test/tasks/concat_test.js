@@ -1,6 +1,13 @@
 var grunt = require('../../lib/grunt');
 var utils = grunt.utils;
 
+// In case the grunt being used to test is different than the grunt being
+// tested, initialize the task and config subsystems.
+if (grunt.task.searchDirs.length === 0) {
+  grunt.task.init([]);
+  grunt.config.init({});
+}
+
 exports['concat'] = function(test) {
   test.expect(1);
   grunt.registerHelper('test_helper', function(a, b) { return a + b; });

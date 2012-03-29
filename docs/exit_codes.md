@@ -8,7 +8,6 @@
 * `10` - [UglifyJS](https://github.com/mishoo/UglifyJS) error
 * `11` - Banner generation error
 * `20` - Init error
-* `31` - Grunt couldn't be loaded, from within a plugin bin script
 * `90-99` - [Nodeunit](https://github.com/caolan/nodeunit) / [QUnit](http://docs.jquery.com/QUnit) error
 
 ## Nodeunit / QUnit specific

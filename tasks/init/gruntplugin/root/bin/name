@@ -1,11 +1,2 @@
 #!/usr/bin/env node
-try {
-  require('grunt').npmTasks('{%= full_name %}').cli();
-} catch(e) {
-  console.log(e.stack + '\n');
-  [ 'An error occurred while loading grunt, please ensure that it has been',
-    'installed correctly before continuing. You can learn more about grunt',
-    'at the grunt project page, https://github.com/cowboy/grunt/'
-  ].forEach(function(s) { console.log(s); });
-  process.exit(31);
-}
+require('grunt').npmTasks('{%= full_name %}').cli();

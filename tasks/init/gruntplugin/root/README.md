@@ -3,19 +3,22 @@
 {%= description %}
 
 ## Getting Started
-Install this grunt plugin with: `npm install -g {%= full_name %}`
+Install this grunt plugin next to your project's [grunt.js gruntfile][getting_started] with: `npm install {%= full_name %}`
 
-Then add this to your project's `grunt.js` gruntfile:
+Then add this line to your project's `grunt.js` gruntfile:
 
 ```javascript
 task.loadNpmTasks('{%= full_name %}');
 ```
 
+[grunt]: https://github.com/cowboy/grunt
+[getting_started]: https://github.com/cowboy/grunt/blob/master/docs/getting_started.md
+
 ## Documentation
 _(Coming soon)_
 
 ## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt](https://github.com/cowboy/grunt).
+In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][grunt].
 
 ## Release History
 _(Nothing yet)_

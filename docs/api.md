@@ -288,9 +288,7 @@ _This method is an alias for the [grunt.task.loadTasks](api_task.md) method._
 
 
 ### grunt.loadNpmTasks
-Load tasks and helpers from the specified Npm-installed grunt plugin. If the verion of grunt being run was installed globally via Npm, this will load a global Npm module. If the verion of grunt being run was installed locally via Npm, this will load a local Npm module.
-
-A grunt plugin is really just a folder containing a `package.json`, a `tasks` directory, and a few other files. You can very easily create a grunt plugin by using the [init task](task_init.md).
+Load tasks and helpers from the specified grunt plugin. This plugin must be installed locally via npm, and must be relative to the [grunt.js gruntfile](getting_started.md). Grunt plugins can be created by using the [gruntplugin init template](task_init.md).
 
 ```javascript
 grunt.loadNpmTasks(pluginName)
@@ -392,6 +390,13 @@ The current grunt version, as a string.
 
 ```javascript
 grunt.version
+```
+
+### grunt.npmTasks
+Inside a [grunt plugin](plugins.md) bin script, this method _must_ be called to inform grunt where to look for that plugin's tasks files. The `npmModuleName` must be the grunt plugin's Npm module name. The [gruntplugin init template](task_init.md), will automatically configure this for you.
+
+```javascript
+grunt.npmTasks(npmModuleName)
 ```
 
 ## Other Methods

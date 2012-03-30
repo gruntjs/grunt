@@ -67,7 +67,9 @@ page.onResourceRequested = function(request) {
   sendDebugMessage('onResourceRequested', request.url);
 };
 page.onResourceReceived = function(request) {
-  sendDebugMessage('onResourceReceived', request.url);
+  if (request.stage === 'end') {
+    sendDebugMessage('onResourceReceived', request.url);
+  }
 };
 
 page.open(url, function(status) {

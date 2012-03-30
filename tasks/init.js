@@ -86,6 +86,12 @@ module.exports = function(grunt) {
       grunt.warn('Existing files may be overwritten!');
     }
 
+    // Abort if tmeplate requires an empty directory.
+    if(initTemplate.forceEmptyDir && fs.readdirSync(process.cwd()).length !== 0) {
+      log.errorlns('This template must be initialized in an empty directory!');
+      return false;
+    }
+
     // This task is asynchronous.
     var taskDone = this.async();
 

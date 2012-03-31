@@ -80,12 +80,6 @@ module.exports = function(grunt) {
       return false;
     }
 
-    // Abort if files were found (to avoid accidentally nuking them).
-    if (initTemplate.warnOn && file.expandFiles(initTemplate.warnOn).length > 0) {
-      log.writeln();
-      grunt.warn('Existing files may be overwritten!');
-    }
-
     // This task is asynchronous.
     var taskDone = this.async();
 
@@ -160,6 +154,13 @@ module.exports = function(grunt) {
       // Iterate over all files in the passed object, copying the source file to
       // the destination, processing the contents.
       copyAndProcess: function(files, props, options) {
+
+        // Abort if files were found (to avoid accidentally nuking them).
+        if (initTemplate.warnOn && file.expandFiles(initTemplate.warnOn).length > 0) {
+          log.writeln();
+          grunt.warn(initTemplate.warnMessage||'Existing files may be overwritten!');
+        }
+
         options = utils._.defaults(options || {}, {
           process: function(contents) {
             return template.process(contents, props, 'init');

@@ -17,7 +17,7 @@ exports.notes = '_Project name_ must start with "jquery." and should be a ' +
   '"jQuery", although it may. For example, a plugin titled "Awesome Plugin" ' +
   'might have the name "jquery.awesome-plugin".';
 
-// Any existing file matching this wildcard will cause a warning.
+// Any existing file or directory matching this wildcard will cause a warning.
 exports.warnOn = '*';
 
 // The actual init template.

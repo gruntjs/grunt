@@ -13,7 +13,7 @@ exports.description = 'Create a commonjs module, including Nodeunit unit tests.'
 // Template-specific notes to be displayed before question prompts.
 exports.notes = '';
 
-// Any existing file matching this wildcard will cause a warning.
+// Any existing file or directory matching this wildcard will cause a warning.
 exports.warnOn = '*';
 
 // The actual init template.

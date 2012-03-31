@@ -16,7 +16,7 @@ exports.notes = 'This template tries to guess file and directory paths, but ' +
   'running grunt. _If you run grunt after generating grunt.js, and grunt ' +
   'exits with errors, edit the grunt.js file!_';
 
-// Any existing file matching this wildcard will cause a warning.
+// Any existing file or directory matching this wildcard will cause a warning.
 exports.warnOn = 'grunt.js';
 
 // The actual init template.

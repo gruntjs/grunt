@@ -80,8 +80,9 @@ module.exports = function(grunt) {
       return false;
     }
 
-    // Abort if files were found (to avoid accidentally nuking them).
-    if (initTemplate.warnOn && file.expandFiles(initTemplate.warnOn).length > 0) {
+    // Abort if matching files or directories were found (to avoid accidentally
+    // nuking them).
+    if (initTemplate.warnOn && file.expand(initTemplate.warnOn).length > 0) {
       log.writeln();
       grunt.warn('Existing files may be overwritten!');
     }
@@ -130,6 +131,20 @@ module.exports = function(grunt) {
           var fileobj = task.expandFiles('init/licenses/LICENSE-' + license)[0];
           files['LICENSE-' + license] = fileobj ? fileobj.rel : null;
         });
+      },
+      // Given an arbitrary prefix path, prefix it to each destination path
+      // (property) in the files object.
+      addPrefix: function(files, prefix) {
+        var tmp = {};
+        // For each file in files, create a new property with the adjusted
+        // destination path on the tmp object, then delete the property from
+        // the files object.
+        Object.keys(files).forEach(function(destpath) {
+          tmp[path.join(prefix, destpath)] = files[destpath];
+          delete files[destpath];
+        });
+        // Populate now-empty files object with properties.
+        Object.keys(tmp).forEach(function(key) { files[key] = tmp[key]; });
       },
       // Given an absolute or relative source path, and an optional relative
       // destination path, copy a file, optionally processing it through the

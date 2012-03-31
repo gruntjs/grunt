@@ -14,7 +14,7 @@ exports.description = 'Create a Node.js module, including Nodeunit unit tests.';
 exports.notes = '_Project name_ shouldn\'t contain "node" or "js" and should ' +
   'be a unique ID not already in use at search.npmjs.org.';
 
-// Any existing file matching this wildcard will cause a warning.
+// Any existing file or directory matching this wildcard will cause a warning.
 exports.warnOn = '*';
 
 // The actual init template.

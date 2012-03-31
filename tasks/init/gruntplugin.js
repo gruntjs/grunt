@@ -14,7 +14,7 @@ exports.description = 'Create a grunt plugin, including Nodeunit unit tests.';
 exports.notes = 'The grunt plugin system is still under development. For ' +
   'more information, see the docs at https://github.com/cowboy/grunt/blob/master/docs/plugins.md';
 
-// Any existing file matching this wildcard will cause a warning.
+// Any existing file or directory matching this wildcard will cause a warning.
 exports.warnOn = '*';
 
 // The actual init template.

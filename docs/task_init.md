@@ -108,8 +108,74 @@ A few notes about `rename.json`:
 ## Creating custom templates
 You create a custom template the exact same way you override init templates and their files, you just use a unique template name. in your userDir, just create a `~/.grunt/tasks/init/MYTEMPLATE.js` and any other relevant files. See the "Overriding template files" and "Renaming or excluding template files" sections for all the details.
 
+## Defining an init template
+
+### exports.description
+This brief template description will be displayed along with the template name when the user runs `grunt init` or `grunt init:` to display a list of all available init templates.
+
+```javascript
+exports.description = descriptionString;
+```
+
+### exports.notes
+If specified, this optional extended description will be displayed before any prompts are displayed. This is a good place to give the user a little help explaining naming conventions, which prompts may be required or optional, etc.
+
+```javascript
+exports.notes = notesString;
+```
+
+### exports.warnOn
+If this optional (but recommended) wildcard pattern is matched, grunt will abort with a warning, that the user can override. This is very useful in cases where the init template could potentially override existing files.
+
+```javascript
+exports.warnOn = wildcardPattern;
+```
+
+While the most common value will be `'*'`, matching any file or directory, the [minimatch](https://github.com/isaacs/minimatch) pattern syntax used allows for a lot of flexibility. For example:
+
+```javascript
+exports.warnOn = 'grunt.js';        // Warn on a grunt.js file.
+exports.warnOn = '*.js';            // Warn on any .js file.
+exports.warnOn = '*.{png,gif,jpg}'; // Warn on any image file.
+exports.warnOn = '*';               // Warn on any non-dotfile or non-dotdir.
+exports.warnOn = '.*';              // Warn on any dotfile or dotdir.
+exports.warnOn = '{.*,*}';          // Warn on any file or dir (dot or non-dot).
+exports.warnOn = '!*/**';           // Warn on any file (ignoring dirs).
+```
+
+### exports.template
+While the `exports` properties are defined outside this function, all the actual init code is specified inside. Three arguments are passed into this function. The `grunt` argument is a reference to grunt, containing all the [grunt methods and libs](api.md). The `init` argument is an object containing methods and properties specific to this init template. The `done` argument is a function that must be called when the init template is done executing.
+
+```javascript
+exports.template = function(grunt, init, done) {
+  // See the "Inside an init template" section.
+};
+```
+
 ## Inside an init template
 _(Documentation coming soon)_
+
+<!--### The prompt helper
+EXPLAIN
+
+```javascript
+grunt.helper('prompt' [, defaults] [, options], done)
+```
+
+### The prompt_for helper
+EXPLAIN
+
+```javascript
+grunt.helper('prompt_for', name [, default])
+```
+
+### init.method
+EXPLAIN
+
+```javascript
+init.method()
+```
+-->
 
 ## Built-in prompts
 _(Documentation coming soon)_

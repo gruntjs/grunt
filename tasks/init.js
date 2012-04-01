@@ -132,20 +132,6 @@ module.exports = function(grunt) {
           files['LICENSE-' + license] = fileobj ? fileobj.rel : null;
         });
       },
-      // Given an arbitrary prefix path, prefix it to each destination path
-      // (property) in the files object.
-      addPrefix: function(files, prefix) {
-        var tmp = {};
-        // For each file in files, create a new property with the adjusted
-        // destination path on the tmp object, then delete the property from
-        // the files object.
-        Object.keys(files).forEach(function(destpath) {
-          tmp[path.join(prefix, destpath)] = files[destpath];
-          delete files[destpath];
-        });
-        // Populate now-empty files object with properties.
-        Object.keys(tmp).forEach(function(key) { files[key] = tmp[key]; });
-      },
       // Given an absolute or relative source path, and an optional relative
       // destination path, copy a file, optionally processing it through the
       // passed callback.

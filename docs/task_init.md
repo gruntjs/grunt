@@ -125,22 +125,25 @@ exports.notes = notesString;
 ```
 
 ### exports.warnOn
-If this optional (but recommended) wildcard pattern is matched, grunt will abort with a warning, that the user can override. This is very useful in cases where the init template could potentially override existing files.
+If this optional (but recommended) wildcard pattern or array of wildcard patterns is matched, grunt will abort with a warning that the user can override with `--force`. This is very useful in cases where the init template could potentially override existing files.
 
 ```javascript
 exports.warnOn = wildcardPattern;
 ```
 
-While the most common value will be `'*'`, matching any file or directory, the [minimatch](https://github.com/isaacs/minimatch) pattern syntax used allows for a lot of flexibility. For example:
+While the most common value will be `'*'`, matching any file or directory, the [minimatch](https://github.com/isaacs/minimatch) wildcard pattern syntax used allows for a lot of flexibility. For example:
 
 ```javascript
 exports.warnOn = 'grunt.js';        // Warn on a grunt.js file.
 exports.warnOn = '*.js';            // Warn on any .js file.
-exports.warnOn = '*.{png,gif,jpg}'; // Warn on any image file.
 exports.warnOn = '*';               // Warn on any non-dotfile or non-dotdir.
 exports.warnOn = '.*';              // Warn on any dotfile or dotdir.
 exports.warnOn = '{.*,*}';          // Warn on any file or dir (dot or non-dot).
 exports.warnOn = '!*/**';           // Warn on any file (ignoring dirs).
+exports.warnOn = '*.{png,gif,jpg}'; // Warn on any image file.
+
+// This is another way of writing the last example.
+exports.warnOn = ['*.png', '*.gif', '*.jpg'];
 ```
 
 ### exports.template

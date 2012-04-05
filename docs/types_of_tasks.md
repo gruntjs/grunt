@@ -13,7 +13,7 @@ Tasks can be created in a few ways.
 ## Alias tasks
 
 ```javascript
-task.registerTask(taskName, [description, ] taskList);
+grunt.registerTask(taskName, [description, ] taskList);
 ```
 
 _Note that for alias tasks, the description is optional. If omitted, a useful description will be added for you automatically._
@@ -21,13 +21,13 @@ _Note that for alias tasks, the description is optional. If omitted, a useful de
 In the following example, a `theworks` task is defined that, when invoked by `grunt theworks`, will execute the `lint`, `qunit`, `concat` and `min` tasks in-order. Running `grunt theworks` behaves exactly as if `grunt lint qunit concat min` was run on the command line.
 
 ```javascript
-task.registerTask('theworks', 'lint qunit concat min');
+grunt.registerTask('theworks', 'lint qunit concat min');
 ```
 
 In this example, a default task is defined that, when invoked by `grunt` or `grunt default`, will execute the `lint`, `qunit`, `concat` and `min` tasks in-order. It behaves exactly as if `grunt lint qunit concat min` was run on the command line.
 
 ```javascript
-task.registerTask('default', 'lint qunit concat min');
+grunt.registerTask('default', 'lint qunit concat min');
 ```
 
 _In case it's not obvious, defining a `default` task is helpful because it runs by default, whenever you run `grunt` without explicitly specifying tasks._
@@ -39,7 +39,7 @@ _Note: multi tasks will ignore any config sub-properties beginning with `_` (und
 
 ```javascript
 /*global config:true, task:true*/
-config.init({
+grunt.initConfig({
   lint: {
     test: ['test/*.js'],
     lib: ['lib/*.js'],
@@ -52,7 +52,7 @@ While it's probably most useful for you to check out the JavaScript source of th
 
 ```javascript
 /*global config:true, task:true*/
-config.init({
+grunt.initConfig({
   logstuff: {
     foo: [1, 2, 3],
     bar: 'hello world',
@@ -60,7 +60,7 @@ config.init({
   }
 });
 
-task.registerMultiTask('logstuff', 'This task logs stuff.', function() {
+grunt.registerMultiTask('logstuff', 'This task logs stuff.', function() {
   // this.target === the name of the target
   // this.data === the target's value in the config object
   // this.name === the task name
@@ -69,11 +69,11 @@ task.registerMultiTask('logstuff', 'This task logs stuff.', function() {
   // this.file === file-specific .src and .dest properties
 
   // Log some stuff.
-  log.writeln(this.target + ': ' + this.data);
+  grunt.log.writeln(this.target + ': ' + this.data);
 
   // If data was falsy, abort!!
   if (!this.data) { return false; }
-  log.writeln('Logging stuff succeeded.');
+  grunt.log.writeln('Logging stuff succeeded.');
 });
 ```
 
@@ -125,33 +125,33 @@ Aborted due to warnings.
 You can go crazy with tasks. If your tasks don't follow the "multi task" structure, use a custom task.
 
 ```javascript
-task.registerTask('default', 'My "default" task description.', function() {
-  log.writeln('Currently running the "default" task.');
+grunt.registerTask('default', 'My "default" task description.', function() {
+  grunt.log.writeln('Currently running the "default" task.');
 });
 ```
 
 Inside a task, you can run other tasks.
 
 ```javascript
-task.registerTask('foo', 'My "foo" task.', function() {
+grunt.registerTask('foo', 'My "foo" task.', function() {
   // Enqueue "bar" and "baz" tasks, to run after "foo" finishes, in-order.
-  task.run('bar baz');
+  grunt.task.run('bar baz');
   // Or:
-  task.run(['bar', 'baz']);
+  grunt.task.run(['bar', 'baz']);
 });
 ```
 
 Tasks can be asynchronous.
 
 ```javascript
-task.registerTask('asyncfoo', 'My "asyncfoo" task.', function() {
+grunt.registerTask('asyncfoo', 'My "asyncfoo" task.', function() {
   // Force task into async mode and grab a handle to the "done" function.
   var done = this.async();
   // Run some sync stuff.
-  log.writeln('Processing task...');
+  grunt.log.writeln('Processing task...');
   // And some async stuff.
   setTimeout(function() {
-    log.writeln('All done!');
+    grunt.log.writeln('All done!');
     done();
   }, 1000);
 });
@@ -160,8 +160,8 @@ task.registerTask('asyncfoo', 'My "asyncfoo" task.', function() {
 Tasks can access their own name and arguments.
 
 ```javascript
-task.registerTask('foo', 'My "foo" task.', function(a, b) {
-  log.writeln(this.name, a, b);
+grunt.registerTask('foo', 'My "foo" task.', function(a, b) {
+  grunt.log.writeln(this.name, a, b);
 });
 
 // Usage:
@@ -175,27 +175,27 @@ task.registerTask('foo', 'My "foo" task.', function(a, b) {
 Tasks can fail if any errors were logged.
 
 ```javascript
-task.registerTask('foo', 'My "foo" task.', function() {
+grunt.registerTask('foo', 'My "foo" task.', function() {
   if (failureOfSomeKind) {
-    log.error('This is an error message.');
+    grunt.log.error('This is an error message.');
   }
 
   // Fail task if errors were logged.
   if (task.hadErrors()) { return false; }
 
-  log.writeln('This is the success message');
+  grunt.log.writeln('This is the success message');
 });
 ```
 
 When tasks fail, all subsequent tasks will be aborted unless `--force` was specified.
 
 ```javascript
-task.registerTask('foo', 'My "foo" task.', function() {
+grunt.registerTask('foo', 'My "foo" task.', function() {
   // Fail synchronously.
   return false;
 });
 
-task.registerTask('bar', 'My "bar" task.', function() {
+grunt.registerTask('bar', 'My "bar" task.', function() {
   var done = this.async();
   setTimeout(function() {
     // Fail asynchronously.
@@ -204,18 +204,18 @@ task.registerTask('bar', 'My "bar" task.', function() {
 });
 ```
 
-Tasks can be dependent on the successful execution of other tasks. Note that `task.requires` won't actually RUN the other task(s). It'll just check to see that it has run and not failed.
+Tasks can be dependent on the successful execution of other tasks. Note that `grunt.task.requires` won't actually RUN the other task(s). It'll just check to see that it has run and not failed.
 
 ```javascript
-task.registerTask('foo', 'My "foo" task.', function() {
+grunt.registerTask('foo', 'My "foo" task.', function() {
   return false;
 });
 
-task.registerTask('bar', 'My "bar" task.', function() {
+grunt.registerTask('bar', 'My "bar" task.', function() {
   // Fail task if "foo" task failed or never ran.
-  task.requires('foo');
+  grunt.task.requires('foo');
   // This code executes if the "foo" task ran successfully.
-  log.writeln('Hello, world.');
+  grunt.log.writeln('Hello, world.');
 });
 
 // Usage:
@@ -228,24 +228,24 @@ task.registerTask('bar', 'My "bar" task.', function() {
 Tasks can fail if required configuration properties don't exist.
 
 ```javascript
-task.registerTask('foo', 'My "foo" task.', function() {
+grunt.registerTask('foo', 'My "foo" task.', function() {
   // Fail task if "meta.name" config prop is missing.
-  config.requires('meta.name');
+  grunt.config.requires('meta.name');
   // Also fails if "meta.name" config prop is missing.
-  config.requires(['meta', 'name']);
+  grunt.config.requires(['meta', 'name']);
   // Log... conditionally.
-  log.writeln('This will only log if meta.name is defined in the config.');
+  grunt.log.writeln('This will only log if meta.name is defined in the config.');
 });
 ```
 
 Tasks can access configuration properties.
 
 ```javascript
-task.registerTask('foo', 'My "foo" task.', function() {
+grunt.registerTask('foo', 'My "foo" task.', function() {
   // Log the property value. Returns null if the property is undefined.
-  log.writeln('The meta.name property is: ' + config('meta.name'));
+  grunt.log.writeln('The meta.name property is: ' + grunt.config('meta.name'));
   // Also logs the property value. Returns null if the property is undefined.
-  log.writeln('The meta.name property is: ' + config(['meta', 'name']));
+  grunt.log.writeln('The meta.name property is: ' + grunt.config(['meta', 'name']));
 });
 ```
 

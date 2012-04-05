@@ -161,7 +161,7 @@ An array of arguments passed to the task. For example, if a "sample" task was ru
 An object generated from the arguments passed to the task. For example, if a "sample" task was run as `grunt sample:foo:bar`, inside the task function, `this.flags` would be `{foo: true, bar: true}`. In a multi task, the target name is not set as a flag.
 
 ### this.errorCount / grunt.task.current.errorCount
-The number of [log.error](api_log.md) calls that occurred during this task. This can be used to fail a task if errors occurred during the task.
+The number of [grunt.log.error](api_log.md) calls that occurred during this task. This can be used to fail a task if errors occurred during the task.
 
 
 ## Inside Multi Tasks

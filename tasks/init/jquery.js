@@ -22,16 +22,6 @@ exports.warnOn = '*';
 
 // The actual init template.
 exports.template = function(grunt, init, done) {
-  // Grunt utilities.
-  var task = grunt.task;
-  var file = grunt.file;
-  var utils = grunt.utils;
-  var log = grunt.log;
-  var verbose = grunt.verbose;
-  var fail = grunt.fail;
-  var option = grunt.option;
-  var config = grunt.config;
-  var template = grunt.template;
 
   grunt.helper('prompt', {type: 'jquery'}, [
     // Prompt for these values.

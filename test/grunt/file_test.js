@@ -1,7 +1,4 @@
 var grunt = require('../../lib/grunt');
-var file = grunt.file;
-var template = grunt.template;
-var utils = grunt.utils;
 
 var fs = require('fs');
 var path = require('path');
@@ -22,25 +19,25 @@ function compare(actual, expected, encoding) {
 exports['file'] = {
   'isPathAbsolute': function(test) {
     test.expect(2);
-    test.ok(file.isPathAbsolute(path.resolve('test/fixtures/a.js')), 'should return true');
-    test.equal(file.isPathAbsolute('test/fixtures/a.js'), false, 'should return false');
+    test.ok(grunt.file.isPathAbsolute(path.resolve('test/fixtures/a.js')), 'should return true');
+    test.equal(grunt.file.isPathAbsolute('test/fixtures/a.js'), false, 'should return false');
     test.done();
   },
   'read': function(test) {
     test.expect(2);
-    test.strictEqual(file.read('test/fixtures/a.js'), fs.readFileSync('test/fixtures/a.js', 'utf8'));
-    test.strictEqual(file.read('test/fixtures/octocat.png'), fs.readFileSync('test/fixtures/octocat.png', 'utf8'));
+    test.strictEqual(grunt.file.read('test/fixtures/a.js'), fs.readFileSync('test/fixtures/a.js', 'utf8'));
+    test.strictEqual(grunt.file.read('test/fixtures/octocat.png'), fs.readFileSync('test/fixtures/octocat.png', 'utf8'));
     test.done();
   },
   'write': function(test) {
     test.expect(4);
     var content = 'var a = "foobar";';
-    file.write('test/fixtures/test_write.js', content);
+    grunt.file.write('test/fixtures/test_write.js', content);
     test.strictEqual(fs.readFileSync('test/fixtures/test_write.js', 'utf8'), content);
-    test.strictEqual(file.read('test/fixtures/test_write.js'), content);
+    test.strictEqual(grunt.file.read('test/fixtures/test_write.js'), content);
 
     var octocat = fs.readFileSync('test/fixtures/octocat.png');
-    file.write('test/fixtures/test_write.png', octocat);
+    grunt.file.write('test/fixtures/test_write.png', octocat);
     test.strictEqual(fs.readFileSync('test/fixtures/test_write.png', 'utf8'), fs.readFileSync('test/fixtures/octocat.png', 'utf8'));
     test.ok(compare('test/fixtures/test_write.png', 'test/fixtures/octocat.png'), 'both buffers should match');
 
@@ -49,18 +46,18 @@ exports['file'] = {
   },
   'copy': function(test) {
     test.expect(6);
-    file.copy('test/fixtures/a.js', 'test/fixtures/test_copy.js');
+    grunt.file.copy('test/fixtures/a.js', 'test/fixtures/test_copy.js');
     test.strictEqual(fs.readFileSync('test/fixtures/test_copy.js', 'utf8'), fs.readFileSync('test/fixtures/a.js', 'utf8'));
 
     var tmpltest = '// should src be a string and template process be all good.';
-    file.copy('test/fixtures/a.js', 'test/fixtures/test_copy.js', {process: function(src) {
+    grunt.file.copy('test/fixtures/a.js', 'test/fixtures/test_copy.js', {process: function(src) {
       test.equal(Buffer.isBuffer(src), false);
       test.equal(typeof src, 'string');
-      return template.process(src + '<%= tmpltest %>', {tmpltest: tmpltest});
+      return grunt.template.process(src + '<%= tmpltest %>', {tmpltest: tmpltest});
     }});
-    test.strictEqual(fs.readFileSync('test/fixtures/test_copy.js', 'utf8'), utils.normalizelf(fs.readFileSync('test/fixtures/a.js', 'utf8')) + tmpltest);
+    test.strictEqual(fs.readFileSync('test/fixtures/test_copy.js', 'utf8'), grunt.utils.normalizelf(fs.readFileSync('test/fixtures/a.js', 'utf8')) + tmpltest);
 
-    file.copy('test/fixtures/octocat.png', 'test/fixtures/test_copy.png');
+    grunt.file.copy('test/fixtures/octocat.png', 'test/fixtures/test_copy.png');
     test.strictEqual(fs.readFileSync('test/fixtures/test_copy.png', 'utf8'), fs.readFileSync('test/fixtures/octocat.png', 'utf8'));
     test.ok(compare('test/fixtures/test_copy.png', 'test/fixtures/octocat.png'), 'both buffers should match');
 

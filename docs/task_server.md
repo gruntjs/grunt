@@ -67,7 +67,7 @@ var connect = require('connect');
 // Redefining the "server" task for this project. Note that the output
 // displayed by --help will reflect the new task description.
 grunt.registerTask('server', 'Start a custom static web server.', function() {
-  log.writeln('Starting static web server in "www-root" on port 1234.');
+  grunt.log.writeln('Starting static web server in "www-root" on port 1234.');
   connect(connect.static('www-root')).listen(1234);
 });
 ```

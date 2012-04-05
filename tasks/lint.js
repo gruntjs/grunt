@@ -8,16 +8,6 @@
  */
 
 module.exports = function(grunt) {
-  // Grunt utilities.
-  var task = grunt.task;
-  var file = grunt.file;
-  var utils = grunt.utils;
-  var log = grunt.log;
-  var verbose = grunt.verbose;
-  var fail = grunt.fail;
-  var option = grunt.option;
-  var config = grunt.config;
-  var template = grunt.template;
 
   // External libs.
   var jshint = require('jshint').JSHINT;
@@ -31,36 +21,36 @@ module.exports = function(grunt) {
     // override the default options and globals.
     var options, globals, tmp;
 
-    tmp = config(['jshint', this.target, 'options']);
+    tmp = grunt.config(['jshint', this.target, 'options']);
     if (typeof tmp === 'object') {
-      verbose.writeln('Using "' + this.target + '" JSHint options.');
+      grunt.verbose.writeln('Using "' + this.target + '" JSHint options.');
       options = tmp;
     } else {
-      verbose.writeln('Using master JSHint options.');
-      options = config('jshint.options');
+      grunt.verbose.writeln('Using master JSHint options.');
+      options = grunt.config('jshint.options');
     }
-    verbose.writeflags(options, 'Options');
+    grunt.verbose.writeflags(options, 'Options');
 
-    tmp = config(['jshint', this.target, 'globals']);
+    tmp = grunt.config(['jshint', this.target, 'globals']);
     if (typeof tmp === 'object') {
-      verbose.writeln('Using "' + this.target + '" JSHint globals.');
+      grunt.verbose.writeln('Using "' + this.target + '" JSHint globals.');
       globals = tmp;
     } else {
-      verbose.writeln('Using master JSHint globals.');
-      globals = config('jshint.globals');
+      grunt.verbose.writeln('Using master JSHint globals.');
+      globals = grunt.config('jshint.globals');
     }
-    verbose.writeflags(globals, 'Globals');
+    grunt.verbose.writeflags(globals, 'Globals');
 
     // Lint specified files.
-    file.expandFiles(this.file.src).forEach(function(filepath) {
-      grunt.helper('lint', file.read(filepath), options, globals, filepath);
+    grunt.file.expandFiles(this.file.src).forEach(function(filepath) {
+      grunt.helper('lint', grunt.file.read(filepath), options, globals, filepath);
     });
 
     // Fail task if errors were logged.
     if (this.errorCount) { return false; }
 
     // Otherwise, print a success message.
-    log.writeln('Lint free.');
+    grunt.log.writeln('Lint free.');
   });
 
   // ==========================================================================
@@ -79,7 +69,7 @@ module.exports = function(grunt) {
     var tabsize = isNaN(character) ? 1 : character;
     // If tabsize > 1, return something that should be safe to use as a
     // placeholder. \uFFFF repeated 2+ times.
-    return tabsize > 1 && utils.repeat(tabsize, '\uFFFF');
+    return tabsize > 1 && grunt.utils.repeat(tabsize, '\uFFFF');
   }
 
   var tabregex = /\t/g;
@@ -87,18 +77,18 @@ module.exports = function(grunt) {
   // Lint source code with JSHint.
   grunt.registerHelper('lint', function(src, options, globals, extraMsg) {
     // JSHint sometimes modifies objects you pass in, so clone them.
-    options = utils._.clone(options);
-    globals = utils._.clone(globals);
+    options = grunt.utils._.clone(options);
+    globals = grunt.utils._.clone(globals);
     // Enable/disable debugging if option explicitly set.
-    if (option('debug') !== undefined) {
-      options.devel = options.debug = option('debug');
+    if (grunt.option('debug') !== undefined) {
+      options.devel = options.debug = grunt.option('debug');
       // Tweak a few things.
-      if (option('debug')) {
+      if (grunt.option('debug')) {
         options.maxerr = Infinity;
       }
     }
     var msg = 'Linting' + (extraMsg ? ' ' + extraMsg : '') + '...';
-    verbose.write(msg);
+    grunt.verbose.write(msg);
     // Tab size as reported by JSHint.
     var tabstr = getTabStr(options);
     var placeholderregex = new RegExp(tabstr, 'g');
@@ -115,11 +105,11 @@ module.exports = function(grunt) {
     // }
     if (result) {
       // Success!
-      verbose.ok();
+      grunt.verbose.ok();
     } else {
       // Something went wrong.
-      verbose.or.write(msg);
-      log.error();
+      grunt.verbose.or.write(msg);
+      grunt.log.error();
       // Iterate over all errors.
       jshint.errors.forEach(function(e) {
         // Sometimes there's no error object.
@@ -128,11 +118,11 @@ module.exports = function(grunt) {
         var evidence = e.evidence;
         var character = e.character;
         if (evidence) {
-          // Manually increment errorcount since we're not using log.error().
+          // Manually increment errorcount since we're not using grunt.log.error().
           grunt.fail.errorcount++;
           // Descriptive code error.
           pos = '['.red + ('L' + e.line).yellow + ':'.red + ('C' + character).yellow + ']'.red;
-          log.writeln(pos + ' ' + e.reason.yellow);
+          grunt.log.writeln(pos + ' ' + e.reason.yellow);
           // If necessary, eplace each tab char with something that can be
           // swapped out later.
           if (tabstr) {
@@ -148,13 +138,13 @@ module.exports = function(grunt) {
           }
           // Replace tab placeholder (or tabs) but with a 2-space soft tab.
           evidence = evidence.replace(tabstr ? placeholderregex : tabregex, '  ');
-          log.writeln(evidence);
+          grunt.log.writeln(evidence);
         } else {
           // Generic "Whoops, too many errors" error.
-          log.error(e.reason);
+          grunt.log.error(e.reason);
         }
       });
-      log.writeln();
+      grunt.log.writeln();
     }
   });
 

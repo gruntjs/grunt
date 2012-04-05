@@ -21,16 +21,6 @@ exports.warnOn = 'grunt.js';
 
 // The actual init template.
 exports.template = function(grunt, init, done) {
-  // Grunt utilities.
-  var task = grunt.task;
-  var file = grunt.file;
-  var utils = grunt.utils;
-  var log = grunt.log;
-  var verbose = grunt.verbose;
-  var fail = grunt.fail;
-  var option = grunt.option;
-  var config = grunt.config;
-  var template = grunt.template;
 
   grunt.helper('prompt', {}, [
     // Prompt for these values.
@@ -70,12 +60,12 @@ exports.template = function(grunt, init, done) {
     }
 
     // Guess at some directories, if they exist.
-    var dirs = file.expandDirs('*').map(function(d) { return d.slice(0, -1); });
+    var dirs = grunt.file.expandDirs('*').map(function(d) { return d.slice(0, -1); });
     props.lib_dir = prefer(dirs, ['lib', 'src']);
     props.test_dir = prefer(dirs, ['test', 'tests', 'unit', 'spec']);
 
     // Maybe this should be extended to support more libraries. Patches welcome!
-    props.jquery = file.expandFiles('**/jquery*.js').length > 0;
+    props.jquery = grunt.file.expandFiles('**/jquery*.js').length > 0;
 
     // Files to copy (and process).
     var files = init.filesToCopy(props);

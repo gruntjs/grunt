@@ -8,16 +8,6 @@
  */
 
 module.exports = function(grunt) {
-  // Grunt utilities.
-  var task = grunt.task;
-  var file = grunt.file;
-  var utils = grunt.utils;
-  var log = grunt.log;
-  var verbose = grunt.verbose;
-  var fail = grunt.fail;
-  var option = grunt.option;
-  var config = grunt.config;
-  var template = grunt.template;
 
   // Nodejs libs.
   var fs = require('fs');
@@ -43,7 +33,7 @@ module.exports = function(grunt) {
 
   grunt.registerInitTask('init', 'Generate project scaffolding from a predefined template.', function() {
     // Extra arguments will be applied to the template file.
-    var args = utils.toArray(arguments);
+    var args = grunt.utils.toArray(arguments);
     // Template name.
     var name = args.shift();
     // Default to last-specified grunt.npmTasks plugin name if template name
@@ -54,14 +44,14 @@ module.exports = function(grunt) {
     }
     // Valid init templates (.js files).
     var templates = {};
-    task.expandFiles('init/*.js').forEach(function(fileobj) {
+    grunt.task.expandFiles('init/*.js').forEach(function(fileobj) {
       // Add template (plus its path) to the templates object.
       templates[path.basename(fileobj.abs, '.js')] = require(fileobj.abs);
     });
     var initTemplate = templates[name];
 
     // Give the user a little help.
-    log.writelns(
+    grunt.log.writelns(
       'This task will create one or more files in the current directory, ' +
       'based on the environment and the answers to a few questions. ' +
       'Note that answering "?" to any question will show question-specific ' +
@@ -70,20 +60,20 @@ module.exports = function(grunt) {
 
     // Abort if a valid template was not specified.
     if (!initTemplate) {
-      log.writeln().write('Loading' + (name ? ' "' + name + '"' : '') + ' init template...').error();
-      log.errorlns('A valid template name must be specified, eg. "grunt ' +
+      grunt.log.writeln().write('Loading' + (name ? ' "' + name + '"' : '') + ' init template...').error();
+      grunt.log.errorlns('A valid template name must be specified, eg. "grunt ' +
         'init:commonjs". The currently-available init templates are: ');
       Object.keys(templates).forEach(function(name) {
         var description = templates[name].description || '(no description)';
-        log.errorlns(name.cyan + ' - ' + description);
+        grunt.log.errorlns(name.cyan + ' - ' + description);
       });
       return false;
     }
 
     // Abort if matching files or directories were found (to avoid accidentally
     // nuking them).
-    if (initTemplate.warnOn && file.expand(initTemplate.warnOn).length > 0) {
-      log.writeln();
+    if (initTemplate.warnOn && grunt.file.expand(initTemplate.warnOn).length > 0) {
+      grunt.log.writeln();
       grunt.warn('Existing files may be overwritten!');
     }
 
@@ -95,31 +85,31 @@ module.exports = function(grunt) {
     // Useful init sub-task-specific utilities.
     var init = {
       // Expose any user-specified default init values.
-      defaults: task.readDefaults('init/defaults.json'),
+      defaults: grunt.task.readDefaults('init/defaults.json'),
       // Expose rename rules for this template.
-      renames: task.readDefaults('init', name, 'rename.json'),
+      renames: grunt.task.readDefaults('init', name, 'rename.json'),
       // Return an object containing files to copy with their absolute source path
       // and relative destination path, renamed (or omitted) according to rules in
       // rename.json (if it exists).
       filesToCopy: function(props) {
         var files = {};
         // Iterate over all source files.
-        task.expandFiles({dot: true}, pathPrefix + '**').forEach(function(obj) {
+        grunt.task.expandFiles({dot: true}, pathPrefix + '**').forEach(function(obj) {
           // Get the path relative to the template root.
           var relpath = obj.rel.slice(pathPrefix.length);
           var rule = init.renames[relpath];
           // Omit files that have an empty / false rule value.
           if (!rule && relpath in init.renames) { return; }
           // Create a property for this file.
-          files[rule ? template.process(rule, props, 'init') : relpath] = obj.rel;
+          files[rule ? grunt.template.process(rule, props, 'init') : relpath] = obj.rel;
         });
         return files;
       },
       // Search init template paths for filename.
       srcpath: function(arg1) {
         if (arg1 == null) { return null; }
-        var args = ['init', name, 'root'].concat(utils.toArray(arguments));
-        return task.getFile.apply(file, args);
+        var args = ['init', name, 'root'].concat(grunt.utils.toArray(arguments));
+        return grunt.task.getFile.apply(grunt.file, args);
       },
       // Determine absolute destination file path.
       destpath: path.join.bind(path, process.cwd()),
@@ -128,7 +118,7 @@ module.exports = function(grunt) {
       addLicenseFiles: function(files, licenses) {
         var available = availableLicenses();
         licenses.forEach(function(license) {
-          var fileobj = task.expandFiles('init/licenses/LICENSE-' + license)[0];
+          var fileobj = grunt.task.expandFiles('init/licenses/LICENSE-' + license)[0];
           files['LICENSE-' + license] = fileobj ? fileobj.rel : null;
         });
       },
@@ -142,28 +132,28 @@ module.exports = function(grunt) {
           destpath = srcpath;
         }
         // Ensure srcpath is absolute.
-        if (!file.isPathAbsolute(srcpath)) {
+        if (!grunt.file.isPathAbsolute(srcpath)) {
           srcpath = init.srcpath(srcpath);
         }
         // Use placeholder file if no src exists.
         if (!srcpath) {
-          srcpath = task.getFile('init/misc/placeholder');
+          srcpath = grunt.task.getFile('init/misc/placeholder');
         }
-        verbose.or.write('Writing ' + destpath + '...');
+        grunt.verbose.or.write('Writing ' + destpath + '...');
         try {
-          file.copy(srcpath, init.destpath(destpath), options);
-          verbose.or.ok();
+          grunt.file.copy(srcpath, init.destpath(destpath), options);
+          grunt.verbose.or.ok();
         } catch(e) {
-          verbose.or.error().error(e);
+          grunt.verbose.or.error().error(e);
           throw e;
         }
       },
       // Iterate over all files in the passed object, copying the source file to
       // the destination, processing the contents.
       copyAndProcess: function(files, props, options) {
-        options = utils._.defaults(options || {}, {
+        options = grunt.utils._.defaults(options || {}, {
           process: function(contents) {
-            return template.process(contents, props, 'init');
+            return grunt.template.process(contents, props, 'init');
           }
         });
         Object.keys(files).forEach(function(destpath) {
@@ -172,12 +162,12 @@ module.exports = function(grunt) {
           // If srcpath is relative, match it against options.noProcess if
           // necessary, then make srcpath absolute.
           var relpath;
-          if (srcpath && !file.isPathAbsolute(srcpath)) {
+          if (srcpath && !grunt.file.isPathAbsolute(srcpath)) {
             if (o.noProcess) {
               relpath = srcpath.slice(pathPrefix.length);
-              o.noProcess = file.isMatch(o.noProcess, relpath);
+              o.noProcess = grunt.file.isMatch(o.noProcess, relpath);
             }
-            srcpath = task.getFile(srcpath);
+            srcpath = grunt.task.getFile(srcpath);
           }
           // Copy!
           init.copy(srcpath, destpath, o);
@@ -227,7 +217,7 @@ module.exports = function(grunt) {
         if (callback) { pkg = callback(pkg, props); }
 
         // Write file.
-        file.write(init.destpath(filename), JSON.stringify(pkg, null, 2));
+        grunt.file.write(init.destpath(filename), JSON.stringify(pkg, null, 2));
       }
     };
 
@@ -237,16 +227,16 @@ module.exports = function(grunt) {
 
     // Show any template-specific notes.
     if (initTemplate.notes) {
-      log.subhead('"' + name + '" template notes:').writelns(initTemplate.notes);
+      grunt.log.subhead('"' + name + '" template notes:').writelns(initTemplate.notes);
     }
 
     // Execute template code, passing in the init object, done function, and any
     // other arguments specified after the init:name:???.
     initTemplate.template.apply(this, [grunt, init, function() {
       // Fail task if errors were logged.
-      if (task.current.errorCount) { taskDone(false); }
+      if (grunt.task.current.errorCount) { taskDone(false); }
       // Otherwise, print a success message.
-      log.writeln().writeln('Initialized from template "' + name + '".');
+      grunt.log.writeln().writeln('Initialized from template "' + name + '".');
       // All done!
       taskDone();
     }].concat(args));
@@ -259,7 +249,7 @@ module.exports = function(grunt) {
   // Prompt user to override default values passed in obj.
   grunt.registerHelper('prompt', function(defaults, options, done) {
     // If defaults are omitted, shuffle arguments a bit.
-    if (utils.kindOf(defaults) === 'array') {
+    if (grunt.utils.kindOf(defaults) === 'array') {
       done = options;
       options = defaults;
       defaults = {};
@@ -285,12 +275,12 @@ module.exports = function(grunt) {
     // Ask user for input. This is in an IIFE because it has to execute at least
     // once, and might be repeated.
     (function ask() {
-      log.subhead('Please answer the following:');
-      var result = utils._.clone(defaults);
+      grunt.log.subhead('Please answer the following:');
+      var result = grunt.utils._.clone(defaults);
       // Loop over each prompt option.
-      utils.async.forEachSeries(options, function(option, done) {
+      grunt.utils.async.forEachSeries(options, function(option, done) {
         var defaultValue;
-        utils.async.forEachSeries(['default', 'altDefault'], function(prop, next) {
+        grunt.utils.async.forEachSeries(['default', 'altDefault'], function(prop, next) {
           if (typeof option[prop] === 'function') {
             // If the value is a function, execute that function, using the
             // value passed into the return callback as the new default value.
@@ -340,7 +330,7 @@ module.exports = function(grunt) {
           // Clean up.
           delete result.ANSWERS_VALID;
           // Iterate over all results.
-          utils.async.forEachSeries(Object.keys(result), function(name, next) {
+          grunt.utils.async.forEachSeries(Object.keys(result), function(name, next) {
             // If this value needs to be sanitized, process it now.
             if (sanitize[name]) {
               sanitize[name](result[name], result, function(err, value) {
@@ -357,7 +347,7 @@ module.exports = function(grunt) {
             }
           }, function(err) {
             // Done!
-            log.writeln();
+            grunt.log.writeln();
             done(err, result);
           });
         } else {
@@ -423,7 +413,7 @@ module.exports = function(grunt) {
       message: 'Version',
       default: function(value, data, done) {
         // Get a valid semver tag from `git describe --tags` if possible.
-        utils.spawn({
+        grunt.utils.spawn({
           cmd: 'git',
           args: ['describe', '--tags'],
           fallback: ''
@@ -460,7 +450,7 @@ module.exports = function(grunt) {
           done();
         } else {
           // Attempt to pull the data from the user's git config.
-          utils.spawn({
+          grunt.utils.spawn({
             cmd: 'git',
             args: ['config', '--get', 'github.user'],
             fallback: ''
@@ -502,7 +492,7 @@ module.exports = function(grunt) {
       message: 'Author name',
       default: function(value, data, done) {
         // Attempt to pull the data from the user's git config.
-        utils.spawn({
+        grunt.utils.spawn({
           cmd: 'git',
           args: ['config', '--get', 'user.name'],
           fallback: 'none'
@@ -514,7 +504,7 @@ module.exports = function(grunt) {
       message: 'Author email',
       default: function(value, data, done) {
         // Attempt to pull the data from the user's git config.
-        utils.spawn({
+        grunt.utils.spawn({
           cmd: 'git',
           args: ['config', '--get', 'user.email'],
           fallback: 'none'
@@ -571,10 +561,10 @@ module.exports = function(grunt) {
   // Commonly-used prompt options with meaningful default values.
   grunt.registerHelper('prompt_for', function(name, altDefault) {
     // Clone the option so the original options object doesn't get modified.
-    var option = utils._.clone(prompts[name]);
+    var option = grunt.utils._.clone(prompts[name]);
     option.name = name;
 
-    var defaults = task.readDefaults('init/defaults.json');
+    var defaults = grunt.task.readDefaults('init/defaults.json');
     if (name in defaults) {
       // A user default was specified for this option, so use its value.
       option.default = defaults[name];
@@ -587,7 +577,7 @@ module.exports = function(grunt) {
 
   // Get the git origin url from the current repo (if possible).
   grunt.registerHelper('git_origin', function(done) {
-    utils.spawn({
+    grunt.utils.spawn({
       cmd: 'git',
       args: ['remote', '-v']
     }, function(err, result, code) {

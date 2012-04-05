@@ -8,16 +8,6 @@
  */
 
 module.exports = function(grunt) {
-  // Grunt utilities.
-  var task = grunt.task;
-  var file = grunt.file;
-  var utils = grunt.utils;
-  var log = grunt.log;
-  var verbose = grunt.verbose;
-  var fail = grunt.fail;
-  var option = grunt.option;
-  var config = grunt.config;
-  var template = grunt.template;
 
   // Nodejs libs.
   var path = require('path');
@@ -40,10 +30,10 @@ module.exports = function(grunt) {
     var len = Object.keys(unfinished).length;
     // If there are unfinished tests, tell the user why Nodeunit killed grunt.
     if (len > 0) {
-      log.muted = false;
-      verbose.error().or.writeln('F'.red);
-      log.error('Incomplete tests/setups/teardowns:');
-      Object.keys(unfinished).forEach(log.error, log);
+      grunt.log.muted = false;
+      grunt.verbose.error().or.writeln('F'.red);
+      grunt.log.error('Incomplete tests/setups/teardowns:');
+      Object.keys(unfinished).forEach(grunt.log.error, grunt.log);
       grunt.fatal('A test was missing test.done(), so nodeunit exploded. Sorry!',
         Math.min(99, 90 + len));
     }
@@ -56,13 +46,13 @@ module.exports = function(grunt) {
     // Print each assertion error + stack.
     while (assertion = failedAssertions.shift()) {
       nodeunitUtils.betterErrors(assertion);
-      verbose.or.error(assertion.testName);
+      grunt.verbose.or.error(assertion.testName);
       if (assertion.error.name === 'AssertionError' && assertion.message) {
-        log.error('AssertionMessage: ' + assertion.message.magenta);
+        grunt.log.error('AssertionMessage: ' + assertion.message.magenta);
       }
       stack = assertion.error.stack.replace(/ {4}(at)/g, '  $1');
       stack = stack.replace(/:(.*?\n)/, '$1'.magenta);
-      log.error(stack + '\n').writeln();
+      grunt.log.error(stack + '\n').writeln();
     }
   }
 
@@ -79,7 +69,7 @@ module.exports = function(grunt) {
           // Keep track of this so that moduleDone output can be suppressed in
           // cases where a test file contains no tests.
           currentModule = name;
-          verbose.subhead('Testing ' + name).or.write('Testing ' + name);
+          grunt.verbose.subhead('Testing ' + name).or.write('Testing ' + name);
         },
         // Executed after a file is done being processed. This executes whether
         // tests exist in the file or not.
@@ -87,12 +77,12 @@ module.exports = function(grunt) {
           // Abort if no tests actually ran.
           if (name !== currentModule) { return; }
           // Print assertion errors here, if verbose mode is disabled.
-          if (!option('verbose')) {
+          if (!grunt.option('verbose')) {
             if (failedAssertions.length > 0) {
-              log.writeln();
+              grunt.log.writeln();
               logFailedAssertions();
             } else {
-              log.ok();
+              grunt.log.ok();
             }
           }
         },
@@ -101,16 +91,16 @@ module.exports = function(grunt) {
           // Keep track of the current test, in case test.done() was omitted
           // and Nodeunit explodes.
           unfinished[name] = name;
-          verbose.write(name + '...');
+          grunt.verbose.write(name + '...');
           // Mute output, in cases where a function being tested logs through
           // grunt (for testing grunt internals).
-          log.muted = true;
+          grunt.log.muted = true;
         },
         // Executed after each test and all its assertions are run.
         testDone: function(name, assertions) {
           delete unfinished[name];
           // Un-mute output.
-          log.muted = false;
+          grunt.log.muted = false;
           // Log errors if necessary, otherwise success.
           if (assertions.failures()) {
             assertions.forEach(function(ass) {
@@ -119,14 +109,14 @@ module.exports = function(grunt) {
                 failedAssertions.push(ass);
               }
             });
-            if (option('verbose')) {
-              log.error();
+            if (grunt.option('verbose')) {
+              grunt.log.error();
               logFailedAssertions();
             } else {
-              log.write('F'.red);
+              grunt.log.write('F'.red);
             }
           } else {
-            verbose.ok().or.write('.');
+            grunt.verbose.ok().or.write('.');
           }
         },
         // Executed when everything is all done.
@@ -136,8 +126,8 @@ module.exports = function(grunt) {
               ' assertions failed (' + assertions.duration + 'ms)',
               Math.min(99, 90 + assertions.failures()));
           } else {
-            verbose.writeln();
-            log.ok(assertions.length + ' assertions passed (' +
+            grunt.verbose.writeln();
+            grunt.log.ok(assertions.length + ' assertions passed (' +
               assertions.duration + 'ms)');
           }
           // Tell the task manager we're all done.
@@ -159,10 +149,10 @@ module.exports = function(grunt) {
 
   grunt.registerMultiTask('test', 'Run unit tests with nodeunit.', function() {
     // File paths.
-    var filepaths = file.expandFiles(this.file.src);
+    var filepaths = grunt.file.expandFiles(this.file.src);
     // Clear all tests' cached require data, in case this task is run inside a
     // "watch" task loop.
-    file.clearRequireCache(filepaths);
+    grunt.file.clearRequireCache(filepaths);
     // Run test(s)... asynchronously!
     nodeunit.reporters.grunt.run(filepaths, {}, this.async());
   });

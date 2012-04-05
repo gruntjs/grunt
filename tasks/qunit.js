@@ -8,16 +8,6 @@
  */
 
 module.exports = function(grunt) {
-  // Grunt utilities.
-  var task = grunt.task;
-  var file = grunt.file;
-  var utils = grunt.utils;
-  var log = grunt.log;
-  var verbose = grunt.verbose;
-  var fail = grunt.fail;
-  var option = grunt.option;
-  var config = grunt.config;
-  var template = grunt.template;
 
   // Nodejs libs.
   var fs = require('fs');
@@ -42,16 +32,16 @@ module.exports = function(grunt) {
     var assertion;
     // Print each assertion error.
     while (assertion = failedAssertions.shift()) {
-      verbose.or.error(assertion.testName);
-      log.error('Message: ' + formatMessage(assertion.message));
+      grunt.verbose.or.error(assertion.testName);
+      grunt.log.error('Message: ' + formatMessage(assertion.message));
       if (assertion.actual !== assertion.expected) {
-        log.error('Actual: ' + formatMessage(assertion.actual));
-        log.error('Expected: ' + formatMessage(assertion.expected));
+        grunt.log.error('Actual: ' + formatMessage(assertion.actual));
+        grunt.log.error('Expected: ' + formatMessage(assertion.expected));
       }
       if (assertion.source) {
-        log.error(assertion.source.replace(/ {4}(at)/g, '  $1'));
+        grunt.log.error(assertion.source.replace(/ {4}(at)/g, '  $1'));
       }
-      log.writeln();
+      grunt.log.writeln();
     }
   }
 
@@ -75,20 +65,20 @@ module.exports = function(grunt) {
     },
     testStart: function(name) {
       currentTest = (currentModule ? currentModule + ' - ' : '') + name;
-      verbose.write(currentTest + '...');
+      grunt.verbose.write(currentTest + '...');
     },
     testDone: function(name, failed, passed, total) {
       // Log errors if necessary, otherwise success.
       if (failed > 0) {
         // list assertions
-        if (option('verbose')) {
-          log.error();
+        if (grunt.option('verbose')) {
+          grunt.log.error();
           logFailedAssertions();
         } else {
-          log.write('F'.red);
+          grunt.log.write('F'.red);
         }
       } else {
-        verbose.ok().or.write('.');
+        grunt.verbose.ok().or.write('.');
       }
     },
     done: function(failed, passed, total, duration) {
@@ -97,29 +87,29 @@ module.exports = function(grunt) {
       status.total += total;
       status.duration += duration;
       // Print assertion errors here, if verbose mode is disabled.
-      if (!option('verbose')) {
+      if (!grunt.option('verbose')) {
         if (failed > 0) {
-          log.writeln();
+          grunt.log.writeln();
           logFailedAssertions();
         } else {
-          log.ok();
+          grunt.log.ok();
         }
       }
     },
     // Error handlers.
     done_fail: function(url) {
-      verbose.write('Running PhantomJS...').or.write('...');
-      log.error();
+      grunt.verbose.write('Running PhantomJS...').or.write('...');
+      grunt.log.error();
       grunt.warn('PhantomJS unable to load "' + url + '" URI.', 90);
     },
     done_timeout: function() {
-      log.writeln();
+      grunt.log.writeln();
       grunt.warn('PhantomJS timed out, possibly due to a missing QUnit start() call.', 90);
     },
     // console.log pass-through.
     console: console.log.bind(console),
     // Debugging messages.
-    debug: log.debug.bind(log, 'phantomjs')
+    debug: grunt.log.debug.bind(grunt.log, 'phantomjs')
   };
 
   // ==========================================================================
@@ -128,7 +118,7 @@ module.exports = function(grunt) {
 
   grunt.registerMultiTask('qunit', 'Run QUnit unit tests in a headless PhantomJS instance.', function() {
     // Get files as URLs.
-    var urls = file.expandFileURLs(this.file.src);
+    var urls = grunt.file.expandFileURLs(this.file.src);
 
     // This task is asynchronous.
     var done = this.async();
@@ -137,9 +127,9 @@ module.exports = function(grunt) {
     status = {failed: 0, passed: 0, total: 0, duration: 0};
 
     // Process each filepath in-order.
-    utils.async.forEachSeries(urls, function(url, next) {
+    grunt.utils.async.forEachSeries(urls, function(url, next) {
       var basename = path.basename(url);
-      verbose.subhead('Testing ' + basename).or.write('Testing ' + basename);
+      grunt.verbose.subhead('Testing ' + basename).or.write('Testing ' + basename);
 
       // Create temporary file to be used for grunt-phantom communication.
       var tempfile = new Tempfile();
@@ -163,11 +153,11 @@ module.exports = function(grunt) {
       // executes the corresponding method with the specified arguments.
       (function loopy() {
         // Disable logging temporarily.
-        log.muted = true;
+        grunt.log.muted = true;
         // Read the file, splitting lines on \n, and removing a trailing line.
-        var lines = file.read(tempfile.path).split('\n').slice(0, -1);
+        var lines = grunt.file.read(tempfile.path).split('\n').slice(0, -1);
         // Re-enable logging.
-        log.muted = false;
+        grunt.log.muted = false;
         // Iterate over all lines that haven't already been processed.
         var done = lines.slice(n).some(function(line) {
           // Get args and method.
@@ -200,15 +190,15 @@ module.exports = function(grunt) {
         code: 90,
         args: [
           // The main script file.
-          task.getFile('qunit/phantom.js'),
+          grunt.task.getFile('qunit/phantom.js'),
           // The temporary file used for communications.
           tempfile.path,
           // The QUnit helper file to be injected.
-          task.getFile('qunit/qunit.js'),
+          grunt.task.getFile('qunit/qunit.js'),
           // URL to the QUnit .html test file to run.
           url,
           // PhantomJS options.
-          '--config=' + task.getFile('qunit/phantom.json')
+          '--config=' + grunt.task.getFile('qunit/phantom.json')
         ],
         done: function(err) {
           if (err) {
@@ -225,8 +215,8 @@ module.exports = function(grunt) {
         grunt.warn(status.failed + '/' + status.total + ' assertions failed (' +
           status.duration + 'ms)', Math.min(99, 90 + status.failed));
       } else {
-        verbose.writeln();
-        log.ok(status.total + ' assertions passed (' + status.duration + 'ms)');
+        grunt.verbose.writeln();
+        grunt.log.ok(status.total + ' assertions passed (' + status.duration + 'ms)');
       }
 
       // All done!
@@ -239,16 +229,16 @@ module.exports = function(grunt) {
   // ==========================================================================
 
   grunt.registerHelper('phantomjs', function(options) {
-    return utils.spawn({
+    return grunt.utils.spawn({
       cmd: 'phantomjs',
       args: options.args
     }, function(err, result, code) {
       if (!err) { return options.done(null); }
       // Something went horribly wrong.
-      verbose.or.writeln();
-      log.write('Running PhantomJS...').error();
+      grunt.verbose.or.writeln();
+      grunt.log.write('Running PhantomJS...').error();
       if (code === 127) {
-        log.errorlns(
+        grunt.log.errorlns(
           'In order for this task to work properly, PhantomJS must be ' +
           'installed and in the system PATH (if you can run "phantomjs" at' +
           ' the command line, this task should work). Unfortunately, ' +
@@ -258,7 +248,7 @@ module.exports = function(grunt) {
         );
         grunt.warn('PhantomJS not found.', options.code);
       } else {
-        result.split('\n').forEach(log.error, log);
+        result.split('\n').forEach(grunt.log.error, grunt.log);
         grunt.warn('PhantomJS exited unexpectedly with exit code ' + code + '.', options.code);
       }
       options.done(code);

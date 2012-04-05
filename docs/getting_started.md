@@ -4,7 +4,7 @@
 
 **If you're starting from scratch, check out the [init task](task_init.md), which will set up a new grunt-based project for you. Even if you don't ultimately use the files that are generated, you can very quickly learn how grunt works.**
 
-## The grunt.js file, aka "gruntfile"
+## The grunt.js file, aka "gruntfile" <a name="the-grunt-js-file-aka-gruntfile" href="#the-grunt-js-file-aka-gruntfile" title="Link to this section">⚑</a>
 Each time grunt is run, it looks in the current directory for a file named `grunt.js`. If this file is not found, grunt continues looking in parent directories until that file is found. This file is typically placed in the root of your project repository, and is a valid JavaScript file comprised of these parts:
 
 * Project configuration
@@ -37,7 +37,7 @@ module.exports = function(grunt) {
 };
 ```
 
-## A Very Important Note
+## A Very Important Note <a name="a-very-important-note" href="#a-very-important-note" title="Link to this section">⚑</a>
 Your `grunt.js` gruntfile **must** contain this code, once and **only** once. If it doesn't, grunt won't work. For the sake of brevity, this "wrapper" code has been omitted from all future examples on this page, but it needs to be there. Like in the previous example.
 
 ```javascript
@@ -46,7 +46,7 @@ module.exports = function(grunt) {
 };
 ```
 
-## Project configuration
+## Project configuration <a name="project-configuration" href="#project-configuration" title="Link to this section">⚑</a>
 
 Each grunt task relies on configuration information defined in an object passed to the [grunt.initConfig](api.md) method.
 
@@ -106,7 +106,7 @@ grunt.initConfig({
 });
 ```
 
-## Loading grunt plugins or tasks folders
+## Loading grunt plugins or tasks folders <a name="loading-grunt-plugins-or-tasks-folders" href="#loading-grunt-plugins-or-tasks-folders" title="Link to this section">⚑</a>
 
 While you can define [tasks and helpers](api.md) in your project's gruntfile, you can also load tasks from external sources.
 
@@ -120,7 +120,7 @@ grunt.loadNpmTasks('grunt-sample');
 
 _Note: loading externally defined tasks and helpers in this way is preferred to loading them via the analogous `--tasks` and `--npm` command-line options. This is because when tasks are created or loaded in the `grunt.js` gruntfile, the tasks effectively become part of the project and will always be used (provided they are available) whenever `grunt` is run._
 
-## Tasks and helpers
+## Tasks and helpers <a name="tasks-and-helpers" href="#tasks-and-helpers" title="Link to this section">⚑</a>
 
 You aren't required to define tasks in your project gruntfile, because grunt provides a number of built-in tasks. That being said, until you define a `default` task, grunt won't know what to do when you run it just as `grunt` without specifying any tasks, because grunt doesn't provide a default `default` task.
 

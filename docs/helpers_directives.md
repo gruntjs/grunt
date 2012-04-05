@@ -2,12 +2,12 @@
 
 # Helpers and Directives
 
-## Built-in Helpers
+## Built-in Helpers <a name="built-in-helpers" href="#built-in-helpers" title="Link to this section">⚑</a>
 EXPLAIN
 
 Take a look at the [built-in tasks source code](../tasks) for more examples.
 
-## Built-in Directives
+## Built-in Directives <a name="built-in-directives" href="#built-in-directives" title="Link to this section">⚑</a>
 
 * `<config:prop.subprop>` - expand to the `prop.subprop` config property. This can be any number of objects deep, `prop.subprop.otherprop.whatever` is totally valid. Great for DRYing up file lists.
 * `<json:file.json>` - expand to the object parsed from file.json via [grunt.file.parseJSON](api_file.md).

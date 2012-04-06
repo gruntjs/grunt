@@ -112,7 +112,7 @@ An internal library for task running.
 
 ## External libraries <a name="external-libraries" href="#external-libraries" title="Link to this section">⚑</a>
 
-### grunt.utils._ <a name="grunt-utils-_" href="#grunt-utils-_" title="Link to this section">⚑</a>
+### grunt.utils._ <a name="grunt-utils" href="#grunt-utils" title="Link to this section">⚑</a>
 [Underscore.js](http://underscorejs.org/) - Tons of super-useful array, function and object utility methods.
 [Underscore.string](https://github.com/epeli/underscore.string) - Tons of string utility methods.
 

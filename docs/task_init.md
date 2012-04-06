@@ -165,7 +165,7 @@ EXPLAIN
 grunt.helper('prompt' [, defaults] [, options], done)
 ```
 
-### The prompt_for helper <a name="the-prompt_for-helper" href="#the-prompt_for-helper" title="Link to this section">⚑</a>
+### The prompt_for helper <a name="the-prompt-for-helper" href="#the-prompt-for-helper" title="Link to this section">⚑</a>
 EXPLAIN
 
 ```javascript

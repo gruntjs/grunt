@@ -285,7 +285,8 @@ exports['Tasks'] = {
       }
     });
     task.run('a:b:c').start();
-  },  'Task#clearQueue': function(test) {
+  },
+  'Task#clearQueue': function(test) {
     test.expect(1);
     var task = this.task;
     task.registerTask('a', 'Push task name onto result.', result.pushTaskname);
@@ -304,6 +305,59 @@ exports['Tasks'] = {
       }
     });
     task.run('a b c d e').start();
+  },
+  'Task#mark': function(test) {
+    // test.expect(1);
+    var task = this.task;
+    task.registerTask('a', 'Explode.', function() {
+      throw task.taskError('whoops.');
+    });
+    task.registerTask('b', 'This task should never run.', result.pushTaskname);
+    task.registerTask('c', 'This task should never run.', result.pushTaskname);
+
+    task.registerTask('d', 'Push task name onto result.', result.pushTaskname);
+    task.registerTask('e', 'Explode.', function() {
+      throw task.taskError('whoops.');
+    });
+    task.registerTask('f', 'This task should never run.', result.pushTaskname);
+
+    task.registerTask('g', 'Push task name onto result.', result.pushTaskname);
+    task.registerTask('h', 'Push task name onto result.', result.pushTaskname);
+    task.registerTask('i', 'Explode.', function() {
+      throw task.taskError('whoops.');
+    });
+
+    task.registerTask('j', 'Run a task and push task name onto result.', function() {
+      task.run('k');
+      result.push(this.name);
+    });
+    task.registerTask('k', 'Explode.', function() {
+      throw task.taskError('whoops.');
+    });
+    task.registerTask('l', 'This task should never run.', result.pushTaskname);
+
+    task.registerTask('m', 'Push task name onto result.', result.pushTaskname);
+    task.registerTask('n', 'Run a task and push task name onto result.', function() {
+      task.run('o');
+      result.push(this.name);
+    });
+    task.registerTask('o', 'Explode.', function() {
+      throw task.taskError('whoops.');
+    });
+
+    task.registerTask('p', 'Push task name onto result.', result.pushTaskname);
+
+    task.options({
+      error: function(e) {
+        result.push('!' + this.name);
+        task.clearQueue({untilMarker: true});
+      },
+      done: function() {
+        test.strictEqual(result.getJoined(), '!ad!egh!ij!kmn!op', 'The specified tasks should have run, in-order.');
+        test.done();
+      }
+    });
+    task.run('a b c').mark().run('d e f').mark().run('g h i').mark().run('j l').mark().run('m n').mark().run('p').mark().start();
   },
   'Task#requires': function(test) {
     test.expect(1);

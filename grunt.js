@@ -17,12 +17,18 @@ module.exports = function(grunt) {
     lint: {
       all: ['grunt.js', 'lib/**/*.js', 'tasks/*.js', 'tasks/*/*.js', 'test/**/*.js']
     },
-    watch: {
-      files: ['<config:lint.all>', '<config:docs.all>'],
-      tasks: 'default'
-    },
     docs: {
       all: ['README.md', 'docs/*.md']
+    },
+    watch: {
+      scripts: {
+        files: '<config:lint.all>',
+        tasks: 'lint test'
+      },
+      docs: {
+        files: '<config:docs.all>',
+        tasks: 'docs'
+      }
     },
     jshint: {
       options: {

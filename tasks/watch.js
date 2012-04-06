@@ -21,26 +21,34 @@ module.exports = function(grunt) {
   // have changed incorrectly.
   var mtimes = {};
 
-  grunt.registerTask('watch', 'Run predefined tasks whenever watched files change.', function(prop) {
+  grunt.registerTask('watch', 'Run predefined tasks whenever watched files change.', function(target) {
+    this.requiresConfig('watch');
+    // Build an array of files/tasks objects.
+    var watch = grunt.config('watch');
+    var targets = target ? [target] : Object.keys(watch).filter(function(key) {
+      return typeof watch[key] !== 'string' && !Array.isArray(watch[key]);
+    });
+    targets = targets.map(function(target) {
+      // Fail if any required config properties have been omitted.
+      target = ['watch', target];
+      this.requiresConfig(target.concat('files'), target.concat('tasks'));
+      return grunt.config(target);
+    }, this);
 
-    var props = ['watch'];
-    // If a prop was passed as the argument, use that sub-property of watch.
-    if (prop) { props.push(prop); }
-    // Get the files and tasks sub-properties.
-    var filesProp = props.concat('files');
-    var tasksProp = props.concat('tasks');
-
-    // Fail if any required config properties have been omitted.
-    this.requiresConfig(filesProp, tasksProp);
+    // Allow "basic" non-target format.
+    if (typeof watch.files === 'string' || Array.isArray(watch.files)) {
+      targets.push({files: watch.files, tasks: watch.tasks});
+    }
 
     grunt.log.write('Waiting...');
 
     // This task is asynchronous.
     var taskDone = this.async();
-    // Get a list of ffles to be watched.
-    var getFiles = grunt.file.expandFiles.bind(grunt.file, grunt.config(filesProp));
+    // Get a list of files to be watched.
+    var patterns = grunt.utils._.chain(targets).pluck('files').flatten().uniq().value();
+    var getFiles = grunt.file.expandFiles.bind(grunt.file, patterns);
     // The tasks to be run.
-    var tasks = grunt.config(tasksProp);
+    var tasks = []; //grunt.config(tasksProp);
     // This task's name + optional args, in string format.
     var nameArgs = this.nameArgs;
     // An ID by which the setInterval can be canceled.
@@ -52,7 +60,7 @@ module.exports = function(grunt) {
 
     // Define an alternate fail "warn" behavior.
     grunt.fail.warnAlternate = function() {
-      grunt.task.clearQueue().run(nameArgs);
+      grunt.task.clearQueue({untilMarker: true}).run(nameArgs);
     };
 
     // Cleanup when files have changed. This is debounced to handle situations
@@ -63,7 +71,8 @@ module.exports = function(grunt) {
       clearInterval(intervalId);
       // Ok!
       grunt.log.ok();
-      Object.keys(changedFiles).forEach(function(filepath) {
+      var fileArray = Object.keys(changedFiles);
+      fileArray.forEach(function(filepath) {
         // Log which file has changed, and how.
         grunt.log.ok('File "' + filepath + '" ' + changedFiles[filepath] + '.');
         // Clear the modified file's cached require data.
@@ -71,9 +80,17 @@ module.exports = function(grunt) {
       });
       // Unwatch all watched files.
       Object.keys(watchedFiles).forEach(unWatchFile);
-      // Enqueue all specified tasks (if specified)...
-      if (tasks) { grunt.task.run(tasks); }
-      // ...followed by the watch task, so that it loops.
+      // For each specified target, test to see if any files matching that
+      // target's file patterns were modified.
+      targets.forEach(function(target) {
+        var files = grunt.file.expandFiles(target.files);
+        var intersection = grunt.utils._.intersection(fileArray, files);
+        // Enqueue specified tasks if a matching file was found.
+        if (intersection.length > 0 && target.tasks) {
+          grunt.task.run(target.tasks).mark();
+        }
+      });
+      // Enqueue the watch task, so that it loops.
       grunt.task.run(nameArgs);
       // Continue task queue.
       taskDone();

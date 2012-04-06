@@ -60,6 +60,14 @@ exports['file_strip_banner'] = function(test) {
   test.done();
 };
 
+exports['file_template'] = function(test) {
+  test.expect(2);
+  var expected = 'Version: ' + grunt.version + ', today: ' + grunt.template.today('yyyy-mm-dd') + '.';
+  test.equal(grunt.helper('file_template', 'test/fixtures/template.txt'), expected, 'It should return the parsed template.');
+  test.equal(grunt.task.directive('<file_template:test/fixtures/template.txt>'), expected, 'It should return the parsed template.');
+  test.done();
+};
+
 exports['banner'] = function(test) {
   test.expect(5);
   grunt.config('test_config', {a: 'aaaaa', b: 'bbbbb', c: [1, 2, 3], d: [{a: 1}, {a: 2}, {a: 3}]});

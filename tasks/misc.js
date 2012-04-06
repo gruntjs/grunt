@@ -52,6 +52,12 @@ module.exports = function(grunt) {
     return grunt.helper('strip_banner', src, this.directive ? this.flags : opts);
   });
 
+  // Process a file as a template.
+  grunt.registerHelper('file_template', function(filepath) {
+    var src = grunt.file.read(filepath);
+    return grunt.template.process(src);
+  });
+
   // Generate banner from template.
   grunt.registerHelper('banner', function(prop) {
     if (!prop) { prop = 'meta.banner'; }

@@ -49,7 +49,7 @@ The `options` object has these possible properties:
 var options = {
   // If specified, the file contents will be parsed as `utf8` and passed into
   // the function, whose return value will be used as the destination file's
-  // contents.
+  // contents. If this function returns false, the file copy will be aborted.
   process: processFunction,
   // These optional wildcard patterns will be matched against the filepath using
   // grunt.file.isMatch. If a specified wildcard pattern matches, the file will

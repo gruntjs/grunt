@@ -58,6 +58,9 @@ module.exports = function(grunt) {
     // File changes to be logged.
     var changedFiles = {};
 
+    // List of changed / deleted file paths.
+    grunt.file._watchFiles = {changed: [], deleted: []};
+
     // Define an alternate fail "warn" behavior.
     grunt.fail.warnAlternate = function() {
       grunt.task.clearQueue({untilMarker: true}).run(nameArgs);
@@ -73,8 +76,11 @@ module.exports = function(grunt) {
       grunt.log.ok();
       var fileArray = Object.keys(changedFiles);
       fileArray.forEach(function(filepath) {
+        var status = changedFiles[filepath];
         // Log which file has changed, and how.
-        grunt.log.ok('File "' + filepath + '" ' + changedFiles[filepath] + '.');
+        grunt.log.ok('File "' + filepath + '" ' + status + '.');
+        // Add filepath to grunt.file._watchFiles for grunt.file.expand* methods.
+        grunt.file._watchFiles[status === 'deleted' ? 'deleted' : 'changed'].push(filepath);
         // Clear the modified file's cached require data.
         grunt.file.clearRequireCache(filepath);
       });

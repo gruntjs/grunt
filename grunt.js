@@ -60,12 +60,12 @@ module.exports = function(grunt) {
       // Copying the file to itself allows it to be processed in-place.
       grunt.file.copy(filepath, filepath, {process: function(src) {
         // Add anchor links to all H2+ headers in .md document files.
-        var newSrc = src.replace(/(##+)\s+(.*?)\s*<a name=.*<\/a>/g, function(_, h, title) {
+        var newSrc = src.replace(/(##+)\s+(.+?)\s*(?:<a name=.*<\/a>)?\n/g, function(_, h, title) {
           // Slugify the title text.
           var slug = grunt.utils._.slugify(title.replace(/\./g, '-'));
           // Put everything back together.
           return h + ' ' + title + ' <a name="' + slug + '" href="#' + slug +
-            '" title="Link to this section">⚑</a>';
+            '" title="Link to this section">⚑</a>\n';
         });
         // Don't copy file if it didn't change.
         if (newSrc === src) { return false; }

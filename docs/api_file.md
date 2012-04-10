@@ -178,6 +178,9 @@ grunt.file.isMatch(patterns, filepath)
 
 Patterns without slashes will be matched against the basename of the path if it contains slashes, eg. pattern `*.js` will match filepath `path/to/file.js`.
 
+### grunt.file.watchFiles <a name="grunt-file-watchfiles" href="#grunt-file-watchfiles" title="Link to this section">⚑</a>
+An object with two properties, `grunt.file.watchFiles.changed` and `grunt.file.watchFiles.deleted` that each contain an array of files changed or deleted since the last time the [watch task](task_watch.md) was run. If the watch task hasn't run, both properties will be `null`.
+
 ## External libraries <a name="external-libraries" href="#external-libraries" title="Link to this section">⚑</a>
 
 ### grunt.file.glob <a name="grunt-file-glob" href="#grunt-file-glob" title="Link to this section">⚑</a>

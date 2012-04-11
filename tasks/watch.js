@@ -89,10 +89,10 @@ module.exports = function(grunt) {
       // For each specified target, test to see if any files matching that
       // target's file patterns were modified.
       targets.forEach(function(target) {
-        var files = grunt.file.expandFiles(target.files);
-        var intersection = grunt.utils._.intersection(fileArray, files);
-        // Enqueue specified tasks if a matching file was found.
-        if (intersection.length > 0 && target.tasks) {
+        // What files in fileArray match the target.files pattern(s)?
+        var files = grunt.file.match(target.files, fileArray);
+        // Enqueue specified tasks if at least one matching file was found.
+        if (files.length > 0 && target.tasks) {
           grunt.task.run(target.tasks).mark();
         }
       });

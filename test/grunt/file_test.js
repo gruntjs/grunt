@@ -92,6 +92,78 @@ exports['file.isMatch'] = {
   }
 };
 
+exports['file.expand*'] = {
+  setUp: function(done) {
+    this.cwd = process.cwd();
+    process.chdir('test/fixtures/expand');
+    done();
+  },
+  tearDown: function(done) {
+    process.chdir(this.cwd);
+    done();
+  },
+  'basic matching': function(test) {
+    test.expect(7);
+    test.deepEqual(grunt.file.expand('**/*.js'), ['js/bar.js', 'js/foo.js'], 'should match.');
+    test.deepEqual(grunt.file.expand('**/*.js', '**/*.css'), ['js/bar.js', 'js/foo.js', 'css/baz.css', 'css/qux.css'], 'should match.');
+    test.deepEqual(grunt.file.expand(['**/*.js', '**/*.css']), ['js/bar.js', 'js/foo.js', 'css/baz.css', 'css/qux.css'], 'should match.');
+    test.deepEqual(grunt.file.expand('**d*/**'), [
+      'deep/',
+      'deep/deep.txt',
+      'deep/deeper/',
+      'deep/deeper/deeper.txt',
+      'deep/deeper/deepest/',
+      'deep/deeper/deepest/deepest.txt'], 'should match files and directories.');
+    test.deepEqual(grunt.file.expandFiles('**d*/**'), [
+      'deep/deep.txt',
+      'deep/deeper/deeper.txt',
+      'deep/deeper/deepest/deepest.txt'], 'should match files only.');
+    test.deepEqual(grunt.file.expand('**d*/**/'), [
+      'deep/',
+      'deep/deeper/',
+      'deep/deeper/deepest/'], 'should match directories only.');
+    test.deepEqual(grunt.file.expandDirs('**d*/**'), [
+      'deep/',
+      'deep/deeper/',
+      'deep/deeper/deepest/'], 'should match directories only.');
+    test.done();
+  },
+  'no matches': function(test) {
+    test.expect(3);
+    test.deepEqual(grunt.file.expand('*.xyz'), [], 'should fail to match.');
+    test.deepEqual(grunt.file.expandDirs('**/*.js'), [], 'should fail to match.');
+    test.deepEqual(grunt.file.expandFiles('js', 'css'), [], 'should fail to match.');
+    test.done();
+  },
+  'unique': function(test) {
+    test.expect(2);
+    test.deepEqual(grunt.file.expand('**/*.js', 'js/*.js'), ['js/bar.js', 'js/foo.js'], 'should match.');
+    test.deepEqual(grunt.file.expand('**/*.js', '**/*.css', 'js/*.js'), ['js/bar.js', 'js/foo.js', 'css/baz.css', 'css/qux.css'], 'should match.');
+    test.done();
+  },
+  'flatten': function(test) {
+    test.expect(1);
+    test.deepEqual(grunt.file.expand([['**/*.js'], ['**/*.css', 'js/*.js']]), ['js/bar.js', 'js/foo.js', 'css/baz.css', 'css/qux.css'], 'should match.');
+    test.done();
+  },
+  'directives': function(test) {
+    test.expect(3);
+    grunt.registerHelper('omg', function() {});
+    test.deepEqual(grunt.file.expand('<omg>'), ['<omg>'], 'should retain valid directives.');
+    test.deepEqual(grunt.file.expand(['**/*.js', '<omg>']), ['js/bar.js', 'js/foo.js', '<omg>'], 'should retain valid directives.');
+    test.deepEqual(grunt.file.expand(['<omg:a:b>', '**/*.js']), ['<omg:a:b>', 'js/bar.js', 'js/foo.js'], 'should retain valid directives.');
+    test.done();
+  },
+  'options': function(test) {
+    test.expect(4);
+    test.deepEqual(grunt.file.expand('*.js'), [], 'should not matchBase (minimatch) by default.');
+    test.deepEqual(grunt.file.expand({matchBase: true}, '*.js'), ['js/bar.js', 'js/foo.js'], 'options should be passed through to minimatch.');
+    test.deepEqual(grunt.file.expand({matchBase: true}, '*.js', '*.css'), ['js/bar.js', 'js/foo.js', 'css/baz.css', 'css/qux.css'], 'should match.');
+    test.deepEqual(grunt.file.expand({matchBase: true}, ['*.js', '*.css']), ['js/bar.js', 'js/foo.js', 'css/baz.css', 'css/qux.css'], 'should match.');
+    test.done();
+  }
+};
+
 // test helper
 //
 // compare - to effectively compare Buffers, we would need something like

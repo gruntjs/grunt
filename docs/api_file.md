@@ -129,20 +129,20 @@ Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_pa
 
 
 ## File Lists and Wildcards <a name="file-lists-and-wildcards" href="#file-lists-and-wildcards" title="Link to this section">⚑</a>
-Wildcard patterns are resolved using the [glob-whatev library](https://github.com/cowboy/node-glob-whatev). See the [minimatch](https://github.com/isaacs/minimatch) module documentation for more details on supported wildcard patterns.
+Wildcard patterns are resolved using the [glob-whatev library](https://github.com/cowboy/node-glob-whatev). See the [minimatch](https://github.com/isaacs/minimatch) module documentation for more details on supported wildcard patterns and matching options.
 
 There are also a number of [task-specific file listing methods](api_task.md) that find files inside grunt plugins and task directories.
 
-_Note: all file paths are relative to the [grunt.js gruntfile](getting_started.md) unless the current working directory is changed with `grunt.file.setBase` or the `--base` command-line option._
-
 ### grunt.file.expand <a name="grunt-file-expand" href="#grunt-file-expand" title="Link to this section">⚑</a>
-Return a unique array of all file or directory paths that match the given wildcard pattern(s). This method accepts one or more comma separated wildcard patterns as well as an array of wildcard patterns.
-
-The `options` object supports all [minimatch](https://github.com/isaacs/minimatch) options.
+Return a unique array of all file or directory paths that match the given wildcard pattern(s). This method accepts either comma separated wildcard patterns or an array of wildcard patterns.
 
 ```javascript
 grunt.file.expand([options, ] patterns)
 ```
+
+File paths are relative to the [grunt.js gruntfile](getting_started.md) unless the current working directory is changed with `grunt.file.setBase` or the `--base` command-line option.
+
+The `options` object supports all [minimatch](https://github.com/isaacs/minimatch) options. For example, if `options.matchBase` is true, patterns without slashes will match against the basename of the path even if it contains slashes, eg. pattern `*.js` will match filepath `path/to/file.js`.
 
 ### grunt.file.expandDirs <a name="grunt-file-expanddirs" href="#grunt-file-expanddirs" title="Link to this section">⚑</a>
 This method behaves the same as `grunt.file.expand` except it only returns directory paths.
@@ -167,16 +167,21 @@ Return a unique array of all `file://` URLs for files that match the given wildc
 grunt.file.expandFileURLs(patternsOrURLs)
 ```
 
+File paths are relative to the [grunt.js gruntfile](getting_started.md) unless the current working directory is changed with `grunt.file.setBase` or the `--base` command-line option.
+
 See the [qunit task source](../tasks/qunit.js) for an example.
 
-### grunt.file.isMatch <a name="grunt-file-ismatch" href="#grunt-file-ismatch" title="Link to this section">⚑</a>
-Match one or more wildcard patterns against a file path. If any of the specified matches, return `true` otherwise return `false`. This method accepts a single string wildcard pattern as well as an array of wildcard patterns. Note that `true` may also be specified to prvent processing.
+### grunt.file.match <a name="grunt-file-match" href="#grunt-file-match" title="Link to this section">⚑</a>
+Match one or more wildcard patterns against one or more file paths. Returns a uniqued array of all file paths that match any of the specified wildcard patterns. Both the `patterns` and `filepaths` argument can be a single string or array of strings.
 
 ```javascript
-grunt.file.isMatch(patterns, filepath)
+grunt.file.match([options, ] patterns, filepaths)
 ```
 
-Patterns without slashes will be matched against the basename of the path if it contains slashes, eg. pattern `*.js` will match filepath `path/to/file.js`.
+The `options` object supports all [minimatch](https://github.com/isaacs/minimatch) options. For example, if `options.matchBase` is true, patterns without slashes will match against the basename of the path even if it contains slashes, eg. pattern `*.js` will match filepath `path/to/file.js`.
+
+### grunt.file.isMatch <a name="grunt-file-ismatch" href="#grunt-file-ismatch" title="Link to this section">⚑</a>
+This method behaves similarly to `grunt.file.match` except it simply returns `true` if any files were matched, otherwise `false`.
 
 ### grunt.file.watchFiles <a name="grunt-file-watchfiles" href="#grunt-file-watchfiles" title="Link to this section">⚑</a>
 An object with two properties, `grunt.file.watchFiles.changed` and `grunt.file.watchFiles.deleted` that each contain an array of files changed or deleted since the last time the [watch task](task_watch.md) was run. If the watch task hasn't run, both properties will be `null`.

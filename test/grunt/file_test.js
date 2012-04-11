@@ -3,6 +3,95 @@ var grunt = require('../../lib/grunt');
 var fs = require('fs');
 var path = require('path');
 
+exports['file.match'] = {
+  'empty set': function(test) {
+    test.expect(12);
+    // Should return empty set if a required argument is missing or an empty set.
+    test.deepEqual(grunt.file.match(null, null), [], 'should return empty set.');
+    test.deepEqual(grunt.file.match({}, null, null), [], 'should return empty set.');
+    test.deepEqual(grunt.file.match(null, 'foo.js'), [], 'should return empty set.');
+    test.deepEqual(grunt.file.match('*.js', null), [], 'should return empty set.');
+    test.deepEqual(grunt.file.match({}, null, 'foo.js'), [], 'should return empty set.');
+    test.deepEqual(grunt.file.match({}, '*.js', null), [], 'should return empty set.');
+    test.deepEqual(grunt.file.match({}, [], 'foo.js'), [], 'should return empty set.');
+    test.deepEqual(grunt.file.match({}, '*.js', []), [], 'should return empty set.');
+    test.deepEqual(grunt.file.match(null, ['foo.js']), [], 'should return empty set.');
+    test.deepEqual(grunt.file.match(['*.js'], null), [], 'should return empty set.');
+    test.deepEqual(grunt.file.match({}, null, ['foo.js']), [], 'should return empty set.');
+    test.deepEqual(grunt.file.match({}, ['*.js'], null), [], 'should return empty set.');
+    test.done();
+  },
+  'basic matching': function(test) {
+    test.expect(6);
+    test.deepEqual(grunt.file.match('*.js', 'foo.js'), ['foo.js'], 'should match correctly.');
+    test.deepEqual(grunt.file.match('*.js', ['foo.js']), ['foo.js'], 'should match correctly.');
+    test.deepEqual(grunt.file.match('*.js', ['foo.js', 'bar.css']), ['foo.js'], 'should match correctly.');
+    test.deepEqual(grunt.file.match(['*.js', '*.css'], 'foo.js'), ['foo.js'], 'should match correctly.');
+    test.deepEqual(grunt.file.match(['*.js', '*.css'], ['foo.js']), ['foo.js'], 'should match correctly.');
+    test.deepEqual(grunt.file.match(['*.js', '*.css'], ['foo.js', 'bar.css']), ['foo.js', 'bar.css'], 'should match correctly.');
+    test.done();
+  },
+  'no matches': function(test) {
+    test.expect(2);
+    test.deepEqual(grunt.file.match('*.js', 'foo.css'), [], 'should fail to match.');
+    test.deepEqual(grunt.file.match('*.js', ['foo.css', 'bar.css']), [], 'should fail to match.');
+    test.done();
+  },
+  'unique': function(test) {
+    test.expect(2);
+    test.deepEqual(grunt.file.match('*.js', ['foo.js', 'foo.js']), ['foo.js'], 'should return a uniqued set.');
+    test.deepEqual(grunt.file.match(['*.js', '*.*'], ['foo.js', 'foo.js']), ['foo.js'], 'should return a uniqued set.');
+    test.done();
+  },
+  'flatten': function(test) {
+    test.expect(1);
+    test.deepEqual(grunt.file.match([['*.js', '*.css'], ['*.*', '*.js']], ['foo.js', 'bar.css']), ['foo.js', 'bar.css'], 'should process nested pattern arrays correctly.');
+    test.done();
+  },
+  'no directives': function(test) {
+    test.expect(2);
+    grunt.registerHelper('omg', function() {});
+    test.deepEqual(grunt.file.match(['*.js', '<omg>'], 'foo.js'), ['foo.js'], 'should filter out directives.');
+    test.deepEqual(grunt.file.match(['<omg:a:b>', '*.js'], 'foo.js'), ['foo.js'], 'should filter out directives.');
+    test.done();
+  },
+  'options.matchBase': function(test) {
+    test.expect(2);
+    test.deepEqual(grunt.file.match({matchBase: true}, '*.js', ['foo.js', 'bar', 'baz/xyz.js']), ['foo.js', 'baz/xyz.js'], 'should matchBase (minimatch) when specified.');
+    test.deepEqual(grunt.file.match('*.js', ['foo.js', 'bar', 'baz/xyz.js']), ['foo.js'], 'should not matchBase (minimatch) by default.');
+    test.done();
+  }
+};
+
+exports['file.isMatch'] = {
+  'basic matching': function(test) {
+    test.expect(6);
+    test.ok(grunt.file.isMatch('*.js', 'foo.js'), 'should match correctly.');
+    test.ok(grunt.file.isMatch('*.js', ['foo.js']), 'should match correctly.');
+    test.ok(grunt.file.isMatch('*.js', ['foo.js', 'bar.css']), 'should match correctly.');
+    test.ok(grunt.file.isMatch(['*.js', '*.css'], 'foo.js'), 'should match correctly.');
+    test.ok(grunt.file.isMatch(['*.js', '*.css'], ['foo.js']), 'should match correctly.');
+    test.ok(grunt.file.isMatch(['*.js', '*.css'], ['foo.js', 'bar.css']), 'should match correctly.');
+    test.done();
+  },
+  'no matches': function(test) {
+    test.expect(6);
+    test.equal(grunt.file.isMatch('*.js', 'foo.css'), false, 'should fail to match.');
+    test.equal(grunt.file.isMatch('*.js', ['foo.css', 'bar.css']), false, 'should fail to match.');
+    test.equal(grunt.file.isMatch(null, 'foo.css'), false, 'should fail to match.');
+    test.equal(grunt.file.isMatch('*.js', null), false, 'should fail to match.');
+    test.equal(grunt.file.isMatch([], 'foo.css'), false, 'should fail to match.');
+    test.equal(grunt.file.isMatch('*.js', []), false, 'should fail to match.');
+    test.done();
+  },
+  'options.matchBase': function(test) {
+    test.expect(2);
+    test.ok(grunt.file.isMatch({matchBase: true}, '*.js', ['baz/xyz.js']), 'should matchBase (minimatch) when specified.');
+    test.equal(grunt.file.isMatch('*.js', ['baz/xyz.js']), false, 'should not matchBase (minimatch) by default.');
+    test.done();
+  }
+};
+
 // test helper
 //
 // compare - to effectively compare Buffers, we would need something like

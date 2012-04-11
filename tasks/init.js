@@ -165,7 +165,7 @@ module.exports = function(grunt) {
           if (srcpath && !grunt.file.isPathAbsolute(srcpath)) {
             if (o.noProcess) {
               relpath = srcpath.slice(pathPrefix.length);
-              o.noProcess = grunt.file.isMatch(o.noProcess, relpath);
+              o.noProcess = grunt.file.isMatch({matchBase: true}, o.noProcess, relpath);
             }
             srcpath = grunt.task.getFile(srcpath);
           }

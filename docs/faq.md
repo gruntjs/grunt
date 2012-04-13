@@ -27,7 +27,7 @@ Note that the `phantomjs` executable needs to be in the system `PATH` for grunt 
 * [Where does $PATH get set in OS X 10.6 Snow Leopard?](http://superuser.com/questions/69130/where-does-path-get-set-in-os-x-10-6-snow-leopard)
 * [How do I change the PATH variable in Linux](https://www.google.com/search?q=How+do+I+change+the+PATH+variable+in+Linux)
 
-## Why doesn't my asynchronous task work?! <a name="why-doesnt-my-async-task-work" href="#why-doesnt-my-async-task-work"" title="Link to this section">⚑</a>
+## Why doesn't my asynchronous task work?! <a name="why-doesnt-my-asynchronous-task-work" href="#why-doesnt-my-asynchronous-task-work" title="Link to this section">⚑</a>
 
 Chances are it's because you have forgotten to use the tell the current task that you are using [async](https://github.com/cowboy/grunt/blob/master/docs/api_task.md#this-async-grunt-task-current-async) behaviour.
 

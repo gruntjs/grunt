@@ -42,11 +42,12 @@ module.exports = function(grunt) {
     if (name == null) {
       name = grunt._npmTasks[grunt._npmTasks.length - 1];
     }
-    // Valid init templates (.js files).
+    // Valid init templates (.js or .coffee files).
     var templates = {};
-    grunt.task.expandFiles('init/*.js').forEach(function(fileobj) {
+    grunt.task.expandFiles('init/*.{js,coffee}').forEach(function(fileobj) {
       // Add template (plus its path) to the templates object.
-      templates[path.basename(fileobj.abs, '.js')] = require(fileobj.abs);
+      var basename = path.basename(fileobj.abs).replace(/\.(?:js|coffee)/, '');
+      templates[basename] = require(fileobj.abs);
     });
     var initTemplate = templates[name];
 

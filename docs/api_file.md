@@ -91,13 +91,6 @@ function callback(abspath, rootdir, subdir, filename) {
 }
 ```
 
-### grunt.file.findup <a name="grunt-file-findup" href="#grunt-file-findup" title="Link to this section">⚑</a>
-Search for a filename in the given directory followed by all parent directories. Returns the first matching filepath found, otherwise returns `null`.
-
-```javascript
-grunt.file.findup(rootdir, filename)
-```
-
 ### grunt.file.isPathAbsolute <a name="grunt-file-ispathabsolute" href="#grunt-file-ispathabsolute" title="Link to this section">⚑</a>
 Is a given file path absolute? Returns a boolean.
 
@@ -170,6 +163,13 @@ grunt.file.expandFileURLs(patternsOrURLs)
 File paths are relative to the [grunt.js gruntfile](getting_started.md) unless the current working directory is changed with `grunt.file.setBase` or the `--base` command-line option.
 
 See the [qunit task source](../tasks/qunit.js) for an example.
+
+### grunt.file.findup <a name="grunt-file-findup" href="#grunt-file-findup" title="Link to this section">⚑</a>
+Search in the given directory followed by all parent directories for a file matching the given wildcard pattern(s). Returns the first matching filepath found, otherwise returns `null`. This method accepts either comma separated wildcard patterns or an array of wildcard patterns.
+
+```javascript
+grunt.file.findup(rootdir, patterns)
+```
 
 ### grunt.file.match <a name="grunt-file-match" href="#grunt-file-match" title="Link to this section">⚑</a>
 Match one or more wildcard patterns against one or more file paths. Returns a uniqued array of all file paths that match any of the specified wildcard patterns. Both the `patterns` and `filepaths` argument can be a single string or array of strings.

@@ -27,16 +27,16 @@ Note that the `phantomjs` executable needs to be in the system `PATH` for grunt 
 * [Where does $PATH get set in OS X 10.6 Snow Leopard?](http://superuser.com/questions/69130/where-does-path-get-set-in-os-x-10-6-snow-leopard)
 * [How do I change the PATH variable in Linux](https://www.google.com/search?q=How+do+I+change+the+PATH+variable+in+Linux)
 
-## Why doesn't my asynchronous task work?! <a name="why-doesnt-my-asynchronous-task-work" href="#why-doesnt-my-asynchronous-task-work" title="Link to this section">⚑</a>
+## Why doesn't my asynchronous task complete? <a name="why-doesnt-my-asynchronous-task-complete" href="#why-doesnt-my-asynchronous-task-complete" title="Link to this section">⚑</a>
+Chances are this is happening because you have forgotten to call the [this.async](api_task.md#this-async-grunt-task-current-async) method to tell grunt that your task is asynchronous. For simplicity's sake, grunt uses a synchronous coding style, which can be switched to asynchronous by calling `this.async()` within the task body.
 
-Chances are it's because you have forgotten to use the tell the current task that you are using [async](https://github.com/cowboy/grunt/blob/master/docs/api_task.md#this-async-grunt-task-current-async) behaviour.
+Note that passing `false` to the `done()` function tells grunt that the task has failed.
 
-For simplicity of use and a clean, readable code Grunt uses a synchronous coding style.  If you are creating a task that does integrate with an asynchronous module or you prefer to write in an asynchronous style be sure to call `this.async()` within the task body and grunt will provide you with a callback function to use, e.g.:
+For example:
 
-```js
-grunt.registerTask('asyncme', 'Your task description goes here.', function() {
-  var callback = this.async();
-
-  doSomethingAsync(callback);
+```javascript
+grunt.registerTask('asyncme', 'My asynchronous task.', function() {
+  var done = this.async();
+  doSomethingAsync(done);
 });
 ```

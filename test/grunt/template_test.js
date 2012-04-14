@@ -26,14 +26,14 @@ exports['template'] = {
       baz: 'a{%= bar %}e'
     };
 
-    test.equal(grunt.template.process('{%= foo %}', obj, 'init'), 'c', 'should retrieve value.');
-    test.equal(grunt.template.process('{%= bar %}', obj, 'init'), 'bcd', 'should recurse.');
-    test.equal(grunt.template.process('{%= baz %}', obj, 'init'), 'abcde', 'should recurse.');
+    test.equal(grunt.template.process('{%= foo %}', obj, {delimiters: 'init'}), 'c', 'should retrieve value.');
+    test.equal(grunt.template.process('{%= bar %}', obj, {delimiters: 'init'}), 'bcd', 'should recurse.');
+    test.equal(grunt.template.process('{%= baz %}', obj, {delimiters: 'init'}), 'abcde', 'should recurse.');
 
-    test.equal(grunt.template.process('{%= foo %}<%= foo %>', obj, 'init'), 'c<%= foo %>', 'should ignore default delimiters');
+    test.equal(grunt.template.process('{%= foo %}<%= foo %>', obj, {delimiters: 'init'}), 'c<%= foo %>', 'should ignore default delimiters');
 
     obj.foo = '{% oops %';
-    test.equal(grunt.template.process('{%= baz %}', obj, 'init'), 'ab{% oops %de', 'should not explode.');
+    test.equal(grunt.template.process('{%= baz %}', obj, {delimiters: 'init'}), 'ab{% oops %de', 'should not explode.');
 
     test.done();
   },
@@ -46,14 +46,14 @@ exports['template'] = {
       baz: 'a[%= bar %]e'
     };
 
-    test.equal(grunt.template.process('[%= foo %]', obj, 'user'), 'c', 'should retrieve value.');
-    test.equal(grunt.template.process('[%= bar %]', obj, 'user'), 'bcd', 'should recurse.');
-    test.equal(grunt.template.process('[%= baz %]', obj, 'user'), 'abcde', 'should recurse.');
+    test.equal(grunt.template.process('[%= foo %]', obj, {delimiters: 'user'}), 'c', 'should retrieve value.');
+    test.equal(grunt.template.process('[%= bar %]', obj, {delimiters: 'user'}), 'bcd', 'should recurse.');
+    test.equal(grunt.template.process('[%= baz %]', obj, {delimiters: 'user'}), 'abcde', 'should recurse.');
 
-    test.equal(grunt.template.process('[%= foo %]<%= foo %>', obj, 'user'), 'c<%= foo %>', 'should ignore default delimiters');
+    test.equal(grunt.template.process('[%= foo %]<%= foo %>', obj, {delimiters: 'user'}), 'c<%= foo %>', 'should ignore default delimiters');
 
     obj.foo = '[% oops %';
-    test.equal(grunt.template.process('[%= baz %]', obj, 'user'), 'ab[% oops %de', 'should not explode.');
+    test.equal(grunt.template.process('[%= baz %]', obj, {delimiters: 'user'}), 'ab[% oops %de', 'should not explode.');
     test.done();
   }
 };

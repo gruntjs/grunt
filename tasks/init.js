@@ -102,7 +102,7 @@ module.exports = function(grunt) {
           // Omit files that have an empty / false rule value.
           if (!rule && relpath in init.renames) { return; }
           // Create a property for this file.
-          files[rule ? grunt.template.process(rule, props, 'init') : relpath] = obj.rel;
+          files[rule ? grunt.template.process(rule, props, {delimiters: 'init'}) : relpath] = obj.rel;
         });
         return files;
       },
@@ -154,7 +154,7 @@ module.exports = function(grunt) {
       copyAndProcess: function(files, props, options) {
         options = grunt.utils._.defaults(options || {}, {
           process: function(contents) {
-            return grunt.template.process(contents, props, 'init');
+            return grunt.template.process(contents, props, {delimiters: 'init'});
           }
         });
         Object.keys(files).forEach(function(destpath) {

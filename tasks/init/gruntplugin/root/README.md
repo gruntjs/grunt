@@ -1,14 +1,14 @@
-# {%= full_name %}
+# {%= name %}
 
 {%= description %}
 
 ## Getting Started
-Install this grunt plugin next to your project's [grunt.js gruntfile][getting_started] with: `npm install {%= full_name %}`
+Install this grunt plugin next to your project's [grunt.js gruntfile][getting_started] with: `npm install {%= name %}`
 
 Then add this line to your project's `grunt.js` gruntfile:
 
 ```javascript
-grunt.loadNpmTasks('{%= full_name %}');
+grunt.loadNpmTasks('{%= name %}');
 ```
 
 [grunt]: https://github.com/cowboy/grunt

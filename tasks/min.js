@@ -64,7 +64,10 @@ module.exports = function(grunt) {
       src = pro.gen_code(ast, options.codegen || {});
       // Success!
       grunt.verbose.ok();
-      return src;
+      // UglifyJS adds a trailing semicolon only when run as a binary.
+      // So we manually add the trailing semicolon when using it as a module.
+      // https://github.com/mishoo/UglifyJS/issues/126
+      return src + ';';
     } catch(e) {
       // Something went wrong.
       grunt.verbose.or.write(msg);

@@ -10,7 +10,7 @@ _Note: if you don't specify a task, but a task named "default" has been defined,
 
 Tasks can be created in a few ways.
 
-## Alias tasks <a name="alias-tasks" href="#alias-tasks" title="Link to this section">⚑</a>
+## Alias tasks <a name="alias-tasks" href="#alias-tasks" title="Link to this section">#</a>
 
 ```javascript
 grunt.registerTask(taskName, [description, ] taskList);
@@ -32,7 +32,7 @@ grunt.registerTask('default', 'lint qunit concat min');
 
 _In case it's not obvious, defining a `default` task is helpful because it runs by default, whenever you run `grunt` without explicitly specifying tasks._
 
-## Multi tasks <a name="multi-tasks" href="#multi-tasks" title="Link to this section">⚑</a>
+## Multi tasks <a name="multi-tasks" href="#multi-tasks" title="Link to this section">#</a>
 A multi task is a task that implicitly iterates over all of its targets if no target is specified. For example, in the following, while `grunt lint:test` or `grunt lint:lib` will lint only those specific sets of files, `grunt lint` will automatically run the `test`, `lib` and `grunt` targets for you. It's super convenient.
 
 _Note: multi tasks will ignore any config sub-properties beginning with `_` (underscore)._
@@ -121,7 +121,7 @@ baz: false
 Aborted due to warnings.
 ```
 
-## Custom tasks <a name="custom-tasks" href="#custom-tasks" title="Link to this section">⚑</a>
+## Custom tasks <a name="custom-tasks" href="#custom-tasks" title="Link to this section">#</a>
 You can go crazy with tasks. If your tasks don't follow the "multi task" structure, use a custom task.
 
 ```javascript

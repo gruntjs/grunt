@@ -1,2 +1,2 @@
 #!/usr/bin/env node
-require('grunt').npmTasks('{%= full_name %}').cli();
+require('grunt').npmTasks('{%= name %}').cli();

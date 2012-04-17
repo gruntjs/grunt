@@ -65,7 +65,7 @@ module.exports = function(grunt) {
           var slug = grunt.utils._.slugify(title.replace(/\./g, '-'));
           // Put everything back together.
           return h + ' ' + title + ' <a name="' + slug + '" href="#' + slug +
-            '" title="Link to this section">⚑</a>\n';
+            '" title="Link to this section">#</a>\n';
         });
         // Don't copy file if it didn't change.
         if (newSrc === src) { return false; }

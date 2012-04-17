@@ -10,7 +10,7 @@
 * `20` - Init error
 * `90-99` - [Nodeunit](https://github.com/caolan/nodeunit) / [QUnit](http://docs.jquery.com/QUnit) error
 
-## Nodeunit / QUnit specific <a name="nodeunit-qunit-specific" href="#nodeunit-qunit-specific" title="Link to this section">⚑</a>
+## Nodeunit / QUnit specific <a name="nodeunit-qunit-specific" href="#nodeunit-qunit-specific" title="Link to this section">#</a>
 
 * `90` - Non assertion-specific error, like a timeout or JavaScript error.
 * `91-99` - 91 = 1 assertion failed, 95 = 5 assertions failed, 99 = 9 or more assertions failed (you get the idea).

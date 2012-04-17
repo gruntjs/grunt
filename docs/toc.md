@@ -2,7 +2,7 @@
 
 # Documentation table of contents
 
-## Getting started <a name="getting-started" href="#getting-started" title="Link to this section">⚑</a>
+## Getting started <a name="getting-started" href="#getting-started" title="Link to this section">#</a>
 
 * [Getting started](getting_started.md) - A guide to configuring grunt for your project.
 * [Example gruntfiles](example_gruntfiles.md) - A few samples, to help you get started.
@@ -10,7 +10,7 @@
 * [FAQ](faq.md) - Frequently asked questions, along with their answers.
 * [Exit codes](exit_codes.md) - A list of all built-in grunt exit codes.
 
-## Built-in tasks <a name="built-in-tasks" href="#built-in-tasks" title="Link to this section">⚑</a>
+## Built-in tasks <a name="built-in-tasks" href="#built-in-tasks" title="Link to this section">#</a>
 
 * [concat](task_concat.md) - Concatenate files.
 * [init](task_init.md) - Generate project scaffolding from a predefined template.
@@ -31,11 +31,11 @@
 [qunit]: http://docs.jquery.com/QUnit
 [phantom]: http://www.phantomjs.org/
 
-## Other built-ins <a name="other-built-ins" href="#other-built-ins" title="Link to this section">⚑</a>
+## Other built-ins <a name="other-built-ins" href="#other-built-ins" title="Link to this section">#</a>
 
 * [Helpers and Directives](helpers_directives.md) - Ones not specifically covered in other task documentation.
 
-## Development <a name="development" href="#development" title="Link to this section">⚑</a>
+## Development <a name="development" href="#development" title="Link to this section">#</a>
 
 * [Contributing to grunt](contributing.md) - Development advice.
 

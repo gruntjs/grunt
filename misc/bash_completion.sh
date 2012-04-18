@@ -10,30 +10,57 @@
 # To enable bash <tab> completion for grunt, add the contents of this file to
 # your ~/.bashrc file OR source this file: source path/to/bash_completion.sh
 
+# Search the current directory and all parent directories for a gruntfile.
+function _grunt_gruntfile() {
+  local curpath="$PWD"
+  while [[ "$curpath" ]]; do
+    for gruntfile in "$curpath/grunt."{js,coffee}; do
+      if [[ -e "$gruntfile" ]]; then
+        echo "$gruntfile"
+        return
+      fi
+    done
+    curpath="${curpath%/*}"
+  done
+  return 1
+}
+
+# Enable bash autocompletion.
 function _grunt_completions() {
   local help opts tasks compls
   # The currently-being-completed word.
   local cur="${COMP_WORDS[COMP_CWORD]}"
-  # Some paths.
-  local basepath="/tmp/grunt_completions/$(pwd)"
-  local optsfile="$basepath/opts"
-  local tasksfile="$basepath/tasks"
-  # If either file doesn't exist or is older than 1 minute old...
-  if [[ ! -f "$optsfile" || ! -f "$tasksfile" || $(find "$optsfile" -mmin +1) || $(find "$tasksfile" -mmin +1) ]]; then
+  # The current gruntfile, if it exists.
+  local gruntfile="$(_grunt_gruntfile)"
+  # The current grunt version.
+  local gruntversion="$(grunt --version)"
+  # Cached info paths.
+  local c_base="/tmp/grunt_completions/${gruntfile:-none}"
+  local c_opts="$c_base/opts"
+  local c_tasks="$c_base/tasks"
+  local c_version="$c_base/version"
+  local c_gruntfile="$c_base/gruntfile"
+  # If grunt is a different version than the cached version or the gruntfile
+  # differs from the cached copy, rebuild and cache options and tasks.
+  if [[ "$gruntversion" != "$(cat "$c_version" 2>/dev/null)" ||
+    $(diff "$gruntfile" "$c_gruntfile" 2>/dev/null) ]]; then
+
     # Create directory if it doesn't exist.
-    [[ -d "$basepath" ]] || mkdir -p "$basepath"
+    [[ -d "$c_base" ]] || mkdir -p "$c_base"
     # Get grunt help output including options and local tasks.
     help="$(grunt --help --no-color 2>/dev/null)"
     # Parse out options and tasks individually.
     opts="$(echo "$help" | awk '$1~/^-/ {sub(",","",$1);print $1} $2~/^-/ {print $2}')"
-    tasks="$(echo "$help" | awk 't==1 {print $1} /Available tasks/ {t=1} /^$/ {t=0}')"
+    tasks="$(echo "$help" | awk 't==1 {print $1} /^Available .* tasks$/ {t=1} /^$/ {t=0}')"
     # Write files.
-    echo "$opts" > "$optsfile"
-    echo "$tasks" > "$tasksfile"
+    echo "$opts" > "$c_opts"
+    echo "$tasks" > "$c_tasks"
+    echo "$gruntversion" > "$c_version"
+    [[ -e "$gruntfile" ]] && cp "$gruntfile" "$c_gruntfile"
   else
-    # Read files.
-    opts="$(cat "$optsfile")"
-    tasks="$(cat "$tasksfile")"
+    # Just read files.
+    opts="$(< "$c_opts")"
+    tasks="$(< "$c_tasks")"
   fi
   compls="$tasks"
   # Only add -- or - options if the user has started typing -

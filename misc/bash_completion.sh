@@ -7,8 +7,10 @@
 # Licensed under the MIT license.
 # http://benalman.com/about/license/
 
-# To enable bash <tab> completion for grunt, add the contents of this file to
-# your ~/.bashrc file OR source this file: source path/to/bash_completion.sh
+# To enable bash <tab> completion for grunt, add the following line (minus any
+# leading #, which is the bash comment character) to your ~/.bashrc file:
+#
+# source "$(grunt --version --verbose | sed -En 's/Install path: (.*)/\1/p')/misc/bash_completion.sh"
 
 # Search the current directory and all parent directories for a gruntfile.
 function _grunt_gruntfile() {

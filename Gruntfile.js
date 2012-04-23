@@ -15,7 +15,7 @@ module.exports = function(grunt) {
       all: ['test/**/*.js']
     },
     lint: {
-      all: ['grunt.js', 'lib/**/*.js', 'tasks/*.js', 'tasks/*/*.js', 'test/**/*.js']
+      all: ['Gruntfile.js', 'lib/**/*.js', 'tasks/*.js', 'tasks/*/*.js', 'test/**/*.js']
     },
     docs: {
       all: ['README.md', 'docs/*.md']

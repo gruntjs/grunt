@@ -7,7 +7,7 @@ var path = require('path');
 var findup = require('../lib/util/findup');
 
 // Where might a locally-installed grunt live?
-var dir = path.resolve(findup(process.cwd(), 'grunt.{js,coffee}'), '../node_modules/grunt');
+var dir = path.resolve(findup(process.cwd(), '{G,g}runtfile.{js,coffee}'), '../node_modules/grunt');
 
 // If grunt is installed locally, use it. Otherwise use this grunt.
 if (!path.existsSync(dir)) { dir = '../lib/grunt'; }

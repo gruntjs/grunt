@@ -8,16 +8,16 @@
  */
 
 // Basic template description.
-exports.description = 'Create a basic grunt.js gruntfile.';
+exports.description = 'Create a basic Gruntfile.';
 
 // Template-specific notes to be displayed before question prompts.
 exports.notes = 'This template tries to guess file and directory paths, but ' +
-  'you will most likely need to edit the generated grunt.js file before ' +
-  'running grunt. _If you run grunt after generating grunt.js, and grunt ' +
-  'exits with errors, edit the grunt.js file!_';
+  'you will most likely need to edit the generated Gruntfile.js file before ' +
+  'running grunt. _If you run grunt after generating the Gruntfile, and ' +
+  'it exits with errors, edit the file!_';
 
 // Any existing file or directory matching this wildcard will cause a warning.
-exports.warnOn = 'grunt.js';
+exports.warnOn = 'Gruntfile.js';
 
 // The actual init template.
 exports.template = function(grunt, init, done) {

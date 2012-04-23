@@ -20,7 +20,7 @@ module.exports = function(grunt) {
         'YOUR_NAME; Licensed MIT */'
     },{% } } %}
     lint: {
-      files: ['grunt.js', '{%= lib_dir %}/**/*.js', '{%= test_dir %}/**/*.js']
+      files: ['Gruntfile.js', '{%= lib_dir %}/**/*.js', '{%= test_dir %}/**/*.js']
     },{% if (dom) { %}
     qunit: {
       files: ['{%= test_dir %}/**/*.html']

@@ -26,7 +26,7 @@ module.exports = function(grunt) {
       files: ['test/**/*.js']
     },
     lint: {
-      files: ['grunt.js', 'lib/**/*.js', 'test/**/*.js']
+      files: ['Gruntfile.js', 'lib/**/*.js', 'test/**/*.js']
     },
     watch: {
       files: '<config:lint.files>',

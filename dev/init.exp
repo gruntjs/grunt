@@ -112,7 +112,7 @@ expect "$ "
 send "echo -e '
 Want to learn more? Check \[grunt\]\[grunt\] out.
 
-\[grunt\]: https://github.com/cowboy/grunt
+\[grunt\]: http://gruntjs.com/
 \[issues\]: https://github.com/cowboy/grunt/issues
 \[init\]: https://github.com/cowboy/grunt/blob/master/docs/task_init.md
 \[expect\]: https://github.com/cowboy/grunt/blob/master/dev/init.exp

@@ -1,4 +1,4 @@
-[Grunt homepage](https://github.com/cowboy/grunt) | [Documentation table of contents](toc.md)
+[Grunt homepage](http://gruntjs.com/) | [Documentation table of contents](toc.md)
 
 **Note: this document is a little out-of-date. You're better off starting with the "Creating Tasks" section of the [API documentation](api.md).**
 

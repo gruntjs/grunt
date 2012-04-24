@@ -54,7 +54,7 @@ var options = {
   // These optional wildcard patterns will be matched against the filepath using
   // grunt.file.isMatch. If a specified wildcard pattern matches, the file will
   // not be processed via `processFunction`. Note that `true` may also be
-  // specified to prvent processing.
+  // specified to prevent processing.
   noProcess: wildcardPatterns
 };
 ```

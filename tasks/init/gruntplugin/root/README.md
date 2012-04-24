@@ -3,9 +3,9 @@
 {%= description %}
 
 ## Getting Started
-Install this grunt plugin next to your project's [grunt.js gruntfile][getting_started] with: `npm install {%= name %}`
+Install this grunt plugin next to your project's [Gruntfile][getting_started] with: `npm install {%= name %}`
 
-Then add this line to your project's `grunt.js` gruntfile:
+Then add this line to your project's Gruntfile:
 
 ```javascript
 grunt.loadNpmTasks('{%= name %}');

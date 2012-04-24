@@ -91,7 +91,7 @@ _This method is also available as [grunt.registerMultiTask](api.md)._
 
 
 ### grunt.task.registerInitTask ☃ <a name="grunt-task-registerinittask" href="#grunt-task-registerinittask" title="Link to this section">#</a>
-Register an "init task." An init task is a task that doesn't require any configuration data, and as such will still run even if grunt can't find a [grunt.js gruntfile](getting_started.md). The included [init task](task_init.md) is an example of an "init task."
+Register an "init task." An init task is a task that doesn't require any configuration data, and as such will still run even if grunt can't find a [Gruntfile](getting_started.md). The included [init task](task_init.md) is an example of an "init task."
 
 ```javascript
 grunt.task.registerInitTask(taskName, description, taskFunction)
@@ -193,10 +193,10 @@ grunt.initConfig({
 
 
 ## Loading Externally-Defined Tasks <a name="loading-externally-defined-tasks" href="#loading-externally-defined-tasks" title="Link to this section">#</a>
-For most projects, tasks and helpers will be defined in the [grunt.js gruntfile](getting_started.md). For larger projects, or in cases where tasks and helpers need to be shared across projects, tasks can be loaded from one or more external directories or Npm-installed grunt plugins.
+For most projects, tasks and helpers will be defined in the [Gruntfile](getting_started.md). For larger projects, or in cases where tasks and helpers need to be shared across projects, tasks can be loaded from one or more external directories or Npm-installed grunt plugins.
 
 ### grunt.task.loadTasks ☃ <a name="grunt-task-loadtasks" href="#grunt-task-loadtasks" title="Link to this section">#</a>
-Load task-related files from the specified directory, relative to the [grunt.js gruntfile](getting_started.md). This method can be used to load task-related files from a local grunt plugin by specifying the path to that plugin's "tasks" subdirectory.
+Load task-related files from the specified directory, relative to the [Gruntfile](getting_started.md). This method can be used to load task-related files from a local grunt plugin by specifying the path to that plugin's "tasks" subdirectory.
 
 ```javascript
 grunt.task.loadTasks(tasksPath)
@@ -206,7 +206,7 @@ _This method is also available as [grunt.loadTasks](api.md)._
 
 
 ### grunt.task.loadNpmTasks ☃ <a name="grunt-task-loadnpmtasks" href="#grunt-task-loadnpmtasks" title="Link to this section">#</a>
-Load tasks and helpers from the specified grunt plugin. This plugin must be installed locally via npm, and must be relative to the [grunt.js gruntfile](getting_started.md). Grunt plugins can be created by using the [gruntplugin init template](task_init.md).
+Load tasks and helpers from the specified grunt plugin. This plugin must be installed locally via npm, and must be relative to the [Gruntfile](getting_started.md). Grunt plugins can be created by using the [gruntplugin init template](task_init.md).
 
 ```javascript
 grunt.task.loadNpmTasks(pluginName)
@@ -266,7 +266,7 @@ _This method is also available as [grunt.helper](api.md)._
 ## Directives <a name="directives" href="#directives" title="Link to this section">#</a>
 Directives are essentially string placeholders for helper functions, specified as values in the [config object](getting_started.md).
 
-A good example of directives would be the `<json:package.json>` and `<config:lint.all>` directives in grunt's own [grunt.js gruntfile](../grunt.js). Or the `<banner>` and `<file_strip_banner:src/grunt-jquery-example.js>` directives in the [sample jQuery plugin gruntfile](https://github.com/cowboy/grunt-jquery-example/blob/master/grunt.js).
+A good example of directives would be the `<json:package.json>` and `<config:lint.all>` directives in grunt's own [Gruntfile](../Gruntfile.js). Or the `<banner>` and `<file_strip_banner:src/grunt-jquery-example.js>` directives in the [sample jQuery plugin gruntfile](https://github.com/cowboy/grunt-jquery-example/blob/master/Gruntfile.js).
 
 See the list of [built-in directives](helpers_directives.md) for examples.
 
@@ -331,15 +331,15 @@ For a given tasks file or related task "extra" file, these paths will be searche
 
 1. The grunt user tasks directory, ie. `grunt.file.userDir('tasks')`.
 2. Npm-installed [grunt plugins](plugins.md) or tasks directories specified on the command-line via the `--tasks` option.
-3. Npm-installed grunt plugins, tasks directories or individual tasks and helpers specified in the [grunt.js gruntfile](getting_started.md).
+3. Npm-installed grunt plugins, tasks directories or individual tasks and helpers specified in the [Gruntfile](getting_started.md).
 4. Task directories built-in to a Npm-installed grunt plugin run via its `grunt-` named binary.
 5. The [built-in grunt tasks directory](../tasks).
 
-This allows referenced Npm-installed grunt plugins, tasks directories, the [grunt.js gruntfile](getting_started.md) and even the user to override grunt functionality as needed.
+This allows referenced Npm-installed grunt plugins, tasks directories, the [Gruntfile](getting_started.md) and even the user to override grunt functionality as needed.
 
 For example, a grunt plugin may add a new "foo" task in its `tasks/foo.js`, completely override an existing task like the [concat task](task_concat.md) in its `tasks/concat.js` or add a new "bar" [init task](task_init.md) template with its `tasks/init/bar.js` and "extra" files in its `tasks/init/bar/` directory. In your personal user tasks directory, you can create your own "baz" init task template with a `tasks/init/baz.js` file or even override individual init template "extra" files like `tasks/init/jquery/root/README.md` just by creating them.
 
-**When defining project-specific tasks or "extra" files, it's always a good idea to include those files in a grunt plugin or tasks directory referenced in the [grunt.js gruntfile](getting_started.md), and committed with the project when possible. This will help to guarantee consistent grunt behavior for all contributors to that project.**
+**When defining project-specific tasks or "extra" files, it's always a good idea to include those files in a grunt plugin or tasks directory referenced in the [Gruntfile](getting_started.md), and committed with the project when possible. This will help to guarantee consistent grunt behavior for all contributors to that project.**
 
 ### grunt.task.searchDirs <a name="grunt-task-searchdirs" href="#grunt-task-searchdirs" title="Link to this section">#</a>
 An array of directory paths that grunt uses to search for task-related files, in "task path order." This array is used by all task-specific file listing methods.
@@ -352,7 +352,7 @@ grunt.task.searchDirs
 ## File Lists and Wildcards <a name="file-lists-and-wildcards" href="#file-lists-and-wildcards" title="Link to this section">#</a>
 Wildcard patterns are resolved using the [glob-whatev library](https://github.com/cowboy/node-glob-whatev). See the [minimatch](https://github.com/isaacs/minimatch) module documentation for more details on supported wildcard patterns.
 
-There are also a number of [generic file listing methods](api_file.md) that list files relative to the [grunt.js gruntfile](getting_started.md).
+There are also a number of [generic file listing methods](api_file.md) that list files relative to the [Gruntfile](getting_started.md).
 
 ### grunt.task.getFile <a name="grunt-task-getfile" href="#grunt-task-getfile" title="Link to this section">#</a>
 Search tasks directories in "task path order" (via `grunt.task.searchDirs`) for a given file path, returning the path of the first matching file.

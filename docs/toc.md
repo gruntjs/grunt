@@ -5,7 +5,7 @@
 ## Getting started <a name="getting-started" href="#getting-started" title="Link to this section">#</a>
 
 * [Getting started](getting_started.md) - A guide to configuring grunt for your project.
-* [Example gruntfiles](example_gruntfiles.md) - A few samples, to help you get started.
+* [Example Gruntfiles](example_gruntfiles.md) - A few samples, to help you get started.
 * [The grunt API](api.md) - Complete API documentation here!
 * [FAQ](faq.md) - Frequently asked questions, along with their answers.
 * [Exit codes](exit_codes.md) - A list of all built-in grunt exit codes.

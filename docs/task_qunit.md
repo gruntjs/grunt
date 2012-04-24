@@ -24,7 +24,7 @@ See the [FAQ](faq.md) for instructions on installing PhantomJS.
 
 
 ## A Very Important Note <a name="a-very-important-note" href="#a-very-important-note" title="Link to this section">#</a>
-Your `grunt.js` gruntfile **must** contain this code, once and **only** once. If it doesn't, grunt won't work. For the sake of brevity, this "wrapper" code has been omitted from all examples on this page, but it needs to be there.
+Your Gruntfile **must** contain this code, once and **only** once. If it doesn't, grunt won't work. For the sake of brevity, this "wrapper" code has been omitted from all examples on this page, but it needs to be there.
 
 ```javascript
 module.exports = function(grunt) {
@@ -91,7 +91,7 @@ _Note: grunt does NOT start a server at `localhost:8000` automatically. While gr
 
 If a web server isn't running at `localhost:8000`, running `grunt qunit` with `http://localhost:8000/` URIs will fail because grunt won't be able to load those URIs. This can be easily rectified by starting the built-in static web server via the [server task](task_server.md).
 
-In this example, running `grunt server qunit` will first start a static web server on `localhost:8000`, with its base path set to the gruntfile's directory. Then, the `qunit` task will be run, requesting the specified URIs from that server.
+In this example, running `grunt server qunit` will first start a static web server on `localhost:8000`, with its base path set to the Gruntfile's directory. Then, the `qunit` task will be run, requesting the specified URIs from that server.
 
 ```javascript
 // Project configuration.

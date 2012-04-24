@@ -2,9 +2,9 @@
 
 # The grunt API
 
-Grunt exposes all of its methods and properties on the `grunt` object that gets passed into the `module.exports` function exported in your [grunt.js gruntfile](getting_started.md) or in your [tasks file](types_of_tasks.md).
+Grunt exposes all of its methods and properties on the `grunt` object that gets passed into the `module.exports` function exported in your [Gruntfile](getting_started.md) or in your [tasks file](types_of_tasks.md).
 
-For example, your project's [grunt.js gruntfile](getting_started.md) might look like this:
+For example, your project's [Gruntfile](getting_started.md) might look like this:
 
 ```javascript
 module.exports = function(grunt) {
@@ -12,7 +12,7 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     lint: {
-      all: ['grunt.js', 'lib/**/*.js', 'test/**/*.js']
+      all: ['Gruntfile.js', 'lib/**/*.js', 'test/**/*.js']
     },
     jshint: {
       options: {
@@ -52,7 +52,7 @@ module.exports = function(grunt) {
 But these are just examples. For more information, read on.
 
 ## A Very Important Note <a name="a-very-important-note" href="#a-very-important-note" title="Link to this section">#</a>
-Your `grunt.js` gruntfile or tasks file **must** contain this code, once and **only** once. If it doesn't, things won't work. For the sake of brevity, this "wrapper" code has been omitted from all future examples on this page, but it needs to be there. Like in the previous examples.
+Your Gruntfile or tasks file **must** contain this code, once and **only** once. If it doesn't, things won't work. For the sake of brevity, this "wrapper" code has been omitted from all future examples on this page, but it needs to be there. Like in the previous examples.
 
 ```javascript
 module.exports = function(grunt) {
@@ -65,7 +65,7 @@ _Note that the method listed below is also available on the [grunt.config](api_c
 
 
 ### grunt.initConfig <a name="grunt-initconfig" href="#grunt-initconfig" title="Link to this section">#</a>
-Initialize a configuration object for the current project. The specified `configObject` is used by tasks and helpers and can also be accessed using the [grunt.config](api_config.md) method. Nearly every project's [grunt.js gruntfile](getting_started.md) will call this method.
+Initialize a configuration object for the current project. The specified `configObject` is used by tasks and helpers and can also be accessed using the [grunt.config](api_config.md) method. Nearly every project's [Gruntfile](getting_started.md) will call this method.
 
 Note that any specified `<config>` and `<json>` [directives](api_task.md) will be automatically processed when the config object is initialized.
 
@@ -78,7 +78,7 @@ This example contains sample config data for the [lint task](task_lint.md):
 ```javascript
 grunt.initConfig({
   lint: {
-    all: ['lib/*.js', 'test/*.js', 'grunt.js']
+    all: ['lib/*.js', 'test/*.js', 'Gruntfile.js']
   }
 });
 ```
@@ -171,7 +171,7 @@ _This method is an alias for the [grunt.task.registerMultiTask](api_task.md) met
 
 
 ### grunt.registerInitTask <a name="grunt-registerinittask" href="#grunt-registerinittask" title="Link to this section">#</a>
-Register an "init task." An init task is a task that doesn't require any configuration data, and as such will still run even if grunt can't find a [grunt.js gruntfile](getting_started.md). The included [init task](task_init.md) is an example of an "init task."
+Register an "init task." An init task is a task that doesn't require any configuration data, and as such will still run even if grunt can't find a [Gruntfile](getting_started.md). The included [init task](task_init.md) is an example of an "init task."
 
 ```javascript
 grunt.registerInitTask(taskName, description, taskFunction)
@@ -273,12 +273,12 @@ grunt.initConfig({
 
 
 ## Loading Externally-Defined Tasks <a name="loading-externally-defined-tasks" href="#loading-externally-defined-tasks" title="Link to this section">#</a>
-For most projects, tasks and helpers will be defined in the [grunt.js gruntfile](getting_started.md). For larger projects, or in cases where tasks and helpers need to be shared across projects, tasks can be loaded from one or more external directories or Npm-installed grunt plugins.
+For most projects, tasks and helpers will be defined in the [Gruntfile](getting_started.md). For larger projects, or in cases where tasks and helpers need to be shared across projects, tasks can be loaded from one or more external directories or Npm-installed grunt plugins.
 
 _Note that the methods listed below are also available on the [grunt.task](api_task.md) object in addition to the `grunt` object._
 
 ### grunt.loadTasks <a name="grunt-loadtasks" href="#grunt-loadtasks" title="Link to this section">#</a>
-Load task-related files from the specified directory, relative to the [grunt.js gruntfile](getting_started.md). This method can be used to load task-related files from a local grunt plugin by specifying the path to that plugin's "tasks" subdirectory.
+Load task-related files from the specified directory, relative to the [Gruntfile](getting_started.md). This method can be used to load task-related files from a local grunt plugin by specifying the path to that plugin's "tasks" subdirectory.
 
 ```javascript
 grunt.loadTasks(tasksPath)
@@ -288,7 +288,7 @@ _This method is an alias for the [grunt.task.loadTasks](api_task.md) method._
 
 
 ### grunt.loadNpmTasks <a name="grunt-loadnpmtasks" href="#grunt-loadnpmtasks" title="Link to this section">#</a>
-Load tasks and helpers from the specified grunt plugin. This plugin must be installed locally via npm, and must be relative to the [grunt.js gruntfile](getting_started.md). Grunt plugins can be created by using the [gruntplugin init template](task_init.md).
+Load tasks and helpers from the specified grunt plugin. This plugin must be installed locally via npm, and must be relative to the [Gruntfile](getting_started.md). Grunt plugins can be created by using the [gruntplugin init template](task_init.md).
 
 ```javascript
 grunt.loadNpmTasks(pluginName)
@@ -405,6 +405,6 @@ grunt.npmTasks(npmModuleName)
 * [grunt.template](api_template.md) - Underscore.js template processing and other template-related methods.
 * [grunt.task](api_task.md) - Register and run tasks and helpers, load external tasks.
 * [grunt.file](api_file.md) - Wildcard expansion, file reading, writing, directory traversing.
-* [grunt.config](api_config.md) - Access project-specific configuration data defined in the [grunt.js gruntfile](getting_started.md).
+* [grunt.config](api_config.md) - Access project-specific configuration data defined in the [Gruntfile](getting_started.md).
 * [grunt.log](api_log.md), [grunt.verbose](api_log.md) - Output messages to the console.
 * [grunt.fail](api_fail.md) - For when something goes horribly wrong.

@@ -74,7 +74,7 @@ grunt.initConfig({
 });
 ```
 
-You can store any arbitrary information inside of the configuration object, and as long as it doesn't conflict with a property one of your tasks is using, it will be ignored. Also, because this is JavaScript and not JSON, you can use any valid JavaScript here. This allows you to programatically generate the configuration object, if necessary.
+You can store any arbitrary information inside of the configuration object, and as long as it doesn't conflict with a property one of your tasks is using, it will be ignored. Also, because this is JavaScript and not JSON, you can use any valid JavaScript here. This allows you to programmatically generate the configuration object, if necessary.
 
 See the documentation [table of contents](toc.md) for a list of tasks whose documentation will explain their specific configuration requirements.
 

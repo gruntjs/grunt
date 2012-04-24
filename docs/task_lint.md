@@ -12,7 +12,7 @@ This task is a [multi task](types_of_tasks.md), meaning that grunt will automati
 _Need some help getting started with grunt? Visit the [getting started](getting_started.md) page. And if you're creating your own tasks or helpers, be sure to check out the [types of tasks](types_of_tasks.md) page as well as the [API documentation](api.md)._
 
 ## A Very Important Note <a name="a-very-important-note" href="#a-very-important-note" title="Link to this section">#</a>
-Your `grunt.js` gruntfile **must** contain this code, once and **only** once. If it doesn't, grunt won't work. For the sake of brevity, this "wrapper" code has been omitted from all examples on this page, but it needs to be there.
+Your Gruntfile **must** contain this code, once and **only** once. If it doesn't, grunt won't work. For the sake of brevity, this "wrapper" code has been omitted from all examples on this page, but it needs to be there.
 
 ```javascript
 module.exports = function(grunt) {
@@ -36,13 +36,13 @@ grunt.initConfig({
 
 ### Wildcards <a name="wildcards" href="#wildcards" title="Link to this section">#</a>
 
-In this example, running `grunt lint` will lint the project's gruntfile as well as all JavaScript files in the `lib` and `test` directories, using the default JSHint `options` and `globals`.
+In this example, running `grunt lint` will lint the project's Gruntfile as well as all JavaScript files in the `lib` and `test` directories, using the default JSHint `options` and `globals`.
 
 ```javascript
 // Project configuration.
 grunt.initConfig({
   lint: {
-    files: ['grunt.js', 'lib/*.js', 'test/*.js']
+    files: ['Gruntfile.js', 'lib/*.js', 'test/*.js']
   }
 });
 ```
@@ -53,7 +53,7 @@ With a slight modification, running `grunt lint` will also lint all JavaScript f
 // Project configuration.
 grunt.initConfig({
   lint: {
-    files: ['grunt.js', 'lib/**/*.js', 'test/**/*.js']
+    files: ['Gruntfile.js', 'lib/**/*.js', 'test/**/*.js']
   }
 });
 ```
@@ -108,7 +108,7 @@ grunt.initConfig({
 
 ### Specifying JSHint options and globals <a name="specifying-jshint-options-and-globals" href="#specifying-jshint-options-and-globals" title="Link to this section">#</a>
 
-In this example, taken from the [Sample jQuery plugin gruntfile](https://github.com/cowboy/grunt-jquery-example/blob/master/grunt.js), custom JSHint `options` and `globals` are specified. These options are explained in the [JSHint documentation](http://www.jshint.com/options/).
+In this example, taken from the [Sample jQuery plugin Gruntfile](https://github.com/cowboy/grunt-jquery-example/blob/master/Gruntfile.js), custom JSHint `options` and `globals` are specified. These options are explained in the [JSHint documentation](http://www.jshint.com/options/).
 
 _Note: config `jshint.options` and `jshint.globals` apply to the entire project, but can be overridden with per-file comments like `/*global exports:false*/`._
 
@@ -116,7 +116,7 @@ _Note: config `jshint.options` and `jshint.globals` apply to the entire project,
 // Project configuration.
 grunt.initConfig({
   lint: {
-    files: ['grunt.js', 'src/**/*.js', 'test/**/*.js']
+    files: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js']
   },
   jshint: {
     options: {
@@ -149,7 +149,7 @@ In this example, there are default JSHint settings, as well as per-target overri
 grunt.initConfig({
   lint: {
     src: 'src/*.js',
-    grunt: 'grunt.js',
+    grunt: 'Gruntfile.js',
     tests: 'tests/unit/**/*.js'
   },
   jshint: {

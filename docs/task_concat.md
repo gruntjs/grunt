@@ -10,7 +10,7 @@ This task is a [multi task](types_of_tasks.md), meaning that grunt will automati
 _Need some help getting started with grunt? Visit the [getting started](getting_started.md) page. And if you're creating your own tasks or helpers, be sure to check out the [types of tasks](types_of_tasks.md) page as well as the [API documentation](api.md)._
 
 ## A Very Important Note <a name="a-very-important-note" href="#a-very-important-note" title="Link to this section">#</a>
-Your `grunt.js` gruntfile **must** contain this code, once and **only** once. If it doesn't, grunt won't work. For the sake of brevity, this "wrapper" code has been omitted from all examples on this page, but it needs to be there.
+Your Gruntfile **must** contain this code, once and **only** once. If it doesn't, grunt won't work. For the sake of brevity, this "wrapper" code has been omitted from all examples on this page, but it needs to be there.
 
 ```javascript
 module.exports = function(grunt) {
@@ -20,7 +20,7 @@ module.exports = function(grunt) {
 
 ## Project configuration <a name="project-configuration" href="#project-configuration" title="Link to this section">#</a>
 
-This example shows a brief overview of the [grunt.js gruntfile](getting_started.md) config properties used by the `concat` task. For a more in-depth explanation, see the usage examples.
+This example shows a brief overview of the [Gruntfile](getting_started.md) config properties used by the `concat` task. For a more in-depth explanation, see the usage examples.
 
 ```javascript
 // Project configuration.

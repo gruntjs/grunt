@@ -43,7 +43,7 @@ grunt.initConfig({
   lint: {
     test: ['test/*.js'],
     lib: ['lib/*.js'],
-    grunt: ['grunt.js']
+    grunt: ['Gruntfile.js']
   }
 });
 ```

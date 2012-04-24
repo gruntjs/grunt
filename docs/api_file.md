@@ -9,7 +9,7 @@ See the [file lib source](../lib/grunt/file.js) for more information.
 ## The file API <a name="the-file-api" href="#the-file-api" title="Link to this section">#</a>
 There are many provided methods for reading and writing files, as well as traversing the filesystem and finding files by wildcard patterns. Many of these methods are wrappers around core Node.js file functionality, but with additional error handling and logging.
 
-_Note: all file paths are relative to the [grunt.js gruntfile](getting_started.md) unless the current working directory is changed with `grunt.file.setBase` or the `--base` command-line option._
+_Note: all file paths are relative to the [Gruntfile](getting_started.md) unless the current working directory is changed with `grunt.file.setBase` or the `--base` command-line option._
 
 ### grunt.file.read <a name="grunt-file-read" href="#grunt-file-read" title="Link to this section">#</a>
 Read and return a file's contents. The `encoding` argument defaults to `utf8` if unspecified.
@@ -112,7 +112,7 @@ grunt.file.userDir([path1, [, path2 [, ...]]])
 ```
 
 ### grunt.file.setBase <a name="grunt-file-setbase" href="#grunt-file-setbase" title="Link to this section">#</a>
-Change grunt's current working directory. By default, all file paths are relative to the [grunt.js gruntfile](getting_started.md). This works just like the `--base` command-line option.
+Change grunt's current working directory. By default, all file paths are relative to the [Gruntfile](getting_started.md). This works just like the `--base` command-line option.
 
 ```javascript
 grunt.file.setBase(path1 [, path2 [, ...]])
@@ -133,7 +133,7 @@ Return a unique array of all file or directory paths that match the given wildca
 grunt.file.expand([options, ] patterns)
 ```
 
-File paths are relative to the [grunt.js gruntfile](getting_started.md) unless the current working directory is changed with `grunt.file.setBase` or the `--base` command-line option.
+File paths are relative to the [Gruntfile](getting_started.md) unless the current working directory is changed with `grunt.file.setBase` or the `--base` command-line option.
 
 The `options` object supports all [minimatch](https://github.com/isaacs/minimatch) options. For example, if `options.matchBase` is true, patterns without slashes will match against the basename of the path even if it contains slashes, eg. pattern `*.js` will match filepath `path/to/file.js`.
 
@@ -160,7 +160,7 @@ Return a unique array of all `file://` URLs for files that match the given wildc
 grunt.file.expandFileURLs(patternsOrURLs)
 ```
 
-File paths are relative to the [grunt.js gruntfile](getting_started.md) unless the current working directory is changed with `grunt.file.setBase` or the `--base` command-line option.
+File paths are relative to the [Gruntfile](getting_started.md) unless the current working directory is changed with `grunt.file.setBase` or the `--base` command-line option.
 
 See the [qunit task source](../tasks/qunit.js) for an example.
 

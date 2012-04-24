@@ -8,7 +8,7 @@ This section is a work in progress. Grunt currently has preliminary plugin suppo
 
 Publishing a "grunt plugin" to Npm gives you 3 possible things:
 
-1. An easily-included-in-your-project set of tasks that get referenced in `grunt.js` when run via `grunt`.
+1. An easily-included-in-your-project set of tasks that get referenced in `Gruntfile.js` when run via `grunt`.
 2. A custom global binary that is like "some version of grunt, plus your specific extra stuff."
 3. Either 1 or 2, depending on whether the plugin was installed globally or locally via Npm.
 
@@ -36,8 +36,8 @@ Notes:
 ### 2. Local install, where you run `grunt` <a name="2-local-install-where-you-run-grunt" href="#2-local-install-where-you-run-grunt" title="Link to this section">#</a>
 
 1. Grunt should already have been installed globally with `npm install -g grunt`.
-2. In your project's root, next to the grunt.js gruntfile, run `npm install grunt-yourplugin`.
-3. Add [grunt.loadNpmTasks('grunt-yourplugin')](api.md) into the project's grunt.js gruntfile.
+2. In your project's root, next to the Gruntfile, run `npm install grunt-yourplugin`.
+3. Add [grunt.loadNpmTasks('grunt-yourplugin')](api.md) into the project's Gruntfile.
 2. Run `grunt` and all of the `grunt-yourplugin` tasks and helpers should be available in addition to those already provided by grunt..
 
 Notes:

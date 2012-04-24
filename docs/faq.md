@@ -3,7 +3,7 @@
 # Frequently Asked Questions
 
 ## On Windows, why does my JS editor open when I try to run grunt? <a name="on-windows-why-does-my-js-editor-open-when-i-try-to-run-grunt" href="#on-windows-why-does-my-js-editor-open-when-i-try-to-run-grunt" title="Link to this section">#</a>
-If you're in the same directory as the [grunt.js gruntfile](getting_started.md), Windows tries to execute _that file_ when you type grunt. So you need to type `grunt.cmd` instead.
+If you're in the same directory as the [Gruntfile](getting_started.md), Windows tries to execute _that file_ when you type grunt. So you need to type `grunt.cmd` instead.
 
 An alternative would be to use the `DOSKEY` command to create a grunt macro, following [these directions](http://devblog.point2.com/2010/05/14/setup-persistent-aliases-macros-in-windows-command-prompt-cmd-exe-using-doskey/). That would allow you to use `grunt` instead of `grunt.cmd`.
 

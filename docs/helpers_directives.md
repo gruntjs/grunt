@@ -24,4 +24,4 @@ Expand to the given file, with any leading `/*...*/` banner (excluding `/*!...*/
 ### `<file_template:file.js>` <a name="file-template-file-js" href="#file-template-file-js" title="Link to this section">#</a>
 Expand to the given file, parsed as a template via [grunt.template.process](api_template.md), using `<% %>` delimiters.
 
-Take a look at the [api documentation](api.md) and [example gruntfiles](example_gruntfiles.md) for directive creation and usage examples.
+Take a look at the [api documentation](api.md) and [example Gruntfiles](example_gruntfiles.md) for directive creation and usage examples.

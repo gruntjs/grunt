@@ -10,7 +10,7 @@ This task starts a static web server on a specified port, at a specified path, w
 _Need some help getting started with grunt? Visit the [getting started](getting_started.md) page. And if you're creating your own tasks or helpers, be sure to check out the [types of tasks](types_of_tasks.md) page as well as the [API documentation](api.md)._
 
 ## A Very Important Note <a name="a-very-important-note" href="#a-very-important-note" title="Link to this section">#</a>
-Your `grunt.js` gruntfile **must** contain this code, once and **only** once. If it doesn't, grunt won't work. For the sake of brevity, this "wrapper" code has been omitted from all examples on this page, but it needs to be there.
+Your Gruntfile **must** contain this code, once and **only** once. If it doesn't, grunt won't work. For the sake of brevity, this "wrapper" code has been omitted from all examples on this page, but it needs to be there.
 
 ```javascript
 module.exports = function(grunt) {
@@ -34,7 +34,7 @@ grunt.initConfig({
 
 ### Basic Use <a name="basic-use" href="#basic-use" title="Link to this section">#</a>
 
-In this example, `grunt server` will start a static web server at `http://localhost:8000/`, with its base path set to the gruntfile's directory. Of course, it will then immediately stop serving files, because grunt exits automatically when there are no more tasks to run.
+In this example, `grunt server` will start a static web server at `http://localhost:8000/`, with its base path set to the Gruntfile's directory. Of course, it will then immediately stop serving files, because grunt exits automatically when there are no more tasks to run.
 
 The `server` task is most useful when used in conjunction with another task, like the [qunit](task_qunit.md) task.
 

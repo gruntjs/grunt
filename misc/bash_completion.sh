@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # grunt
-# https://github.com/cowboy/grunt
+# http://gruntjs.com/
 #
 # Copyright (c) 2012 "Cowboy" Ben Alman
 # Licensed under the MIT license.

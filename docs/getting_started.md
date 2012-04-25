@@ -4,7 +4,7 @@
 
 **If you're starting from scratch, check out the [init task](task_init.md), which will set up a new grunt-based project for you. Even if you don't ultimately use the files that are generated, you can very quickly learn how grunt works.**
 
-## The Gruntfile.js file, aka "Gruntfile" <a name="the-grunt-js-file-aka-gruntfile" href="#the-grunt-js-file-aka-gruntfile" title="Link to this section">#</a>
+## The Gruntfile.js file, aka "Gruntfile" <a name="the-gruntfile-js-file-aka-gruntfile" href="#the-gruntfile-js-file-aka-gruntfile" title="Link to this section">#</a>
 Each time grunt is run, it looks in the current directory for a file named `Gruntfile.js`. If this file is not found, grunt continues looking in parent directories until that file is found. This file is typically placed in the root of your project repository, and is a valid JavaScript file comprised of these parts:
 
 * Project configuration

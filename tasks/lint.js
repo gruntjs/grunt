@@ -21,25 +21,51 @@ module.exports = function(grunt) {
     // override the default options and globals.
     var options, globals, tmp;
 
-    tmp = grunt.config(['jshint', this.target, 'options']);
-    if (typeof tmp === 'object') {
-      grunt.verbose.writeln('Using "' + this.target + '" JSHint options.');
-      options = tmp;
-    } else {
-      grunt.verbose.writeln('Using master JSHint options.');
-      options = grunt.config('jshint.options');
+    // Check for a jshintrc file.
+    if (tmp = grunt.config(['jshint', this.target, 'jshintrc'])) {
+      // If a target-specific jshintrc file was specified, read it.
+      grunt.verbose.writeln('Using "' + this.target + '" jshintrc file.');
+      options = grunt.file.readJSON(tmp);
+    } else if (tmp = grunt.config('jshint.jshintrc')) {
+      // If a global jshintrc file was specified, read it.
+      grunt.verbose.writeln('Using master jshintrc file.');
+      options = grunt.file.readJSON(tmp);
     }
-    grunt.verbose.writeflags(options, 'Options');
 
-    tmp = grunt.config(['jshint', this.target, 'globals']);
-    if (typeof tmp === 'object') {
-      grunt.verbose.writeln('Using "' + this.target + '" JSHint globals.');
-      globals = tmp;
+    if (options) {
+      // A jshintrc file was read.
+      if (options.predef) {
+        // Temp kluge for https://github.com/jshint/node-jshint/issues/104
+        globals = {};
+        Object.keys(options.predef).forEach(function(key) {
+          globals[key] = true;
+        });
+        delete options.predef;
+      }
+
     } else {
-      grunt.verbose.writeln('Using master JSHint globals.');
-      globals = grunt.config('jshint.globals');
+      // No jshintrc file was read.
+      tmp = grunt.config(['jshint', this.target, 'options']);
+      if (typeof tmp === 'object') {
+        grunt.verbose.writeln('Using "' + this.target + '" JSHint options.');
+        options = tmp;
+      } else {
+        grunt.verbose.writeln('Using master JSHint options.');
+        options = grunt.config('jshint.options');
+      }
+
+      tmp = grunt.config(['jshint', this.target, 'globals']);
+      if (typeof tmp === 'object') {
+        grunt.verbose.writeln('Using "' + this.target + '" JSHint globals.');
+        globals = tmp;
+      } else {
+        grunt.verbose.writeln('Using master JSHint globals.');
+        globals = grunt.config('jshint.globals');
+      }
     }
-    grunt.verbose.writeflags(globals, 'Globals');
+
+    grunt.verbose.writeflags(options, 'JSHint options');
+    grunt.verbose.writeflags(globals, 'JSHint globals');
 
     // Lint specified files.
     grunt.file.expandFiles(this.file.src).forEach(function(filepath) {

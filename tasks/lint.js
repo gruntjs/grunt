@@ -37,7 +37,7 @@ module.exports = function(grunt) {
       if (options.predef) {
         // Temp kluge for https://github.com/jshint/node-jshint/issues/104
         globals = {};
-        Object.keys(options.predef).forEach(function(key) {
+        options.predef.forEach(function(key) {
           globals[key] = true;
         });
         delete options.predef;

@@ -68,7 +68,7 @@ module.exports = function(grunt) {
       grunt.verbose.write('Generating banner...');
       try {
         // Compile and run template, using config object as the data source.
-        banner = grunt.template.process(tmpl) + grunt.utils.linefeed;
+        banner = grunt.template.process(tmpl) + grunt.util.linefeed;
         grunt.verbose.ok();
       } catch(e) {
         banner = '';

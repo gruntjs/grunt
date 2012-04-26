@@ -32,12 +32,12 @@ module.exports = function(grunt) {
 
   // Concat source files and/or directives.
   grunt.registerHelper('concat', function(files, options) {
-    options = grunt.utils._.defaults(options || {}, {
-      separator: grunt.utils.linefeed
+    options = grunt.util._.defaults(options || {}, {
+      separator: grunt.util.linefeed
     });
     return files ? files.map(function(filepath) {
       return grunt.task.directive(filepath, grunt.file.read);
-    }).join(grunt.utils.normalizelf(options.separator)) : '';
+    }).join(grunt.util.normalizelf(options.separator)) : '';
   });
 
 };

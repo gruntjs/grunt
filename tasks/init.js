@@ -33,7 +33,7 @@ module.exports = function(grunt) {
 
   grunt.registerInitTask('init', 'Generate project scaffolding from a predefined template.', function() {
     // Extra arguments will be applied to the template file.
-    var args = grunt.utils.toArray(arguments);
+    var args = grunt.util.toArray(arguments);
     // Template name.
     var name = args.shift();
     // Default to last-specified grunt.npmTasks plugin name if template name
@@ -109,7 +109,7 @@ module.exports = function(grunt) {
       // Search init template paths for filename.
       srcpath: function(arg1) {
         if (arg1 == null) { return null; }
-        var args = ['init', name, 'root'].concat(grunt.utils.toArray(arguments));
+        var args = ['init', name, 'root'].concat(grunt.util.toArray(arguments));
         return grunt.task.getFile.apply(grunt.file, args);
       },
       // Determine absolute destination file path.
@@ -152,7 +152,7 @@ module.exports = function(grunt) {
       // Iterate over all files in the passed object, copying the source file to
       // the destination, processing the contents.
       copyAndProcess: function(files, props, options) {
-        options = grunt.utils._.defaults(options || {}, {
+        options = grunt.util._.defaults(options || {}, {
           process: function(contents) {
             return grunt.template.process(contents, props, {delimiters: 'init'});
           }
@@ -255,7 +255,7 @@ module.exports = function(grunt) {
   // Prompt user to override default values passed in obj.
   grunt.registerHelper('prompt', function(defaults, options, done) {
     // If defaults are omitted, shuffle arguments a bit.
-    if (grunt.utils.kindOf(defaults) === 'array') {
+    if (grunt.util.kindOf(defaults) === 'array') {
       done = options;
       options = defaults;
       defaults = {};
@@ -282,11 +282,11 @@ module.exports = function(grunt) {
     // once, and might be repeated.
     (function ask() {
       grunt.log.subhead('Please answer the following:');
-      var result = grunt.utils._.clone(defaults);
+      var result = grunt.util._.clone(defaults);
       // Loop over each prompt option.
-      grunt.utils.async.forEachSeries(options, function(option, done) {
+      grunt.util.async.forEachSeries(options, function(option, done) {
         var defaultValue;
-        grunt.utils.async.forEachSeries(['default', 'altDefault'], function(prop, next) {
+        grunt.util.async.forEachSeries(['default', 'altDefault'], function(prop, next) {
           if (typeof option[prop] === 'function') {
             // If the value is a function, execute that function, using the
             // value passed into the return callback as the new default value.
@@ -336,7 +336,7 @@ module.exports = function(grunt) {
           // Clean up.
           delete result.ANSWERS_VALID;
           // Iterate over all results.
-          grunt.utils.async.forEachSeries(Object.keys(result), function(name, next) {
+          grunt.util.async.forEachSeries(Object.keys(result), function(name, next) {
             // If this value needs to be sanitized, process it now.
             if (sanitize[name]) {
               sanitize[name](result[name], result, function(err, value) {
@@ -419,7 +419,7 @@ module.exports = function(grunt) {
       message: 'Version',
       default: function(value, data, done) {
         // Get a valid semver tag from `git describe --tags` if possible.
-        grunt.utils.spawn({
+        grunt.util.spawn({
           cmd: 'git',
           args: ['describe', '--tags'],
           fallback: ''
@@ -456,7 +456,7 @@ module.exports = function(grunt) {
           done();
         } else {
           // Attempt to pull the data from the user's git config.
-          grunt.utils.spawn({
+          grunt.util.spawn({
             cmd: 'git',
             args: ['config', '--get', 'github.user'],
             fallback: ''
@@ -498,7 +498,7 @@ module.exports = function(grunt) {
       message: 'Author name',
       default: function(value, data, done) {
         // Attempt to pull the data from the user's git config.
-        grunt.utils.spawn({
+        grunt.util.spawn({
           cmd: 'git',
           args: ['config', '--get', 'user.name'],
           fallback: 'none'
@@ -510,7 +510,7 @@ module.exports = function(grunt) {
       message: 'Author email',
       default: function(value, data, done) {
         // Attempt to pull the data from the user's git config.
-        grunt.utils.spawn({
+        grunt.util.spawn({
           cmd: 'git',
           args: ['config', '--get', 'user.email'],
           fallback: 'none'
@@ -568,7 +568,7 @@ module.exports = function(grunt) {
   // Commonly-used prompt options with meaningful default values.
   grunt.registerHelper('prompt_for', function(name, altDefault) {
     // Clone the option so the original options object doesn't get modified.
-    var option = grunt.utils._.clone(prompts[name]);
+    var option = grunt.util._.clone(prompts[name]);
     option.name = name;
 
     var defaults = grunt.task.readDefaults('init/defaults.json');
@@ -584,7 +584,7 @@ module.exports = function(grunt) {
 
   // Get the git origin url from the current repo (if possible).
   grunt.registerHelper('git_origin', function(done) {
-    grunt.utils.spawn({
+    grunt.util.spawn({
       cmd: 'git',
       args: ['remote', '-v']
     }, function(err, result, code) {

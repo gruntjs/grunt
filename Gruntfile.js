@@ -62,7 +62,7 @@ module.exports = function(grunt) {
         // Add anchor links to all H2+ headers in .md document files.
         var newSrc = src.replace(/(##+)\s+(.+?)\s*(?:<a name=.*<\/a>)?\n/g, function(_, h, title) {
           // Slugify the title text.
-          var slug = grunt.utils._.slugify(title.replace(/\./g, '-'));
+          var slug = grunt.util._.slugify(title.replace(/\./g, '-'));
           // Put everything back together.
           return h + ' ' + title + ' <a name="' + slug + '" href="#' + slug +
             '" title="Link to this section">#</a>\n';

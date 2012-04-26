@@ -45,7 +45,7 @@ module.exports = function(grunt) {
     // This task is asynchronous.
     var taskDone = this.async();
     // Get a list of files to be watched.
-    var patterns = grunt.utils._.chain(targets).pluck('files').flatten().uniq().value();
+    var patterns = grunt.util._.chain(targets).pluck('files').flatten().uniq().value();
     var getFiles = grunt.file.expandFiles.bind(grunt.file, patterns);
     // The tasks to be run.
     var tasks = []; //grunt.config(tasksProp);
@@ -69,7 +69,7 @@ module.exports = function(grunt) {
     // Cleanup when files have changed. This is debounced to handle situations
     // where editors save multiple files "simultaneously" and should wait until
     // all the files are saved.
-    var done = grunt.utils._.debounce(function() {
+    var done = grunt.util._.debounce(function() {
       // Clear the files-added setInterval.
       clearInterval(intervalId);
       // Ok!
@@ -159,7 +159,7 @@ module.exports = function(grunt) {
     // Watch for files to be added.
     intervalId = setInterval(function() {
       // Files that have been added since last interval execution.
-      var added = grunt.utils._.difference(getFiles(), Object.keys(watchedFiles));
+      var added = grunt.util._.difference(getFiles(), Object.keys(watchedFiles));
       added.forEach(function(filepath) {
         // This file has been added.
         fileChanged('added', filepath);

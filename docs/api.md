@@ -401,7 +401,7 @@ grunt.npmTasks(npmModuleName)
 
 ## Other Methods <a name="other-methods" href="#other-methods" title="Link to this section">#</a>
 
-* [grunt.utils](api_utils.md) - Miscellaneous utilities, including Underscore.js, Async and Hooker.
+* [grunt.util](api_util.md) - Miscellaneous utilities, including Underscore.js, Async and Hooker.
 * [grunt.template](api_template.md) - Underscore.js template processing and other template-related methods.
 * [grunt.task](api_task.md) - Register and run tasks and helpers, load external tasks.
 * [grunt.file](api_file.md) - Wildcard expansion, file reading, writing, directory traversing.

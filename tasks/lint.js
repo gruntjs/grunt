@@ -95,7 +95,7 @@ module.exports = function(grunt) {
     var tabsize = isNaN(character) ? 1 : character;
     // If tabsize > 1, return something that should be safe to use as a
     // placeholder. \uFFFF repeated 2+ times.
-    return tabsize > 1 && grunt.utils.repeat(tabsize, '\uFFFF');
+    return tabsize > 1 && grunt.util.repeat(tabsize, '\uFFFF');
   }
 
   var tabregex = /\t/g;
@@ -103,8 +103,8 @@ module.exports = function(grunt) {
   // Lint source code with JSHint.
   grunt.registerHelper('lint', function(src, options, globals, extraMsg) {
     // JSHint sometimes modifies objects you pass in, so clone them.
-    options = grunt.utils._.clone(options);
-    globals = grunt.utils._.clone(globals);
+    options = grunt.util._.clone(options);
+    globals = grunt.util._.clone(globals);
     // Enable/disable debugging if option explicitly set.
     if (grunt.option('debug') !== undefined) {
       options.devel = options.debug = grunt.option('debug');

@@ -33,7 +33,7 @@ grunt.template.process('<%= baz %>', obj) // 'abcde'
 ```
 
 ### grunt.template.setDelimiters <a name="grunt-template-setdelimiters" href="#grunt-template-setdelimiters" title="Link to this section">#</a>
-Set the [Underscore.js template](http://underscorejs.org/#template) delimiters to a predefined set in case you `grunt.utils._.template` needs to be called manually.
+Set the [Underscore.js template](http://underscorejs.org/#template) delimiters to a predefined set in case you `grunt.util._.template` needs to be called manually.
 
 _You probably won't need to use this method, because you'll be using `grunt.template.process` which uses this method internally._
 

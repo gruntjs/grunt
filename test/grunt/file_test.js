@@ -224,5 +224,26 @@ exports['file'] = {
 
     ['test/fixtures/test_copy.js', 'test/fixtures/test_copy.png'].forEach(fs.unlinkSync);
     test.done();
+  },
+  'recurse': function(test) {
+    test.expect(1);
+    var rootdir = 'test/fixtures/expand';
+    var expected = {};
+    expected[rootdir + '/css/baz.css'] = [rootdir, 'css', 'baz.css'];
+    expected[rootdir + '/css/qux.css'] = [rootdir, 'css', 'qux.css'];
+    expected[rootdir + '/deep/deep.txt'] = [rootdir, 'deep', 'deep.txt'];
+    expected[rootdir + '/deep/deeper/deeper.txt'] = [rootdir, 'deep/deeper', 'deeper.txt'];
+    expected[rootdir + '/deep/deeper/deepest/deepest.txt'] = [rootdir, 'deep/deeper/deepest', 'deepest.txt'];
+    expected[rootdir + '/js/bar.js'] = [rootdir, 'js', 'bar.js'];
+    expected[rootdir + '/js/foo.js'] = [rootdir, 'js', 'foo.js'];
+    expected[rootdir + '/README.md'] = [rootdir, undefined, 'README.md'];
+
+    var actual = {};
+    grunt.file.recurse(rootdir, function(abspath, rootdir, subdir, filename) {
+      actual[abspath] = [rootdir, subdir, filename];
+    });
+
+    test.deepEqual(actual, expected, 'paths and arguments should match.');
+    test.done();
   }
 };

@@ -68,7 +68,8 @@ module.exports = function(grunt) {
     grunt.verbose.writeflags(globals, 'JSHint globals');
 
     // Lint specified files.
-    grunt.file.expandFiles(this.file.src).forEach(function(filepath) {
+    var files = grunt.file.expandFiles(this.file.src);
+    files.forEach(function(filepath) {
       grunt.helper('lint', grunt.file.read(filepath), options, globals, filepath);
     });
 
@@ -76,7 +77,7 @@ module.exports = function(grunt) {
     if (this.errorCount) { return false; }
 
     // Otherwise, print a success message.
-    grunt.log.writeln('Lint free.');
+    grunt.log.writeln('Lint free files: ' + files.length);
   });
 
   // ==========================================================================

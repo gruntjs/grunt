@@ -61,14 +61,17 @@ module.exports = function(grunt) {
 
     // Abort if a valid template was not specified.
     if (!initTemplate) {
-      grunt.log.writeln().write('Loading' + (name ? ' "' + name + '"' : '') + ' init template...').error();
-      grunt.log.errorlns('A valid template name must be specified, eg. "grunt ' +
-        'init:commonjs". The currently-available init templates are: ');
+      grunt.log.writeln();
+      if (name) {
+        grunt.log.write('Loading "' + name + '" init template...').error();
+      }
+      grunt.log.writelns('A valid init template name must be specified, eg. ' +
+        '"grunt init:commonjs". The currently-available templates are:');
       Object.keys(templates).forEach(function(name) {
         var description = templates[name].description || '(no description)';
-        grunt.log.errorlns(name.cyan + ' - ' + description);
+        grunt.log.writelns(name.cyan + ' - ' + description);
       });
-      return false;
+      return !name;
     }
 
     // Abort if matching files or directories were found (to avoid accidentally

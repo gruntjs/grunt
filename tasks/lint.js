@@ -77,7 +77,7 @@ module.exports = function(grunt) {
     if (this.errorCount) { return false; }
 
     // Otherwise, print a success message.
-    grunt.log.writeln('Lint free files: ' + files.length);
+    grunt.log.ok(files.length + ' files lint free.');
   });
 
   // ==========================================================================

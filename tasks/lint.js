@@ -94,6 +94,7 @@ module.exports = function(grunt) {
     var placeholderregex = new RegExp(tabstr, 'g');
     // Lint.
     var result = jshint(src, options || {}, globals || {});
+    var data = jshint.data();
     // Attempt to work around JSHint erroneously reporting bugs.
     // if (!result) {
     //   // Filter out errors that shouldn't be reported.
@@ -103,7 +104,7 @@ module.exports = function(grunt) {
     //   // If no errors are left, JSHint actually succeeded.
     //   result = jshint.errors.length === 0;
     // }
-    if (result) {
+    if (result && !data.unused) {
       // Success!
       grunt.verbose.ok();
     } else {
@@ -143,6 +144,13 @@ module.exports = function(grunt) {
           // Generic "Whoops, too many errors" error.
           grunt.log.error(e.reason);
         }
+      });
+      // Iterate over all unused variables
+      (data.unused || []).forEach(function(u) {
+        // Manually increment errorcount since we're not using grunt.log.error().
+        grunt.fail.errorcount++;
+        var pos = '['.red + ('L' + u.line).yellow + ']'.red;
+        grunt.log.writeln(pos + ' unused variable ' + u.name.yellow);
       });
       grunt.log.writeln();
     }

@@ -17,6 +17,13 @@ Return the "kind" of a value. Like `typeof` but returns the internal `[[Class]]`
 grunt.util.kindOf(value)
 ```
 
+### grunt.util.error <a name="grunt-util-error" href="#grunt-util-error" title="Link to this section">#</a>
+Return a new Error instance (that can be thrown) with the appropriate message. If an Error object is specified instead of `message` that object will be returned. Also, if an Error object is specified for `origError` and grunt was run with the `--debug 9` option, the original Error stack will be dumped.
+
+```javascript
+grunt.util.error(message [, origError])
+```
+
 ### grunt.util.linefeed <a name="grunt-util-linefeed" href="#grunt-util-linefeed" title="Link to this section">#</a>
 The linefeed character, normalized for the current operating system. (`\r\n` on Windows, `\n` otherwise)
 

@@ -37,6 +37,27 @@ exports['utils.callbackify'] = {
 };
 
 exports['utils'] = {
+  'error': function(test) {
+    test.expect(9);
+    var origError = new Error('Original error.');
+
+    var err = grunt.util.error('Test message.');
+    test.ok(err instanceof Error, 'Should be an Error.');
+    test.equal(err.name, 'Error', 'Should be an Error.');
+    test.equal(err.message, 'Test message.', 'Should have the correct message.');
+
+    err = grunt.util.error('Test message.', origError);
+    test.ok(err instanceof Error, 'Should be an Error.');
+    test.equal(err.name, 'Error', 'Should be an Error.');
+    test.equal(err.message, 'Test message.', 'Should have the correct message.');
+    test.equal(err.origError, origError, 'Should reflect the original error.');
+
+    var newError = new Error('Test message.');
+    err = grunt.util.error(newError, origError);
+    test.equal(err, newError, 'Should be the passed-in Error.');
+    test.equal(err.origError, origError, 'Should reflect the original error.');
+    test.done();
+  },
   'linefeed': function(test) {
     test.expect(1);
     if (process.platform === 'win32') {

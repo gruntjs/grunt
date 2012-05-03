@@ -436,6 +436,12 @@ exports['Task#parseArgs'] = {
     test.deepEqual(this.parseTest(obj), [obj], 'single object should be returned as array.');
     test.done();
   },
+  'trim': function(test) {
+    test.expect(2);
+    test.deepEqual(this.parseTest(' foo '), ['foo'], 'should ignore extraneous whitespace.');
+    test.deepEqual(this.parseTest(' foo  bar '), ['foo', 'bar'], 'should ignore extraneous whitespace.');
+    test.done();
+  },
   'nothing': function(test) {
     test.expect(1);
     test.deepEqual(this.parseTest(), [], 'should return an empty array if nothing passed.');

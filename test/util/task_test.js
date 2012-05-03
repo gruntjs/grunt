@@ -256,15 +256,16 @@ exports['Tasks'] = {
     task.registerTask('c', 'Push task name onto result.', result.pushTaskname);
     task.registerTask('d', 'Push task name onto result.', result.pushTaskname);
     task.registerTask('e', 'Push task name onto result and run other tasks.', function() { delay(this.async()); result.push(this.name); task.run('f'); });
-    task.registerTask('f', 'Push task name onto result.', result.pushTaskname);
+    task.registerTask('f', 'Push task name onto result and run other tasks.', function() { this.async()(); result.push(this.name); task.run('g'); });
     task.registerTask('g', 'Push task name onto result.', result.pushTaskname);
+    task.registerTask('h', 'Push task name onto result.', result.pushTaskname);
     task.options({
       done: function() {
-        test.strictEqual(result.getJoined(), 'abcdefg', 'The specified tasks should have run, in-order.');
+        test.strictEqual(result.getJoined(), 'abcdefgh', 'The specified tasks should have run, in-order.');
         test.done();
       }
     });
-    task.run('a g').start();
+    task.run('a h').start();
   },
   'Task#current': function(test) {
     test.expect(8);

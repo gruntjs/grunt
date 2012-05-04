@@ -22,9 +22,9 @@ exports.template = function(grunt, init, done) {
 
   grunt.helper('prompt', {type: 'grunt'}, [
     // Prompt for these values.
-    grunt.helper('prompt_for', 'name', function(value) {
+    grunt.helper('prompt_for', 'name', function(value, props, done) {
       // Prepend grunt- to default name.
-      return 'grunt-' + value;
+      done(null, 'grunt-' + value);
     }),
     grunt.helper('prompt_for', 'description', 'The best grunt tasks ever.'),
     grunt.helper('prompt_for', 'version'),

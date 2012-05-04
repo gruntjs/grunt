@@ -6,6 +6,8 @@
  * Licensed under the {%= licenses.join(', ') %} license{%= licenses.length === 1 ? '' : 's' %}.
  */
 
+'use strict';
+
 module.exports = function(grunt) {
 
   // Please see the grunt documentation for more information regarding task and

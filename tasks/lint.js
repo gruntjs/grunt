@@ -134,53 +134,63 @@ module.exports = function(grunt) {
     if (result && !data.unused) {
       // Success!
       grunt.verbose.ok();
-    } else {
-      // Something went wrong.
-      grunt.verbose.or.write(msg);
-      grunt.log.error();
-      // Iterate over all errors.
-      jshint.errors.forEach(function(e) {
-        // Sometimes there's no error object.
-        if (!e) { return; }
-        var pos;
-        var evidence = e.evidence;
-        var character = e.character;
-        if (evidence) {
-          // Manually increment errorcount since we're not using grunt.log.error().
-          grunt.fail.errorcount++;
-          // Descriptive code error.
-          pos = '['.red + ('L' + e.line).yellow + ':'.red + ('C' + character).yellow + ']'.red;
-          grunt.log.writeln(pos + ' ' + e.reason.yellow);
-          // If necessary, eplace each tab char with something that can be
-          // swapped out later.
-          if (tabstr) {
-            evidence = evidence.replace(tabregex, tabstr);
-          }
-          if (character > evidence.length) {
-            // End of line.
-            evidence = evidence + ' '.inverse.red;
-          } else {
-            // Middle of line.
-            evidence = evidence.slice(0, character - 1) + evidence[character - 1].inverse.red +
-              evidence.slice(character);
-          }
-          // Replace tab placeholder (or tabs) but with a 2-space soft tab.
-          evidence = evidence.replace(tabstr ? placeholderregex : tabregex, '  ');
-          grunt.log.writeln(evidence);
-        } else {
-          // Generic "Whoops, too many errors" error.
-          grunt.log.error(e.reason);
-        }
+      return;
+    }
+    // Something went wrong.
+    grunt.verbose.or.write(msg);
+    grunt.log.error();
+    // Iterate over all unused variables
+    var varsByLine = {};
+    if (data.unused) {
+      data.unused.forEach(function(unused) {
+        var line = unused.line;
+        var vars = varsByLine[line] = varsByLine[line] || [];
+        vars.push(unused.name);
       });
-      // Iterate over all unused variables
-      (data.unused || []).forEach(function(u) {
+      Object.keys(varsByLine).forEach(function(line) {
         // Manually increment errorcount since we're not using grunt.log.error().
         grunt.fail.errorcount++;
-        var pos = '['.red + ('L' + u.line).yellow + ']'.red;
-        grunt.log.writeln(pos + ' unused variable ' + u.name.yellow);
+        var vars = varsByLine[line];
+        grunt.log.writeln('['.red + ('L' + line).yellow + ']'.red +
+          (' Unused variable' + (vars.length === 1 ? '' : 's') + ': ').yellow +
+          grunt.log.wordlist(vars, {color: false, separator: ', '.yellow}));
       });
-      grunt.log.writeln();
     }
+    // Iterate over all errors.
+    jshint.errors.forEach(function(e) {
+      // Sometimes there's no error object.
+      if (!e) { return; }
+      var pos;
+      var evidence = e.evidence;
+      var character = e.character;
+      if (evidence) {
+        // Manually increment errorcount since we're not using grunt.log.error().
+        grunt.fail.errorcount++;
+        // Descriptive code error.
+        pos = '['.red + ('L' + e.line).yellow + ':'.red + ('C' + character).yellow + ']'.red;
+        grunt.log.writeln(pos + ' ' + e.reason.yellow);
+        // If necessary, eplace each tab char with something that can be
+        // swapped out later.
+        if (tabstr) {
+          evidence = evidence.replace(tabregex, tabstr);
+        }
+        if (character > evidence.length) {
+          // End of line.
+          evidence = evidence + ' '.inverse.red;
+        } else {
+          // Middle of line.
+          evidence = evidence.slice(0, character - 1) + evidence[character - 1].inverse.red +
+            evidence.slice(character);
+        }
+        // Replace tab placeholder (or tabs) but with a 2-space soft tab.
+        evidence = evidence.replace(tabstr ? placeholderregex : tabregex, '  ');
+        grunt.log.writeln(evidence);
+      } else {
+        // Generic "Whoops, too many errors" error.
+        grunt.log.error(e.reason);
+      }
+    });
+    grunt.log.writeln();
   });
 
 };

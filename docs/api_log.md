@@ -84,7 +84,18 @@ These methods don't actually log, they just return strings that can be used in o
 Returns a comma-separated list of `arr` array items.
 
 ```javascript
-grunt.log.wordlist(arr)
+grunt.log.wordlist(arr [, options])
+```
+
+The `options` object has these possible properties, and default values:
+
+```javascript
+var options = {
+  // The separator string (can be colored).
+  separator: ', ',
+  // The array item color (specify false to not colorize).
+  color: 'cyan',
+};
 ```
 
 ### grunt.log.uncolor <a name="grunt-log-uncolor" href="#grunt-log-uncolor" title="Link to this section">#</a>

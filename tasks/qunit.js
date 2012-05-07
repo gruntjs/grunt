@@ -10,7 +10,6 @@
 module.exports = function(grunt) {
 
   // Nodejs libs.
-  var fs = require('fs');
   var path = require('path');
 
   // External libs.

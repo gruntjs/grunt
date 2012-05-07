@@ -10,7 +10,6 @@
 module.exports = function(grunt) {
 
   // Nodejs libs.
-  var fs = require('fs');
   var path = require('path');
 
   // External libs.
@@ -120,7 +119,6 @@ module.exports = function(grunt) {
       // Given some number of licenses, add properly-named license files to the
       // files object.
       addLicenseFiles: function(files, licenses) {
-        var available = availableLicenses();
         licenses.forEach(function(license) {
           var fileobj = grunt.task.expandFiles('init/licenses/LICENSE-' + license)[0];
           files['LICENSE-' + license] = fileobj ? fileobj.rel : null;

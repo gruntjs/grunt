@@ -7,22 +7,33 @@
  * http://benalman.com/about/license/
  */
 
-module.exports = function(init, done) {
-  task.helper('prompt', {}, [
+// Basic template description.
+exports.description = 'Create a commonjs module, including Nodeunit unit tests.';
+
+// Template-specific notes to be displayed before question prompts.
+exports.notes = '';
+
+// Any existing file or directory matching this wildcard will cause a warning.
+exports.warnOn = '*';
+
+// The actual init template.
+exports.template = function(grunt, init, done) {
+
+  grunt.helper('prompt', {}, [
     // Prompt for these values.
-    task.helper('prompt_for', 'name'),
-    task.helper('prompt_for', 'description'),
-    task.helper('prompt_for', 'version'),
-    task.helper('prompt_for', 'repository'),
-    task.helper('prompt_for', 'homepage'),
-    task.helper('prompt_for', 'bugs'),
-    task.helper('prompt_for', 'licenses'),
-    task.helper('prompt_for', 'author_name'),
-    task.helper('prompt_for', 'author_email'),
-    task.helper('prompt_for', 'author_url'),
-    task.helper('prompt_for', 'node_version'),
-    task.helper('prompt_for', 'node_main'),
-    task.helper('prompt_for', 'node_test')
+    grunt.helper('prompt_for', 'name'),
+    grunt.helper('prompt_for', 'description'),
+    grunt.helper('prompt_for', 'version'),
+    grunt.helper('prompt_for', 'repository'),
+    grunt.helper('prompt_for', 'homepage'),
+    grunt.helper('prompt_for', 'bugs'),
+    grunt.helper('prompt_for', 'licenses'),
+    grunt.helper('prompt_for', 'author_name'),
+    grunt.helper('prompt_for', 'author_email'),
+    grunt.helper('prompt_for', 'author_url'),
+    grunt.helper('prompt_for', 'node_version', '*'),
+    grunt.helper('prompt_for', 'main'),
+    grunt.helper('prompt_for', 'npm_test')
   ], function(err, props) {
     // Files to copy (and process).
     var files = init.filesToCopy(props);
@@ -30,13 +41,14 @@ module.exports = function(init, done) {
     // Add properly-named license files.
     init.addLicenseFiles(files, props.licenses);
 
-    // Actually copy (and process). files.
+    // Actually copy (and process) files.
     init.copyAndProcess(files, props);
 
     // Generate package.json file.
-    init.writePackage('package.json', props);
+    init.writePackageJSON('package.json', props);
 
     // All done!
     done();
   });
+
 };

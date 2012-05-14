@@ -7,29 +7,37 @@
  * http://benalman.com/about/license/
  */
 
-// ============================================================================
-// TASKS
-// ============================================================================
+module.exports = function(grunt) {
 
-task.registerBasicTask('concat', 'Concatenate files.', function(data, target) {
-  // Concat specified files.
-  var files = file.expand(data.src);
-  file.write(data.dest, task.helper('concat', files));
+  // ==========================================================================
+  // TASKS
+  // ==========================================================================
 
-  // Fail task if errors were logged.
-  if (task.hadErrors()) { return false; }
+  grunt.registerMultiTask('concat', 'Concatenate files.', function() {
+    var files = grunt.file.expandFiles(this.file.src);
+    // Concat specified files.
+    var src = grunt.helper('concat', files, {separator: this.data.separator});
+    grunt.file.write(this.file.dest, src);
 
-  // Otherwise, print a success message.
-  log.writeln('File "' + data.dest + '" created.');
-});
+    // Fail task if errors were logged.
+    if (this.errorCount) { return false; }
 
-// ============================================================================
-// HELPERS
-// ============================================================================
+    // Otherwise, print a success message.
+    grunt.log.writeln('File "' + this.file.dest + '" created.');
+  });
 
-// Concat source files and/or directives.
-task.registerHelper('concat', function(files) {
-  return files ? files.map(function(filepath) {
-    return task.directive(filepath, file.read);
-  }).join(utils.linefeed) : '';
-});
+  // ==========================================================================
+  // HELPERS
+  // ==========================================================================
+
+  // Concat source files and/or directives.
+  grunt.registerHelper('concat', function(files, options) {
+    options = grunt.utils._.defaults(options || {}, {
+      separator: grunt.utils.linefeed
+    });
+    return files ? files.map(function(filepath) {
+      return grunt.task.directive(filepath, grunt.file.read);
+    }).join(grunt.utils.normalizelf(options.separator)) : '';
+  });
+
+};

@@ -7,74 +7,79 @@
  * http://benalman.com/about/license/
  */
 
-var spawn = require('child_process').spawn;
+module.exports = function(grunt) {
 
-// ============================================================================
-// HELPERS
-// ============================================================================
+  // ==========================================================================
+  // HELPERS
+  // ==========================================================================
 
-// Get a config property. Most useful as a directive like <config:foo.bar>.
-task.registerHelper('config', config);
+  // Get a config property. Most useful as a directive like <config:foo.bar>.
+  grunt.registerHelper('config', grunt.config);
 
-// Read a JSON file. Most useful as a directive like <json:package.json>.
-var jsons = {};
-task.registerHelper('json', function(filepath) {
-  // Don't re-fetch if being called as a directive and JSON is already cached.
-  if (!this.directive || !(filepath in jsons)) {
-    jsons[filepath] = file.readJson(filepath);
-  }
-  return jsons[filepath];
-});
-
-// Spawn a child process, capturing its stdout and stderr.
-task.registerHelper('child_process', function(opts, done) {
-  var child = spawn(opts.cmd, opts.args, opts.opts);
-  var results = [];
-  var errors = [];
-  child.stdout.on('data', results.push.bind(results));
-  child.stderr.on('data', errors.push.bind(errors));
-  child.on('exit', function(code) {
-    if (code === 0) {
-      done(null, results.join('').replace(/\s+$/, ''), code);
-    } else if ('fallback' in opts) {
-      done(null, opts.fallback, code);
-    } else {
-      done(code, errors.join('').replace(/\s+$/, ''), code);
+  // Read a JSON file. Most useful as a directive like <json:package.json>.
+  var jsons = {};
+  grunt.registerHelper('json', function(filepath) {
+    // Don't re-fetch if being called as a directive and JSON is already cached.
+    if (!this.directive || !(filepath in jsons)) {
+      jsons[filepath] = grunt.file.readJSON(filepath);
     }
+    return jsons[filepath];
   });
-});
 
-// Return the given source coude with any leading banner comment stripped.
-task.registerHelper('strip_banner', template.stripBanner);
-
-// Get a source file's contents with any leading banner comment stripped.
-task.registerHelper('file_strip_banner', function(filepath) {
-  return template.stripBanner(file.read(filepath));
-});
-
-// Generate banner from template.
-task.registerHelper('banner', function(prop) {
-  if (!prop) { prop = 'meta.banner'; }
-  var banner, obj;
-  var tmpl = config(prop);
-  if (tmpl) {
-    // Read config object first, to ensure that verbose-mode JSON reading via
-    // <json> directive doesn't interrupt logging.
-    obj = config();
-    // Now, log.
-    verbose.write('Generating banner...');
-    try {
-      // Compile and run template, passing in config object as the data source.
-      banner = template.process(tmpl, obj) + utils.linefeed;
-      verbose.ok();
-    } catch(e) {
-      banner = '';
-      verbose.error();
-      fail.warn(e, 11);
+  // Return the given source coude with any leading banner comment stripped.
+  grunt.registerHelper('strip_banner', function(src, options) {
+    if (!options) { options = {}; }
+    var m = [];
+    if (options.line) {
+      // Strip // ... leading banners.
+      m.push('(?:.*\\/\\/.*\\n)*\\s*');
     }
-  } else {
-    fail.warn('No "' + prop + '" banner template defined.', 11);
-    banner = '';
-  }
-  return banner;
-});
+    if (options.block) {
+      // Strips all /* ... */ block comment banners.
+      m.push('\\/\\*[\\s\\S]*?\\*\\/');
+    } else {
+      // Strips only /* ... */ block comment banners, excluding /*! ... */.
+      m.push('\\/\\*[^!][\\s\\S]*?\\*\\/');
+    }
+    var re = new RegExp('^\\s*(?:' + m.join('|') + ')\\s*', '');
+    return src.replace(re, '');
+  });
+
+  // Get a source file's contents with any leading banner comment stripped. If
+  // used as a directive, get options from the flags object.
+  grunt.registerHelper('file_strip_banner', function(filepath, opts) {
+    var src = grunt.file.read(filepath);
+    return grunt.helper('strip_banner', src, this.directive ? this.flags : opts);
+  });
+
+  // Process a file as a template.
+  grunt.registerHelper('file_template', function(filepath) {
+    var src = grunt.file.read(filepath);
+    return grunt.template.process(src);
+  });
+
+  // Generate banner from template.
+  grunt.registerHelper('banner', function(prop) {
+    if (!prop) { prop = 'meta.banner'; }
+    var banner;
+    var tmpl = grunt.config(prop);
+    if (tmpl) {
+      // Now, log.
+      grunt.verbose.write('Generating banner...');
+      try {
+        // Compile and run template, using config object as the data source.
+        banner = grunt.template.process(tmpl) + grunt.utils.linefeed;
+        grunt.verbose.ok();
+      } catch(e) {
+        banner = '';
+        grunt.verbose.error();
+        grunt.warn(e, 11);
+      }
+    } else {
+      grunt.warn('No "' + prop + '" banner template defined.', 11);
+      banner = '';
+    }
+    return banner;
+  });
+
+};

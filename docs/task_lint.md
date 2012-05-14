@@ -1,49 +1,72 @@
 [Grunt homepage](https://github.com/cowboy/grunt) | [Documentation table of contents](toc.md)
 
 # lint (built-in task)
-Validate one or more input files with JSHint.
+Validate files with [JSHint][jshint].
 
-## About
+[jshint]: http://www.jshint.com/
 
-This task is a [basic task](tasks_creating.md), meaning that grunt will automatically iterate over all `lint` targets if no specific target is specified.
+## About <a name="about" href="#about" title="Link to this section">⚑</a>
 
-For more information on general configuration options, see the [configuring grunt](configuring.md) page.
+This task is a [multi task](types_of_tasks.md), meaning that grunt will automatically iterate over all `lint` targets if a target is not specified.
 
-## Usage examples
+_Need some help getting started with grunt? Visit the [getting started](getting_started.md) page. And if you're creating your own tasks or helpers, be sure to check out the [types of tasks](types_of_tasks.md) page as well as the [API documentation](api.md)._
 
-### Wildcards
-
-In this example, `grunt lint` will lint the project's gruntfile as well as all JavaScript files in the `lib` and `test` directories, using the default JSHint `options` and `globals`.
+## A Very Important Note <a name="a-very-important-note" href="#a-very-important-note" title="Link to this section">⚑</a>
+Your `grunt.js` gruntfile **must** contain this code, once and **only** once. If it doesn't, grunt won't work. For the sake of brevity, this "wrapper" code has been omitted from all examples on this page, but it needs to be there.
 
 ```javascript
-/*global config:true, task:true*/
-config.init({
+module.exports = function(grunt) {
+  // Your grunt code goes in here.
+};
+```
+
+## Project configuration <a name="project-configuration" href="#project-configuration" title="Link to this section">⚑</a>
+
+This example shows a brief overview of the [config](api_config.md) properties used by the `lint` task. For a more in-depth explanation, see the usage examples.
+
+```javascript
+// Project configuration.
+grunt.initConfig({
+  // Lists of files to be linted with JSHint.
+  lint: {}
+});
+```
+
+## Usage examples <a name="usage-examples" href="#usage-examples" title="Link to this section">⚑</a>
+
+### Wildcards <a name="wildcards" href="#wildcards" title="Link to this section">⚑</a>
+
+In this example, running `grunt lint` will lint the project's gruntfile as well as all JavaScript files in the `lib` and `test` directories, using the default JSHint `options` and `globals`.
+
+```javascript
+// Project configuration.
+grunt.initConfig({
   lint: {
     files: ['grunt.js', 'lib/*.js', 'test/*.js']
   }
 });
 ```
 
-With a slight modification, `grunt lint` will also lint all JavaScript files in the `lib` and `test` directories _and all subdirectories_. See the [minimatch](https://github.com/isaacs/minimatch) module's documentation for more details on wildcard patterns.
+With a slight modification, running `grunt lint` will also lint all JavaScript files in the `lib` and `test` directories _and all subdirectories_. See the [minimatch](https://github.com/isaacs/minimatch) module documentation for more details on wildcard patterns.
 
 ```javascript
-/*global config:true, task:true*/
-config.init({
+// Project configuration.
+grunt.initConfig({
   lint: {
     files: ['grunt.js', 'lib/**/*.js', 'test/**/*.js']
   }
 });
 ```
 
-### Linting before and after concat
+### Linting before and after concat <a name="linting-before-and-after-concat" href="#linting-before-and-after-concat" title="Link to this section">⚑</a>
 
-In this example, `grunt lint` will lint two separate sets of files using the default JSHint `options` and `globals`, one "beforeconcat" set, and one "afterconcat" set. Running `grunt lint` will lint both sets of files all at once, because lint is a [basic task](tasks_creating.md). This is not ideal, because `dist/output.js` might get linted before it gets created!
+In this example, running `grunt lint` will lint two separate sets of files using the default JSHint `options` and `globals`: one "beforeconcat" set, and one "afterconcat" set. Running `grunt lint` will lint both sets of files all at once, because lint is a [multi task](types_of_tasks.md). This is not ideal, because `dist/output.js` may get linted before it gets created via the [concat task](task_concat.md)!
 
-You really need to lint the "beforeconcat" set first, then concat, then lint the "afterconcat" set, by doing `grunt lint:beforeconcat concat lint:afterconcat`.
+In this case, you should lint the "beforeconcat" set first, then concat, then lint the "afterconcat" set, by running `grunt lint:beforeconcat concat lint:afterconcat`.
 
 ```javascript
-/*global config:true, task:true*/
-config.init({
+// Project configuration.
+grunt.initConfig({
   concat: {
     dist: {
       src: ['src/foo.js', 'src/bar.js'],
@@ -55,21 +78,20 @@ config.init({
     afterconcat: ['dist/output.js']
   }
 });
+
+// Default task.
+grunt.registerTask('default', 'lint:beforeconcat concat lint:afterconcat');
 ```
 
-If this build process was something you did frequently, it would make sense to create an [alias task](tasks_creating.md) for it with a short name like "build" so that it can be run as `grunt build`. To make life even easier, naming that alias task "default" would allow you to run it with the command `grunt`.
+_Note: in the above example, a default [alias task](types_of_tasks.md) was created that runs the 'lint:beforeconcat', 'concat' and 'lint:afterconcat' tasks. If you didn't want this to be the default grunt task, you could give it a different name._
 
-```javascript
-task.registerTask('default', 'lint:beforeconcat concat lint:afterconcat');
-```
-
-### Dynamic filenames
+### Dynamic filenames <a name="dynamic-filenames" href="#dynamic-filenames" title="Link to this section">⚑</a>
 
 Building on the previous example, if you want to avoid duplication, you can use a [directive](helpers_directives.md) like `'<config:concat.dist.dest>'` in place of `'dist/output.js'` in the `afterconcat` lint target. This allows you to generate the output filename dynamically. In this example, the `concat:dist` destination filename is generated from the `name` and `version` properties of the referenced `package.json` file through the `pkg` config property.
 
 ```javascript
-/*global config:true, task:true*/
-config.init({
+// Project configuration.
+grunt.initConfig({
   pkg: '<json:package.json>',
   concat: {
     dist: {
@@ -84,15 +106,15 @@ config.init({
 });
 ```
 
-### Specifying JSHint options and globals
+### Specifying JSHint options and globals <a name="specifying-jshint-options-and-globals" href="#specifying-jshint-options-and-globals" title="Link to this section">⚑</a>
 
 In this example, taken from the [Sample jQuery plugin gruntfile](https://github.com/cowboy/grunt-jquery-example/blob/master/grunt.js), custom JSHint `options` and `globals` are specified. These options are explained in the [JSHint documentation](http://www.jshint.com/options/).
 
-_Note: config `jshint.options` and `jshint.globals` apply to the entire project, but can be overridden with per-file comments like `/*global config:true, task:true*/`._
+_Note: config `jshint.options` and `jshint.globals` apply to the entire project, but can be overridden with per-file comments like `/*global exports:false*/`._
 
 ```javascript
-/*global config:true, task:true*/
-config.init({
+// Project configuration.
+grunt.initConfig({
   lint: {
     files: ['grunt.js', 'src/**/*.js', 'test/**/*.js']
   },
@@ -112,18 +134,19 @@ config.init({
     globals: {
       jQuery: true
     }
-  }
+  },
 });
 ```
 
-#### Per-target JSHint options and globals
+#### Per-target JSHint options and globals <a name="per-target-jshint-options-and-globals" href="#per-target-jshint-options-and-globals" title="Link to this section">⚑</a>
 
 For each `lint` target, grunt looks for a target-named object underneath the `jshint` config object. If this object is found, its `options` and `globals` sub-objects will be used instead of the global ones. this allows per-lint-target JSHint options/globals overrides.
 
 In this example, there are default JSHint settings, as well as per-target overrides:
 
 ```javascript
-config.init({
+// Project configuration.
+grunt.initConfig({
   lint: {
     src: 'src/*.js',
     grunt: 'grunt.js',
@@ -152,14 +175,14 @@ config.init({
 });
 ```
 
-## Helpers
+## Helpers <a name="helpers" href="#helpers" title="Link to this section">⚑</a>
 
 A generic `lint` helper is available for use in any other task where file linting might be useful. For example:
 
 ```javascript
 var filename = 'example.js';
-var src = file.read(filename);
-task.helper('lint', src, {browser: true}, {jQuery: true}, filename);
+var src = grunt.file.read(filename);
+grunt.helper('lint', src, {browser: true}, {jQuery: true}, filename);
 ```
 
-See the [lint task source](https://github.com/cowboy/grunt/blob/master/tasks/lint.js) for more information.
+See the [lint task source](../tasks/lint.js) for more information.

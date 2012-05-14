@@ -7,33 +7,46 @@
  * http://benalman.com/about/license/
  */
 
-module.exports = function(init, done) {
-  task.helper('prompt', {type: 'grunt'}, [
+// Basic template description.
+exports.description = 'Create a grunt plugin, including Nodeunit unit tests.';
+
+// Template-specific notes to be displayed before question prompts.
+exports.notes = 'The grunt plugin system is still under development. For ' +
+  'more information, see the docs at https://github.com/cowboy/grunt/blob/master/docs/plugins.md';
+
+// Any existing file or directory matching this wildcard will cause a warning.
+exports.warnOn = '*';
+
+// The actual init template.
+exports.template = function(grunt, init, done) {
+
+  grunt.helper('prompt', {type: 'grunt'}, [
     // Prompt for these values.
-    task.helper('prompt_for', 'name', function(value, data, done) {
+    grunt.helper('prompt_for', 'name', function(value, data, done) {
       // Prepend "grunt-" to default name if not already there.
       data.short_name = value;
       value = data.full_name = 'grunt-' + value;
       // if (!/^grunt-/.test(value)) { value = 'grunt-' + value; }
       done(null, value);
     }),
-    task.helper('prompt_for', 'description', 'The best sample grunt tasks ever.'),
-    task.helper('prompt_for', 'version'),
-    task.helper('prompt_for', 'repository'),
-    task.helper('prompt_for', 'homepage'),
-    task.helper('prompt_for', 'bugs'),
-    task.helper('prompt_for', 'licenses'),
-    task.helper('prompt_for', 'author_name'),
-    task.helper('prompt_for', 'author_email'),
-    task.helper('prompt_for', 'author_url'),
-    task.helper('prompt_for', 'grunt_version'),
-    task.helper('prompt_for', 'node_version', '*')
+    grunt.helper('prompt_for', 'description', 'The best sample grunt tasks ever.'),
+    grunt.helper('prompt_for', 'version'),
+    grunt.helper('prompt_for', 'repository'),
+    grunt.helper('prompt_for', 'homepage'),
+    grunt.helper('prompt_for', 'bugs'),
+    grunt.helper('prompt_for', 'licenses'),
+    grunt.helper('prompt_for', 'author_name'),
+    grunt.helper('prompt_for', 'author_email'),
+    grunt.helper('prompt_for', 'author_url'),
+    grunt.helper('prompt_for', 'grunt_version'),
+    grunt.helper('prompt_for', 'node_version', '*')
   ], function(err, props) {
     // Set a few grunt-plugin-specific properties.
-    props.node_main = 'grunt.js';
-    props.node_test = 'grunt test';
-    props.node_bin = 'bin/' + props.name;
-    props.node_dependencies = {grunt: props.grunt_version};
+    props.main = 'grunt.js';
+    props.npm_test = 'grunt test';
+    props.bin = 'bin/' + props.name;
+    props.dependencies = {grunt: props.grunt_version};
+    props.keywords = ['gruntplugin'];
 
     // Files to copy (and process).
     var files = init.filesToCopy(props);
@@ -41,13 +54,14 @@ module.exports = function(init, done) {
     // Add properly-named license files.
     init.addLicenseFiles(files, props.licenses);
 
-    // Actually copy (and process). files.
+    // Actually copy (and process) files.
     init.copyAndProcess(files, props);
 
     // Generate package.json file.
-    init.writePackage('package.json', props);
+    init.writePackageJSON('package.json', props);
 
     // All done!
     done();
   });
+
 };

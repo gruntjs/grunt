@@ -8,10 +8,9 @@
 * `10` - [UglifyJS](https://github.com/mishoo/UglifyJS) error
 * `11` - Banner generation error
 * `20` - Init error
-* `31` - Grunt couldn't be loaded, from within a plugin bin script
 * `90-99` - [Nodeunit](https://github.com/caolan/nodeunit) / [QUnit](http://docs.jquery.com/QUnit) error
 
-## Nodeunit / QUnit specific
+## Nodeunit / QUnit specific <a name="nodeunit-qunit-specific" href="#nodeunit-qunit-specific" title="Link to this section">⚑</a>
 
 * `90` - Non assertion-specific error, like a timeout or JavaScript error.
 * `91-99` - 91 = 1 assertion failed, 95 = 5 assertions failed, 99 = 9 or more assertions failed (you get the idea).

@@ -197,6 +197,8 @@ module.exports = function(grunt) {
           grunt.task.getFile('qunit/qunit.js'),
           // URL to the QUnit .html test file to run.
           url,
+          // The test timeout value (innactivity)
+          ( grunt.config.get('phantomjs') || {} ).timeout || 5000,
           // PhantomJS options.
           '--config=' + grunt.task.getFile('qunit/phantom.json')
         ],

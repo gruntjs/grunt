@@ -1,3 +1,5 @@
+'use strict';
+
 var {%= js_safe_name %} = require('../lib/{%= name %}.js');
 
 /*

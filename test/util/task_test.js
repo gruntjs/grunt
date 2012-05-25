@@ -176,6 +176,73 @@ exports['Tasks'] = {
     test.deepEqual(result.get(), [null], 'Non-nested tasks have a null name.');
     test.done();
   },
+  'Task#run (async failing)': function(test) {
+    // test.expect(2);
+    var task = this.task;
+    var results = [];
+
+    task.registerTask('sync1', 'sync, gonna succeed', function() {});
+
+    task.registerTask('sync2', 'sync, gonna fail', function() {
+      return false;
+    });
+
+    task.registerTask('sync3', 'sync, gonna fail', function() {
+      return new Error('sync3: Error');
+    });
+
+    task.registerTask('sync4', 'sync, gonna fail', function() {
+      return new TypeError('sync4: TypeError');
+    });
+
+    task.registerTask('sync5', 'sync, gonna fail', function() {
+      throw new Error('sync5: Error');
+    });
+
+    task.registerTask('sync6', 'sync, gonna fail', function() {
+      throw new TypeError('sync6: TypeError');
+    });
+
+    task.registerTask('syncs', 'sync1 sync2 sync3 sync4 sync5 sync6');
+
+    task.registerTask('async1', 'async, gonna succeed', function() {
+      setTimeout(this.async().bind(null, undefined), 1);
+    });
+
+    task.registerTask('async2', 'async, gonna fail', function() {
+      setTimeout(this.async().bind(null, false), 1);
+    });
+
+    task.registerTask('async3', 'async, gonna fail', function() {
+      setTimeout(this.async().bind(null, new Error('async3: Error')), 1);
+    });
+
+    task.registerTask('async4', 'async, gonna fail', function() {
+      setTimeout(this.async().bind(null, new TypeError('async4: TypeError')), 1);
+    });
+
+    task.registerTask('asyncs', 'async1 async2 async3 async4');
+
+    task.options({
+      error: function(e) {
+        results.push({name: e.name, message: e.message});
+      },
+      done: function() {
+        test.deepEqual(results, [
+          {name: 'Error', message: 'Task "sync2" failed.'},
+          {name: 'Error', message: 'sync3: Error'},
+          {name: 'TypeError', message: 'sync4: TypeError'},
+          {name: 'Error', message: 'sync5: Error'},
+          {name: 'TypeError', message: 'sync6: TypeError'},
+          {name: 'Error', message: 'Task "async2" failed.'},
+          {name: 'Error', message: 'async3: Error'},
+          {name: 'TypeError', message: 'async4: TypeError'}
+        ], 'The specified tasks should have run, in-order.');
+        test.done();
+      }
+    });
+    task.run('syncs asyncs').start();
+  },
   'Task#run (nested, exception handling)': function(test) {
     test.expect(2);
     var task = this.task;
@@ -256,15 +323,16 @@ exports['Tasks'] = {
     task.registerTask('c', 'Push task name onto result.', result.pushTaskname);
     task.registerTask('d', 'Push task name onto result.', result.pushTaskname);
     task.registerTask('e', 'Push task name onto result and run other tasks.', function() { delay(this.async()); result.push(this.name); task.run('f'); });
-    task.registerTask('f', 'Push task name onto result.', result.pushTaskname);
+    task.registerTask('f', 'Push task name onto result and run other tasks.', function() { this.async()(); result.push(this.name); task.run('g'); });
     task.registerTask('g', 'Push task name onto result.', result.pushTaskname);
+    task.registerTask('h', 'Push task name onto result.', result.pushTaskname);
     task.options({
       done: function() {
-        test.strictEqual(result.getJoined(), 'abcdefg', 'The specified tasks should have run, in-order.');
+        test.strictEqual(result.getJoined(), 'abcdefgh', 'The specified tasks should have run, in-order.');
         test.done();
       }
     });
-    task.run('a g').start();
+    task.run('a h').start();
   },
   'Task#current': function(test) {
     test.expect(8);
@@ -434,6 +502,12 @@ exports['Task#parseArgs'] = {
     test.expect(1);
     var obj = {};
     test.deepEqual(this.parseTest(obj), [obj], 'single object should be returned as array.');
+    test.done();
+  },
+  'trim': function(test) {
+    test.expect(2);
+    test.deepEqual(this.parseTest(' foo '), ['foo'], 'should ignore extraneous whitespace.');
+    test.deepEqual(this.parseTest(' foo  bar '), ['foo', 'bar'], 'should ignore extraneous whitespace.');
     test.done();
   },
   'nothing': function(test) {

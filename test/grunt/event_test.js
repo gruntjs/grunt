@@ -31,7 +31,7 @@ exports['event'] = {
     var message = 'Custom Message';
     
     // Should not throw an error
-    grunt.event.emit('uncaght.event', message);
+    grunt.event.emit('uncaught.event', message);
     test.ok(true);
     test.done();
   }

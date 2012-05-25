@@ -1,12 +1,12 @@
 var grunt = require('../../lib/grunt');
 
-exports['events'] = {
+exports['event'] = {
   
   'logerror': function(test) {
     test.expect(1);
     var message = 'Error Message';
     
-    grunt.events.on('log.error', function(msg){
+    grunt.event.on('log.error', function(msg){
       test.equal(message, msg);
     });
     
@@ -18,11 +18,11 @@ exports['events'] = {
     test.expect(1);
     var message = 'Custom Message';
     
-    grunt.events.on('some.event', function(msg){
+    grunt.event.on('some.event', function(msg){
       test.equal(message, msg);
     });
     
-    grunt.events.emit('some.event', message);
+    grunt.event.emit('some.event', message);
     test.done();
   },
 
@@ -31,7 +31,7 @@ exports['events'] = {
     var message = 'Custom Message';
     
     // Should not throw an error
-    grunt.events.emit('uncaght.event', message);
+    grunt.event.emit('uncaght.event', message);
     test.ok(true);
     test.done();
   }

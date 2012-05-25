@@ -161,6 +161,13 @@ exports['file.expand*'] = {
     test.deepEqual(grunt.file.expand({matchBase: true}, '*.js', '*.css'), ['js/bar.js', 'js/foo.js', 'css/baz.css', 'css/qux.css'], 'should match.');
     test.deepEqual(grunt.file.expand({matchBase: true}, ['*.js', '*.css']), ['js/bar.js', 'js/foo.js', 'css/baz.css', 'css/qux.css'], 'should match.');
     test.done();
+  },
+  'exclude': function(test) {
+    test.expect(3);
+    test.deepEqual(grunt.file.expand(['js/bar.js','!js/bar.js']), [], 'negation should cancel match');
+    test.deepEqual(grunt.file.expand(['**/*.js', '!js/foo.js']), ['js/bar.js'], 'should omit single file from matched set');
+    test.deepEqual(grunt.file.expand(['**/*.js', '**/*.css', '!js/bar.js', '!css/baz.css']), ['js/foo.js','css/qux.css'], 'multiple negations should be removed from list');
+    test.done()
   }
 };
 

@@ -10,7 +10,7 @@
 # To enable bash <tab> completion for grunt, add the following line (minus any
 # leading #, which is the bash comment character) to your ~/.bashrc file:
 #
-# source "$(grunt --version --verbose | sed -En 's/Install path: (.*)/\1/p')/misc/bash_completion.sh"
+# source "$(grunt -Vv | sed -En 's#Install path: (.*)#\1/misc/bash_completion.sh#p')"
 
 # Search the current directory and all parent directories for a gruntfile.
 function _grunt_gruntfile() {

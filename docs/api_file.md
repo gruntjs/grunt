@@ -178,6 +178,48 @@ grunt.file.isMatch(patterns, filepath)
 
 Patterns without slashes will be matched against the basename of the path if it contains slashes, eg. pattern `*.js` will match filepath `path/to/file.js`.
 
+### grunt.file.exists <a name="grunt-file-exists" href="#grunt-file-exists" title="Link to this section">⚑</a>
+Does the given path exist? Returns a boolean.
+
+Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
+
+```javascript
+grunt.file.exists(path1 [, path2 [, ...]])
+```
+
+### grunt.file.isLink <a name="grunt-file-islink" href="#grunt-file-islink" title="Link to this section">⚑</a>
+Is the given path a symbolic link? Returns a boolean.
+
+Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
+
+```javascript
+grunt.file.isLink(path1 [, path2 [, ...]])
+```
+
+Returns false if the path doesn't exist.
+
+### grunt.file.isDir <a name="grunt-file-isdir" href="#grunt-file-isdir" title="Link to this section">⚑</a>
+Is the given path a directory? Returns a boolean.
+
+Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
+
+```javascript
+grunt.file.isDir(path1 [, path2 [, ...]])
+```
+
+Returns false if the path doesn't exist.
+
+### grunt.file.isFile <a name="grunt-file-isfile" href="#grunt-file-isfile" title="Link to this section">⚑</a>
+Is the given path a file? Returns a boolean.
+
+Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
+
+```javascript
+grunt.file.isFile(path1 [, path2 [, ...]])
+```
+
+Returns false if the path doesn't exist.
+
 ## External libraries <a name="external-libraries" href="#external-libraries" title="Link to this section">⚑</a>
 
 ### grunt.file.glob <a name="grunt-file-glob" href="#grunt-file-glob" title="Link to this section">⚑</a>

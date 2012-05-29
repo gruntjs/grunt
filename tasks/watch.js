@@ -1,6 +1,6 @@
 /*
  * grunt
- * https://github.com/cowboy/grunt
+ * http://gruntjs.com/
  *
  * Copyright (c) 2012 "Cowboy" Ben Alman
  * Licensed under the MIT license.
@@ -45,10 +45,8 @@ module.exports = function(grunt) {
     // This task is asynchronous.
     var taskDone = this.async();
     // Get a list of files to be watched.
-    var patterns = grunt.utils._.chain(targets).pluck('files').flatten().uniq().value();
+    var patterns = grunt.util._.chain(targets).pluck('files').flatten().uniq().value();
     var getFiles = grunt.file.expandFiles.bind(grunt.file, patterns);
-    // The tasks to be run.
-    var tasks = []; //grunt.config(tasksProp);
     // This task's name + optional args, in string format.
     var nameArgs = this.nameArgs;
     // An ID by which the setInterval can be canceled.
@@ -58,6 +56,9 @@ module.exports = function(grunt) {
     // File changes to be logged.
     var changedFiles = {};
 
+    // List of changed / deleted file paths.
+    grunt.file.watchFiles = {changed: [], deleted: []};
+
     // Define an alternate fail "warn" behavior.
     grunt.fail.warnAlternate = function() {
       grunt.task.clearQueue({untilMarker: true}).run(nameArgs);
@@ -66,15 +67,18 @@ module.exports = function(grunt) {
     // Cleanup when files have changed. This is debounced to handle situations
     // where editors save multiple files "simultaneously" and should wait until
     // all the files are saved.
-    var done = grunt.utils._.debounce(function() {
+    var done = grunt.util._.debounce(function() {
       // Clear the files-added setInterval.
       clearInterval(intervalId);
       // Ok!
       grunt.log.ok();
       var fileArray = Object.keys(changedFiles);
       fileArray.forEach(function(filepath) {
+        var status = changedFiles[filepath];
         // Log which file has changed, and how.
-        grunt.log.ok('File "' + filepath + '" ' + changedFiles[filepath] + '.');
+        grunt.log.ok('File "' + filepath + '" ' + status + '.');
+        // Add filepath to grunt.file.watchFiles for grunt.file.expand* methods.
+        grunt.file.watchFiles[status === 'deleted' ? 'deleted' : 'changed'].push(filepath);
         // Clear the modified file's cached require data.
         grunt.file.clearRequireCache(filepath);
       });
@@ -83,10 +87,10 @@ module.exports = function(grunt) {
       // For each specified target, test to see if any files matching that
       // target's file patterns were modified.
       targets.forEach(function(target) {
-        var files = grunt.file.expandFiles(target.files);
-        var intersection = grunt.utils._.intersection(fileArray, files);
-        // Enqueue specified tasks if a matching file was found.
-        if (intersection.length > 0 && target.tasks) {
+        // What files in fileArray match the target.files pattern(s)?
+        var files = grunt.file.match(target.files, fileArray);
+        // Enqueue specified tasks if at least one matching file was found.
+        if (files.length > 0 && target.tasks) {
           grunt.task.run(target.tasks).mark();
         }
       });
@@ -153,7 +157,7 @@ module.exports = function(grunt) {
     // Watch for files to be added.
     intervalId = setInterval(function() {
       // Files that have been added since last interval execution.
-      var added = grunt.utils._.difference(getFiles(), Object.keys(watchedFiles));
+      var added = grunt.util._.difference(getFiles(), Object.keys(watchedFiles));
       added.forEach(function(filepath) {
         // This file has been added.
         fileChanged('added', filepath);

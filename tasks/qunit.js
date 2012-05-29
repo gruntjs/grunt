@@ -1,6 +1,6 @@
 /*
  * grunt
- * https://github.com/cowboy/grunt
+ * http://gruntjs.com/
  *
  * Copyright (c) 2012 "Cowboy" Ben Alman
  * Licensed under the MIT license.
@@ -10,7 +10,6 @@
 module.exports = function(grunt) {
 
   // Nodejs libs.
-  var fs = require('fs');
   var path = require('path');
 
   // External libs.
@@ -127,7 +126,7 @@ module.exports = function(grunt) {
     status = {failed: 0, passed: 0, total: 0, duration: 0};
 
     // Process each filepath in-order.
-    grunt.utils.async.forEachSeries(urls, function(url, next) {
+    grunt.util.async.forEachSeries(urls, function(url, next) {
       var basename = path.basename(url);
       grunt.verbose.subhead('Testing ' + basename).or.write('Testing ' + basename);
 
@@ -229,7 +228,7 @@ module.exports = function(grunt) {
   // ==========================================================================
 
   grunt.registerHelper('phantomjs', function(options) {
-    return grunt.utils.spawn({
+    return grunt.util.spawn({
       cmd: 'phantomjs',
       args: options.args
     }, function(err, result, code) {

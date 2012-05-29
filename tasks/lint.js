@@ -174,7 +174,10 @@ module.exports = function(grunt) {
         if (tabstr) {
           evidence = evidence.replace(tabregex, tabstr);
         }
-        if (character > evidence.length) {
+        if (character === 0) {
+          // Beginning of line.
+          evidence = ' '.inverse.red + evidence;
+        } else if (character > evidence.length) {
           // End of line.
           evidence = evidence + ' '.inverse.red;
         } else {

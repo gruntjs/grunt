@@ -176,7 +176,7 @@ module.exports = function(grunt) {
         }
         if (character === 0) {
           // Beginning of line.
-          evidence = ' '.inverse.red + evidence;
+          evidence = '?'.inverse.red + evidence;
         } else if (character > evidence.length) {
           // End of line.
           evidence = evidence + ' '.inverse.red;

@@ -1,6 +1,6 @@
 /*
  * grunt
- * https://github.com/cowboy/grunt
+ * http://gruntjs.com/
  *
  * Copyright (c) 2012 "Cowboy" Ben Alman
  * Licensed under the MIT license.
@@ -21,28 +21,55 @@ module.exports = function(grunt) {
     // override the default options and globals.
     var options, globals, tmp;
 
-    tmp = grunt.config(['jshint', this.target, 'options']);
-    if (typeof tmp === 'object') {
-      grunt.verbose.writeln('Using "' + this.target + '" JSHint options.');
-      options = tmp;
-    } else {
-      grunt.verbose.writeln('Using master JSHint options.');
-      options = grunt.config('jshint.options');
+    // Check for a jshintrc file.
+    if (tmp = grunt.config(['jshint', this.target, 'jshintrc'])) {
+      // If a target-specific jshintrc file was specified, read it.
+      grunt.verbose.writeln('Using "' + this.target + '" jshintrc file.');
+      options = grunt.file.readJSON(tmp);
+    } else if (tmp = grunt.config('jshint.jshintrc')) {
+      // If a global jshintrc file was specified, read it.
+      grunt.verbose.writeln('Using master jshintrc file.');
+      options = grunt.file.readJSON(tmp);
     }
-    grunt.verbose.writeflags(options, 'Options');
 
-    tmp = grunt.config(['jshint', this.target, 'globals']);
-    if (typeof tmp === 'object') {
-      grunt.verbose.writeln('Using "' + this.target + '" JSHint globals.');
-      globals = tmp;
+    if (options) {
+      // A jshintrc file was read.
+      if (options.predef) {
+        // Temp kluge for https://github.com/jshint/node-jshint/issues/104
+        globals = {};
+        options.predef.forEach(function(key) {
+          globals[key] = true;
+        });
+        delete options.predef;
+      }
+
     } else {
-      grunt.verbose.writeln('Using master JSHint globals.');
-      globals = grunt.config('jshint.globals');
+      // No jshintrc file was read.
+      tmp = grunt.config(['jshint', this.target, 'options']);
+      if (typeof tmp === 'object') {
+        grunt.verbose.writeln('Using "' + this.target + '" JSHint options.');
+        options = tmp;
+      } else {
+        grunt.verbose.writeln('Using master JSHint options.');
+        options = grunt.config('jshint.options');
+      }
+
+      tmp = grunt.config(['jshint', this.target, 'globals']);
+      if (typeof tmp === 'object') {
+        grunt.verbose.writeln('Using "' + this.target + '" JSHint globals.');
+        globals = tmp;
+      } else {
+        grunt.verbose.writeln('Using master JSHint globals.');
+        globals = grunt.config('jshint.globals');
+      }
     }
-    grunt.verbose.writeflags(globals, 'Globals');
+
+    grunt.verbose.writeflags(options, 'JSHint options');
+    grunt.verbose.writeflags(globals, 'JSHint globals');
 
     // Lint specified files.
-    grunt.file.expandFiles(this.file.src).forEach(function(filepath) {
+    var files = grunt.file.expandFiles(this.file.src);
+    files.forEach(function(filepath) {
       grunt.helper('lint', grunt.file.read(filepath), options, globals, filepath);
     });
 
@@ -50,7 +77,7 @@ module.exports = function(grunt) {
     if (this.errorCount) { return false; }
 
     // Otherwise, print a success message.
-    grunt.log.writeln('Lint free.');
+    grunt.log.ok(files.length + ' files lint free.');
   });
 
   // ==========================================================================
@@ -69,7 +96,7 @@ module.exports = function(grunt) {
     var tabsize = isNaN(character) ? 1 : character;
     // If tabsize > 1, return something that should be safe to use as a
     // placeholder. \uFFFF repeated 2+ times.
-    return tabsize > 1 && grunt.utils.repeat(tabsize, '\uFFFF');
+    return tabsize > 1 && grunt.util.repeat(tabsize, '\uFFFF');
   }
 
   var tabregex = /\t/g;
@@ -77,8 +104,8 @@ module.exports = function(grunt) {
   // Lint source code with JSHint.
   grunt.registerHelper('lint', function(src, options, globals, extraMsg) {
     // JSHint sometimes modifies objects you pass in, so clone them.
-    options = grunt.utils._.clone(options);
-    globals = grunt.utils._.clone(globals);
+    options = grunt.util._.clone(options);
+    globals = grunt.util._.clone(globals);
     // Enable/disable debugging if option explicitly set.
     if (grunt.option('debug') !== undefined) {
       options.devel = options.debug = grunt.option('debug');
@@ -94,6 +121,7 @@ module.exports = function(grunt) {
     var placeholderregex = new RegExp(tabstr, 'g');
     // Lint.
     var result = jshint(src, options || {}, globals || {});
+    var data = jshint.data();
     // Attempt to work around JSHint erroneously reporting bugs.
     // if (!result) {
     //   // Filter out errors that shouldn't be reported.
@@ -103,49 +131,69 @@ module.exports = function(grunt) {
     //   // If no errors are left, JSHint actually succeeded.
     //   result = jshint.errors.length === 0;
     // }
-    if (result) {
+    if (result && !data.unused) {
       // Success!
       grunt.verbose.ok();
-    } else {
-      // Something went wrong.
-      grunt.verbose.or.write(msg);
-      grunt.log.error();
-      // Iterate over all errors.
-      jshint.errors.forEach(function(e) {
-        // Sometimes there's no error object.
-        if (!e) { return; }
-        var pos;
-        var evidence = e.evidence;
-        var character = e.character;
-        if (evidence) {
-          // Manually increment errorcount since we're not using grunt.log.error().
-          grunt.fail.errorcount++;
-          // Descriptive code error.
-          pos = '['.red + ('L' + e.line).yellow + ':'.red + ('C' + character).yellow + ']'.red;
-          grunt.log.writeln(pos + ' ' + e.reason.yellow);
-          // If necessary, eplace each tab char with something that can be
-          // swapped out later.
-          if (tabstr) {
-            evidence = evidence.replace(tabregex, tabstr);
-          }
-          if (character > evidence.length) {
-            // End of line.
-            evidence = evidence + ' '.inverse.red;
-          } else {
-            // Middle of line.
-            evidence = evidence.slice(0, character - 1) + evidence[character - 1].inverse.red +
-              evidence.slice(character);
-          }
-          // Replace tab placeholder (or tabs) but with a 2-space soft tab.
-          evidence = evidence.replace(tabstr ? placeholderregex : tabregex, '  ');
-          grunt.log.writeln(evidence);
-        } else {
-          // Generic "Whoops, too many errors" error.
-          grunt.log.error(e.reason);
-        }
-      });
-      grunt.log.writeln();
+      return;
     }
+    // Something went wrong.
+    grunt.verbose.or.write(msg);
+    grunt.log.error();
+    // Iterate over all unused variables
+    var varsByLine = {};
+    if (data.unused) {
+      data.unused.forEach(function(unused) {
+        var line = unused.line;
+        var vars = varsByLine[line] = varsByLine[line] || [];
+        vars.push(unused.name);
+      });
+      Object.keys(varsByLine).forEach(function(line) {
+        // Manually increment errorcount since we're not using grunt.log.error().
+        grunt.fail.errorcount++;
+        var vars = varsByLine[line];
+        grunt.log.writeln('['.red + ('L' + line).yellow + ']'.red +
+          (' Unused variable' + (vars.length === 1 ? '' : 's') + ': ').yellow +
+          grunt.log.wordlist(vars, {color: false, separator: ', '.yellow}));
+      });
+    }
+    // Iterate over all errors.
+    jshint.errors.forEach(function(e) {
+      // Sometimes there's no error object.
+      if (!e) { return; }
+      var pos;
+      var evidence = e.evidence;
+      var character = e.character;
+      if (evidence) {
+        // Manually increment errorcount since we're not using grunt.log.error().
+        grunt.fail.errorcount++;
+        // Descriptive code error.
+        pos = '['.red + ('L' + e.line).yellow + ':'.red + ('C' + character).yellow + ']'.red;
+        grunt.log.writeln(pos + ' ' + e.reason.yellow);
+        // If necessary, eplace each tab char with something that can be
+        // swapped out later.
+        if (tabstr) {
+          evidence = evidence.replace(tabregex, tabstr);
+        }
+        if (character === 0) {
+          // Beginning of line.
+          evidence = '?'.inverse.red + evidence;
+        } else if (character > evidence.length) {
+          // End of line.
+          evidence = evidence + ' '.inverse.red;
+        } else {
+          // Middle of line.
+          evidence = evidence.slice(0, character - 1) + evidence[character - 1].inverse.red +
+            evidence.slice(character);
+        }
+        // Replace tab placeholder (or tabs) but with a 2-space soft tab.
+        evidence = evidence.replace(tabstr ? placeholderregex : tabregex, '  ');
+        grunt.log.writeln(evidence);
+      } else {
+        // Generic "Whoops, too many errors" error.
+        grunt.log.error(e.reason);
+      }
+    });
+    grunt.log.writeln();
   });
 
 };

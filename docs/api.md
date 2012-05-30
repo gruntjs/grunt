@@ -1,10 +1,10 @@
-[Grunt homepage](https://github.com/cowboy/grunt) | [Documentation table of contents](toc.md)
+[Grunt homepage](http://gruntjs.com/) | [Documentation table of contents](toc.md)
 
 # The grunt API
 
-Grunt exposes all of its methods and properties on the `grunt` object that gets passed into the `module.exports` function exported in your [grunt.js gruntfile](getting_started.md) or in your [tasks file](types_of_tasks.md).
+Grunt exposes all of its methods and properties on the `grunt` object that gets passed into the `module.exports` function exported in your [Gruntfile](getting_started.md) or in your [tasks file](types_of_tasks.md).
 
-For example, your project's [grunt.js gruntfile](getting_started.md) might look like this:
+For example, your project's [Gruntfile](getting_started.md) might look like this:
 
 ```javascript
 module.exports = function(grunt) {
@@ -12,7 +12,7 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     lint: {
-      all: ['grunt.js', 'lib/**/*.js', 'test/**/*.js']
+      all: ['Gruntfile.js', 'lib/**/*.js', 'test/**/*.js']
     },
     jshint: {
       options: {
@@ -51,8 +51,8 @@ module.exports = function(grunt) {
 
 But these are just examples. For more information, read on.
 
-## A Very Important Note <a name="a-very-important-note" href="#a-very-important-note" title="Link to this section">⚑</a>
-Your `grunt.js` gruntfile or tasks file **must** contain this code, once and **only** once. If it doesn't, things won't work. For the sake of brevity, this "wrapper" code has been omitted from all future examples on this page, but it needs to be there. Like in the previous examples.
+## A Very Important Note <a name="a-very-important-note" href="#a-very-important-note" title="Link to this section">#</a>
+Your Gruntfile or tasks file **must** contain this code, once and **only** once. If it doesn't, things won't work. For the sake of brevity, this "wrapper" code has been omitted from all future examples on this page, but it needs to be there. Like in the previous examples.
 
 ```javascript
 module.exports = function(grunt) {
@@ -60,12 +60,12 @@ module.exports = function(grunt) {
 };
 ```
 
-## Config <a name="config" href="#config" title="Link to this section">⚑</a>
+## Config <a name="config" href="#config" title="Link to this section">#</a>
 _Note that the method listed below is also available on the [grunt.config](api_config.md) object in addition to the `grunt` object._
 
 
-### grunt.initConfig <a name="grunt-initconfig" href="#grunt-initconfig" title="Link to this section">⚑</a>
-Initialize a configuration object for the current project. The specified `configObject` is used by tasks and helpers and can also be accessed using the [grunt.config](api_config.md) method. Nearly every project's [grunt.js gruntfile](getting_started.md) will call this method.
+### grunt.initConfig <a name="grunt-initconfig" href="#grunt-initconfig" title="Link to this section">#</a>
+Initialize a configuration object for the current project. The specified `configObject` is used by tasks and helpers and can also be accessed using the [grunt.config](api_config.md) method. Nearly every project's [Gruntfile](getting_started.md) will call this method.
 
 Note that any specified `<config>` and `<json>` [directives](api_task.md) will be automatically processed when the config object is initialized.
 
@@ -78,7 +78,7 @@ This example contains sample config data for the [lint task](task_lint.md):
 ```javascript
 grunt.initConfig({
   lint: {
-    all: ['lib/*.js', 'test/*.js', 'grunt.js']
+    all: ['lib/*.js', 'test/*.js', 'Gruntfile.js']
   }
 });
 ```
@@ -88,7 +88,7 @@ See the [configuring grunt](getting_started.md) page for more configuration exam
 _This method is an alias for the [grunt.config.init](api_config.md) method._
 
 
-## Creating Tasks <a name="creating-tasks" href="#creating-tasks" title="Link to this section">⚑</a>
+## Creating Tasks <a name="creating-tasks" href="#creating-tasks" title="Link to this section">#</a>
 Tasks are grunt's bread and butter. The stuff you do most often, like `lint` or `test`. Every time grunt is run, you specify one or more tasks to run, which tells grunt what you'd like it to do.
 
 If you don't specify a task, but a task named "default" has been defined, that task will run (unsurprisingly) by default.
@@ -96,7 +96,7 @@ If you don't specify a task, but a task named "default" has been defined, that t
 _Note that the methods listed below are also available on the [grunt.task](api_task.md) object in addition to the `grunt` object._
 
 
-### grunt.registerTask <a name="grunt-registertask" href="#grunt-registertask" title="Link to this section">⚑</a>
+### grunt.registerTask <a name="grunt-registertask" href="#grunt-registertask" title="Link to this section">#</a>
 Register an "alias task" or a task function. This method supports the following two signatures:
 
 **Alias task**
@@ -140,7 +140,7 @@ See the [creating tasks](types_of_tasks.md) documentation for more examples of t
 _This method is an alias for the [grunt.task.registerTask](api_task.md) method._
 
 
-### grunt.registerMultiTask <a name="grunt-registermultitask" href="#grunt-registermultitask" title="Link to this section">⚑</a>
+### grunt.registerMultiTask <a name="grunt-registermultitask" href="#grunt-registermultitask" title="Link to this section">#</a>
 Register a "multi task." A multi task is a task that implicitly iterates over all of its named sub-properties (AKA targets) if no target was specified. In addition to the default properties and methods, extra multi task-specific properties are available inside the task function as properties of the `this` object.
 
 Many of the built-in tasks, including the [lint task](task_lint.md), [concat task](task_concat.md) and [min task](task_min.md) are multi tasks.
@@ -170,8 +170,8 @@ See the [creating tasks](types_of_tasks.md) documentation for more examples of m
 _This method is an alias for the [grunt.task.registerMultiTask](api_task.md) method._
 
 
-### grunt.registerInitTask <a name="grunt-registerinittask" href="#grunt-registerinittask" title="Link to this section">⚑</a>
-Register an "init task." An init task is a task that doesn't require any configuration data, and as such will still run even if grunt can't find a [grunt.js gruntfile](getting_started.md). The included [init task](task_init.md) is an example of an "init task."
+### grunt.registerInitTask <a name="grunt-registerinittask" href="#grunt-registerinittask" title="Link to this section">#</a>
+Register an "init task." An init task is a task that doesn't require any configuration data, and as such will still run even if grunt can't find a [Gruntfile](getting_started.md). The included [init task](task_init.md) is an example of an "init task."
 
 ```javascript
 grunt.registerInitTask(taskName, description, taskFunction)
@@ -181,7 +181,7 @@ For an init task example, see the [init task source](../tasks/init.js).
 
 _This method is an alias for the [grunt.task.registerInitTask](api_task.md) method._
 
-### grunt.renameTask <a name="grunt-renametask" href="#grunt-renametask" title="Link to this section">⚑</a>
+### grunt.renameTask <a name="grunt-renametask" href="#grunt-renametask" title="Link to this section">#</a>
 Rename a task. This might be useful if you want to override the default behavior of a task, while retaining the old name.
 
 ```javascript
@@ -190,10 +190,10 @@ grunt.renameTask(oldname, newname)
 
 _This method is an alias for the [grunt.task.renameTask](api_task.md) method._
 
-## Inside Tasks <a name="inside-tasks" href="#inside-tasks" title="Link to this section">⚑</a>
+## Inside Tasks <a name="inside-tasks" href="#inside-tasks" title="Link to this section">#</a>
 An object is made available as `this` inside each task function that contains a number of useful task-specific properties and methods. This same object is also exposed as `grunt.task.current` for use in [templates](api_template.md).
 
-### this.async / grunt.task.current.async <a name="this-async-grunt-task-current-async" href="#this-async-grunt-task-current-async" title="Link to this section">⚑</a>
+### this.async / grunt.task.current.async <a name="this-async-grunt-task-current-async" href="#this-async-grunt-task-current-async" title="Link to this section">#</a>
 If a task is asynchronous, this method must be invoked to instruct grunt to wait. It returns a handle to a "done" function that should be called when the task has completed. `false` can be passed to the done function to indicate that the task has failed. If this method isn't invoked, the task executes synchronously.
 
 ```javascript
@@ -208,7 +208,7 @@ setTimeout(function() {
 }, 1000);
 ```
 
-### this.requires / grunt.task.current.requires <a name="this-requires-grunt-task-current-requires" href="#this-requires-grunt-task-current-requires" title="Link to this section">⚑</a>
+### this.requires / grunt.task.current.requires <a name="this-requires-grunt-task-current-requires" href="#this-requires-grunt-task-current-requires" title="Link to this section">#</a>
 If one task depends on the successful completion of another task (or tasks), this method can be used to force grunt to abort if the other task didn't run, or if the other task failed. The task list can be a space-separated string, an array of task names, or individual task name arguments.
 
 Note that this won't actually run the specified task(s), it will just fail the current task if they haven't already run successfully.
@@ -217,7 +217,7 @@ Note that this won't actually run the specified task(s), it will just fail the c
 this.requires(taskList)
 ```
 
-### this.requiresConfig / grunt.task.current.requiresConfig <a name="this-requiresconfig-grunt-task-current-requiresconfig" href="#this-requiresconfig-grunt-task-current-requiresconfig" title="Link to this section">⚑</a>
+### this.requiresConfig / grunt.task.current.requiresConfig <a name="this-requiresconfig-grunt-task-current-requiresconfig" href="#this-requiresconfig-grunt-task-current-requiresconfig" title="Link to this section">#</a>
 Fail the current task if one or more required [config](api_config.md) properties is missing. One or more string or array config properties may be specified.
 
 ```javascript
@@ -228,31 +228,31 @@ See the [grunt.config documentation](api_config.md) for more information about c
 
 _This method is an alias for the [grunt.config.requires](api_config.md) method._
 
-### this.name / grunt.task.current.name <a name="this-name-grunt-task-current-name" href="#this-name-grunt-task-current-name" title="Link to this section">⚑</a>
+### this.name / grunt.task.current.name <a name="this-name-grunt-task-current-name" href="#this-name-grunt-task-current-name" title="Link to this section">#</a>
 The name of the task, as defined in `grunt.registerTask`. For example, if a "sample" task was run as `grunt sample` or `grunt sample:foo`, inside the task function, `this.name` would be `"sample"`.
 
-### this.nameArgs / grunt.task.current.nameArgs <a name="this-nameargs-grunt-task-current-nameargs" href="#this-nameargs-grunt-task-current-nameargs" title="Link to this section">⚑</a>
+### this.nameArgs / grunt.task.current.nameArgs <a name="this-nameargs-grunt-task-current-nameargs" href="#this-nameargs-grunt-task-current-nameargs" title="Link to this section">#</a>
 The name of the task, as specified with any colon-separated arguments or flags on the command-line. For example, if a "sample" task was run as `grunt sample:foo`, inside the task function, `this.nameArgs` would be `"sample:foo"`.
 
-### this.args / grunt.task.current.args <a name="this-args-grunt-task-current-args" href="#this-args-grunt-task-current-args" title="Link to this section">⚑</a>
+### this.args / grunt.task.current.args <a name="this-args-grunt-task-current-args" href="#this-args-grunt-task-current-args" title="Link to this section">#</a>
 An array of arguments passed to the task. For example, if a "sample" task was run as `grunt sample:foo:bar`, inside the task function, `this.args` would be `["foo", "bar"]`. Note that in multi tasks, the target is removed from the `this.args` array and is not passed into the task function.
 
-### this.flags / grunt.task.current.flags <a name="this-flags-grunt-task-current-flags" href="#this-flags-grunt-task-current-flags" title="Link to this section">⚑</a>
+### this.flags / grunt.task.current.flags <a name="this-flags-grunt-task-current-flags" href="#this-flags-grunt-task-current-flags" title="Link to this section">#</a>
 An object generated from the arguments passed to the task. For example, if a "sample" task was run as `grunt sample:foo:bar`, inside the task function, `this.flags` would be `{foo: true, bar: true}`. In a multi task, the target name is not set as a flag.
 
-### this.errorCount / grunt.task.current.errorCount <a name="this-errorcount-grunt-task-current-errorcount" href="#this-errorcount-grunt-task-current-errorcount" title="Link to this section">⚑</a>
+### this.errorCount / grunt.task.current.errorCount <a name="this-errorcount-grunt-task-current-errorcount" href="#this-errorcount-grunt-task-current-errorcount" title="Link to this section">#</a>
 The number of [grunt.log.error](api_log.md) calls that occurred during this task. This can be used to fail a task if errors occurred during the task.
 
 
-## Inside Multi Tasks <a name="inside-multi-tasks" href="#inside-multi-tasks" title="Link to this section">⚑</a>
+## Inside Multi Tasks <a name="inside-multi-tasks" href="#inside-multi-tasks" title="Link to this section">#</a>
 
-### this.target / grunt.task.current.target <a name="this-target-grunt-task-current-target" href="#this-target-grunt-task-current-target" title="Link to this section">⚑</a>
+### this.target / grunt.task.current.target <a name="this-target-grunt-task-current-target" href="#this-target-grunt-task-current-target" title="Link to this section">#</a>
 In a multi task, this is the name of the target currently being iterated over. For example, if a "sample" multi task was run as `grunt sample:foo` with the config data `{sample: {foo: "bar"}}`, inside the task function, `this.target` would be `"foo"`.
 
-### this.data / grunt.task.current.data <a name="this-data-grunt-task-current-data" href="#this-data-grunt-task-current-data" title="Link to this section">⚑</a>
+### this.data / grunt.task.current.data <a name="this-data-grunt-task-current-data" href="#this-data-grunt-task-current-data" title="Link to this section">#</a>
 In a multi task, this is the actual data stored in the grunt config object for the given target. For example, if a "sample" multi task was run as `grunt sample:foo` with the config data `{sample: {foo: "bar"}}`, inside the task function, `this.data` would be `"bar"`.
 
-### this.file / grunt.task.current.file <a name="this-file-grunt-task-current-file" href="#this-file-grunt-task-current-file" title="Link to this section">⚑</a>
+### this.file / grunt.task.current.file <a name="this-file-grunt-task-current-file" href="#this-file-grunt-task-current-file" title="Link to this section">#</a>
 In a multi task, target data can be stored in two different formats. A relatively basic "compact" format and a much more flexible "full" format. When the compact format is used, that key and value are made available as `this.file.dest` and `this.file.src`, respectively. When the full format is used, the specified `src` and `dest` values are used for `this.file.dest` and `this.file.src`.
 
 Note that while grunt supports expanding [templates](api_template.md) for both `src` and `dest`, they only work for the `dest` file path when the _full_ format is used.
@@ -272,13 +272,13 @@ grunt.initConfig({
 ```
 
 
-## Loading Externally-Defined Tasks <a name="loading-externally-defined-tasks" href="#loading-externally-defined-tasks" title="Link to this section">⚑</a>
-For most projects, tasks and helpers will be defined in the [grunt.js gruntfile](getting_started.md). For larger projects, or in cases where tasks and helpers need to be shared across projects, tasks can be loaded from one or more external directories or Npm-installed grunt plugins.
+## Loading Externally-Defined Tasks <a name="loading-externally-defined-tasks" href="#loading-externally-defined-tasks" title="Link to this section">#</a>
+For most projects, tasks and helpers will be defined in the [Gruntfile](getting_started.md). For larger projects, or in cases where tasks and helpers need to be shared across projects, tasks can be loaded from one or more external directories or Npm-installed grunt plugins.
 
 _Note that the methods listed below are also available on the [grunt.task](api_task.md) object in addition to the `grunt` object._
 
-### grunt.loadTasks <a name="grunt-loadtasks" href="#grunt-loadtasks" title="Link to this section">⚑</a>
-Load task-related files from the specified directory, relative to the [grunt.js gruntfile](getting_started.md). This method can be used to load task-related files from a local grunt plugin by specifying the path to that plugin's "tasks" subdirectory.
+### grunt.loadTasks <a name="grunt-loadtasks" href="#grunt-loadtasks" title="Link to this section">#</a>
+Load task-related files from the specified directory, relative to the [Gruntfile](getting_started.md). This method can be used to load task-related files from a local grunt plugin by specifying the path to that plugin's "tasks" subdirectory.
 
 ```javascript
 grunt.loadTasks(tasksPath)
@@ -287,8 +287,8 @@ grunt.loadTasks(tasksPath)
 _This method is an alias for the [grunt.task.loadTasks](api_task.md) method._
 
 
-### grunt.loadNpmTasks <a name="grunt-loadnpmtasks" href="#grunt-loadnpmtasks" title="Link to this section">⚑</a>
-Load tasks and helpers from the specified grunt plugin. This plugin must be installed locally via npm, and must be relative to the [grunt.js gruntfile](getting_started.md). Grunt plugins can be created by using the [gruntplugin init template](task_init.md).
+### grunt.loadNpmTasks <a name="grunt-loadnpmtasks" href="#grunt-loadnpmtasks" title="Link to this section">#</a>
+Load tasks and helpers from the specified grunt plugin. This plugin must be installed locally via npm, and must be relative to the [Gruntfile](getting_started.md). Grunt plugins can be created by using the [gruntplugin init template](task_init.md).
 
 ```javascript
 grunt.loadNpmTasks(pluginName)
@@ -297,7 +297,7 @@ grunt.loadNpmTasks(pluginName)
 _This method is an alias for the [grunt.task.loadNpmTasks](api_task.md) method._
 
 
-## Defining and Executing Helpers <a name="defining-and-executing-helpers" href="#defining-and-executing-helpers" title="Link to this section">⚑</a>
+## Defining and Executing Helpers <a name="defining-and-executing-helpers" href="#defining-and-executing-helpers" title="Link to this section">#</a>
 Helpers are utility functions that can be used by any task.
 
 For example, in the [min task](../tasks/min.js), the majority of the actual minification work is done in an `uglify` helper, so that other tasks can utilize that minification code if they want to.
@@ -306,7 +306,7 @@ See the list of [built-in helpers](helpers_directives.md) for examples.
 
 _Note that the methods listed below are also available on the [grunt.task](api_task.md) object in addition to the `grunt` object._
 
-### grunt.registerHelper <a name="grunt-registerhelper" href="#grunt-registerhelper" title="Link to this section">⚑</a>
+### grunt.registerHelper <a name="grunt-registerhelper" href="#grunt-registerhelper" title="Link to this section">#</a>
 Register a helper function that can be used by any task. When called as a directive, `this.directive` will be true inside of the helper.
 
 ```javascript
@@ -323,7 +323,7 @@ grunt.registerHelper('add_two_nums', function(a, b) {
 
 _This method is an alias for the [grunt.task.registerHelper](api_task.md) method._
 
-### grunt.renameHelper <a name="grunt-renamehelper" href="#grunt-renamehelper" title="Link to this section">⚑</a>
+### grunt.renameHelper <a name="grunt-renamehelper" href="#grunt-renamehelper" title="Link to this section">#</a>
 Rename a helper. This might be useful if you want to override the default behavior of a helper, while retaining the old name (to avoid having to completely recreate an already-made task just because you needed to override or extend a built-in helper).
 
 ```javascript
@@ -332,7 +332,7 @@ grunt.renameHelper(oldname, newname)
 
 _This method is an alias for the [grunt.task.renameHelper](api_task.md) method._
 
-### grunt.helper <a name="grunt-helper" href="#grunt-helper" title="Link to this section">⚑</a>
+### grunt.helper <a name="grunt-helper" href="#grunt-helper" title="Link to this section">#</a>
 Invoke a registered helper function.
 
 ```javascript
@@ -348,10 +348,10 @@ grunt.helper('add_two_nums', 1, 2) // 3
 _This method is an alias for the [grunt.task.helper](api_task.md) method._
 
 
-## Warnings and Fatal Errors <a name="warnings-and-fatal-errors" href="#warnings-and-fatal-errors" title="Link to this section">⚑</a>
+## Warnings and Fatal Errors <a name="warnings-and-fatal-errors" href="#warnings-and-fatal-errors" title="Link to this section">#</a>
 If something explodes (or is about to explode) inside a helper or task, it can force grunt to abort. See the [exit codes documentation](exit_codes.md) for a list of all built-in grunt exit codes.
 
-### grunt.warn <a name="grunt-warn" href="#grunt-warn" title="Link to this section">⚑</a>
+### grunt.warn <a name="grunt-warn" href="#grunt-warn" title="Link to this section">#</a>
 Display a warning and abort grunt immediately. Grunt will continue processing tasks if the `--force` command-line option was specified. The `error` argument can be a string message or an error object.
 
 ```javascript
@@ -362,7 +362,7 @@ If `--debug 9` is specified on the command-line and an error object was specifie
 
 _This method is an alias for the [grunt.fail.warn](api_fail.md) method._
 
-### grunt.fatal <a name="grunt-fatal" href="#grunt-fatal" title="Link to this section">⚑</a>
+### grunt.fatal <a name="grunt-fatal" href="#grunt-fatal" title="Link to this section">#</a>
 Display a warning and abort grunt immediately. The `error` argument can be a string message or an error object.
 
 ```javascript
@@ -374,37 +374,37 @@ If `--debug 9` is specified on the command-line and an error object was specifie
 _This method is an alias for the [grunt.fail.fatal](api_fail.md) method._
 
 
-## Command-line Options <a name="command-line-options" href="#command-line-options" title="Link to this section">⚑</a>
+## Command-line Options <a name="command-line-options" href="#command-line-options" title="Link to this section">#</a>
 
-### grunt.option <a name="grunt-option" href="#grunt-option" title="Link to this section">⚑</a>
+### grunt.option <a name="grunt-option" href="#grunt-option" title="Link to this section">#</a>
 Retrieve the value of a command-line option, eg. `debug`. Note that for each command-line option, the inverse can be tested, eg. `no-debug`.
 
 ```javascript
 grunt.option(optionName)
 ```
 
-## Miscellaneous <a name="miscellaneous" href="#miscellaneous" title="Link to this section">⚑</a>
+## Miscellaneous <a name="miscellaneous" href="#miscellaneous" title="Link to this section">#</a>
 
-### grunt.version <a name="grunt-version" href="#grunt-version" title="Link to this section">⚑</a>
+### grunt.version <a name="grunt-version" href="#grunt-version" title="Link to this section">#</a>
 The current grunt version, as a string.
 
 ```javascript
 grunt.version
 ```
 
-### grunt.npmTasks <a name="grunt-npmtasks" href="#grunt-npmtasks" title="Link to this section">⚑</a>
+### grunt.npmTasks <a name="grunt-npmtasks" href="#grunt-npmtasks" title="Link to this section">#</a>
 Inside a [grunt plugin](plugins.md) bin script, this method _must_ be called to inform grunt where to look for that plugin's tasks files. The `npmModuleName` must be the grunt plugin's Npm module name. The [gruntplugin init template](task_init.md), will automatically configure this for you.
 
 ```javascript
 grunt.npmTasks(npmModuleName)
 ```
 
-## Other Methods <a name="other-methods" href="#other-methods" title="Link to this section">⚑</a>
+## Other Methods <a name="other-methods" href="#other-methods" title="Link to this section">#</a>
 
-* [grunt.utils](api_utils.md) - Miscellaneous utilities, including Underscore.js, Async and Hooker.
+* [grunt.util](api_util.md) - Miscellaneous utilities, including Underscore.js, Async and Hooker.
 * [grunt.template](api_template.md) - Underscore.js template processing and other template-related methods.
 * [grunt.task](api_task.md) - Register and run tasks and helpers, load external tasks.
 * [grunt.file](api_file.md) - Wildcard expansion, file reading, writing, directory traversing.
-* [grunt.config](api_config.md) - Access project-specific configuration data defined in the [grunt.js gruntfile](getting_started.md).
+* [grunt.config](api_config.md) - Access project-specific configuration data defined in the [Gruntfile](getting_started.md).
 * [grunt.log](api_log.md), [grunt.verbose](api_log.md) - Output messages to the console.
 * [grunt.fail](api_fail.md) - For when something goes horribly wrong.

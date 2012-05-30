@@ -1,6 +1,6 @@
 /*
  * grunt
- * https://github.com/cowboy/grunt
+ * http://gruntjs.com/
  *
  * Copyright (c) 2012 "Cowboy" Ben Alman
  * Licensed under the MIT license.
@@ -22,14 +22,11 @@ exports.template = function(grunt, init, done) {
 
   grunt.helper('prompt', {type: 'grunt'}, [
     // Prompt for these values.
-    grunt.helper('prompt_for', 'name', function(value, data, done) {
-      // Prepend "grunt-" to default name if not already there.
-      data.short_name = value;
-      value = data.full_name = 'grunt-' + value;
-      // if (!/^grunt-/.test(value)) { value = 'grunt-' + value; }
-      done(null, value);
+    grunt.helper('prompt_for', 'name', function(value, props, done) {
+      // Prepend grunt- to default name.
+      done(null, 'grunt-' + value);
     }),
-    grunt.helper('prompt_for', 'description', 'The best sample grunt tasks ever.'),
+    grunt.helper('prompt_for', 'description', 'The best grunt tasks ever.'),
     grunt.helper('prompt_for', 'version'),
     grunt.helper('prompt_for', 'repository'),
     grunt.helper('prompt_for', 'homepage'),
@@ -42,7 +39,8 @@ exports.template = function(grunt, init, done) {
     grunt.helper('prompt_for', 'node_version', '*')
   ], function(err, props) {
     // Set a few grunt-plugin-specific properties.
-    props.main = 'grunt.js';
+    props.short_name = props.name.replace(/^grunt[\-_]?/, '');
+    props.main = 'Gruntfile.js';
     props.npm_test = 'grunt test';
     props.bin = 'bin/' + props.name;
     props.dependencies = {grunt: props.grunt_version};

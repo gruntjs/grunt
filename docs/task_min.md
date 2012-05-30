@@ -1,18 +1,18 @@
-[Grunt homepage](https://github.com/cowboy/grunt) | [Documentation table of contents](toc.md)
+[Grunt homepage](http://gruntjs.com/) | [Documentation table of contents](toc.md)
 
 # min (built-in task)
 Minify files with [UglifyJS][uglify].
 
 [uglify]: https://github.com/mishoo/UglifyJS/
 
-## About <a name="about" href="#about" title="Link to this section">⚑</a>
+## About <a name="about" href="#about" title="Link to this section">#</a>
 
 This task is a [multi task](types_of_tasks.md), meaning that grunt will automatically iterate over all `min` targets if a target is not specified.
 
 _Need some help getting started with grunt? Visit the [getting started](getting_started.md) page. And if you're creating your own tasks or helpers, be sure to check out the [types of tasks](types_of_tasks.md) page as well as the [API documentation](api.md)._
 
-## A Very Important Note <a name="a-very-important-note" href="#a-very-important-note" title="Link to this section">⚑</a>
-Your `grunt.js` gruntfile **must** contain this code, once and **only** once. If it doesn't, grunt won't work. For the sake of brevity, this "wrapper" code has been omitted from all examples on this page, but it needs to be there.
+## A Very Important Note <a name="a-very-important-note" href="#a-very-important-note" title="Link to this section">#</a>
+Your Gruntfile **must** contain this code, once and **only** once. If it doesn't, grunt won't work. For the sake of brevity, this "wrapper" code has been omitted from all examples on this page, but it needs to be there.
 
 ```javascript
 module.exports = function(grunt) {
@@ -20,7 +20,7 @@ module.exports = function(grunt) {
 };
 ```
 
-## Project configuration <a name="project-configuration" href="#project-configuration" title="Link to this section">⚑</a>
+## Project configuration <a name="project-configuration" href="#project-configuration" title="Link to this section">#</a>
 
 This example shows a brief overview of the [config](api_config.md) properties used by the `min` task. For a more in-depth explanation, see the usage examples.
 
@@ -34,9 +34,9 @@ grunt.initConfig({
 });
 ```
 
-## Usage examples <a name="usage-examples" href="#usage-examples" title="Link to this section">⚑</a>
+## Usage examples <a name="usage-examples" href="#usage-examples" title="Link to this section">#</a>
 
-### Minifying individual files <a name="minifying-individual-files" href="#minifying-individual-files" title="Link to this section">⚑</a>
+### Minifying individual files <a name="minifying-individual-files" href="#minifying-individual-files" title="Link to this section">#</a>
 
 In this example, running `grunt min:dist` (or `grunt min` because `min` is a [multi task](types_of_tasks.md)) will minify the specified source file, writing the output to `dist/built.min.js`.
 
@@ -54,7 +54,7 @@ grunt.initConfig({
 });
 ```
 
-### Minifying while concatenating files <a name="minifying-while-concatenating-files" href="#minifying-while-concatenating-files" title="Link to this section">⚑</a>
+### Minifying while concatenating files <a name="minifying-while-concatenating-files" href="#minifying-while-concatenating-files" title="Link to this section">#</a>
 
 In this example, running `grunt min:dist` (or `grunt min` because `min` is a [multi task](types_of_tasks.md)) will first concatenate the three specified source files, in order, minifying the result and writing the output to `dist/built.min.js`.
 
@@ -87,7 +87,7 @@ grunt.initConfig({
 });
 ```
 
-### Minifying and concatenating separately <a name="minifying-and-concatenating-separately" href="#minifying-and-concatenating-separately" title="Link to this section">⚑</a>
+### Minifying and concatenating separately <a name="minifying-and-concatenating-separately" href="#minifying-and-concatenating-separately" title="Link to this section">#</a>
 
 Often, it's desirable to create both unminified and minified distribution files. In these cases, the [concat task](task_concat.md) should be run first, followed by the `min` task.
 
@@ -113,7 +113,7 @@ grunt.initConfig({
 });
 ```
 
-### Banner comments <a name="banner-comments" href="#banner-comments" title="Link to this section">⚑</a>
+### Banner comments <a name="banner-comments" href="#banner-comments" title="Link to this section">#</a>
 
 In this example, running `grunt min:dist` (or `grunt min` because `min` is a [multi task](types_of_tasks.md)) will first strip any preexisting comments from the `src/project.js` file (because that's how UglifyJS works), then concatenate the result with a newly-generated banner comment, writing the output to `dist/built.js`.
 
@@ -138,7 +138,7 @@ grunt.initConfig({
 });
 ```
 
-### Specifying UglifyJS options <a name="specifying-uglifyjs-options" href="#specifying-uglifyjs-options" title="Link to this section">⚑</a>
+### Specifying UglifyJS options <a name="specifying-uglifyjs-options" href="#specifying-uglifyjs-options" title="Link to this section">#</a>
 
 In this example, custom UglifyJS `mangle`, `squeeze` and `codegen` options are specified. The listed methods and their expected options are explained in the API section of the [UglifyJS documentation][uglify]:
 
@@ -163,7 +163,7 @@ grunt.initConfig({
 });
 ```
 
-## Helpers <a name="helpers" href="#helpers" title="Link to this section">⚑</a>
+## Helpers <a name="helpers" href="#helpers" title="Link to this section">#</a>
 
 A generic `uglify` helper is available for use in any other task where file minification might be useful. For example:
 

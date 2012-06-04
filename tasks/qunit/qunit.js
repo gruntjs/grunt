@@ -9,6 +9,8 @@
 
 /*global QUnit:true, alert:true*/
 
+'use strict';
+
 // Don't re-order tests.
 QUnit.config.reorder = false;
 // Run tests serially, not in parallel.

@@ -7,6 +7,8 @@
  * http://benalman.com/about/license/
  */
 
+'use strict';
+
 module.exports = function(grunt) {
 
   // Nodejs libs.

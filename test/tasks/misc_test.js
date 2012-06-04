@@ -1,3 +1,5 @@
+'use strict';
+
 var grunt = require('../../lib/grunt');
 
 // In case the grunt being used to test is different than the grunt being

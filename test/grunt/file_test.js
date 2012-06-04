@@ -180,6 +180,15 @@ exports['file.expand*'] = {
     test.deepEqual(grunt.file.expand(['**/*.js', '**/*.css', '!**/*.css']), ['js/bar.js', 'js/foo.js'], 'negated wildcards should be removed from the matched set');
     test.deepEqual(grunt.file.expand(['!**/b*.*', 'js/bar.js', 'js/foo.js', 'css/baz.css', 'css/qux.css']), ['js/foo.js', 'css/qux.css'], 'different pattern for negation should still work');
     test.done();
+  },
+  'options.cwd': function(test) {
+    test.expect(4);
+    var opts = {cwd: path.resolve(process.cwd(), '..')};
+    test.deepEqual(grunt.file.expand(opts, ['expand/js', 'expand/js/*']), ['expand/js/', 'expand/js/bar.js', 'expand/js/foo.js'], 'should match.');
+    test.deepEqual(grunt.file.expandFiles(opts, ['expand/js', 'expand/js/*']), ['expand/js/bar.js', 'expand/js/foo.js'], 'should match.');
+    test.deepEqual(grunt.file.expandDirs(opts, ['expand/js', 'expand/js/*']), ['expand/js/'], 'should match.');
+    test.deepEqual(grunt.file.expandFiles(opts, ['expand/js', 'expand/js/*', '!**/b*.js']), ['expand/js/foo.js'], 'should negate properly.');
+    test.done();
   }
 };
 

@@ -7,6 +7,8 @@
  * http://benalman.com/about/license/
  */
 
+'use strict';
+
 // Basic template description.
 exports.description = 'Create a Node.js module, including Nodeunit unit tests.';
 

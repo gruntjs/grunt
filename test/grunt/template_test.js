@@ -1,3 +1,5 @@
+'use strict';
+
 var grunt = require('../../lib/grunt');
 
 exports['template'] = {

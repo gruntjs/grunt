@@ -1,3 +1,5 @@
+'use strict';
+
 // Test helpers.
 function delay(fn) { setTimeout(fn, 10); }
 
@@ -13,7 +15,7 @@ var result = (function() {
   };
 }());
 
-var requireTask = require.bind(this, '../../lib/util/task.js');
+var requireTask = require.bind(exports, '../../lib/util/task.js');
 
 exports['new Task'] = {
   'create': function(test) {

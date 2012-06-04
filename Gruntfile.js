@@ -7,6 +7,8 @@
  * http://benalman.com/about/license/
  */
 
+'use strict';
+
 module.exports = function(grunt) {
 
   // Project configuration.
@@ -43,8 +45,7 @@ module.exports = function(grunt) {
         boss: true,
         eqnull: true,
         node: true,
-        es5: true,
-        strict: false
+        es5: true
       },
       globals: {}
     }

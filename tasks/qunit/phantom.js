@@ -9,6 +9,8 @@
 
 /*global phantom:true*/
 
+'use strict';
+
 var fs = require('fs');
 
 // The temporary file used for communications.

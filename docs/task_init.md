@@ -102,7 +102,7 @@ If, for some reason, you want to rename or exclude files, you can edit the afore
 
 A few notes about `rename.json`:
 
-* If `false` is specified for the `destpath` the file will not be copied.
+* If `false` is specified as a `destpath` the file will not be copied (glob pattern is supported for `srcpath`).
 * The `rename.json` file is _merged_ using `grunt.task.readDefaults` so it _overrides_ built-in values.
 
 ## Creating custom templates <a name="creating-custom-templates" href="#creating-custom-templates" title="Link to this section">#</a>

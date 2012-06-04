@@ -57,6 +57,13 @@ exports['file.match'] = {
     test.deepEqual(grunt.file.match(['<omg:a:b>', '*.js'], 'foo.js'), ['foo.js'], 'should filter out directives.');
     test.done();
   },
+  'exclude': function(test) {
+    test.expect(3);
+    test.deepEqual(grunt.file.match(['*.js', '!*.js'], ['foo.js', 'bar.js']), [], 'negation should cancel match');
+    test.deepEqual(grunt.file.match(['*.js', '!f*.js'], ['foo.js', 'bar.js', 'baz.js']), ['bar.js', 'baz.js'], 'partial negation should partially cancel match');
+    test.deepEqual(grunt.file.match(['!b*.js', '*.js'], ['foo.js', 'bar.js', 'baz.js']), ['foo.js'], 'partial negation should partially cancel match');
+    test.done();
+  },
   'options.matchBase': function(test) {
     test.expect(2);
     test.deepEqual(grunt.file.match({matchBase: true}, '*.js', ['foo.js', 'bar', 'baz/xyz.js']), ['foo.js', 'baz/xyz.js'], 'should matchBase (minimatch) when specified.');

@@ -254,6 +254,38 @@ exports['file'] = {
     ['test/fixtures/test_copy.js', 'test/fixtures/test_copy.png'].forEach(fs.unlinkSync);
     test.done();
   },
+  'exists': function(test) {
+    test.expect(4);
+    test.ok(grunt.file.exists('test/fixtures/octocat.png'), 'should return true');
+    test.ok(grunt.file.exists('test/fixtures/octocat-link.png'), 'should return true');
+    test.ok(grunt.file.exists('test/fixtures'), 'should return true');
+    test.equal(grunt.file.exists('test/fixtures/does/not/exist'), false, 'should return false');
+    test.done();
+  },
+  'isLink': function(test) {
+    test.expect(4);
+    test.equals(grunt.file.isLink('test/fixtures/octocat.png'), false, 'should return false');
+    test.ok(grunt.file.isLink('test/fixtures/octocat-link.png'), 'should return true');
+    test.equals(grunt.file.isLink('test/fixtures'), false, 'should return false');
+    test.equals(grunt.file.isLink('test/fixtures/does/not/exist'), false, 'should return false');
+    test.done();
+  },
+  'isDir': function(test) {
+    test.expect(4);
+    test.equals(grunt.file.isDir('test/fixtures/octocat.png'), false, 'should return false');
+    test.equals(grunt.file.isDir('test/fixtures/octocat-link.png'), false, 'should return false');
+    test.ok(grunt.file.isDir('test/fixtures'), 'should return true');
+    test.equals(grunt.file.isDir('test/fixtures/does/not/exist'), false, 'should return false');
+    test.done();
+  },
+  'isFile': function(test) {
+    test.expect(4);
+    test.ok(grunt.file.isFile('test/fixtures/octocat.png'), 'should return true');
+    test.ok(grunt.file.isFile('test/fixtures/octocat-link.png'), 'should return true');
+    test.equals(grunt.file.isFile('test/fixtures'), false, 'should return false');
+    test.equals(grunt.file.isFile('test/fixtures/does/not/exist'), false, 'should return false');
+    test.done();
+  },
   'recurse': function(test) {
     test.expect(1);
     var rootdir = 'test/fixtures/expand';

@@ -186,6 +186,48 @@ This method behaves similarly to `grunt.file.match` except it simply returns `tr
 ### grunt.file.watchFiles <a name="grunt-file-watchfiles" href="#grunt-file-watchfiles" title="Link to this section">#</a>
 An object with two properties, `grunt.file.watchFiles.changed` and `grunt.file.watchFiles.deleted` that each contain an array of files changed or deleted since the last time the [watch task](task_watch.md) was run. If the watch task hasn't run, both properties will be `null`.
 
+### grunt.file.exists <a name="grunt-file-exists" href="#grunt-file-exists" title="Link to this section">#</a>
+Does the given path exist? Returns a boolean.
+
+Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
+
+```javascript
+grunt.file.exists(path1 [, path2 [, ...]])
+```
+
+### grunt.file.isLink <a name="grunt-file-islink" href="#grunt-file-islink" title="Link to this section">#</a>
+Is the given path a symbolic link? Returns a boolean.
+
+Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
+
+```javascript
+grunt.file.isLink(path1 [, path2 [, ...]])
+```
+
+Returns false if the path doesn't exist.
+
+### grunt.file.isDir <a name="grunt-file-isdir" href="#grunt-file-isdir" title="Link to this section">#</a>
+Is the given path a directory? Returns a boolean.
+
+Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
+
+```javascript
+grunt.file.isDir(path1 [, path2 [, ...]])
+```
+
+Returns false if the path doesn't exist.
+
+### grunt.file.isFile <a name="grunt-file-isfile" href="#grunt-file-isfile" title="Link to this section">#</a>
+Is the given path a file? Returns a boolean.
+
+Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
+
+```javascript
+grunt.file.isFile(path1 [, path2 [, ...]])
+```
+
+Returns false if the path doesn't exist.
+
 ## External libraries <a name="external-libraries" href="#external-libraries" title="Link to this section">#</a>
 
 ### grunt.file.glob <a name="grunt-file-glob" href="#grunt-file-glob" title="Link to this section">#</a>

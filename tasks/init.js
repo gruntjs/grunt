@@ -98,15 +98,22 @@ module.exports = function(grunt) {
       // rename.json (if it exists).
       filesToCopy: function(props) {
         var files = {};
+        // Exclusion patterns.
+        var patterns = Object.keys(init.renames).filter(function(key) {
+          return !init.renames[key];
+        }).map(function(key) {
+          return '!' + pathPrefix + key;
+        });
+        // Inclusion pattern.
+        patterns.push(pathPrefix + '**');
         // Iterate over all source files.
-        grunt.task.expandFiles({dot: true}, pathPrefix + '**').forEach(function(obj) {
-          // Get the path relative to the template root.
-          var relpath = obj.rel.slice(pathPrefix.length);
-          var rule = init.renames[relpath];
-          // Omit files that have an empty / false rule value.
-          if (!rule && relpath in init.renames) { return; }
+        grunt.task.expandFiles({dot: true}, patterns).forEach(function(obj) {
+          // Get the source filepath relative to the template root.
+          var src = obj.rel.slice(pathPrefix.length);
+          // Get the destination filepath.
+          var dest = init.renames[src];
           // Create a property for this file.
-          files[rule ? grunt.template.process(rule, props, {delimiters: 'init'}) : relpath] = obj.rel;
+          files[dest ? grunt.template.process(dest, props, {delimiters: 'init'}) : src] = obj.rel;
         });
         return files;
       },

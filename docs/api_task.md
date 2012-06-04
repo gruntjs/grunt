@@ -366,7 +366,7 @@ grunt.task.getFile(path1 [, path2 [, ...]])
 ```
 
 ### grunt.task.expand <a name="grunt-task-expand" href="#grunt-task-expand" title="Link to this section">#</a>
-Search task "search directories" for the given wildcard pattern(s), returning a unique array of all matching file paths as "file objects" in `grunt.task.searchDirs` "task path order." This method accepts one or more comma separated wildcard patterns as well as an array of wildcard patterns.
+Search task "search directories" for the given wildcard pattern(s), returning a unique array of all matching file paths as "file objects" in `grunt.task.searchDirs` "task path order." This method accepts one or more comma separated wildcard patterns as well as an array of wildcard patterns. Paths matching patterns that begin with `!` will be excluded from the returned array.
 
 The `options` object supports all [minimatch](https://github.com/isaacs/minimatch) options.
 

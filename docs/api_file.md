@@ -172,7 +172,7 @@ grunt.file.findup(rootdir, patterns)
 ```
 
 ### grunt.file.match <a name="grunt-file-match" href="#grunt-file-match" title="Link to this section">#</a>
-Match one or more wildcard patterns against one or more file paths. Returns a uniqued array of all file paths that match any of the specified wildcard patterns. Both the `patterns` and `filepaths` argument can be a single string or array of strings.
+Match one or more wildcard patterns against one or more file paths. Returns a uniqued array of all file paths that match any of the specified wildcard patterns. Both the `patterns` and `filepaths` argument can be a single string or array of strings. Paths matching patterns that begin with `!` will be excluded from the returned array.
 
 ```javascript
 grunt.file.match([options, ] patterns, filepaths)

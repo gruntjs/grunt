@@ -163,14 +163,6 @@ exports['file.expand*'] = {
     test.deepEqual(grunt.file.expand(['<omg:a:b>', '**/*.js']), ['<omg:a:b>', 'js/bar.js', 'js/foo.js'], 'should retain valid directives.');
     test.done();
   },
-  'options': function(test) {
-    test.expect(4);
-    test.deepEqual(grunt.file.expand('*.js'), [], 'should not matchBase (minimatch) by default.');
-    test.deepEqual(grunt.file.expand({matchBase: true}, '*.js'), ['js/bar.js', 'js/foo.js'], 'options should be passed through to minimatch.');
-    test.deepEqual(grunt.file.expand({matchBase: true}, '*.js', '*.css'), ['js/bar.js', 'js/foo.js', 'css/baz.css', 'css/qux.css'], 'should match.');
-    test.deepEqual(grunt.file.expand({matchBase: true}, ['*.js', '*.css']), ['js/bar.js', 'js/foo.js', 'css/baz.css', 'css/qux.css'], 'should match.');
-    test.done();
-  },
   'exclude': function(test) {
     test.expect(6);
     test.deepEqual(grunt.file.expand(['js/bar.js','!js/bar.js']), [], 'negation should cancel match');
@@ -179,6 +171,15 @@ exports['file.expand*'] = {
     test.deepEqual(grunt.file.expand(['**/*.js', '**/*.css', '!js/bar.js', '!css/baz.css']), ['js/foo.js','css/qux.css'], 'multiple negations should be removed from the set');
     test.deepEqual(grunt.file.expand(['**/*.js', '**/*.css', '!**/*.css']), ['js/bar.js', 'js/foo.js'], 'negated wildcards should be removed from the matched set');
     test.deepEqual(grunt.file.expand(['!**/b*.*', 'js/bar.js', 'js/foo.js', 'css/baz.css', 'css/qux.css']), ['js/foo.js', 'css/qux.css'], 'different pattern for negation should still work');
+    test.done();
+  },
+  'options.matchBase': function(test) {
+    test.expect(4);
+    var opts = {matchBase: true};
+    test.deepEqual(grunt.file.expand('*.js'), [], 'should not matchBase (minimatch) by default.');
+    test.deepEqual(grunt.file.expand(opts, '*.js'), ['js/bar.js', 'js/foo.js'], 'options should be passed through to minimatch.');
+    test.deepEqual(grunt.file.expand(opts, '*.js', '*.css'), ['js/bar.js', 'js/foo.js', 'css/baz.css', 'css/qux.css'], 'should match.');
+    test.deepEqual(grunt.file.expand(opts, ['*.js', '*.css']), ['js/bar.js', 'js/foo.js', 'css/baz.css', 'css/qux.css'], 'should match.');
     test.done();
   },
   'options.cwd': function(test) {

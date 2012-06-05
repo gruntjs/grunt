@@ -38,6 +38,14 @@ function sendDebugMessage() {
   sendMessage(['debug'].concat([].slice.call(arguments)));
 }
 
+// Sent an environment message.
+function sendEnvMessage(name) {
+  sendMessage(['env_' + name].concat([].slice.call(arguments, 1)));
+}
+
+// This allows grunt to abort if the PhantomJS version isn't adequate.
+sendEnvMessage('version', phantom.version);
+
 // Abort if QUnit doesn't do anything for a while.
 setInterval(function() {
   if (new Date() - last > 5000) {

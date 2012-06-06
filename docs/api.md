@@ -385,8 +385,15 @@ grunt.option(optionName)
 
 ## Miscellaneous <a name="miscellaneous" href="#miscellaneous" title="Link to this section">#</a>
 
+### grunt.package <a name="grunt-package" href="#grunt-package" title="Link to this section">#</a>
+The current grunt `package.json` metadata, as an object.
+
+```javascript
+grunt.package
+```
+
 ### grunt.version <a name="grunt-version" href="#grunt-version" title="Link to this section">#</a>
-The current grunt version, as a string.
+The current grunt version, as a string. This is just a shortcut to the `grunt.package.version` property.
 
 ```javascript
 grunt.version

@@ -163,6 +163,12 @@ An object generated from the arguments passed to the task. For example, if a "sa
 ### this.errorCount / grunt.task.current.errorCount <a name="this-errorcount-grunt-task-current-errorcount" href="#this-errorcount-grunt-task-current-errorcount" title="Link to this section">#</a>
 The number of [grunt.log.error](api_log.md) calls that occurred during this task. This can be used to fail a task if errors occurred during the task.
 
+### this.options / grunt.task.current.options <a name="this-options-grunt-task-current-options" href="#this-options-grunt-task-current-options" title="Link to this section">#</a>
+Returns a task-specific options object. This object contains properties merged from the optional `defaultsObj` argument, which can be overridden by a task-specific `options` property (and for multi tasks, an additional target-specific `options` property) in the config data.
+
+```javascript
+this.options([defaultsObj])
+```
 
 ## Inside Multi Tasks <a name="inside-multi-tasks" href="#inside-multi-tasks" title="Link to this section">#</a>
 

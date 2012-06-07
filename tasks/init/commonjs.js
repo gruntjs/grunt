@@ -33,7 +33,7 @@ exports.template = function(grunt, init, done) {
     grunt.helper('prompt_for', 'author_name'),
     grunt.helper('prompt_for', 'author_email'),
     grunt.helper('prompt_for', 'author_url'),
-    grunt.helper('prompt_for', 'node_version', '*'),
+    grunt.helper('prompt_for', 'node_version'),
     grunt.helper('prompt_for', 'main'),
     grunt.helper('prompt_for', 'npm_test')
   ], function(err, props) {

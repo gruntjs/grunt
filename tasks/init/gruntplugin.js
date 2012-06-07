@@ -38,7 +38,7 @@ exports.template = function(grunt, init, done) {
     grunt.helper('prompt_for', 'author_email'),
     grunt.helper('prompt_for', 'author_url'),
     grunt.helper('prompt_for', 'grunt_version'),
-    grunt.helper('prompt_for', 'node_version', '*')
+    grunt.helper('prompt_for', 'node_version', grunt.package.engines.node)
   ], function(err, props) {
     // Set a few grunt-plugin-specific properties.
     props.short_name = props.name.replace(/^grunt[\-_]?/, '');

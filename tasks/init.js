@@ -535,7 +535,7 @@ module.exports = function(grunt) {
     },
     node_version: {
       message: 'What versions of node does it run on?',
-      default: '~' + process.versions.node,
+      default: '*',
       warning: 'Must be a valid semantic version range descriptor.'
     },
     main: {

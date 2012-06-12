@@ -30,7 +30,7 @@
 
   test('is chainable', 1, function() {
     // Not a bad test to run on collection methods.
-    strictEqual(this.elems.awesome(), this.elems, 'should be chaninable');
+    strictEqual(this.elems.awesome(), this.elems, 'should be chainable');
   });
 
   test('is awesome', 1, function() {

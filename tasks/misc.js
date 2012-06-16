@@ -18,6 +18,9 @@ module.exports = function(grunt) {
   // Get a config property. Most useful as a directive like <config:foo.bar>.
   grunt.registerHelper('config', grunt.config);
 
+  // Get a config property and process it as a template.
+  grunt.registerHelper('config_process', grunt.config.process);
+
   // Read a JSON file. Most useful as a directive like <json:package.json>.
   var jsons = {};
   grunt.registerHelper('json', function(filepath) {
@@ -61,8 +64,20 @@ module.exports = function(grunt) {
     return grunt.template.process(src);
   });
 
-  // Generate banner from template.
+  // Generate banner from template. This helper is deprecated.
+  var bannerWarned;
   grunt.registerHelper('banner', function(prop) {
+    if (!bannerWarned) {
+      bannerWarned = true;
+      grunt.log.errorlns('Note that the "banner" helper and directive have ' +
+        'been deprecated. Please use the more general "config_process" ' +
+        'helper and/or directive (which does NOT automatically add a ' +
+        'trailing newline!) instead. (grunt 0.4.0+)');
+      // This warning shouldn't cause tasks that look at this.errorCount to fail.
+      // TODO: come up with a better way to do non-error warnings.
+      grunt.fail.errorcount--;
+    }
+
     if (!prop) { prop = 'meta.banner'; }
     var banner;
     var tmpl = grunt.config(prop);

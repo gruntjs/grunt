@@ -1,7 +1,7 @@
 [Grunt homepage](http://gruntjs.com/) | [Documentation table of contents](toc.md)
 
 # concat (built-in task)
-Concatenate one or more input files (and/or [directives](helpers_directives.md) output, like `<banner>`) into an output file.
+Concatenate one or more input files (and/or [directives](helpers_directives.md) output, like `<config_process>`) into an output file.
 
 ## About <a name="about" href="#about" title="Link to this section">#</a>
 
@@ -25,7 +25,7 @@ This example shows a brief overview of the [Gruntfile](getting_started.md) confi
 ```javascript
 // Project configuration.
 grunt.initConfig({
-  // Project metadata, used by the <banner> directive.
+  // Project metadata, used by the (now deprecated) <banner> directive.
   meta: {},
   // Lists of files to be concatenated.
   concat: {}

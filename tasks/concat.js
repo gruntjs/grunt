@@ -16,12 +16,23 @@ module.exports = function(grunt) {
   // ==========================================================================
 
   grunt.registerMultiTask('concat', 'Concatenate files.', function() {
-    // Get any task- or target-specific options.
-    var options = this.options();
+    // Get any task- or target-specific options, using the top-level "banner"
+    // property (if it exists) as default.
+    var options = this.options({
+      separator: null,
+      banner: grunt.config('banner') || ''
+    });
+
     // The source files to be concatenated.
     var files = grunt.file.expandFiles(this.file.src);
-    // Concat specified files.
-    var src = grunt.helper('concat', files, {separator: options.separator});
+
+    // If banner wasn't specified, use empty string. Otherwise process banner
+    // and add a linefeed.
+    var banner = grunt.template.process(options.banner);
+
+    // Concat banner + specified files.
+    var src = banner + grunt.helper('concat', files, {separator: options.separator});
+
     // Write the destination file.
     grunt.file.write(this.file.dest, src);
 

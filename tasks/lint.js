@@ -19,60 +19,35 @@ module.exports = function(grunt) {
   // ==========================================================================
 
   grunt.registerMultiTask('lint', 'Validate files with JSHint.', function() {
-    // Get flags and globals, allowing target-specific options and globals to
-    // override the default options and globals.
-    var options, globals, tmp;
+    // Get any task- or target-specific options, using the top-level "jshint"
+    // property and its sub-properties (options, globals, jshintrc) as defaults.
+    var options = this.options(grunt.config('jshint'));
 
-    // Check for a jshintrc file.
-    if (tmp = grunt.config(['jshint', this.target, 'jshintrc'])) {
-      // If a target-specific jshintrc file was specified, read it.
-      grunt.verbose.writeln('Using "' + this.target + '" jshintrc file.');
-      options = grunt.file.readJSON(tmp);
-    } else if (tmp = grunt.config('jshint.jshintrc')) {
-      // If a global jshintrc file was specified, read it.
-      grunt.verbose.writeln('Using master jshintrc file.');
-      options = grunt.file.readJSON(tmp);
-    }
-
-    if (options) {
-      // A jshintrc file was read.
-      if (options.predef) {
+    // If a jshintrc file was specified, read it.
+    var jshintrc;
+    if (options.jshintrc) {
+      jshintrc = grunt.file.readJSON(options.jshintrc);
+      delete options.jshintrc;
+      // JSHint options and globals will be read from jshintrc file.
+      options.options = jshintrc;
+      options.globals = {};
+      if (jshintrc.predef) {
         // Temp kluge for https://github.com/jshint/node-jshint/issues/104
-        globals = {};
-        options.predef.forEach(function(key) {
-          globals[key] = true;
+        jshintrc.predef.forEach(function(key) {
+          options.globals[key] = true;
         });
-        delete options.predef;
-      }
-
-    } else {
-      // No jshintrc file was read.
-      tmp = grunt.config(['jshint', this.target, 'options']);
-      if (typeof tmp === 'object') {
-        grunt.verbose.writeln('Using "' + this.target + '" JSHint options.');
-        options = tmp;
-      } else {
-        grunt.verbose.writeln('Using master JSHint options.');
-        options = grunt.config('jshint.options');
-      }
-
-      tmp = grunt.config(['jshint', this.target, 'globals']);
-      if (typeof tmp === 'object') {
-        grunt.verbose.writeln('Using "' + this.target + '" JSHint globals.');
-        globals = tmp;
-      } else {
-        grunt.verbose.writeln('Using master JSHint globals.');
-        globals = grunt.config('jshint.globals');
+        delete jshintrc.predef;
       }
     }
 
-    grunt.verbose.writeflags(options, 'JSHint options');
-    grunt.verbose.writeflags(globals, 'JSHint globals');
+    grunt.verbose.writeflags(options.options, 'JSHint options');
+    grunt.verbose.writeflags(options.globals, 'JSHint globals');
 
     // Lint specified files.
     var files = grunt.file.expandFiles(this.file.src);
     files.forEach(function(filepath) {
-      grunt.helper('lint', grunt.file.read(filepath), options, globals, filepath);
+      grunt.helper('lint', grunt.file.read(filepath), options.options,
+        options.globals, filepath);
     });
 
     // Fail task if errors were logged.

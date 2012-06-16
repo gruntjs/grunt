@@ -49,9 +49,10 @@ module.exports = function(grunt) {
 
   // Get a source file's contents with any leading banner comment stripped. If
   // used as a directive, get options from the flags object.
-  grunt.registerHelper('file_strip_banner', function(filepath, opts) {
+  grunt.registerHelper('file_strip_banner', function(filepath, options) {
+    if (this.directive) { options = this.flags; }
     var src = grunt.file.read(filepath);
-    return grunt.helper('strip_banner', src, this.directive ? this.flags : opts);
+    return grunt.helper('strip_banner', src, options);
   });
 
   // Process a file as a template.

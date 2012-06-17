@@ -1,20 +1,22 @@
 /*
  * grunt
- * https://github.com/cowboy/grunt
+ * http://gruntjs.com/
  *
  * Copyright (c) 2012 "Cowboy" Ben Alman
  * Licensed under the MIT license.
  * http://benalman.com/about/license/
  */
 
+'use strict';
+
 module.exports = function(grunt) {
 
   // Nodejs libs.
-  var fs = require('fs');
   var path = require('path');
 
   // External libs.
   var Tempfile = require('temporary/lib/file');
+  var semver = require('semver');
 
   // Keep track of the last-started module, test and status.
   var currentModule, currentTest, status;
@@ -44,6 +46,10 @@ module.exports = function(grunt) {
       grunt.log.writeln();
     }
   }
+
+  // If this gets set, it's probably because something horrible happened, and
+  // the task will clean itself up and abort.
+  var abort;
 
   // Handle methods passed from PhantomJS, including QUnit hooks.
   var phantomHandlers = {
@@ -106,6 +112,21 @@ module.exports = function(grunt) {
       grunt.log.writeln();
       grunt.warn('PhantomJS timed out, possibly due to a missing QUnit start() call.', 90);
     },
+    // Abort if PhantomJS version isn't adequate.
+    env_version: function(version) {
+      var current = [version.major, version.minor, version.patch].join('.');
+      var required = '1.4.0';
+      if (semver.lt(current, required)) {
+        abort = true;
+        grunt.log.writeln();
+        grunt.log.errorlns(
+          'In order for this task to work properly, PhantomJS version ' +
+          required + ' or newer must be installed, but version ' + current +
+          ' was detected.'
+        );
+        grunt.warn('PhantomJS needs to be updated.', 127);
+      }
+    },
     // console.log pass-through.
     console: console.log.bind(console),
     // Debugging messages.
@@ -127,7 +148,7 @@ module.exports = function(grunt) {
     status = {failed: 0, passed: 0, total: 0, duration: 0};
 
     // Process each filepath in-order.
-    grunt.utils.async.forEachSeries(urls, function(url, next) {
+    grunt.util.async.forEachSeries(urls, function(url, next) {
       var basename = path.basename(url);
       grunt.verbose.subhead('Testing ' + basename).or.write('Testing ' + basename);
 
@@ -167,10 +188,10 @@ module.exports = function(grunt) {
           if (phantomHandlers[method]) {
             phantomHandlers[method].apply(null, args);
           }
-          // If the method name started with test, return true. Because the
-          // Array#some method was used, this not only sets "done" to true,
-          // but stops further iteration from occurring.
-          return (/^done/).test(method);
+          // If abort is true or the method name started with done, return true.
+          // Because the Array#some method was used, this not only sets "done"
+          // to true, but stops further iteration from occurring.
+          return abort || (/^done/).test(method);
         });
 
         if (done) {
@@ -229,7 +250,7 @@ module.exports = function(grunt) {
   // ==========================================================================
 
   grunt.registerHelper('phantomjs', function(options) {
-    return grunt.utils.spawn({
+    return grunt.util.spawn({
       cmd: 'phantomjs',
       args: options.args
     }, function(err, result, code) {

@@ -1,16 +1,16 @@
-[Grunt homepage](https://github.com/cowboy/grunt) | [Documentation table of contents](toc.md)
+[Grunt homepage](http://gruntjs.com/) | [Documentation table of contents](toc.md)
 
 # concat (built-in task)
-Concatenate one or more input files (and/or [directives](helpers_directives.md) output, like `<banner>`) into an output file.
+Concatenate one or more input files (and/or [directives](helpers_directives.md) output, like `<config_process>`) into an output file.
 
-## About <a name="about" href="#about" title="Link to this section">⚑</a>
+## About <a name="about" href="#about" title="Link to this section">#</a>
 
 This task is a [multi task](types_of_tasks.md), meaning that grunt will automatically iterate over all `concat` targets if a target is not specified.
 
 _Need some help getting started with grunt? Visit the [getting started](getting_started.md) page. And if you're creating your own tasks or helpers, be sure to check out the [types of tasks](types_of_tasks.md) page as well as the [API documentation](api.md)._
 
-## A Very Important Note <a name="a-very-important-note" href="#a-very-important-note" title="Link to this section">⚑</a>
-Your `grunt.js` gruntfile **must** contain this code, once and **only** once. If it doesn't, grunt won't work. For the sake of brevity, this "wrapper" code has been omitted from all examples on this page, but it needs to be there.
+## A Very Important Note <a name="a-very-important-note" href="#a-very-important-note" title="Link to this section">#</a>
+Your Gruntfile **must** contain this code, once and **only** once. If it doesn't, grunt won't work. For the sake of brevity, this "wrapper" code has been omitted from all examples on this page, but it needs to be there.
 
 ```javascript
 module.exports = function(grunt) {
@@ -18,23 +18,23 @@ module.exports = function(grunt) {
 };
 ```
 
-## Project configuration <a name="project-configuration" href="#project-configuration" title="Link to this section">⚑</a>
+## Project configuration <a name="project-configuration" href="#project-configuration" title="Link to this section">#</a>
 
-This example shows a brief overview of the [grunt.js gruntfile](getting_started.md) config properties used by the `concat` task. For a more in-depth explanation, see the usage examples.
+This example shows a brief overview of the [Gruntfile](getting_started.md) config properties used by the `concat` task. For a more in-depth explanation, see the usage examples.
 
 ```javascript
 // Project configuration.
 grunt.initConfig({
-  // Project metadata, used by the <banner> directive.
+  // Project metadata, used by the (now deprecated) <banner> directive.
   meta: {},
   // Lists of files to be concatenated.
   concat: {}
 });
 ```
 
-## Usage examples <a name="usage-examples" href="#usage-examples" title="Link to this section">⚑</a>
+## Usage examples <a name="usage-examples" href="#usage-examples" title="Link to this section">#</a>
 
-### Concatenating multiple files <a name="concatenating-multiple-files" href="#concatenating-multiple-files" title="Link to this section">⚑</a>
+### Concatenating multiple files <a name="concatenating-multiple-files" href="#concatenating-multiple-files" title="Link to this section">#</a>
 
 In this example, running `grunt concat:dist` (or `grunt concat` because `concat` is a [multi task](types_of_tasks.md)) will simply concatenate the three specified source files, in order, writing the output to `dist/built.js`.
 
@@ -65,7 +65,7 @@ grunt.initConfig({
 });
 ```
 
-### Banner comments <a name="banner-comments" href="#banner-comments" title="Link to this section">⚑</a>
+### Banner comments <a name="banner-comments" href="#banner-comments" title="Link to this section">#</a>
 
 In this example, running `grunt concat:dist` (or `grunt concat` because `concat` is a [multi task](types_of_tasks.md)) will first strip any preexisting banner comment from the `src/project.js` file, then concatenate the result with a newly-generated banner comment, writing the output to `dist/built.js`.
 
@@ -90,7 +90,7 @@ grunt.initConfig({
 });
 ```
 
-### Multiple build targets <a name="multiple-build-targets" href="#multiple-build-targets" title="Link to this section">⚑</a>
+### Multiple build targets <a name="multiple-build-targets" href="#multiple-build-targets" title="Link to this section">#</a>
 
 In this example, running `grunt concat` will build two separate files. One "basic" version, with the main file essentially just copied to `dist/basic.js`, and another "with_extras" concatenated version written to `dist/with_extras.js`.
 
@@ -112,7 +112,7 @@ grunt.initConfig({
 });
 ```
 
-### Dynamic filenames <a name="dynamic-filenames" href="#dynamic-filenames" title="Link to this section">⚑</a>
+### Dynamic filenames <a name="dynamic-filenames" href="#dynamic-filenames" title="Link to this section">#</a>
 
 Filenames can be generated dynamically by using `<%= %>` delimited underscore templates as filenames.
 
@@ -131,7 +131,7 @@ grunt.initConfig({
 });
 ```
 
-### Advanced dynamic filenames <a name="advanced-dynamic-filenames" href="#advanced-dynamic-filenames" title="Link to this section">⚑</a>
+### Advanced dynamic filenames <a name="advanced-dynamic-filenames" href="#advanced-dynamic-filenames" title="Link to this section">#</a>
 
 In this more involved example, running `grunt concat` will build two separate files (because `concat` is a [multi task](types_of_tasks.md)). The destination file paths will be expanded dynamically based on the specified underscore templates, recursively if necessary.
 
@@ -158,7 +158,7 @@ grunt.initConfig({
 });
 ```
 
-## Helpers <a name="helpers" href="#helpers" title="Link to this section">⚑</a>
+## Helpers <a name="helpers" href="#helpers" title="Link to this section">#</a>
 
 A generic `concat` helper is available for use in any other task where file and/or [directive](helpers_directives.md) concatenation might be useful. In this example, a `;` separator is specified, although it defaults to linefeed if omitted:
 

@@ -1,11 +1,13 @@
 /*
  * grunt
- * https://github.com/cowboy/grunt
+ * http://gruntjs.com/
  *
  * Copyright (c) 2012 "Cowboy" Ben Alman
  * Licensed under the MIT license.
  * http://benalman.com/about/license/
  */
+
+'use strict';
 
 // Basic template description.
 exports.description = 'Create a jQuery plugin, including QUnit unit tests.';

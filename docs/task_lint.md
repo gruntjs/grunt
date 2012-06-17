@@ -1,18 +1,18 @@
-[Grunt homepage](https://github.com/cowboy/grunt) | [Documentation table of contents](toc.md)
+[Grunt homepage](http://gruntjs.com/) | [Documentation table of contents](toc.md)
 
 # lint (built-in task)
 Validate files with [JSHint][jshint].
 
 [jshint]: http://www.jshint.com/
 
-## About <a name="about" href="#about" title="Link to this section">⚑</a>
+## About <a name="about" href="#about" title="Link to this section">#</a>
 
 This task is a [multi task](types_of_tasks.md), meaning that grunt will automatically iterate over all `lint` targets if a target is not specified.
 
 _Need some help getting started with grunt? Visit the [getting started](getting_started.md) page. And if you're creating your own tasks or helpers, be sure to check out the [types of tasks](types_of_tasks.md) page as well as the [API documentation](api.md)._
 
-## A Very Important Note <a name="a-very-important-note" href="#a-very-important-note" title="Link to this section">⚑</a>
-Your `grunt.js` gruntfile **must** contain this code, once and **only** once. If it doesn't, grunt won't work. For the sake of brevity, this "wrapper" code has been omitted from all examples on this page, but it needs to be there.
+## A Very Important Note <a name="a-very-important-note" href="#a-very-important-note" title="Link to this section">#</a>
+Your Gruntfile **must** contain this code, once and **only** once. If it doesn't, grunt won't work. For the sake of brevity, this "wrapper" code has been omitted from all examples on this page, but it needs to be there.
 
 ```javascript
 module.exports = function(grunt) {
@@ -20,7 +20,7 @@ module.exports = function(grunt) {
 };
 ```
 
-## Project configuration <a name="project-configuration" href="#project-configuration" title="Link to this section">⚑</a>
+## Project configuration <a name="project-configuration" href="#project-configuration" title="Link to this section">#</a>
 
 This example shows a brief overview of the [config](api_config.md) properties used by the `lint` task. For a more in-depth explanation, see the usage examples.
 
@@ -32,17 +32,17 @@ grunt.initConfig({
 });
 ```
 
-## Usage examples <a name="usage-examples" href="#usage-examples" title="Link to this section">⚑</a>
+## Usage examples <a name="usage-examples" href="#usage-examples" title="Link to this section">#</a>
 
-### Wildcards <a name="wildcards" href="#wildcards" title="Link to this section">⚑</a>
+### Wildcards <a name="wildcards" href="#wildcards" title="Link to this section">#</a>
 
-In this example, running `grunt lint` will lint the project's gruntfile as well as all JavaScript files in the `lib` and `test` directories, using the default JSHint `options` and `globals`.
+In this example, running `grunt lint` will lint the project's Gruntfile as well as all JavaScript files in the `lib` and `test` directories, using the default JSHint `options` and `globals`.
 
 ```javascript
 // Project configuration.
 grunt.initConfig({
   lint: {
-    files: ['grunt.js', 'lib/*.js', 'test/*.js']
+    files: ['Gruntfile.js', 'lib/*.js', 'test/*.js']
   }
 });
 ```
@@ -53,12 +53,12 @@ With a slight modification, running `grunt lint` will also lint all JavaScript f
 // Project configuration.
 grunt.initConfig({
   lint: {
-    files: ['grunt.js', 'lib/**/*.js', 'test/**/*.js']
+    files: ['Gruntfile.js', 'lib/**/*.js', 'test/**/*.js']
   }
 });
 ```
 
-### Linting before and after concat <a name="linting-before-and-after-concat" href="#linting-before-and-after-concat" title="Link to this section">⚑</a>
+### Linting before and after concat <a name="linting-before-and-after-concat" href="#linting-before-and-after-concat" title="Link to this section">#</a>
 
 In this example, running `grunt lint` will lint two separate sets of files using the default JSHint `options` and `globals`: one "beforeconcat" set, and one "afterconcat" set. Running `grunt lint` will lint both sets of files all at once, because lint is a [multi task](types_of_tasks.md). This is not ideal, because `dist/output.js` may get linted before it gets created via the [concat task](task_concat.md)!
 
@@ -85,7 +85,7 @@ grunt.registerTask('default', 'lint:beforeconcat concat lint:afterconcat');
 
 _Note: in the above example, a default [alias task](types_of_tasks.md) was created that runs the 'lint:beforeconcat', 'concat' and 'lint:afterconcat' tasks. If you didn't want this to be the default grunt task, you could give it a different name._
 
-### Dynamic filenames <a name="dynamic-filenames" href="#dynamic-filenames" title="Link to this section">⚑</a>
+### Dynamic filenames <a name="dynamic-filenames" href="#dynamic-filenames" title="Link to this section">#</a>
 
 Building on the previous example, if you want to avoid duplication, you can use a [directive](helpers_directives.md) like `'<config:concat.dist.dest>'` in place of `'dist/output.js'` in the `afterconcat` lint target. This allows you to generate the output filename dynamically. In this example, the `concat:dist` destination filename is generated from the `name` and `version` properties of the referenced `package.json` file through the `pkg` config property.
 
@@ -106,9 +106,9 @@ grunt.initConfig({
 });
 ```
 
-### Specifying JSHint options and globals <a name="specifying-jshint-options-and-globals" href="#specifying-jshint-options-and-globals" title="Link to this section">⚑</a>
+### Specifying JSHint options and globals <a name="specifying-jshint-options-and-globals" href="#specifying-jshint-options-and-globals" title="Link to this section">#</a>
 
-In this example, taken from the [Sample jQuery plugin gruntfile](https://github.com/cowboy/grunt-jquery-example/blob/master/grunt.js), custom JSHint `options` and `globals` are specified. These options are explained in the [JSHint documentation](http://www.jshint.com/options/).
+In this example, taken from the [Sample jQuery plugin Gruntfile](https://github.com/cowboy/grunt-jquery-example/blob/master/Gruntfile.js), custom JSHint `options` and `globals` are specified. These options are explained in the [JSHint documentation](http://www.jshint.com/options/).
 
 _Note: config `jshint.options` and `jshint.globals` apply to the entire project, but can be overridden with per-file comments like `/*global exports:false*/`._
 
@@ -116,7 +116,7 @@ _Note: config `jshint.options` and `jshint.globals` apply to the entire project,
 // Project configuration.
 grunt.initConfig({
   lint: {
-    files: ['grunt.js', 'src/**/*.js', 'test/**/*.js']
+    files: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js']
   },
   jshint: {
     options: {
@@ -138,7 +138,7 @@ grunt.initConfig({
 });
 ```
 
-#### Per-target JSHint options and globals <a name="per-target-jshint-options-and-globals" href="#per-target-jshint-options-and-globals" title="Link to this section">⚑</a>
+#### Per-target JSHint options and globals <a name="per-target-jshint-options-and-globals" href="#per-target-jshint-options-and-globals" title="Link to this section">#</a>
 
 For each `lint` target, grunt looks for a target-named object underneath the `jshint` config object. If this object is found, its `options` and `globals` sub-objects will be used instead of the global ones. this allows per-lint-target JSHint options/globals overrides.
 
@@ -149,7 +149,7 @@ In this example, there are default JSHint settings, as well as per-target overri
 grunt.initConfig({
   lint: {
     src: 'src/*.js',
-    grunt: 'grunt.js',
+    grunt: 'Gruntfile.js',
     tests: 'tests/unit/**/*.js'
   },
   jshint: {
@@ -175,7 +175,7 @@ grunt.initConfig({
 });
 ```
 
-## Helpers <a name="helpers" href="#helpers" title="Link to this section">⚑</a>
+## Helpers <a name="helpers" href="#helpers" title="Link to this section">#</a>
 
 A generic `lint` helper is available for use in any other task where file linting might be useful. For example:
 

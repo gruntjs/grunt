@@ -1,11 +1,13 @@
 /*
  * grunt
- * https://github.com/cowboy/grunt
+ * http://gruntjs.com/
  *
  * Copyright (c) 2012 "Cowboy" Ben Alman
  * Licensed under the MIT license.
  * http://benalman.com/about/license/
  */
+
+'use strict';
 
 module.exports = function(grunt) {
 
@@ -15,7 +17,7 @@ module.exports = function(grunt) {
       all: ['test/**/*.js']
     },
     lint: {
-      all: ['grunt.js', 'lib/**/*.js', 'tasks/*.js', 'tasks/*/*.js', 'test/**/*.js']
+      all: ['Gruntfile.js', 'lib/**/*.js', 'tasks/*.js', 'tasks/*/*.js', 'test/**/*.js']
     },
     docs: {
       all: ['README.md', 'docs/*.md']
@@ -60,12 +62,12 @@ module.exports = function(grunt) {
       // Copying the file to itself allows it to be processed in-place.
       grunt.file.copy(filepath, filepath, {process: function(src) {
         // Add anchor links to all H2+ headers in .md document files.
-        var newSrc = src.replace(/(##+)\s+(.*?)\s*<a name=.*<\/a>/g, function(_, h, title) {
+        var newSrc = src.replace(/(##+)\s+(.+?)\s*(?:<a name=.*<\/a>)?\n/g, function(_, h, title) {
           // Slugify the title text.
-          var slug = grunt.utils._.slugify(title.replace(/\./g, '-'));
+          var slug = grunt.util._.slugify(title.replace(/\./g, '-'));
           // Put everything back together.
           return h + ' ' + title + ' <a name="' + slug + '" href="#' + slug +
-            '" title="Link to this section">⚑</a>';
+            '" title="Link to this section">#</a>\n';
         });
         // Don't copy file if it didn't change.
         if (newSrc === src) { return false; }

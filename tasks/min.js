@@ -1,11 +1,13 @@
 /*
  * grunt
- * https://github.com/cowboy/grunt
+ * http://gruntjs.com/
  *
  * Copyright (c) 2012 "Cowboy" Ben Alman
  * Licensed under the MIT license.
  * http://benalman.com/about/license/
  */
+
+'use strict';
 
 module.exports = function(grunt) {
 
@@ -18,21 +20,29 @@ module.exports = function(grunt) {
   // ==========================================================================
 
   grunt.registerMultiTask('min', 'Minify files with UglifyJS.', function() {
+    // Get any task- or target-specific options, using the top-level "uglify"
+    // and "banner" property (if they exist) as defaults.
+    var options = this.options({
+      separator: null,
+      uglify: grunt.config('uglify'),
+      banner: grunt.config('banner') || ''
+    });
+
+    // The source files to be concatenated.
     var files = grunt.file.expandFiles(this.file.src);
-    // Get banner, if specified. It would be nice if UglifyJS supported ignoring
-    // all comments matching a certain pattern, like /*!...*/, but it doesn't.
-    var banner = grunt.task.directive(files[0], function() { return null; });
-    if (banner === null) {
-      banner = '';
-    } else {
-      files.shift();
-    }
+
+    // If banner wasn't specified, use empty string. Otherwise process banner
+    // and add a linefeed.
+    var banner = grunt.template.process(options.banner);
+
     // Concat specified files. This should really be a single, pre-built (and
     // linted) file, but it supports any number of files.
-    var max = grunt.helper('concat', files, {separator: this.data.separator});
+    var max = grunt.helper('concat', files, {separator: options.separator});
 
     // Concat banner + minified source.
-    var min = banner + grunt.helper('uglify', max, grunt.config('uglify'));
+    var min = banner + grunt.helper('uglify', max, options.uglify);
+
+    // Write the destination file.
     grunt.file.write(this.file.dest, min);
 
     // Fail task if errors were logged.

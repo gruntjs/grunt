@@ -1,3 +1,5 @@
+'use strict';
+
 var grunt = require('../../lib/grunt');
 
 // In case the grunt being used to test is different than the grunt being
@@ -73,19 +75,19 @@ exports['banner'] = function(test) {
   grunt.config('test_config', {a: 'aaaaa', b: 'bbbbb', c: [1, 2, 3], d: [{a: 1}, {a: 2}, {a: 3}]});
 
   grunt.config('meta.banner', 'foo\n<%= test_config.a %>\nbar');
-  test.equal(grunt.helper('banner'), grunt.utils.normalizelf('foo\naaaaa\nbar\n'), 'It should use the default banner.');
+  test.equal(grunt.helper('banner'), grunt.util.normalizelf('foo\naaaaa\nbar\n'), 'It should use the default banner.');
 
   grunt.config('test_config.banner', '<%= test_config.b %>');
-  test.equal(grunt.helper('banner', 'test_config.banner'), grunt.utils.normalizelf('bbbbb\n'), 'It should use the requested banner.');
+  test.equal(grunt.helper('banner', 'test_config.banner'), grunt.util.normalizelf('bbbbb\n'), 'It should use the requested banner.');
 
   grunt.config('test_config.banner', '<%= test_config.c.join(", ") %>');
-  test.equal(grunt.helper('banner', 'test_config.banner'), grunt.utils.normalizelf('1, 2, 3\n'), 'It should join arrays.');
+  test.equal(grunt.helper('banner', 'test_config.banner'), grunt.util.normalizelf('1, 2, 3\n'), 'It should join arrays.');
 
   grunt.config('test_config.banner', '<%= _.pluck(test_config.d, "a").join(", ") %>');
-  test.equal(grunt.helper('banner', 'test_config.banner'), grunt.utils.normalizelf('1, 2, 3\n'), 'It should join arrays.');
+  test.equal(grunt.helper('banner', 'test_config.banner'), grunt.util.normalizelf('1, 2, 3\n'), 'It should join arrays.');
 
   grunt.config('test_config.banner', '<%= grunt.template.today("yyyy-mm-dd") %>');
-  test.equal(grunt.helper('banner', 'test_config.banner'), grunt.utils.normalizelf(grunt.template.today('yyyy-mm-dd') + '\n'), 'It should parse the current date correctly.');
+  test.equal(grunt.helper('banner', 'test_config.banner'), grunt.util.normalizelf(grunt.template.today('yyyy-mm-dd') + '\n'), 'It should parse the current date correctly.');
 
   test.done();
 };

@@ -1,11 +1,13 @@
 /*
  * grunt
- * https://github.com/cowboy/grunt
+ * http://gruntjs.com/
  *
  * Copyright (c) 2012 "Cowboy" Ben Alman
  * Licensed under the MIT license.
  * http://benalman.com/about/license/
  */
+
+'use strict';
 
 module.exports = function(grunt) {
 
@@ -15,6 +17,9 @@ module.exports = function(grunt) {
 
   // Get a config property. Most useful as a directive like <config:foo.bar>.
   grunt.registerHelper('config', grunt.config);
+
+  // Get a config property and process it as a template.
+  grunt.registerHelper('config_process', grunt.config.process);
 
   // Read a JSON file. Most useful as a directive like <json:package.json>.
   var jsons = {};
@@ -47,9 +52,10 @@ module.exports = function(grunt) {
 
   // Get a source file's contents with any leading banner comment stripped. If
   // used as a directive, get options from the flags object.
-  grunt.registerHelper('file_strip_banner', function(filepath, opts) {
+  grunt.registerHelper('file_strip_banner', function(filepath, options) {
+    if (this.directive) { options = this.flags; }
     var src = grunt.file.read(filepath);
-    return grunt.helper('strip_banner', src, this.directive ? this.flags : opts);
+    return grunt.helper('strip_banner', src, options);
   });
 
   // Process a file as a template.
@@ -58,8 +64,20 @@ module.exports = function(grunt) {
     return grunt.template.process(src);
   });
 
-  // Generate banner from template.
+  // Generate banner from template. This helper is deprecated.
+  var bannerWarned;
   grunt.registerHelper('banner', function(prop) {
+    if (!bannerWarned) {
+      bannerWarned = true;
+      grunt.log.errorlns('Note that the "banner" helper and directive have ' +
+        'been deprecated. Please use the more general "config_process" ' +
+        'helper and/or directive (which does NOT automatically add a ' +
+        'trailing newline!) instead. (grunt 0.4.0+)');
+      // This warning shouldn't cause tasks that look at this.errorCount to fail.
+      // TODO: come up with a better way to do non-error warnings.
+      grunt.fail.errorcount--;
+    }
+
     if (!prop) { prop = 'meta.banner'; }
     var banner;
     var tmpl = grunt.config(prop);
@@ -68,7 +86,7 @@ module.exports = function(grunt) {
       grunt.verbose.write('Generating banner...');
       try {
         // Compile and run template, using config object as the data source.
-        banner = grunt.template.process(tmpl) + grunt.utils.linefeed;
+        banner = grunt.template.process(tmpl) + grunt.util.linefeed;
         grunt.verbose.ok();
       } catch(e) {
         banner = '';

@@ -1,11 +1,13 @@
 /*
  * grunt
- * https://github.com/cowboy/grunt
+ * http://gruntjs.com/
  *
  * Copyright (c) 2012 "Cowboy" Ben Alman
  * Licensed under the MIT license.
  * http://benalman.com/about/license/
  */
+
+'use strict';
 
 // Basic template description.
 exports.description = 'Create a commonjs module, including Nodeunit unit tests.';
@@ -31,7 +33,7 @@ exports.template = function(grunt, init, done) {
     grunt.helper('prompt_for', 'author_name'),
     grunt.helper('prompt_for', 'author_email'),
     grunt.helper('prompt_for', 'author_url'),
-    grunt.helper('prompt_for', 'node_version', '*'),
+    grunt.helper('prompt_for', 'node_version'),
     grunt.helper('prompt_for', 'main'),
     grunt.helper('prompt_for', 'npm_test')
   ], function(err, props) {

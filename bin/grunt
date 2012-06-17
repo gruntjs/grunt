@@ -6,9 +6,13 @@ var path = require('path');
 // Badass internal grunt lib.
 var findup = require('../lib/util/findup');
 
-// Where might a locally-installed grunt live?
-var dir = path.resolve(findup(process.cwd(), 'grunt.js'), '../node_modules/grunt');
+// Search for Gruntfile.
+var gruntfile = findup(process.cwd(), '{G,g}runtfile.{js,coffee}');
+// Gruntfile not found, look for pre-0.4.0 grunt.js file. TODO: remove, someday.
+if (!gruntfile) { gruntfile = findup(process.cwd(), 'grunt.js'); }
 
+// Where might a locally-installed grunt live?
+var dir = path.resolve(gruntfile, '../node_modules/grunt');
 // If grunt is installed locally, use it. Otherwise use this grunt.
 if (!path.existsSync(dir)) { dir = '../lib/grunt'; }
 

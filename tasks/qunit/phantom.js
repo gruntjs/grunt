@@ -1,6 +1,6 @@
 /*
  * grunt
- * https://github.com/cowboy/grunt
+ * http://gruntjs.com/
  *
  * Copyright (c) 2012 "Cowboy" Ben Alman
  * Licensed under the MIT license.
@@ -8,6 +8,8 @@
  */
 
 /*global phantom:true*/
+
+'use strict';
 
 var fs = require('fs');
 
@@ -35,6 +37,14 @@ function sendMessage(args) {
 function sendDebugMessage() {
   sendMessage(['debug'].concat([].slice.call(arguments)));
 }
+
+// Sent an environment message.
+function sendEnvMessage(name) {
+  sendMessage(['env_' + name].concat([].slice.call(arguments, 1)));
+}
+
+// This allows grunt to abort if the PhantomJS version isn't adequate.
+sendEnvMessage('version', phantom.version);
 
 // Abort if QUnit doesn't do anything for a while.
 setInterval(function() {

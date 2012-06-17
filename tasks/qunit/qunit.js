@@ -1,6 +1,6 @@
 /*
  * grunt
- * https://github.com/cowboy/grunt
+ * http://gruntjs.com/
  *
  * Copyright (c) 2012 "Cowboy" Ben Alman
  * Licensed under the MIT license.
@@ -8,6 +8,8 @@
  */
 
 /*global QUnit:true, alert:true*/
+
+'use strict';
 
 // Don't re-order tests.
 QUnit.config.reorder = false;

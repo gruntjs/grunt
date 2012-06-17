@@ -3,10 +3,11 @@
 <head>
   <meta charset="utf-8">
   <title>{%= title || name %} Test Suite</title>
-  <!-- Load local jQuery, removing access to $ (use jQuery, not $). -->
+  <!-- Load local jQuery. -->
   <script src="../libs/jquery/jquery.js"></script>
+  <!-- Remove access to $ for better real-world testing. -->
   <script>jQuery.noConflict()</script>
-  <!-- Load local QUnit (grunt requires v1.0.0 or newer). -->
+  <!-- Load local QUnit (grunt requires QUnit v1.0.0 or newer). -->
   <link rel="stylesheet" href="../libs/qunit/qunit.css" media="screen">
   <script src="../libs/qunit/qunit.js"></script>
   <!-- Load local lib and tests. -->

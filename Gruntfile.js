@@ -17,7 +17,23 @@ module.exports = function(grunt) {
       all: ['test/**/*.js']
     },
     lint: {
-      all: ['Gruntfile.js', 'lib/**/*.js', 'tasks/*.js', 'tasks/*/*.js', 'test/**/*.js']
+      all: ['Gruntfile.js', 'lib/**/*.js', 'tasks/*.js', 'tasks/*/*.js', 'test/**/*.js'],
+      options: {
+        options: {
+          curly: true,
+          eqeqeq: true,
+          immed: true,
+          latedef: true,
+          newcap: true,
+          noarg: true,
+          sub: true,
+          undef: true,
+          boss: true,
+          eqnull: true,
+          node: true,
+          es5: true
+        }
+      }
     },
     docs: {
       all: ['README.md', 'docs/*.md']
@@ -31,23 +47,6 @@ module.exports = function(grunt) {
         files: '<config:docs.all>',
         tasks: 'docs'
       }
-    },
-    jshint: {
-      options: {
-        curly: true,
-        eqeqeq: true,
-        immed: true,
-        latedef: true,
-        newcap: true,
-        noarg: true,
-        sub: true,
-        undef: true,
-        boss: true,
-        eqnull: true,
-        node: true,
-        es5: true
-      },
-      globals: {}
     }
   });
 

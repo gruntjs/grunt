@@ -20,8 +20,7 @@ module.exports = function(grunt) {
   // ==========================================================================
 
   grunt.registerMultiTask('min', 'Minify files with UglifyJS.', function() {
-    // Get any task- or target-specific options, using the top-level "uglify"
-    // and "banner" property (if they exist) as defaults.
+    // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({
       separator: null,
       uglify: grunt.config('uglify'),

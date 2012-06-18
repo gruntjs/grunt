@@ -19,9 +19,12 @@ module.exports = function(grunt) {
   // ==========================================================================
 
   grunt.registerMultiTask('lint', 'Validate files with JSHint.', function() {
-    // Get any task- or target-specific options, using the top-level "jshint"
-    // property and its sub-properties (options, globals, jshintrc) as defaults.
-    var options = this.options(grunt.config('jshint'));
+    // Merge task-specific and/or target-specific options with these defaults.
+    var options = this.options({
+      options: {},
+      globals: {},
+      jshintrc: null
+    });
 
     // If a jshintrc file was specified, read it.
     var jshintrc;

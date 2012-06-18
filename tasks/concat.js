@@ -16,8 +16,7 @@ module.exports = function(grunt) {
   // ==========================================================================
 
   grunt.registerMultiTask('concat', 'Concatenate files.', function() {
-    // Get any task- or target-specific options, using the top-level "banner"
-    // property (if it exists) as default.
+    // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({
       separator: null,
       banner: grunt.config('banner') || ''

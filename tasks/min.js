@@ -23,8 +23,8 @@ module.exports = function(grunt) {
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({
       separator: null,
-      uglify: grunt.config('uglify'),
-      banner: grunt.config('banner') || ''
+      banner: grunt.config('banner') || '',
+      uglify: {}
     });
 
     // The source files to be concatenated.

@@ -255,8 +255,9 @@ exports['file'] = {
     test.done();
   },
   'exists': function(test) {
-    test.expect(4);
+    test.expect(5);
     test.ok(grunt.file.exists('test/fixtures/octocat.png'), 'should return true');
+    test.ok(grunt.file.exists('test', 'fixtures', 'octocat.png'), 'should return true');
     test.ok(grunt.file.exists('test/fixtures/octocat-link.png'), 'should return true');
     test.ok(grunt.file.exists('test/fixtures'), 'should return true');
     test.equal(grunt.file.exists('test/fixtures/does/not/exist'), false, 'should return false');

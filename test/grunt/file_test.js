@@ -219,6 +219,13 @@ exports['file'] = {
     test.strictEqual(grunt.file.read('test/fixtures/octocat.png'), fs.readFileSync('test/fixtures/octocat.png', 'utf8'));
     test.done();
   },
+  'readYAML': function(test) {
+    test.expect(2);
+    var obj = grunt.file.readYAML('test/fixtures/test.yaml');
+    test.equal(obj.foo, 'bar', 'YAML properties should be available as-defined.');
+    test.deepEqual(obj.baz, [1, 2, 3], 'YAML properties should be available as-defined.');
+    test.done();
+  },
   'write': function(test) {
     test.expect(4);
     var content = 'var a = "foobar";';

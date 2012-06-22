@@ -219,6 +219,13 @@ exports['file'] = {
     test.strictEqual(grunt.file.read('test/fixtures/octocat.png'), fs.readFileSync('test/fixtures/octocat.png', 'utf8'));
     test.done();
   },
+  'readJSON5': function(test) {
+    test.expect(2);
+    var obj = grunt.file.readJSON('test/fixtures/test.json5');
+    test.equal(obj.foo, 'multiline', 'JSON5 properties should be available as-defined.');
+    test.deepEqual(obj.baz, [1, 2, 3], 'JSON5 properties should be available as-defined.');
+    test.done();
+  },
   'write': function(test) {
     test.expect(4);
     var content = 'var a = "foobar";';

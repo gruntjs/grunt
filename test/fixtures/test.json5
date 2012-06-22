@@ -1,0 +1,6 @@
+{
+  // Comment!
+  "foo": "multi\
+line",
+  "baz": [1, 2, 3],
+}

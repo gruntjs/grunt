@@ -226,6 +226,13 @@ exports['file'] = {
     test.deepEqual(obj.baz, [1, 2, 3], 'JSON5 properties should be available as-defined.');
     test.done();
   },
+  'readYAML': function(test) {
+    test.expect(2);
+    var obj = grunt.file.readYAML('test/fixtures/test.yaml');
+    test.equal(obj.foo, 'bar', 'YAML properties should be available as-defined.');
+    test.deepEqual(obj.baz, [1, 2, 3], 'YAML properties should be available as-defined.');
+    test.done();
+  },
   'write': function(test) {
     test.expect(4);
     var content = 'var a = "foobar";';

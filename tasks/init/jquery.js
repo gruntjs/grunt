@@ -22,6 +22,11 @@ exports.warnOn = '*';
 
 // The actual init template.
 exports.template = function(grunt, init, done) {
+  // Change validation to require that name starts with "jquery."
+  var prompts = grunt.helper('prompt_for_obj');
+  prompts.name.validator = /^jquery\.[\w\-\.]+$/;
+  prompts.name.warning = 'Must begin with "jquery." and be only letters, ' +
+    'numbers, dashes, dots or underscores.';
 
   grunt.helper('prompt', {type: 'jquery'}, [
     // Prompt for these values.

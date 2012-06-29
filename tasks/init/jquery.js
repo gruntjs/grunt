@@ -11,30 +11,23 @@
 exports.description = 'Create a jQuery plugin, including QUnit unit tests.';
 
 // Template-specific notes to be displayed before question prompts.
-exports.notes = '_Project name_ must start with "jquery." and should be a ' +
-  'unique ID not already in use at plugins.jquery.com. _Project title_ ' +
-  'should be a human-readable title, and doesn\'t need to contain the word ' +
-  '"jQuery", although it may. For example, a plugin titled "Awesome Plugin" ' +
-  'might have the name "jquery.awesome-plugin".';
+exports.notes = '_Project name_ should not contain "jquery" or "js" and ' +
+  'should be a unique ID not already in use at plugins.jquery.com. _Project ' +
+  'title_ should be a human-readable title, and doesn\'t need to contain ' +
+  'the word "jQuery", although it may. For example, a plugin titled "Awesome ' +
+  'jQuery Plugin" might have the name "awesome-plugin". For more information ' +
+  'please see the documentation at ' +
+  'https://github.com/jquery/plugins.jquery.com/blob/master/docs/jquery.json.md';
 
 // Any existing file or directory matching this wildcard will cause a warning.
 exports.warnOn = '*';
 
 // The actual init template.
 exports.template = function(grunt, init, done) {
-  // Change validation to require that name starts with "jquery."
-  var prompts = grunt.helper('prompt_for_obj');
-  prompts.name.validator = /^jquery\.[\w\-\.]+$/;
-  prompts.name.warning = 'Must begin with "jquery." and be only letters, ' +
-    'numbers, dashes, dots or underscores.';
 
   grunt.helper('prompt', {type: 'jquery'}, [
     // Prompt for these values.
-    grunt.helper('prompt_for', 'name', function(value, data, done) {
-      // Prepend "jquery." to current name.
-      value = data.full_name = 'jquery.' + value;
-      done(null, value);
-    }),
+    grunt.helper('prompt_for', 'name'),
     grunt.helper('prompt_for', 'title', function(value, data, done) {
       // Fix jQuery capitalization.
       value = value.replace(/jquery/gi, 'jQuery');
@@ -51,6 +44,11 @@ exports.template = function(grunt, init, done) {
     grunt.helper('prompt_for', 'author_url'),
     grunt.helper('prompt_for', 'jquery_version')
   ], function(err, props) {
+    // A few additional properties.
+    props.jqueryjson = props.name + '.jquery.json';
+    props.dependencies = {jquery: props.jquery_version || '>= 1'};
+    props.keywords = [];
+
     // Files to copy (and process).
     var files = init.filesToCopy(props);
 
@@ -60,11 +58,17 @@ exports.template = function(grunt, init, done) {
     // Actually copy (and process) files.
     init.copyAndProcess(files, props, {noProcess: 'libs/**'});
 
-    // jQuery plugins depend on jQuery!
-    props.dependencies = {jquery: props.jquery_version || '1'};
+    // Generate package.json file, used by npm and grunt.
+    init.writePackageJSON('package.json', {
+      name: 'jquery-plugin',
+      version: '0.0.0-ignored',
+      npm_test: 'grunt qunit',
+      // TODO: pull from grunt's package.json
+      node_version: '>= 0.6.0',
+    });
 
-    // Generate package.json file.
-    init.writePackageJSON('package.json', props);
+    // Generate jquery.json file.
+    init.writePackageJSON(props.jqueryjson, props);
 
     // All done!
     done();

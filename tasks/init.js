@@ -182,18 +182,25 @@ module.exports = function(grunt) {
           if (prop in props) { pkg[prop] = props[prop]; }
         });
         // Author.
-        pkg.author = {};
-        ['name', 'email', 'url'].forEach(function(prop) {
-          if (props['author_' + prop]) {
-            pkg.author[prop] = props['author_' + prop];
-          }
+        var hasAuthor = Object.keys(props).some(function(prop) {
+          return (/^author_/).test(prop);
         });
+        if (hasAuthor) {
+          pkg.author = {};
+          ['name', 'email', 'url'].forEach(function(prop) {
+            if (props['author_' + prop]) {
+              pkg.author[prop] = props['author_' + prop];
+            }
+          });
+        }
         // Other stuff.
         if ('repository' in props) { pkg.repository = {type: 'git', url: props.repository}; }
         if ('bugs' in props) { pkg.bugs = {url: props.bugs}; }
-        pkg.licenses = props.licenses.map(function(license) {
-          return {type: license, url: props.homepage + '/blob/master/LICENSE-' + license};
-        });
+        if (props.licenses) {
+          pkg.licenses = props.licenses.map(function(license) {
+            return {type: license, url: props.homepage + '/blob/master/LICENSE-' + license};
+          });
+        }
 
         // Node/npm-specific (?)
         if (props.main) { pkg.main = props.main; }
@@ -207,11 +214,9 @@ module.exports = function(grunt) {
           }
         }
 
-        pkg.dependencies = {};
         if (props.dependencies) { pkg.dependencies = props.dependencies; }
         if (props.devDependencies) { pkg.devDependencies = props.devDependencies; }
-
-        pkg.keywords = props.keywords || [];
+        if (props.keywords) { pkg.keywords = props.keywords; }
 
         // Allow final tweaks to the pkg object.
         if (callback) { pkg = callback(pkg, props); }
@@ -519,12 +524,13 @@ module.exports = function(grunt) {
     },
     jquery_version: {
       message: 'Required jQuery version',
-      default: '~1.5',
+      default: '>= 1.6',
       warning: 'Must be a valid semantic version range descriptor.'
     },
     node_version: {
       message: 'What versions of node does it run on?',
-      default: '~' + process.versions.node,
+      // TODO: pull from grunt's package.json
+      default: '>= 0.6.0',
       warning: 'Must be a valid semantic version range descriptor.'
     },
     main: {

@@ -35,6 +35,8 @@ exports.template = function(grunt, init, done) {
     grunt.helper('prompt_for', 'main'),
     grunt.helper('prompt_for', 'npm_test')
   ], function(err, props) {
+    props.keywords = [];
+
     // Files to copy (and process).
     var files = init.filesToCopy(props);
 

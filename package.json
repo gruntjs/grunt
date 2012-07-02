@@ -50,7 +50,7 @@
     "colors": "~0.6.0",
     "connect": "~2.2.1",
     "dateformat": "1.0.2-1.2.3",
-    "glob-whatev": "~0.1.6",
+    "glob-whatev": "~0.1.7",
     "hooker": "~0.2.3",
     "jshint": "~0.7.1",
     "nodeunit": "~0.7.4",

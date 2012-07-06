@@ -6,24 +6,24 @@ Run [QUnit][qunit] unit tests in a headless [PhantomJS][phantom] instance.
 [qunit]: http://docs.jquery.com/QUnit
 [phantom]: http://www.phantomjs.org/
 
-## About <a name="about" href="#about" title="Link to this section">#</a>
+## About
 
 This task is a [multi task](types_of_tasks.md), meaning that grunt will automatically iterate over all `qunit` targets if a target is not specified.
 
 _Need some help getting started with grunt? Visit the [getting started](getting_started.md) page. And if you're creating your own tasks or helpers, be sure to check out the [types of tasks](types_of_tasks.md) page as well as the [API documentation](api.md)._
 
-### QUnit <a name="qunit" href="#qunit" title="Link to this section">#</a>
+### QUnit
 
 [QUnit][qunit] is a powerful, easy-to-use, JavaScript test suite. It's used by the jQuery project to test its code and plugins but is capable of testing any generic JavaScript code.
 
-### PhantomJS <a name="phantomjs" href="#phantomjs" title="Link to this section">#</a>
+### PhantomJS
 
 [PhantomJS](http://www.phantomjs.org/) is a headless WebKit with JavaScript API. It has fast and native support for various web standards: DOM handling, CSS selector, JSON, Canvas, and SVG. PhantomJS is required for the `qunit` task to work.
 
 See the [FAQ](faq.md) for instructions on installing PhantomJS.
 
 
-## A Very Important Note <a name="a-very-important-note" href="#a-very-important-note" title="Link to this section">#</a>
+## A Very Important Note
 Your Gruntfile **must** contain this code, once and **only** once. If it doesn't, grunt won't work. For the sake of brevity, this "wrapper" code has been omitted from all examples on this page, but it needs to be there.
 
 ```javascript
@@ -32,7 +32,7 @@ module.exports = function(grunt) {
 };
 ```
 
-## Project configuration <a name="project-configuration" href="#project-configuration" title="Link to this section">#</a>
+## Project configuration
 
 This example shows a brief overview of the [config](api_config.md) properties used by the `qunit` task. For a more in-depth explanation, see the usage examples.
 
@@ -44,9 +44,9 @@ grunt.initConfig({
 });
 ```
 
-## Usage examples <a name="usage-examples" href="#usage-examples" title="Link to this section">#</a>
+## Usage examples
 
-### Wildcards <a name="wildcards" href="#wildcards" title="Link to this section">#</a>
+### Wildcards
 
 In this example, `grunt qunit` will test all `.html` files in the test directory. First, the wildcard is expanded to match each individual file. Then, each matched filename is converted to the appropriate `file://` URI. Finally, [QUnit][qunit] is run for each URI.
 
@@ -70,7 +70,7 @@ grunt.initConfig({
 });
 ```
 
-### Testing via http:// or https:// <a name="testing-via-http-or-https" href="#testing-via-http-or-https" title="Link to this section">#</a>
+### Testing via http:// or https://
 
 In circumstances where running unit tests from `file://` URIs is inadequate, you can specify `http://` or `https://` URIs instead. If `http://` or `https://` URIs have been specified, those URIs will be passed directly into [QUnit][qunit] as-specified.
 
@@ -87,7 +87,7 @@ grunt.initConfig({
 
 _Note: grunt does NOT start a server at `localhost:8000` automatically. While grunt DOES have a [server task](task_server.md) that can be run before the qunit task to serve files statically, it must be started manually..._
 
-### Using the built-in static webserver <a name="using-the-built-in-static-webserver" href="#using-the-built-in-static-webserver" title="Link to this section">#</a>
+### Using the built-in static webserver
 
 If a web server isn't running at `localhost:8000`, running `grunt qunit` with `http://localhost:8000/` URIs will fail because grunt won't be able to load those URIs. This can be easily rectified by starting the built-in static web server via the [server task](task_server.md).
 
@@ -111,7 +111,7 @@ grunt.registerTask('test', 'server qunit');
 
 _Note: in the above example, an [alias task](types_of_tasks.md) called `test` was created that runs both the `server` and `qunit` tasks._
 
-## Debugging <a name="debugging" href="#debugging" title="Link to this section">#</a>
+## Debugging
 
 Running grunt with the `--debug` flag will output a lot of PhantomJS-specific debugging information. This can be very helpful in seeing what actual URIs are being requested and received by PhantomJS.
 

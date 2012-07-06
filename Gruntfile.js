@@ -35,54 +35,15 @@ module.exports = function(grunt) {
         }
       }
     },
-    docs: {
-      all: ['README.md', 'docs/*.md']
-    },
     watch: {
       scripts: {
         files: '<config:lint.all>',
         tasks: 'lint test'
-      },
-      docs: {
-        files: '<config:docs.all>',
-        tasks: 'docs'
       }
     }
   });
 
   // Default task.
-  grunt.registerTask('default', 'lint test docs');
-
-  // Process markdown documentation to make the world a better place.
-  grunt.registerMultiTask('docs', 'Tweak markdown documentation.', function() {
-    var files = grunt.file.expandFiles(this.file.src);
-    var processed = 0;
-    files.forEach(function(filepath) {
-      // Copying the file to itself allows it to be processed in-place.
-      grunt.file.copy(filepath, filepath, {process: function(src) {
-        // Add anchor links to all H2+ headers in .md document files.
-        var newSrc = src.replace(/(##+)\s+(.+?)\s*(?:<a name=.*<\/a>)?\n/g, function(_, h, title) {
-          // Slugify the title text.
-          var slug = grunt.util._.slugify(title.replace(/\./g, '-'));
-          // Put everything back together.
-          return h + ' ' + title + ' <a name="' + slug + '" href="#' + slug +
-            '" title="Link to this section">#</a>\n';
-        });
-        // Don't copy file if it didn't change.
-        if (newSrc === src) { return false; }
-        // Log and copy.
-        grunt.log.writeln('File "' + filepath + '" updated.');
-        processed++;
-        return newSrc;
-      }});
-    });
-
-    // Fail task if errors were logged.
-    if (this.errorCount) { return false; }
-
-    if (processed === 0) {
-      grunt.log.writeln('No documents updated.');
-    }
-  });
+  grunt.registerTask('default', 'lint test');
 
 };

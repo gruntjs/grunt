@@ -1,7 +1,6 @@
 [Grunt homepage](http://gruntjs.com/) | [Documentation table of contents](toc.md)
 
 # test (built-in task)
-
 Run unit tests with [Nodeunit][nodeunit].
 
 [nodeunit]: https://github.com/caolan/nodeunit/
@@ -10,7 +9,7 @@ Run unit tests with [Nodeunit][nodeunit].
 
 This task is a [multi task](types_of_tasks.md), meaning that grunt will automatically iterate over all `test` targets if a target is not specified.
 
-This task is for testing on the server side. If you're looking to test JAvaScript that uses `window` or the DOM, please use the [qunit task](task_qunit.md).
+This task is for testing on the server side. If you're looking to test JavaScript that uses `window` or the DOM, please use the [qunit task](task_qunit.md).
 
 ### Nodeunit <a name="nodeunit" href="#nodeunit" title="Link to this section">#</a>
 

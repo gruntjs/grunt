@@ -22,7 +22,7 @@ The init task currently supports a number of built-in templates.
 ### Gruntfile <a name="gruntfile" href="#gruntfile" title="Link to this section">#</a>
 Generated via `grunt init:gruntfile`, this customizable template creates a single [Gruntfile](getting_started.md) based on the answers to a few questions and some highly advanced "fuzzy logic" that tries to determine source and unit test paths. This is the template you want to use to generate a Gruntfile for an existing project.
 
-If your code is DOM-related, [QUnit unit tests](task_qunit.md) will be used, otherwise Nodeunit unit tests will be used. Where appropriate, predefined [lint](task_lint.md), [concat](task_concat.md) and [minification](task_min.md) tasks are generated. Also, depending on the library used, JSHint globals may be predefined (just `jQuery` for now).
+If your code is DOM-related, [QUnit unit tests](task_qunit.md) will be used, otherwise [Nodeunit unit tests](task_test.md) will be used. Where appropriate, predefined [lint](task_lint.md), [concat](task_concat.md) and [minification](task_min.md) tasks are generated. Also, depending on the library used, JSHint globals may be predefined (just `jQuery` for now).
 
 **You will most likely need to edit the generated Gruntfile.js file before running `grunt`. If you run grunt after generating Gruntfile.js, and it exits with errors, edit the Gruntfile.js file!**
 

@@ -15,7 +15,7 @@ As of now, grunt has the following predefined tasks that you can use in your pro
 * [min](/cowboy/grunt/blob/master/docs/task_min.md) - Minify files with [UglifyJS][uglify].
 * [qunit](/cowboy/grunt/blob/master/docs/task_qunit.md) - Run [QUnit][qunit] unit tests in a headless [PhantomJS][phantom] instance.
 * [server](/cowboy/grunt/blob/master/docs/task_server.md) - Start a static web server.
-* test - Run unit tests with [nodeunit][nodeunit].
+* [test](/cowboy/grunt/blob/master/docs/task_test.md) - Run unit tests with [nodeunit][nodeunit].
 * watch - Run predefined tasks whenever watched files change.
 
 _(More documentation forthcoming)_

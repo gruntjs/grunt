@@ -28,7 +28,7 @@ Note that the `phantomjs` executable needs to be in the system `PATH` for grunt 
 * [How do I change the PATH variable in Linux](https://www.google.com/search?q=How+do+I+change+the+PATH+variable+in+Linux)
 
 ## Why doesn't my asynchronous task complete?
-Chances are this is happening because you have forgotten to call the [this.async](api_task.md#this-async-grunt-task-current-async) method to tell grunt that your task is asynchronous. For simplicity's sake, grunt uses a synchronous coding style, which can be switched to asynchronous by calling `this.async()` within the task body.
+Chances are this is happening because you have forgotten to call the [this.async](api_task.md#thisasync--grunttaskcurrentasync) method to tell grunt that your task is asynchronous. For simplicity's sake, grunt uses a synchronous coding style, which can be switched to asynchronous by calling `this.async()` within the task body.
 
 Note that passing `false` to the `done()` function tells grunt that the task has failed.
 

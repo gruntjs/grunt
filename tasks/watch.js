@@ -116,7 +116,7 @@ module.exports = function(grunt) {
         watchedFiles[filepath] = fs.watch(filepath, function(event) {
           var mtime;
           // Has the file been deleted?
-          var deleted = !path.existsSync(filepath);
+          var deleted = !fs.existsSync(filepath);
           if (deleted) {
             // If file was deleted, stop watching file.
             unWatchFile(filepath);

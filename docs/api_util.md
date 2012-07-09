@@ -110,6 +110,34 @@ Given an array or array-like object, return an array. Great for converting `argu
 grunt.util.toArray(arrayLikeObject)
 ```
 
+### grunt.util.callbackify
+Normalizes both "returns a value" and "passes result to a callback" functions to always pass a result to the specified callback. If the original function returns a value, that value will now be passed to the callback, which is specified as the last argument, after all other predefined arguments. If the original function passed a value to a callback, it will continue to do so.
+
+```javascript
+grunt.util.callbackify(syncOrAsyncFunction)
+```
+
+This example might better illustrate:
+
+```javascript
+function add1(a, b) {
+  return a + b;
+}
+function add2(a, b, callback) {
+  callback(a + b);
+}
+
+var fn1 = grunt.util.callbackify(add1);
+var fn2 = grunt.util.callbackify(add2);
+
+fn1(1, 2, function(result) {
+  console.log('1 plus 2 equals ' + result);
+});
+fn2(1, 2, function(result) {
+  console.log('1 plus 2 equals ' + result);
+});
+```
+
 ## Internal libraries
 
 ### grunt.util.namespace

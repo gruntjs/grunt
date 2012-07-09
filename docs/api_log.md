@@ -32,11 +32,25 @@ If `msg` string is omitted, logs `ERROR` in red, otherwise logs `>> msg`, with t
 grunt.log.error([msg])
 ```
 
+### grunt.log.errorlns / grunt.verbose.errorlns
+Log an error with `grunt.log.error`, wrapping text to 80 columns using `grunt.log.wraptext`.
+
+```javascript
+grunt.log.errorlns(msg)
+```
+
 ### grunt.log.ok / grunt.verbose.ok
 If `msg` string is omitted, logs `OK` in green, otherwise logs `>> msg`, with trailing newline.
 
 ```javascript
 grunt.log.ok([msg])
+```
+
+### grunt.log.oklns / grunt.verbose.oklns
+Log an ok message with `grunt.log.ok`, wrapping text to 80 columns using `grunt.log.wraptext`.
+
+```javascript
+grunt.log.oklns(msg)
 ```
 
 ### grunt.log.subhead / grunt.verbose.subhead

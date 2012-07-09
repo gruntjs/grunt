@@ -110,6 +110,26 @@ Given an array or array-like object, return an array. Great for converting `argu
 grunt.util.toArray(arrayLikeObject)
 ```
 
+### grunt.util.callbackify
+
+Run a function that returns a value in a callback instead. Our example function that returns a value:
+
+```javascript
+function add(a, b) {
+  return a + b;
+}
+```
+
+Using callbackify we can run it using a callback:
+
+```javascript
+grunt.util.callbackify(add)(1, 2, function(result) {
+  console.log('1 plus 2 equals ' + result);
+});
+```
+
+This will also work on sync and async functions with existing callbacks.
+
 ## Internal libraries
 
 ### grunt.util.namespace

@@ -497,7 +497,7 @@ module.exports = function(grunt) {
     licenses: {
       message: 'Licenses',
       default: 'MIT',
-      validator: /^[\w\-]+(?:\s+[\w\-]+)*$/,
+      validator: /^[\w\-\.\d]+(?:\s+[\w\-\.\d]+)*$/,
       warning: 'Must be zero or more space-separated licenses. Built-in ' +
         'licenses are: ' + availableLicenses().join(' ') + ', but you may ' +
         'specify any number of custom licenses.',

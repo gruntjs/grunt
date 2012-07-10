@@ -40,7 +40,7 @@ exports.template = function(grunt, init, done) {
     grunt.helper('prompt_for', 'repository'),
     grunt.helper('prompt_for', 'homepage'),
     grunt.helper('prompt_for', 'bugs'),
-    grunt.helper('prompt_for', 'licenses', 'MIT GPL'),
+    grunt.helper('prompt_for', 'licenses', 'MIT GPL-2.0'),
     grunt.helper('prompt_for', 'author_name'),
     grunt.helper('prompt_for', 'author_email'),
     grunt.helper('prompt_for', 'author_url'),

@@ -84,8 +84,8 @@ module.exports = function(grunt) {
   // Lint source code with JSHint.
   grunt.registerHelper('lint', function(src, options, globals, extraMsg) {
     // JSHint sometimes modifies objects you pass in, so clone them.
-    options = grunt.util._.clone(options);
-    globals = grunt.util._.clone(globals);
+    options = options ? grunt.util._.clone(options) : {};
+    globals = globals ? grunt.util._.clone(globals) : {};
     // Enable/disable debugging if option explicitly set.
     if (grunt.option('debug') !== undefined) {
       options.devel = options.debug = grunt.option('debug');

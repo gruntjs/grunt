@@ -1,4 +1,7 @@
-/*global require:true */
+/*global require:true, exports:true*/
+/*jshint globalstrict:true, sub:true*/
+'use strict';
+
 var {%= js_safe_name %} = require('../lib/{%= name %}.js');
 
 /*

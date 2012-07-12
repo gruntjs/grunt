@@ -7,6 +7,7 @@
  */
 
 (function(exports) {
+  'use strict';
 
   exports.awesome = function() {
     return 'awesome';

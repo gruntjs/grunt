@@ -1,3 +1,5 @@
+/*global require:true, exports:true*/
+/*jshint globalstrict:true, sub:true*/
 'use strict';
 
 var grunt = require('grunt');

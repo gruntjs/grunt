@@ -25,6 +25,13 @@ Read a file's contents, parsing the data as JSON and returning the result.
 grunt.file.readJSON(filepath)
 ```
 
+### grunt.file.readYAML
+Read a file's contents, parsing the data as YAML and returning the result.
+
+```javascript
+grunt.file.readYAML(filepath)
+```
+
 ### grunt.file.write
 Write the specified contents to a file, creating intermediate directories if necessary.
 

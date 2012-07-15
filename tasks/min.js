@@ -31,17 +31,28 @@ module.exports = function(grunt) {
     // linted) file, but it supports any number of files.
     var max = grunt.helper('concat', files, {separator: this.data.separator});
 
-    // Concat banner + minified source.
-    var min = banner + grunt.helper('uglify', max, grunt.config('uglify'));
-    grunt.file.write(this.file.dest, min);
+    var done = this.async();
 
-    // Fail task if errors were logged.
-    if (this.errorCount) { return false; }
+    function complete(code) {
+      // Fail task if errors were logged.
+      if (this.errorCount) { done(false); return; }
 
-    // Otherwise, print a success message....
-    grunt.log.writeln('File "' + this.file.dest + '" created.');
-    // ...and report some size information.
-    grunt.helper('min_max_info', min, max);
+      // Concat banner + minified source.
+      var min = banner + code;
+      grunt.file.write(this.file.dest, min);
+
+      // Otherwise, print a success message....
+      grunt.log.writeln('File "' + this.file.dest + '" created.');
+      // ...and report some size information.
+      grunt.helper('min_max_info', min, max);
+
+      done();
+    }
+
+    var that = this;
+    grunt.helper('uglify', max, grunt.config('uglify'), function(code) {
+      complete.call(that, code);
+    });
   });
 
   // ==========================================================================
@@ -50,7 +61,7 @@ module.exports = function(grunt) {
 
   // Minify with UglifyJS.
   // From https://github.com/mishoo/UglifyJS
-  grunt.registerHelper('uglify', function(src, options) {
+  grunt.registerHelper('uglify', function(src, options, callback) {
     if (!options) { options = {}; }
     var jsp = uglifyjs.parser;
     var pro = uglifyjs.uglify;
@@ -67,13 +78,14 @@ module.exports = function(grunt) {
       // UglifyJS adds a trailing semicolon only when run as a binary.
       // So we manually add the trailing semicolon when using it as a module.
       // https://github.com/mishoo/UglifyJS/issues/126
-      return src + ';';
+      callback(src + ';');
     } catch(e) {
       // Something went wrong.
       grunt.verbose.or.write(msg);
       pos = '['.red + ('L' + e.line).yellow + ':'.red + ('C' + e.col).yellow + ']'.red;
       grunt.log.error().writeln(pos + ' ' + (e.message + ' (position: ' + e.pos + ')').yellow);
       grunt.warn('UglifyJS found errors.', 10);
+      callback(null);
     }
   });
 

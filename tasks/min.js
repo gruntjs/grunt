@@ -17,7 +17,7 @@ module.exports = function(grunt) {
   // TASKS
   // ==========================================================================
 
-  grunt.registerMultiTask('min', 'Minify files with UglifyJS.', function() {
+  grunt.registerMultiTask('min', 'Minify files.', function() {
     var files = grunt.file.expandFiles(this.file.src);
     // Get banner, if specified. It would be nice if UglifyJS supported ignoring
     // all comments matching a certain pattern, like /*!...*/, but it doesn't.
@@ -49,8 +49,10 @@ module.exports = function(grunt) {
       done();
     }
 
+    var helper = this.data.helper || 'uglify';
+
     var that = this;
-    grunt.helper('uglify', max, grunt.config('uglify'), function(code) {
+    grunt.helper(helper, max, grunt.config(helper), function(code) {
       complete.call(that, code);
     });
   });

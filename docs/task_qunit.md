@@ -111,6 +111,24 @@ grunt.registerTask('test', 'server qunit');
 
 _Note: in the above example, an [alias task](types_of_tasks.md) called `test` was created that runs both the `server` and `qunit` tasks._
 
+### Specifying a custom PhantomJS timeout
+
+If you have long-running asynchronous tests, you can specify an optional timeout value. In the following example, the default value of `5000` is overridden with the value `10000` (timeout values are in milliseconds):
+
+```javascript
+// Project configuration.
+grunt.initConfig({
+  qunit: {
+    options: {
+      timeout: 10000
+    },
+    all: ['test/**/*.html']
+  }
+});
+```
+
+As in other multi tasks, this value can be further overridden on a per-target basis.
+
 ## Debugging
 
 Running grunt with the `--debug` flag will output a lot of PhantomJS-specific debugging information. This can be very helpful in seeing what actual URIs are being requested and received by PhantomJS.

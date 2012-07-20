@@ -138,6 +138,12 @@ module.exports = function(grunt) {
   // ==========================================================================
 
   grunt.registerMultiTask('qunit', 'Run QUnit unit tests in a headless PhantomJS instance.', function() {
+    // Merge task-specific and/or target-specific options with these defaults.
+    var options = this.options({
+      // Default PhantomJS timeout.
+      timeout: 5000
+    });
+
     // Get files as URLs.
     var urls = grunt.file.expandFileURLs(this.file.src);
 
@@ -218,6 +224,8 @@ module.exports = function(grunt) {
           grunt.task.getFile('qunit/qunit.js'),
           // URL to the QUnit .html test file to run.
           url,
+          // Task options.
+          JSON.stringify(options),
           // PhantomJS options.
           '--config=' + grunt.task.getFile('qunit/phantom.json')
         ],

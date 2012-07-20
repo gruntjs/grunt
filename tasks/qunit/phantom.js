@@ -19,6 +19,8 @@ var tmpfile = phantom.args[0];
 var qunit = phantom.args[1];
 // The QUnit .html test file to run.
 var url = phantom.args[2];
+// Extra, optionally overridable stuff.
+var options = JSON.parse(phantom.args[3]);
 
 // Keep track of the last time a QUnit message was sent.
 var last = new Date();
@@ -48,10 +50,10 @@ sendEnvMessage('version', phantom.version);
 
 // Abort if QUnit doesn't do anything for a while.
 setInterval(function() {
-  if (new Date() - last > 5000) {
+  if (new Date() - last > options.timeout) {
     sendMessage(['done_timeout']);
   }
-}, 1000);
+}, 100);
 
 // Create a new page.
 var page = require('webpage').create();

@@ -79,3 +79,12 @@ exports['utils'] = {
     test.done();
   }
 };
+
+exports['util.underscore.string'] = function(test) {
+  test.expect(4);
+  test.equals(grunt.util._.trim('    foo     '), 'foo', 'Should have trimmed the string.');
+  test.equals(grunt.util._.capitalize('foo'), 'Foo', 'Should have capitalized the first letter.');
+  test.equals(grunt.util._.words('one two three').length, 3, 'Should have counted three words.');
+  test.ok(grunt.util._.isBlank(' '), 'Should be blank.');
+  test.done();
+};

@@ -187,6 +187,54 @@ grunt.initConfig({
 });
 ```
 
+#### Using a `.jshintrc` file
+
+To override lint options with a `.jshintrc` JSHint resource file, add a `jshintrc` setting to your `options` object. Specifying a `.jshintrc` file will override any other JSHint options set in your Gruntfile.
+
+```javascript
+// Project configuration.
+grunt.initConfig({
+  lint: {
+    options: {
+      // Default JSHint resource file
+      jshintrc: '.jshintrc',
+      options: {curly: true}
+    },
+    all: {
+      files: {
+        src: ['src/*.js', 'lib/*.js']
+      },
+    },
+    tests: {
+      files: {
+        src: 'tests/unit/**/*.js'
+      },
+      options: {
+        // Will override the defaults for the lint:tests target.
+        jshintrc: 'tests/.jshintrc'
+      }
+    }
+  }
+});
+```
+
+The `.jshintrc` file must be valid JSON and would look something like this:
+
+```json
+{
+  "curly": true,
+  "eqnull": true,
+  "eqeqeq": true,
+  "expr": true,
+  "latedef": true,
+  "noarg": true,
+  "onevar": true,
+  "smarttabs": true,
+  "trailing": true,
+  "undef": true
+}
+```
+
 ## Helpers
 
 A generic `lint` helper is available for use in any other task where file linting might be useful. For example:

@@ -32,5 +32,5 @@ exports['awesome'] = {
     // tests here
     test.equal({%= js_test_safe_name %}.awesome(), 'awesome', 'should be awesome.');
     test.done();
-  }
+  },
 };

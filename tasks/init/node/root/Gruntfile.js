@@ -6,7 +6,7 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: '<json:package.json>',
     test: {
-      files: ['test/**/*.js']
+      files: ['test/**/*.js'],
     },
     lint: {
       files: ['Gruntfile.js', 'lib/**/*.js', 'test/**/*.js'],
@@ -22,17 +22,18 @@ module.exports = function(grunt) {
           undef: true,
           boss: true,
           eqnull: true,
-          node: true
+          node: true,
+          es5: true,
         },
         globals: {
-          exports: true
-        }
-      }
+          exports: true,
+        },
+      },
     },
     watch: {
       files: '<config:lint.files>',
-      tasks: 'default'
-    }
+      tasks: 'default',
+    },
   });
 
   // Default task.

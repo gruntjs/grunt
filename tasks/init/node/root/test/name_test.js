@@ -1,6 +1,6 @@
 'use strict';
 
-var {%= js_safe_name %} = require('../lib/{%= name %}.js');
+var {%= js_test_safe_name %} = require('../lib/{%= name %}.js');
 
 /*
   ======== A Handy Little Nodeunit Reference ========
@@ -30,7 +30,7 @@ exports['awesome'] = {
   'no args': function(test) {
     test.expect(1);
     // tests here
-    test.equal({%= js_safe_name %}.awesome(), 'awesome', 'should be awesome.');
+    test.equal({%= js_test_safe_name %}.awesome(), 'awesome', 'should be awesome.');
     test.done();
   }
 };

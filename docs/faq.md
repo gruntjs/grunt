@@ -40,3 +40,36 @@ grunt.registerTask('asyncme', 'My asynchronous task.', function() {
   doSomethingAsync(done);
 });
 ```
+
+## How can I pass parameters from the command-line?
+Whenever you're using alias tasks, you can't pass a flag to aliased tasks. Here are a few patterns to deal with that.
+
+For a global setting available to all tasks, use options:
+
+```javascript
+grunt.registerTask('upload', 'Upload code to deploy', function(n) {
+  var target = grunt.option('target');
+  // use target var to do something useful
+});
+grunt.registerTask('deploy', 'validate upload')
+```
+
+You can then call `grunt deploy --target=staging`
+
+Options can also be used with just the key, without a value: `grunt deploy --staging`
+
+In other cases you may want to expose additional configuration or global values. In that case, register a task that sets it's arguments as a global or config value:
+
+```javascript
+grunt.registerTask('set_global', 'Set a global var.', function(name, val) {
+  global[name] = val;
+});
+
+grunt.registerTask('set_config', 'Set a config property.', function(name, val) {
+  grunt.config.set(name, val);
+});
+```
+
+Then call those with regular flags, along with whatever task will make use of those values:
+
+`grunt set_global:name:peter set_config:target:staging deploy`

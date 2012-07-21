@@ -45,6 +45,164 @@ module.exports = function(grunt) {
     }
   }
 
+  function AntJUnitXmlResultFormatter (xmlReportFile) {
+    this.testSuites = [];
+    this.currentTestSuite = null;
+    this.currentTest = null;
+
+	// 'Dummy' test suite for tests that are not in a module.
+    this.testSuites.push({
+      name: '',
+      timestamp: new Date(),
+      tests: []
+    });
+
+    this.moduleStart = function (name) {
+      var testSuite = {
+        name: name,
+        timestamp:  new Date(),
+        tests: []
+      };
+
+      this.testSuites.push(testSuite);
+      this.currentTestSuite = testSuite;
+    };
+
+    this.moduleDone = function (name, failed, passed, total) {
+      var testSuite = this.currentTestSuite;
+
+      this.currentTestSuite = null;
+      this.currentTest = null;
+    };
+
+    this.testStart = function (name) {
+      var test = {
+        name: name,
+        startTimestamp: new Date(),
+        assertions: []
+      };
+
+      if (this.currentTestSuite) {
+        this.currentTestSuite.tests.push(test);
+      } else {
+        this.testSuites[0].tests.push(test);
+      }
+
+      this.currentTest = test;
+    };
+
+    this.testDone = function (name, failed, passed, total) {
+      var test = this.currentTest;
+
+      test.endTimestamp = new Date();
+      test.time = test.endTimestamp - test.startTimestamp;
+      test.failed = failed;
+      test.passed = passed;
+      test.total = total;
+
+      this.currentTest = null;
+    };
+
+    this.log = function (result, actual, expected, message, source) {
+      var test = this.currentTest;
+
+      test.assertions.push({
+        result: result,
+        actual: actual,
+        expected: expected,
+        message: message,
+        source: source
+      });
+    };
+
+    this.beginXmlElement = function (elementName, attributes) {
+      var formattedAttributes = [];
+
+      for (attribute in attributes || {}) {
+        if (Object.prototype.hasOwnProperty.call(attributes, attribute)) {
+          formattedAttributes.push(attribute + '="' + this.xmlAttributeEncode(attributes[attribute]) + '"');
+        }
+      }
+
+      return '<' + elementName + ' ' + formattedAttributes.join(' ') + '>';
+    };
+
+    this.endXmlElement = function (elementName) {
+      return '</' + elementName + '>';
+    };
+
+    this.xmlEncode = function (text) {
+      return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;');
+    };
+
+    this.xmlAttributeEncode = function (text) {
+      return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&apos;')
+        .replace(/</g, '&lt;');
+    };
+
+    this.xmlCData = function (text) {
+      return '<![CDATA[' + String(text).replace(/]]>/g, ']]]]><![CDATA[>') + ']]>';
+    };
+
+    this.allDone = function (callback) {
+      var self = this,
+        stream = fs.createWriteStream(xmlReportFile, {flags: 'w', encoding: 'utf-8'});
+
+      stream.on('close', function () { callback(); });
+
+      stream.write(this.beginXmlElement('testsuites', {}));
+
+      this.testSuites.forEach(function (testSuite, index) {
+        if (index === 0 && !testSuite.tests.length) {
+          return;
+        }
+
+        stream.write(self.beginXmlElement('testsuite', {
+          name: testSuite.name,
+          tests: testSuite.tests.length,
+          timestamp: grunt.template.date(testSuite.timestamp, 'isoDateTime', true)
+        }));
+
+        testSuite.tests.forEach(function (test) {
+          stream.write(self.beginXmlElement('testcase', {
+            name: test.name,
+            assertions: test.total,
+            time: test.time / 1000
+          }));
+
+          test.assertions.forEach(function (assertion) {
+            if (assertion.result) {
+              return;
+            }
+
+            stream.write(self.beginXmlElement('error', {
+              type: 'assertionFailure',
+              message: assertion.message
+            }));
+
+            stream.write(self.xmlCData(
+              'Expected: ' + assertion.expected + '\n' +
+              '  Result: ' + assertion.actual + '\n' +
+              '  Source: ' + (assertion.source === null ? '' : assertion.source)));
+
+            stream.write(self.endXmlElement('error'));
+          });
+
+          stream.write(self.endXmlElement('testcase'));
+        });
+
+        stream.write(self.endXmlElement('testsuite'));
+      });
+
+      stream.end(this.endXmlElement('testsuites'));
+    };
+  }
+
   // Handle methods passed from PhantomJS, including QUnit hooks.
   var phantomHandlers = {
     // QUnit hooks.
@@ -120,6 +278,11 @@ module.exports = function(grunt) {
     // Get files as URLs.
     var urls = grunt.file.expandFileURLs(this.file.src);
 
+    var resultListeners = [];
+    if (this.data.antJUnitXmlReport) {
+      resultListeners.push(new AntJUnitXmlResultFormatter(this.data.antJUnitXmlReport));
+    }
+
     // This task is asynchronous.
     var done = this.async();
 
@@ -167,6 +330,11 @@ module.exports = function(grunt) {
           if (phantomHandlers[method]) {
             phantomHandlers[method].apply(null, args);
           }
+          resultListeners.forEach(function (item) {
+            if (item[method]) {
+              item[method].apply(item, args);
+            }
+          });
           // If the method name started with test, return true. Because the
           // Array#some method was used, this not only sets "done" to true,
           // but stops further iteration from occurring.
@@ -210,17 +378,20 @@ module.exports = function(grunt) {
     }, function(err) {
       // All tests have been run.
 
-      // Log results.
-      if (status.failed > 0) {
-        grunt.warn(status.failed + '/' + status.total + ' assertions failed (' +
-          status.duration + 'ms)', Math.min(99, 90 + status.failed));
-      } else {
-        grunt.verbose.writeln();
-        grunt.log.ok(status.total + ' assertions passed (' + status.duration + 'ms)');
-      }
-
-      // All done!
-      done();
+      grunt.utils.async.forEach(resultListeners, function (item, callback) {
+        item.allDone(callback);
+      }, function (err) {
+        // Log results.
+        if (status.failed > 0) {
+          grunt.warn(status.failed + '/' + status.total + ' assertions failed (' +
+            status.duration + 'ms)', Math.min(99, 90 + status.failed));
+        } else {
+          grunt.verbose.writeln();
+          grunt.log.ok(status.total + ' assertions passed (' + status.duration + 'ms)');
+        }
+        // All done!
+        done();
+      });
     });
   });
 

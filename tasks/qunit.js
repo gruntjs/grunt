@@ -116,7 +116,8 @@ module.exports = function(grunt) {
     };
 
     this.beginXmlElement = function (elementName, attributes) {
-      var formattedAttributes = [];
+      var formattedAttributes = [],
+        attribute;
 
       for (attribute in attributes || {}) {
         if (Object.prototype.hasOwnProperty.call(attributes, attribute)) {
@@ -146,7 +147,7 @@ module.exports = function(grunt) {
     };
 
     this.xmlCData = function (text) {
-      return '<![CDATA[' + String(text).replace(/]]>/g, ']]]]><![CDATA[>') + ']]>';
+      return '<![CDATA[' + String(text).replace(/\]\]>/g, ']]]]><![CDATA[>') + ']]>';
     };
 
     this.allDone = function (callback) {

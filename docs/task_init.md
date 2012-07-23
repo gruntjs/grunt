@@ -13,7 +13,7 @@ Unlike other tasks, init should only ever be run once for a project. Typically, 
 
 ## Usage examples <a name="usage-examples" href="#usage-examples" title="Link to this section">⚑</a>
 
-Change to a new directory, and type in `grunt init:TEMPLATE` where TEMPLATE is one of the following templates. Answer the questions. Watch grunt do it's thing. Done. Now you have fully initialized project scaffolding that you can customize, `grunt` and publish.
+Change to a new directory, and type in `grunt init:TEMPLATE` where TEMPLATE is one of the following templates. Answer the questions. Watch grunt do its thing. Done. Now you have fully initialized project scaffolding that you can customize, `grunt` and publish.
 
 ## Built-in templates <a name="built-in-templates" href="#built-in-templates" title="Link to this section">⚑</a>
 

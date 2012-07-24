@@ -29,7 +29,7 @@ module.exports = function(grunt) {
     },
     watch: {
       files: '<config:lint.files>',
-      tasks: 'default'
+      tasks: ['default']
     }
   });
 
@@ -37,6 +37,6 @@ module.exports = function(grunt) {
   grunt.loadTasks('tasks');
 
   // Default task.
-  grunt.registerTask('default', 'lint test');
+  grunt.registerTask('default', ['lint', 'test']);
 
 };

@@ -106,7 +106,7 @@ grunt.initConfig({
 });
 
 // A convenient task alias.
-grunt.registerTask('test', 'server qunit');
+grunt.registerTask('test', ['server', 'qunit']);
 ```
 
 _Note: in the above example, an [alias task](types_of_tasks.md) called `test` was created that runs both the `server` and `qunit` tasks._

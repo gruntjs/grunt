@@ -47,11 +47,11 @@ module.exports = function(grunt) {
     },
     watch: {
       files: '<config:lint.files>',
-      tasks: 'lint qunit'
+      tasks: ['lint', 'qunit']
     }
   });
 
   // Default task.
-  grunt.registerTask('default', 'lint qunit concat min');
+  grunt.registerTask('default', ['lint', 'qunit', 'concat', 'min']);
 
 };

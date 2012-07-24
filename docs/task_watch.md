@@ -50,7 +50,7 @@ grunt.initConfig({
   },
   watch: {
     files: ['<config:lint.files>', '<config:lint.qunit>']
-    tasks: 'lint qunit'
+    tasks: ['lint', 'qunit']
   }
 });
 ```
@@ -75,11 +75,11 @@ grunt.initConfig({
   watch: {
     lint: {
       files: '<config:lint.files>',
-      tasks: 'lint'
+      tasks: ['lint']
     },
     qunit: {
       files: ['lib/**/*.js', 'test/**/*.js', 'test/**/*.html']
-      tasks: 'qunit'
+      tasks: ['qunit']
     }
   }
 });

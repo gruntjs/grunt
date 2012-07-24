@@ -67,7 +67,7 @@ grunt.registerTask('upload', 'Upload code to specified target.', function(n) {
   var target = grunt.option('target');
   // do something useful with target here
 });
-grunt.registerTask('deploy', 'validate upload');
+grunt.registerTask('deploy', ['validate', 'upload']);
 ```
 
 _Note that boolean options can be specified using just a key without a value. For example, running `grunt deploy --staging` on the command line would cause `grunt.option('staging')` to return `true`._

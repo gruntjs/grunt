@@ -46,11 +46,11 @@ module.exports = function(grunt) {
     },
     watch: {
       files: '<config:lint.files>',
-      tasks: 'lint test'
+      tasks: ['lint', 'test']
     }
   });
 
   // Default task.
-  grunt.registerTask('default', 'lint test concat min');
+  grunt.registerTask('default', ['lint', 'test', 'concat', 'min']);
 
 };

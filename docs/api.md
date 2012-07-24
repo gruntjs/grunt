@@ -25,7 +25,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-sample');
 
   // Default task.
-  grunt.registerTask('default', 'lint sample');
+  grunt.registerTask('default', ['lint', 'sample']);
 
 };
 ```
@@ -101,7 +101,7 @@ Register an "alias task" or a task function. This method supports the following 
 
 **Alias task**
 
-If a task list is specified, the new task will be an alias for one or more other tasks. Whenever this "alias task" is run, every specified task in `taskList` will be run, in the order specified. The `taskList` argument can be a space-separated string or an array of task names.
+If a task list is specified, the new task will be an alias for one or more other tasks. Whenever this "alias task" is run, every specified task in `taskList` will be run, in the order specified. The `taskList` argument must be an array of tasks.
 
 ```javascript
 grunt.registerTask(taskName, taskList)
@@ -110,7 +110,13 @@ grunt.registerTask(taskName, taskList)
 This example alias task defines a "default" task whereby the "lint", "qunit", "concat" and "min" tasks are run automatically if grunt is executed without any tasks specified:
 
 ```javascript
-task.registerTask('default', 'lint qunit concat min');
+task.registerTask('default', ['lint', 'qunit', 'concat', 'min']);
+```
+
+Task arguments can be specified as well. In this example, the alias "dist" runs both the "concat" and "min" tasks, each with the "dist" argument:
+
+```javascript
+task.registerTask('dist', ['concat:dist', 'min:dist']);
 ```
 
 **Function task**
@@ -209,7 +215,7 @@ setTimeout(function() {
 ```
 
 ### this.requires / grunt.task.current.requires
-If one task depends on the successful completion of another task (or tasks), this method can be used to force grunt to abort if the other task didn't run, or if the other task failed. The task list can be a space-separated string, an array of task names, or individual task name arguments.
+If one task depends on the successful completion of another task (or tasks), this method can be used to force grunt to abort if the other task didn't run, or if the other task failed. The task list can be an array of task names or individual task name arguments.
 
 Note that this won't actually run the specified task(s), it will just fail the current task if they haven't already run successfully.
 

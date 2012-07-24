@@ -21,13 +21,13 @@ _Note that for alias tasks, the description is optional. If omitted, a useful de
 In the following example, a `theworks` task is defined that, when invoked by `grunt theworks`, will execute the `lint`, `qunit`, `concat` and `min` tasks in-order. Running `grunt theworks` behaves exactly as if `grunt lint qunit concat min` was run on the command line.
 
 ```javascript
-grunt.registerTask('theworks', 'lint qunit concat min');
+grunt.registerTask('theworks', ['lint', 'qunit', 'concat', 'min']);
 ```
 
 In this example, a default task is defined that, when invoked by `grunt` or `grunt default`, will execute the `lint`, `qunit`, `concat` and `min` tasks in-order. It behaves exactly as if `grunt lint qunit concat min` was run on the command line.
 
 ```javascript
-grunt.registerTask('default', 'lint qunit concat min');
+grunt.registerTask('default', ['lint', 'qunit', 'concat', 'min']);
 ```
 
 _In case it's not obvious, defining a `default` task is helpful because it runs by default, whenever you run `grunt` without explicitly specifying tasks._
@@ -135,7 +135,7 @@ Inside a task, you can run other tasks.
 ```javascript
 grunt.registerTask('foo', 'My "foo" task.', function() {
   // Enqueue "bar" and "baz" tasks, to run after "foo" finishes, in-order.
-  grunt.task.run('bar baz');
+  grunt.task.run('bar', 'baz');
   // Or:
   grunt.task.run(['bar', 'baz']);
 });

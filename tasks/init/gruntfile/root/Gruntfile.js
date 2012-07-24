@@ -40,7 +40,7 @@ module.exports = function(grunt) {
     },{% } %}
     watch: {
       files: '<config:lint.files>',
-      tasks: 'lint {%= test_task %}'
+      tasks: ['lint', '{%= test_task %}']
     },
     jshint: {
       options: {
@@ -64,6 +64,6 @@ module.exports = function(grunt) {
   });
 
   // Default task.
-  grunt.registerTask('default', 'lint {%= test_task %}{%= min_concat ? " concat min" : "" %}');
+  grunt.registerTask('default', ['lint', '{%= test_task %}'{%= min_concat ? ", 'concat', 'min'" : "" %}]);
 
 };

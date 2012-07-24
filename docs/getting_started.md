@@ -32,7 +32,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-sample');
 
   // Default task.
-  grunt.registerTask('default', 'lint sample');
+  grunt.registerTask('default', ['lint', 'sample']);
 
 };
 ```
@@ -130,7 +130,7 @@ In the following example, a default task is defined that, when invoked by specif
 
 ```javascript
 // Default task.
-grunt.registerTask('default', 'lint qunit concat min');
+grunt.registerTask('default', ['lint', 'qunit', 'concat', 'min']);
 ```
 
 _Note: choose the default tasks that make the most sense for your project. If you find yourself commonly executing other groups of tasks, create as many named aliases as you need!_

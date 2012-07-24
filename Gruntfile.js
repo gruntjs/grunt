@@ -38,12 +38,12 @@ module.exports = function(grunt) {
     watch: {
       scripts: {
         files: '<config:lint.all>',
-        tasks: 'lint test'
+        tasks: ['lint', 'test']
       }
     }
   });
 
   // Default task.
-  grunt.registerTask('default', 'lint test');
+  grunt.registerTask('default', ['lint', 'test']);
 
 };

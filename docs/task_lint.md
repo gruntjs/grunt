@@ -80,7 +80,7 @@ grunt.initConfig({
 });
 
 // Default task.
-grunt.registerTask('default', 'lint:beforeconcat concat lint:afterconcat');
+grunt.registerTask('default', ['lint:beforeconcat', 'concat', 'lint:afterconcat']);
 ```
 
 _Note: in the above example, a default [alias task](types_of_tasks.md) was created that runs the 'lint:beforeconcat', 'concat' and 'lint:afterconcat' tasks. If you didn't want this to be the default grunt task, you could give it a different name._

@@ -2,6 +2,12 @@
 
 # Frequently Asked Questions
 
+## Windows support
+
+Grunt works fine on Windows as node and npm work fine on Windows. Usually the problematic part is cygwin, e.g. by bundling an outdated node version.
+
+The best way to get around that is to use [msysgit](http://code.google.com/p/msysgit/) to get a `git` binary in your regular command prompt (better yet, use PowerShell). Then just install [node](http://nodejs.org/#download) using their official installer and you get both `node` and `npm` binaries.
+
 ## On Windows, why does my JS editor open when I try to run grunt?
 If you're in the same directory as the [Gruntfile](getting_started.md), Windows tries to execute _that file_ when you type grunt. So you need to type `grunt.cmd` instead.
 

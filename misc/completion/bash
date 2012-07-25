@@ -7,16 +7,18 @@
 # Licensed under the MIT license.
 # http://benalman.com/about/license/
 
-# To enable bash <tab> completion for grunt, add the following line (minus any
+# Usage:
+#
+# To enable bash <tab> completion for grunt, add the following line (minus the
 # leading #, which is the bash comment character) to your ~/.bashrc file:
 #
-# source "$(grunt -Vv | sed -En 's#Install path: (.*)#\1/misc/bash_completion.sh#p')"
+# eval "$(grunt --completion=bash)"
 
 # Search the current directory and all parent directories for a gruntfile.
 function _grunt_gruntfile() {
   local curpath="$PWD"
   while [[ "$curpath" ]]; do
-    for gruntfile in "$curpath/grunt."{js,coffee}; do
+    for gruntfile in "$curpath/"{G,g}runtfile.{js,coffee}; do
       if [[ -e "$gruntfile" ]]; then
         echo "$gruntfile"
         return
@@ -53,7 +55,7 @@ function _grunt_completions() {
     help="$(grunt --help --no-color 2>/dev/null)"
     # Parse out options and tasks individually.
     opts="$(echo "$help" | awk '$1~/^-/ {sub(",","",$1);print $1} $2~/^-/ {print $2}')"
-    tasks="$(echo "$help" | awk 't==1 {print $1} /^Available .* tasks$/ {t=1} /^$/ {t=0}')"
+    tasks="$(echo "$help" | awk '/^$/ {t=0} t==1 {print $1} /^Available .* tasks$/ {t=1}')"
     # Write files.
     echo "$opts" > "$c_opts"
     echo "$tasks" > "$c_tasks"

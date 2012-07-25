@@ -46,6 +46,15 @@ grunt.registerTask('asyncme', 'My asynchronous task.', function() {
 });
 ```
 
+## How do I enable shell tab auto-completion?
+To enable bash tab auto-completion for grunt, add the following line to your `~/.bashrc` file:
+
+```bash
+eval "$(grunt --completion=bash)"
+```
+
+This assumes that grunt has been installed globally with `npm install -g grunt`. Currently, the only supported shell is bash.
+
 ## How can I share parameters across multiple tasks?
 While each task can accept its own parameters, there are a few options available for sharing parameters across multiple tasks.
 

@@ -134,7 +134,7 @@ Wildcard patterns are resolved using the [glob-whatev library](https://github.co
 There are also a number of [task-specific file listing methods](api_task.md) that find files inside grunt plugins and task directories.
 
 ### grunt.file.expand
-Return a unique array of all file or directory paths that match the given wildcard pattern(s). This method accepts either comma separated wildcard patterns or an array of wildcard patterns. Paths matching patterns that begin with `!` will be excluded from the returned array.
+Return a unique array of all file or directory paths that match the given wildcard pattern(s). This method accepts either comma separated wildcard patterns or an array of wildcard patterns. Paths matching patterns that begin with `!` will be excluded from the returned array. Patterns are processed in order, so inclusion and exclusion order is significant.
 
 ```javascript
 grunt.file.expand([options, ] patterns)
@@ -179,7 +179,7 @@ grunt.file.findup(rootdir, patterns)
 ```
 
 ### grunt.file.match
-Match one or more wildcard patterns against one or more file paths. Returns a uniqued array of all file paths that match any of the specified wildcard patterns. Both the `patterns` and `filepaths` argument can be a single string or array of strings. Paths matching patterns that begin with `!` will be excluded from the returned array.
+Match one or more wildcard patterns against one or more file paths. Returns a uniqued array of all file paths that match any of the specified wildcard patterns. Both the `patterns` and `filepaths` argument can be a single string or array of strings. Paths matching patterns that begin with `!` will be excluded from the returned array. Patterns are processed in order, so inclusion and exclusion order is significant.
 
 ```javascript
 grunt.file.match([options, ] patterns, filepaths)

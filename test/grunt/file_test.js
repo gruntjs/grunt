@@ -57,11 +57,13 @@ exports['file.match'] = {
     test.deepEqual(grunt.file.match(['<omg:a:b>', '*.js'], 'foo.js'), ['foo.js'], 'should filter out directives.');
     test.done();
   },
-  'exclude': function(test) {
-    test.expect(3);
-    test.deepEqual(grunt.file.match(['*.js', '!*.js'], ['foo.js', 'bar.js']), [], 'negation should cancel match');
-    test.deepEqual(grunt.file.match(['*.js', '!f*.js'], ['foo.js', 'bar.js', 'baz.js']), ['bar.js', 'baz.js'], 'partial negation should partially cancel match');
-    test.deepEqual(grunt.file.match(['!b*.js', '*.js'], ['foo.js', 'bar.js', 'baz.js']), ['foo.js'], 'partial negation should partially cancel match');
+  'exclusion': function(test) {
+    test.expect(5);
+    test.deepEqual(grunt.file.match(['!*.js'], ['foo.js', 'bar.js']), [], 'solitary exclusion should match nothing');
+    test.deepEqual(grunt.file.match(['*.js', '!*.js'], ['foo.js', 'bar.js']), [], 'exclusion should cancel match');
+    test.deepEqual(grunt.file.match(['*.js', '!f*.js'], ['foo.js', 'bar.js', 'baz.js']), ['bar.js', 'baz.js'], 'partial exclusion should partially cancel match');
+    test.deepEqual(grunt.file.match(['*.js', '!*.js', 'b*.js'], ['foo.js', 'bar.js', 'baz.js']), ['bar.js', 'baz.js'], 'inclusion / exclusion order matters');
+    test.deepEqual(grunt.file.match(['*.js', '!f*.js', '*.js'], ['foo.js', 'bar.js', 'baz.js']), ['bar.js', 'baz.js', 'foo.js'], 'inclusion / exclusion order matters');
     test.done();
   },
   'options.matchBase': function(test) {
@@ -156,21 +158,25 @@ exports['file.expand*'] = {
     test.done();
   },
   'directives': function(test) {
-    test.expect(3);
+    // test.expect(3);
     grunt.registerHelper('omg', function() {});
     test.deepEqual(grunt.file.expand('<omg>'), ['<omg>'], 'should retain valid directives.');
     test.deepEqual(grunt.file.expand(['**/*.js', '<omg>']), ['js/bar.js', 'js/foo.js', '<omg>'], 'should retain valid directives.');
-    test.deepEqual(grunt.file.expand(['<omg:a:b>', '**/*.js']), ['<omg:a:b>', 'js/bar.js', 'js/foo.js'], 'should retain valid directives.');
+    test.deepEqual(grunt.file.expand(['<omg>', '**/*.js', '<omg>']), ['<omg>', 'js/bar.js', 'js/foo.js', '<omg>'], 'should retain duplicate directives.');
+    test.deepEqual(grunt.file.expand(['<nonexistent>', '**/*.js', '<nonexistent>']), ['js/bar.js', 'js/foo.js'], 'should discard invalid directives.');
+    test.deepEqual(grunt.file.expand(['<omg:a:b>', '**/*.js']), ['<omg:a:b>', 'js/bar.js', 'js/foo.js'], 'should retain valid directives with arguments.');
     test.done();
   },
-  'exclude': function(test) {
-    test.expect(6);
-    test.deepEqual(grunt.file.expand(['js/bar.js','!js/bar.js']), [], 'negation should cancel match');
+  'exclusion': function(test) {
+    test.expect(8);
+    test.deepEqual(grunt.file.expand(['!js/*.js']), [], 'solitary exclusion should match nothing');
+    test.deepEqual(grunt.file.expand(['js/bar.js','!js/bar.js']), [], 'exclusion should cancel match');
     test.deepEqual(grunt.file.expand(['**/*.js', '!js/foo.js']), ['js/bar.js'], 'should omit single file from matched set');
-    test.deepEqual(grunt.file.expand(['!js/foo.js', '**/*.js']), ['js/bar.js'], 'order of negation should not matter');
-    test.deepEqual(grunt.file.expand(['**/*.js', '**/*.css', '!js/bar.js', '!css/baz.css']), ['js/foo.js','css/qux.css'], 'multiple negations should be removed from the set');
-    test.deepEqual(grunt.file.expand(['**/*.js', '**/*.css', '!**/*.css']), ['js/bar.js', 'js/foo.js'], 'negated wildcards should be removed from the matched set');
-    test.deepEqual(grunt.file.expand(['!**/b*.*', 'js/bar.js', 'js/foo.js', 'css/baz.css', 'css/qux.css']), ['js/foo.js', 'css/qux.css'], 'different pattern for negation should still work');
+    test.deepEqual(grunt.file.expand(['!js/foo.js', '**/*.js']), ['js/bar.js', 'js/foo.js'], 'inclusion / exclusion order matters');
+    test.deepEqual(grunt.file.expand(['**/*.js', '**/*.css', '!js/bar.js', '!css/baz.css']), ['js/foo.js','css/qux.css'], 'multiple exclusions should be removed from the set');
+    test.deepEqual(grunt.file.expand(['**/*.js', '**/*.css', '!**/*.css']), ['js/bar.js', 'js/foo.js'], 'excluded wildcards should be removed from the matched set');
+    test.deepEqual(grunt.file.expand(['js/bar.js', 'js/foo.js', 'css/baz.css', 'css/qux.css', '!**/b*.*']), ['js/foo.js', 'css/qux.css'], 'different pattern for exclusion should still work');
+    test.deepEqual(grunt.file.expand(['js/bar.js', '!**/b*.*', 'js/foo.js', 'css/baz.css', 'css/qux.css']), ['js/foo.js', 'css/baz.css', 'css/qux.css'], 'inclusion / exclusion order matters');
     test.done();
   },
   'options.matchBase': function(test) {

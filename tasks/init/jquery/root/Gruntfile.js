@@ -1,4 +1,5 @@
-/*global module:false*/
+'use strict';
+
 module.exports = function(grunt) {
 
   // Project configuration.
@@ -25,29 +26,38 @@ module.exports = function(grunt) {
       files: ['test/**/*.html']
     },
     lint: {
-      files: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js'],
-      options: {
+      gruntfile: {
         options: {
-          curly: true,
-          eqeqeq: true,
-          immed: true,
-          latedef: true,
-          newcap: true,
-          noarg: true,
-          sub: true,
-          undef: true,
-          boss: true,
-          eqnull: true,
-          browser: true
+          jshintrc: '.jshintrc'
         },
-        globals: {
-          jQuery: true
-        }
-      }
+        src: 'Gruntfile.js'
+      },
+      src: {
+        options: {
+          jshintrc: 'src/.jshintrc'
+        },
+        src: ['src/**/*.js']
+      },
+      test: {
+        options: {
+          jshintrc: 'test/.jshintrc'
+        },
+        src: ['test/**/*.js']
+      },
     },
     watch: {
-      files: '<config:lint.files>',
-      tasks: ['lint', 'qunit']
+      gruntfile: {
+        files: '<config:lint.gruntfile.src>',
+        tasks: ['lint:gruntfile']
+      },
+      src: {
+        files: '<config:lint.src.src>',
+        tasks: ['lint:src', 'qunit']
+      },
+      test: {
+        files: '<config:lint.test.src>',
+        tasks: ['lint:test', 'qunit']
+      },
     }
   });
 

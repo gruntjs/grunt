@@ -7,6 +7,7 @@
 * `3` - Task failure
 * `10` - [UglifyJS](https://github.com/mishoo/UglifyJS) error
 * `11` - Banner generation error
+* `12` - Shell auto-completion rules error
 * `20` - Init error
 * `90-99` - [Nodeunit](https://github.com/caolan/nodeunit) / [QUnit](http://docs.jquery.com/QUnit) error
 

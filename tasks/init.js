@@ -233,7 +233,14 @@ module.exports = function(grunt) {
         if (callback) { pkg = callback(pkg, props); }
 
         // Write file.
-        grunt.file.write(init.destpath(filename), JSON.stringify(pkg, null, 2));
+        grunt.verbose.or.write('Writing ' + filename + '...');
+        try {
+          grunt.file.write(init.destpath(filename), JSON.stringify(pkg, null, 2));
+          grunt.verbose.or.ok();
+        } catch(e) {
+          grunt.verbose.or.error().error(e);
+          throw e;
+        }
       }
     };
 

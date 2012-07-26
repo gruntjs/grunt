@@ -70,7 +70,11 @@ exports.template = function(grunt, init, done) {
     });
 
     // Generate jquery.json file.
-    init.writePackageJSON(props.jqueryjson, props);
+    init.writePackageJSON(props.jqueryjson, props, function(pkg, props) {
+      // The jQuery site needs the "bugs" value as a string.
+      if ('bugs' in props) { pkg.bugs = props.bugs; }
+      return pkg;
+    });
 
     // All done!
     done();

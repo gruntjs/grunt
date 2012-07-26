@@ -458,7 +458,7 @@ module.exports = function(grunt) {
           if (err) {
             // Attempt to guess at the repo name. Maybe we'll get lucky!
             result = 'git://github.com/' + (process.env.USER || process.env.USERNAME || '???') + '/' +
-              data.name + '.git';
+              path.basename(process.cwd()) + '.git';
           } else {
             result = result.replace(/^git@([^:]+):/, 'git://$1/');
           }

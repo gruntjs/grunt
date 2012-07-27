@@ -2,7 +2,8 @@
 module.exports = function(grunt) {
 
   // Project configuration.
-  grunt.initConfig({{% if (min_concat) { if (package_json) { %}
+  grunt.initConfig({{% if (min_concat) { %}
+    // Metadata.{% if (package_json) { %}
     pkg: '<json:package.json>',
     banner: '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
       '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
@@ -17,15 +18,7 @@ module.exports = function(grunt) {
       '* http://PROJECT_WEBSITE/\n' +
       '* Copyright (c) <%= grunt.template.today("yyyy") %> ' +
       'YOUR_NAME; Licensed MIT */\n',{% } } %}
-    lint: {
-      files: ['Gruntfile.js', '{%= lib_dir %}/**/*.js', '{%= test_dir %}/**/*.js']
-    },{% if (dom) { %}
-    qunit: {
-      files: ['{%= test_dir %}/**/*.html']
-    },{% } else { %}
-    test: {
-      files: ['{%= test_dir %}/**/*.js']
-    },{% } %}{% if (min_concat) { %}
+    // Task configuration.{% if (min_concat) { %}
     concat: {
       options: {
         banner: '<config:banner>'
@@ -44,29 +37,48 @@ module.exports = function(grunt) {
         dest: 'dist/{%= file_name %}.min.js'
       }
     },{% } %}
-    watch: {
-      files: '<config:lint.files>',
-      tasks: ['lint', '{%= test_task %}']
-    },
-    jshint: {
+    lint: {
       options: {
-        curly: true,
-        eqeqeq: true,
-        immed: true,
-        latedef: true,
-        newcap: true,
-        noarg: true,
-        sub: true,
-        undef: true,
-        boss: true,
-        eqnull: true{% if (dom) { %},
-        browser: true{% } %}
+        options: {
+          curly: true,
+          eqeqeq: true,
+          immed: true,
+          latedef: true,
+          newcap: true,
+          noarg: true,
+          sub: true,
+          undef: true,
+          boss: true,
+          eqnull: true{% if (dom) { %},
+          browser: true{% } %}
+        },
+        globals: {{% if (jquery) { %}
+          jQuery: true
+        {% } %}}
       },
-      globals: {{% if (jquery) { %}
-        jQuery: true
-      {% } %}}
-    }{% if (min_concat) { %},
-    uglify: {}{% } %}
+      gruntfile: {
+        src: 'Gruntfile.js'
+      },
+      lib_test: {
+        src: ['{%= lib_dir %}/**/*.js', '{%= test_dir %}/**/*.js']
+      }
+    },{% if (dom) { %}
+    qunit: {
+      files: ['{%= test_dir %}/**/*.html']
+    },{% } else { %}
+    test: {
+      files: ['{%= test_dir %}/**/*.js']
+    },{% } %}
+    watch: {
+      gruntfile: {
+        files: '<config:lint.gruntfile.src>',
+        tasks: ['lint:gruntfile']
+      },
+      lib_test: {
+        files: '<config:lint.lib_test.src>',
+        tasks: ['lint:lib_test', '{%= test_task %}']
+      }
+    }
   });
 
   // Default task.

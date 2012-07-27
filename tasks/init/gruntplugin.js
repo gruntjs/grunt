@@ -28,7 +28,7 @@ exports.template = function(grunt, init, done) {
       // Prepend grunt- to default name.
       done(null, 'grunt-' + value);
     }),
-    grunt.helper('prompt_for', 'description', 'The best grunt tasks ever.'),
+    grunt.helper('prompt_for', 'description', 'The best grunt plugin ever.'),
     grunt.helper('prompt_for', 'version'),
     grunt.helper('prompt_for', 'repository'),
     grunt.helper('prompt_for', 'homepage'),

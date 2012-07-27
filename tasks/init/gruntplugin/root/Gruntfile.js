@@ -8,29 +8,40 @@ module.exports = function(grunt) {
       files: ['test/**/*.js']
     },
     lint: {
-      files: ['Gruntfile.js', 'tasks/**/*.js', 'test/**/*.js'],
       options: {
-        options: {
-          curly: true,
-          eqeqeq: true,
-          immed: true,
-          latedef: true,
-          newcap: true,
-          noarg: true,
-          sub: true,
-          undef: true,
-          boss: true,
-          eqnull: true,
-          node: true,
-          es5: true
-        },
-        globals: {}
-      }
+        jshintrc: '.jshintrc'
+      },
+      gruntfile: {
+        src: 'Gruntfile.js'
+      },
+      bin: {
+        src: ['bin/{%= name %}']
+      },
+      lib: {
+        src: ['lib/**/*.js']
+      },
+      test: {
+        src: ['test/**/*.js']
+      },
     },
     watch: {
-      files: '<config:lint.files>',
-      tasks: ['default']
-    }
+      gruntfile: {
+        files: '<config:lint.gruntfile.src>',
+        tasks: ['lint:gruntfile']
+      },
+      bin: {
+        files: '<config:lint.bin.src>',
+        tasks: ['lint:bin']
+      },
+      lib: {
+        files: '<config:lint.lib.src>',
+        tasks: ['lint:lib', 'test']
+      },
+      test: {
+        files: '<config:lint.test.src>',
+        tasks: ['lint:test', 'test']
+      },
+    },
   });
 
   // Load local tasks.

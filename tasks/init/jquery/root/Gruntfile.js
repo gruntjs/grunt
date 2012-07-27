@@ -14,13 +14,13 @@ module.exports = function(grunt) {
       dist: {
         src: ['<file_strip_banner:src/<%= pkg.name %>.js>'],
         dest: 'dist/<%= pkg.name %>.js'
-      }
+      },
     },
     min: {
       dist: {
-        src: '<config:concat.dist.dest>',
+        src: ['<config:concat.dist.dest>'],
         dest: 'dist/<%= pkg.name %>.min.js'
-      }
+      },
     },
     qunit: {
       files: ['test/**/*.html']
@@ -58,7 +58,7 @@ module.exports = function(grunt) {
         files: '<config:lint.test.src>',
         tasks: ['lint:test', 'qunit']
       },
-    }
+    },
   });
 
   // Default task.

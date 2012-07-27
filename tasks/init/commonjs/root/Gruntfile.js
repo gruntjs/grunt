@@ -14,13 +14,13 @@ module.exports = function(grunt) {
       dist: {
         src: ['<file_strip_banner:lib/<%= pkg.name %>.js>'],
         dest: 'dist/<%= pkg.name %>.js'
-      }
+      },
     },
     min: {
       dist: {
         src: ['<config:concat.dist.dest>'],
         dest: 'dist/<%= pkg.name %>.min.js'
-      }
+      },
     },
     test: {
       files: ['test/**/*.js']

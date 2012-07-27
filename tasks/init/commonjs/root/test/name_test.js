@@ -1,4 +1,5 @@
-/*global require:true */
+'use strict';
+
 var {%= js_test_safe_name %} = require('../lib/{%= name %}.js');
 
 /*

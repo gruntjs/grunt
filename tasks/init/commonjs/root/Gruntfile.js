@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function(grunt) {
 
   // Project configuration.
@@ -24,30 +26,36 @@ module.exports = function(grunt) {
       files: ['test/**/*.js']
     },
     lint: {
-      files: ['Gruntfile.js', 'lib/**/*.js', 'test/**/*.js'],
       options: {
+        jshintrc: '.jshintrc'
+      },
+      gruntfile: {
+        src: 'Gruntfile.js'
+      },
+      lib: {
         options: {
-          curly: true,
-          eqeqeq: true,
-          immed: true,
-          latedef: true,
-          newcap: true,
-          noarg: true,
-          sub: true,
-          undef: true,
-          boss: true,
-          eqnull: true
+          jshintrc: 'lib/.jshintrc'
         },
-        globals: {
-          exports: true,
-          module: false
-        }
-      }
+        src: ['lib/**/*.js']
+      },
+      test: {
+        src: ['test/**/*.js']
+      },
     },
     watch: {
-      files: '<config:lint.files>',
-      tasks: ['lint', 'test']
-    }
+      gruntfile: {
+        files: '<config:lint.gruntfile.src>',
+        tasks: ['lint:gruntfile']
+      },
+      lib: {
+        files: '<config:lint.lib.src>',
+        tasks: ['lint:lib', 'test']
+      },
+      test: {
+        files: '<config:lint.test.src>',
+        tasks: ['lint:test', 'test']
+      },
+    },
   });
 
   // Default task.

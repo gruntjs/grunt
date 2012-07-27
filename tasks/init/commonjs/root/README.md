@@ -30,7 +30,7 @@ In your code, you can attach {%= name %}'s methods to any object.
 
 ```html
 <script>
-this.exports = Bocoup.utils;
+var exports = Bocoup.utils;
 </script>
 <script src="dist/{%= name %}.min.js"></script>
 <script>

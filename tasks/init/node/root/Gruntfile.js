@@ -4,35 +4,36 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
-    pkg: '<json:package.json>',
     test: {
       files: ['test/**/*.js'],
     },
     lint: {
-      files: ['Gruntfile.js', 'lib/**/*.js', 'test/**/*.js'],
       options: {
-        options: {
-          curly: true,
-          eqeqeq: true,
-          immed: true,
-          latedef: true,
-          newcap: true,
-          noarg: true,
-          sub: true,
-          undef: true,
-          boss: true,
-          eqnull: true,
-          node: true,
-          es5: true,
-        },
-        globals: {
-          exports: true,
-        },
+        jshintrc: '.jshintrc'
+      },
+      gruntfile: {
+        src: 'Gruntfile.js'
+      },
+      lib: {
+        src: ['lib/**/*.js']
+      },
+      test: {
+        src: ['test/**/*.js']
       },
     },
     watch: {
-      files: '<config:lint.files>',
-      tasks: ['lint', 'test'],
+      gruntfile: {
+        files: '<config:lint.gruntfile.src>',
+        tasks: ['lint:gruntfile']
+      },
+      lib: {
+        files: '<config:lint.lib.src>',
+        tasks: ['lint:lib', 'test']
+      },
+      test: {
+        files: '<config:lint.test.src>',
+        tasks: ['lint:test', 'test']
+      },
     },
   });
 

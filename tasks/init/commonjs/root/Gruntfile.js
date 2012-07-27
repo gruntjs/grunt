@@ -11,12 +11,18 @@ module.exports = function(grunt) {
       '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
       ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
     concat: {
+      options: {
+        banner: '<config:banner>'
+      },
       dist: {
         src: ['<file_strip_banner:lib/<%= pkg.name %>.js>'],
         dest: 'dist/<%= pkg.name %>.js'
       },
     },
     min: {
+      options: {
+        banner: '<config:banner>'
+      },
       dist: {
         src: ['<config:concat.dist.dest>'],
         dest: 'dist/<%= pkg.name %>.min.js'

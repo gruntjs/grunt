@@ -27,12 +27,18 @@ module.exports = function(grunt) {
       files: ['{%= test_dir %}/**/*.js']
     },{% } %}{% if (min_concat) { %}
     concat: {
+      options: {
+        banner: '<config:banner>'
+      },
       dist: {
         src: ['<file_strip_banner:{%= lib_dir %}/{%= file_name %}.js>'],
         dest: 'dist/{%= file_name %}.js'
       }
     },
     min: {
+      options: {
+        banner: '<config:banner>'
+      },
       dist: {
         src: ['<config:concat.dist.dest>'],
         dest: 'dist/{%= file_name %}.min.js'

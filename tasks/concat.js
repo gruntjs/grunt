@@ -17,7 +17,11 @@ module.exports = function(grunt) {
     var files = grunt.file.expandFiles(this.file.src);
     // Concat specified files.
     var src = grunt.helper('concat', files, {separator: this.data.separator});
-    grunt.file.write(this.file.dest, src);
+
+    var prefix = this.data.prefix || "";
+    var suffix = this.data.suffix || "";
+
+    grunt.file.write(this.file.dest, prefix + src + suffix);
 
     // Fail task if errors were logged.
     if (this.errorCount) { return false; }

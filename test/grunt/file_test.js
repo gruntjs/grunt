@@ -152,6 +152,23 @@ exports['file.expand*'] = {
     test.deepEqual(grunt.file.expand('**/*.js', '**/*.css', 'js/*.js'), ['js/bar.js', 'js/foo.js', 'css/baz.css', 'css/qux.css'], 'should match.');
     test.done();
   },
+  'file order': function(test) {
+    test.expect(7);
+    var files;
+    files = grunt.file.expand('js/foo.js', 'js/bar.js', '**/*.{js,css}');
+    test.deepEqual(files.length, 4, 'four files should have been found.');
+    test.deepEqual(files.slice(0, 2), ['js/foo.js', 'js/bar.js'], 'specifically-specified-up-front file order should be maintained.');
+
+    files = grunt.file.expand('js/bar.js', 'js/foo.js', '**/*.{js,css}');
+    test.deepEqual(files.length, 4, 'four files should have been found.');
+    test.deepEqual(files.slice(0, 2), ['js/bar.js', 'js/foo.js'], 'specifically-specified-up-front file order should be maintained.');
+
+    files = grunt.file.expand('js/foo.js', '**/*.{js,css}', '!js/bar.js', 'js/bar.js');
+    test.deepEqual(files.length, 4, 'four files should have been found.');
+    test.deepEqual(files[0], 'js/foo.js', 'specifically-specified-up-front file order should be maintained.');
+    test.deepEqual(files[3], 'js/bar.js', 'if a file is excluded and then re-added, it should be added at the end.');
+    test.done();
+  },
   'flatten': function(test) {
     test.expect(1);
     test.deepEqual(grunt.file.expand([['**/*.js'], ['**/*.css', 'js/*.js']]), ['js/bar.js', 'js/foo.js', 'css/baz.css', 'css/qux.css'], 'should match.');

@@ -2,7 +2,7 @@
 
 var grunt = require('../../lib/grunt');
 
-exports['utils.callbackify'] = {
+exports['util.callbackify'] = {
   'return': function(test) {
     test.expect(1);
     // This function returns a value.
@@ -38,7 +38,7 @@ exports['utils.callbackify'] = {
   }
 };
 
-exports['utils'] = {
+exports['util'] = {
   'error': function(test) {
     test.expect(9);
     var origError = new Error('Original error.');

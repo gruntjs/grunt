@@ -17,7 +17,14 @@ module.exports = function(grunt) {
       all: ['test/**/*.js']
     },
     lint: {
-      all: ['Gruntfile.js', 'lib/**/*.js', 'tasks/*.js', 'tasks/*/*.js', 'test/**/*.js'],
+      all: [
+        'Gruntfile.js',
+        'lib/**/*.js',
+        'tasks/*.js',
+        'tasks/*/*.js',
+        'test/**/*.js',
+        '!test/fixtures/**/*.js'
+      ],
       options: {
         options: {
           curly: true,

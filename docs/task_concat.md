@@ -162,7 +162,7 @@ grunt.initConfig({
 
 You can specify a prefix and suffix which will be prepend and append to the concated text. 
 
-In this example, running `grunt concat:dist` will simply concatenate the two specified source files, in order, wrap it into a immediately-invoked function expression (prexif and suffix) and writing the output to `dist/built.js`.
+In this example, running `grunt concat:dist` will simply concatenate the two specified source files, in order, wrap it into a immediately-invoked function expression (prefix and suffix) and writing the output to `dist/built.js`.
 
 ```javascript
 // Project configuration.

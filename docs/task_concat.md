@@ -158,6 +158,26 @@ grunt.initConfig({
 });
 ```
 
+### Usage of prefix and suffix <a name="prefix-and-suffix" href="#prefix-and-suffix" title="Link to this section">⚑</a>
+
+You can specify a prefix and suffix which will be prepend and append to the concated text. 
+
+In this example, running `grunt concat:dist` will simply concatenate the two specified source files, in order, wrap it into a immediately-invoked function expression (prefix and suffix) and writing the output to `dist/built.js`.
+
+```javascript
+// Project configuration.
+grunt.initConfig({
+  concat: {
+    dist: {
+      prefix: "(function () { \n",
+      suffix: "\n }());",
+      src: ['src/main.js', 'src/extra.js'],
+      dest: 'dist/built.js'
+    }
+  },
+});
+```
+
 ## Helpers <a name="helpers" href="#helpers" title="Link to this section">⚑</a>
 
 A generic `concat` helper is available for use in any other task where file and/or [directive](helpers_directives.md) concatenation might be useful. In this example, a `;` separator is specified, although it defaults to linefeed if omitted:

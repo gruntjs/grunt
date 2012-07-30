@@ -153,20 +153,22 @@ exports['file.expand*'] = {
     test.done();
   },
   'file order': function(test) {
-    test.expect(7);
-    var files;
-    files = grunt.file.expand('js/foo.js', 'js/bar.js', '**/*.{js,css}');
-    test.deepEqual(files.length, 4, 'four files should have been found.');
-    test.deepEqual(files.slice(0, 2), ['js/foo.js', 'js/bar.js'], 'specifically-specified-up-front file order should be maintained.');
+    test.expect(4);
+    var actual = grunt.file.expand('**/*.{js,css}');
+    var expected = ['css/baz.css', 'css/qux.css', 'js/bar.js', 'js/foo.js'];
+    test.deepEqual(actual, expected, 'should select 4 files in this order, by default.');
 
-    files = grunt.file.expand('js/bar.js', 'js/foo.js', '**/*.{js,css}');
-    test.deepEqual(files.length, 4, 'four files should have been found.');
-    test.deepEqual(files.slice(0, 2), ['js/bar.js', 'js/foo.js'], 'specifically-specified-up-front file order should be maintained.');
+    actual = grunt.file.expand('js/foo.js', 'js/bar.js', '**/*.{js,css}');
+    expected = ['js/foo.js', 'js/bar.js', 'css/baz.css', 'css/qux.css'];
+    test.deepEqual(actual, expected, 'specifically-specified-up-front file order should be maintained.');
 
-    files = grunt.file.expand('js/foo.js', '**/*.{js,css}', '!js/bar.js', 'js/bar.js');
-    test.deepEqual(files.length, 4, 'four files should have been found.');
-    test.deepEqual(files[0], 'js/foo.js', 'specifically-specified-up-front file order should be maintained.');
-    test.deepEqual(files[3], 'js/bar.js', 'if a file is excluded and then re-added, it should be added at the end.');
+    actual = grunt.file.expand('js/bar.js', 'js/foo.js', '**/*.{js,css}');
+    expected = ['js/bar.js', 'js/foo.js', 'css/baz.css', 'css/qux.css'];
+    test.deepEqual(actual, expected, 'specifically-specified-up-front file order should be maintained.');
+
+    actual = grunt.file.expand('js/foo.js', '**/*.{js,css}', '!js/bar.js', 'js/bar.js');
+    expected = ['js/foo.js', 'css/baz.css', 'css/qux.css', 'js/bar.js'];
+    test.deepEqual(actual, expected, 'if a file is excluded and then re-added, it should be added at the end.');
     test.done();
   },
   'flatten': function(test) {

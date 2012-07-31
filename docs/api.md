@@ -62,6 +62,7 @@ module.exports = function(grunt) {
 
 ## Libraries
 
+* [grunt.event](api_event.md) - Event emitting via the [EventEmitter2](https://github.com/hij1nx/EventEmitter2) library.
 * [grunt.util](api_util.md) - Miscellaneous utilities, including Underscore.js, Async and Hooker.
 * [grunt.template](api_template.md) - Underscore.js template processing and other template-related methods.
 * [grunt.task](api_task.md) - Register and run tasks and helpers, load external tasks.

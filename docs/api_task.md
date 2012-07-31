@@ -116,6 +116,15 @@ grunt.task.renameTask(oldname, newname)
 
 _This method is also available as [grunt.renameTask](api.md)._
 
+### grunt.task.unregisterTasks ☃
+Unregister one or more tasks. This will de-list the specified tasks from the `--help` screen and make them no longer available for use. The task list can be an array of task names or individual task name arguments.
+
+```javascript
+grunt.task.unregisterTasks(taskList)
+```
+
+_This method is also available as [grunt.unregisterTasks](api.md)._
+
 ## Inside Tasks
 An object is made available as `this` inside each task function that contains a number of useful task-specific properties and methods. This same object is also exposed as `grunt.task.current` for use in [templates](api_template.md).
 
@@ -259,6 +268,15 @@ grunt.task.renameHelper(oldname, newname)
 ```
 
 _This method is also available as [grunt.renameHelper](api.md)._
+
+### grunt.task.unregisterHelpers ☃
+Unregister one or more helpers. This will make the specified helpers no longer available for use. The helper list can be an array of helper names or individual helper name arguments.
+
+```javascript
+grunt.task.unregisterHelpers(helperList)
+```
+
+_This method is also available as [grunt.unregisterHelpers](api.md)._
 
 ### grunt.task.helper ☃
 Invoke a registered helper function.

@@ -53,4 +53,6 @@ module.exports = function(grunt) {
   // Default task.
   grunt.registerTask('default', ['lint', 'test']);
 
+  // Unregister unused tasks.
+  grunt.unregisterTasks('concat', 'min', 'init', 'server', 'qunit');
 };

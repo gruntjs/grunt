@@ -61,7 +61,25 @@ exports['Helpers'] = {
     test.doesNotThrow(function() { task.helper('newadd'); }, 'It should be accessible by its new name.');
     test.throws(function() { task.helper('add'); }, 'It should not be accessible by its previous name.');
     test.done();
-  }
+  },
+  'Task#unregisterHelpers': function(test) {
+    test.expect(8);
+    var task = this.task;
+    task.registerHelper('a', function() {});
+    task.registerHelper('b', function() {});
+    task.registerHelper('c', function() {});
+    task.registerHelper('d', function() {});
+    task.registerHelper('e', function() {});
+    test.equal(task.unregisterHelpers('a'), task, 'It should unregister the helper and chain.');
+    test.equal('a' in task._helpers, false, 'The helper should have been deleted.');
+    test.equal(task.unregisterHelpers('b', 'c'), task, 'It should unregister the helpers and chain.');
+    test.equal('b' in task._helpers, false, 'The helper should have been deleted.');
+    test.equal('c' in task._helpers, false, 'The helper should have been deleted.');
+    test.equal(task.unregisterHelpers(['d', 'e']), task, 'It should unregister the helpers and chain.');
+    test.equal('d' in task._helpers, false, 'The helper should have been deleted.');
+    test.equal('e' in task._helpers, false, 'The helper should have been deleted.');
+    test.done();
+  },
 };
 
 exports['Directives'] = {
@@ -169,6 +187,24 @@ exports['Tasks'] = {
     test.equal('nothing' in task._tasks, false, 'It should remove the previous task.');
     test.doesNotThrow(function() { task.run('newnothing'); }, 'It should be accessible by its new name.');
     test.throws(function() { task.run('nothing'); }, 'It should not be accessible by its previous name and throw an exception.');
+    test.done();
+  },
+  'Task#unregisterTasks': function(test) {
+    test.expect(8);
+    var task = this.task;
+    task.registerTask('a', 'Do nothing.', function() {});
+    task.registerTask('b', 'Do nothing.', function() {});
+    task.registerTask('c', 'Do nothing.', function() {});
+    task.registerTask('d', 'Do nothing.', ['a', 'b']);
+    task.registerTask('e', 'Do nothing.', ['c', 'd']);
+    test.equal(task.unregisterTasks('a'), task, 'It should unregister the task and chain.');
+    test.equal('a' in task._tasks, false, 'The task should have been deleted.');
+    test.equal(task.unregisterTasks('b', 'c'), task, 'It should unregister the tasks and chain.');
+    test.equal('b' in task._tasks, false, 'The task should have been deleted.');
+    test.equal('c' in task._tasks, false, 'The task should have been deleted.');
+    test.equal(task.unregisterTasks(['d', 'e']), task, 'It should unregister the tasks and chain.');
+    test.equal('d' in task._tasks, false, 'The task should have been deleted.');
+    test.equal('e' in task._tasks, false, 'The task should have been deleted.');
     test.done();
   },
   'Task#run (exception handling)': function(test) {

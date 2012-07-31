@@ -43,7 +43,10 @@ module.exports = function(grunt) {
 
     // Lint specified files.
     grunt.file.expandFiles(this.file.src).forEach(function(filepath) {
-      grunt.helper('lint', grunt.file.read(filepath), options, globals, filepath);
+      var src = grunt.file.read(filepath);
+      // Remove potential Unicode Byte Order Mark.
+      src = src.replace(/^\uFEFF/, '');
+      grunt.helper('lint', src, options, globals, filepath);
     });
 
     // Fail task if errors were logged.

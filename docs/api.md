@@ -60,6 +60,16 @@ module.exports = function(grunt) {
 };
 ```
 
+## Libraries
+
+* [grunt.util](api_util.md) - Miscellaneous utilities, including Underscore.js, Async and Hooker.
+* [grunt.template](api_template.md) - Underscore.js template processing and other template-related methods.
+* [grunt.task](api_task.md) - Register and run tasks and helpers, load external tasks.
+* [grunt.file](api_file.md) - Wildcard expansion, file reading, writing, directory traversing.
+* [grunt.config](api_config.md) - Access project-specific configuration data defined in the [Gruntfile](getting_started.md).
+* [grunt.log](api_log.md), [grunt.verbose](api_log.md) - Output messages to the console.
+* [grunt.fail](api_fail.md) - For when something goes horribly wrong.
+
 ## Config
 _Note that the method listed below is also available on the [grunt.config](api_config.md) object in addition to the `grunt` object._
 
@@ -435,13 +445,3 @@ Inside a [grunt plugin](plugins.md) bin script, this method _must_ be called to 
 ```javascript
 grunt.npmTasks(npmModuleName)
 ```
-
-## Other Methods
-
-* [grunt.util](api_util.md) - Miscellaneous utilities, including Underscore.js, Async and Hooker.
-* [grunt.template](api_template.md) - Underscore.js template processing and other template-related methods.
-* [grunt.task](api_task.md) - Register and run tasks and helpers, load external tasks.
-* [grunt.file](api_file.md) - Wildcard expansion, file reading, writing, directory traversing.
-* [grunt.config](api_config.md) - Access project-specific configuration data defined in the [Gruntfile](getting_started.md).
-* [grunt.log](api_log.md), [grunt.verbose](api_log.md) - Output messages to the console.
-* [grunt.fail](api_fail.md) - For when something goes horribly wrong.

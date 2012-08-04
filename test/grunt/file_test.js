@@ -239,9 +239,11 @@ exports['file'] = {
     test.done();
   },
   'read': function(test) {
-    test.expect(2);
+    test.expect(4);
     test.strictEqual(grunt.file.read('test/fixtures/a.js'), fs.readFileSync('test/fixtures/a.js', 'utf8'));
     test.strictEqual(grunt.file.read('test/fixtures/octocat.png'), fs.readFileSync('test/fixtures/octocat.png', 'utf8'));
+    test.strictEqual(grunt.file.read('test/fixtures/no_BOM.txt'), 'foo', 'file should be read as-expected.');
+    test.strictEqual(grunt.file.read('test/fixtures/BOM.txt'), 'foo', 'BOM should be stripped from string.');
     test.done();
   },
   'readYAML': function(test) {

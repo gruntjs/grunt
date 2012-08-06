@@ -343,6 +343,33 @@ exports['file'] = {
     test.equals(grunt.file.isFile('test/fixtures/does/not/exist'), false, 'nonexistent files are not files.');
     test.done();
   },
+  'mkdir': function(test) {
+    test.expect(6);
+    // In Nodejs 0.8.0, existsSync moved from path -> fs.
+    var existsSync = fs.existsSync || path.existsSync;
+
+    test.doesNotThrow(function() {
+      grunt.file.mkdir(tmpdir.path);
+    }, 'Should not explode if the directory already exists.');
+    test.ok(existsSync(tmpdir.path), 'path should still exist.');
+
+    test.doesNotThrow(function() {
+      grunt.file.mkdir(path.join(tmpdir.path, 'aa/bb/cc'));
+    }, 'Should also not explode, otherwise.');
+    test.ok(path.join(tmpdir.path, 'aa/bb/cc'), 'path should have been created.');
+
+    fs.writeFileSync(path.join(tmpdir.path, 'aa/bb/xx'), 'test');
+    test.throws(function() {
+      grunt.file.mkdir(path.join(tmpdir.path, 'aa/bb/xx/yy'));
+    }, 'Should throw if a path cannot be created (ENOTDIR).');
+
+    fs.chmodSync(path.join(tmpdir.path, 'aa/bb'), parseInt('0555', 8));
+    test.throws(function() {
+      grunt.file.mkdir(path.join(tmpdir.path, 'aa/bb/dd'));
+    }, 'Should throw if a path cannot be created (EACCES).');
+
+    test.done();
+  },
   'recurse': function(test) {
     test.expect(1);
     var rootdir = 'test/fixtures/expand';

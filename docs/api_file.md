@@ -67,12 +67,12 @@ var options = {
 ```
 
 ### grunt.file.mkdir
-Works like `mkdir -p`. Create a directory along with any intermediate directories.
+Works like `mkdir -p`. Create a directory along with any intermediate directories. If `mode` isn't specified, it defaults to `0777 & (~process.umask())`.
 
 _If the `--no-write` command-line option is specified, directories won't actually be created._
 
 ```javascript
-grunt.file.mkdir(dirpath)
+grunt.file.mkdir(dirpath [, mode])
 ```
 
 ### grunt.file.recurse

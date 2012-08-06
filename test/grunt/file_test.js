@@ -6,6 +6,11 @@ var fs = require('fs');
 var path = require('path');
 
 var Tempfile = require('temporary/lib/file');
+var Tempdir = require('temporary/lib/dir');
+
+var tmpdir = new Tempdir();
+fs.symlink(path.resolve('test/fixtures/octocat.png'), path.join(tmpdir.path, 'octocat.png'), 'file');
+fs.symlink(path.resolve('test/fixtures/expand'), path.join(tmpdir.path, 'expand'), 'dir');
 
 exports['file.match'] = {
   'empty set': function(test) {
@@ -303,8 +308,8 @@ exports['file'] = {
     test.ok(grunt.file.exists('test/fixtures/octocat.png'), 'files exist.');
     test.ok(grunt.file.exists('test', 'fixtures', 'octocat.png'), 'should work for paths in parts.');
     test.ok(grunt.file.exists('test/fixtures'), 'directories exist.');
-    test.ok(grunt.file.exists('test/fixtures/octocat-link.png'), 'file links exist.');
-    test.ok(grunt.file.exists('test/fixtures/expand-link'), 'directory links exist.');
+    test.ok(grunt.file.exists(path.join(tmpdir.path, 'octocat.png')), 'file links exist.');
+    test.ok(grunt.file.exists(path.join(tmpdir.path, 'expand')), 'directory links exist.');
     test.equal(grunt.file.exists('test/fixtures/does/not/exist'), false, 'nonexistent files do not exist.');
     test.done();
   },
@@ -312,9 +317,9 @@ exports['file'] = {
     test.expect(6);
     test.equals(grunt.file.isLink('test/fixtures/octocat.png'), false, 'files are not links.');
     test.equals(grunt.file.isLink('test/fixtures'), false, 'directories are not links.');
-    test.ok(grunt.file.isLink('test/fixtures/octocat-link.png'), 'file links are links.');
-    test.ok(grunt.file.isLink('test/fixtures/expand-link'), 'directory links are links.');
-    test.ok(grunt.file.isLink('test', 'fixtures', 'octocat-link.png'), 'should work for paths in parts.');
+    test.ok(grunt.file.isLink(path.join(tmpdir.path, 'octocat.png')), 'file links are links.');
+    test.ok(grunt.file.isLink(path.join(tmpdir.path, 'expand')), 'directory links are links.');
+    test.ok(grunt.file.isLink(tmpdir.path, 'octocat.png'), 'should work for paths in parts.');
     test.equals(grunt.file.isLink('test/fixtures/does/not/exist'), false, 'nonexistent files are not links.');
     test.done();
   },
@@ -323,8 +328,8 @@ exports['file'] = {
     test.equals(grunt.file.isDir('test/fixtures/octocat.png'), false, 'files are not directories.');
     test.ok(grunt.file.isDir('test/fixtures'), 'directories are directories.');
     test.ok(grunt.file.isDir('test', 'fixtures'), 'should work for paths in parts.');
-    test.equals(grunt.file.isDir('test/fixtures/octocat-link.png'), false, 'file links are not directories.');
-    test.ok(grunt.file.isDir('test/fixtures/expand-link'), 'directory links are directories.');
+    test.equals(grunt.file.isDir(path.join(tmpdir.path, 'octocat.png')), false, 'file links are not directories.');
+    test.ok(grunt.file.isDir(path.join(tmpdir.path, 'expand')), 'directory links are directories.');
     test.equals(grunt.file.isDir('test/fixtures/does/not/exist'), false, 'nonexistent files are not directories.');
     test.done();
   },
@@ -333,8 +338,8 @@ exports['file'] = {
     test.ok(grunt.file.isFile('test/fixtures/octocat.png'), 'files are files.');
     test.ok(grunt.file.isFile('test', 'fixtures', 'octocat.png'), 'should work for paths in parts.');
     test.equals(grunt.file.isFile('test/fixtures'), false, 'directories are not files.');
-    test.ok(grunt.file.isFile('test/fixtures/octocat-link.png'), 'file links are files.');
-    test.equals(grunt.file.isFile('test/fixtures/expand-link'), false, 'directory links are not files.');
+    test.ok(grunt.file.isFile(path.join(tmpdir.path, 'octocat.png')), 'file links are files.');
+    test.equals(grunt.file.isFile(path.join(tmpdir.path, 'expand')), false, 'directory links are not files.');
     test.equals(grunt.file.isFile('test/fixtures/does/not/exist'), false, 'nonexistent files are not files.');
     test.done();
   },

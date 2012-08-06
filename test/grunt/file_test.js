@@ -5,6 +5,8 @@ var grunt = require('../../lib/grunt');
 var fs = require('fs');
 var path = require('path');
 
+var Tempfile = require('temporary/lib/file');
+
 exports['file.match'] = {
   'empty set': function(test) {
     test.expect(12);
@@ -255,37 +257,45 @@ exports['file'] = {
   },
   'write': function(test) {
     test.expect(4);
+    var tmpfile = new Tempfile();
     var content = 'var a = "foobar";';
-    grunt.file.write('test/fixtures/test_write.js', content);
-    test.strictEqual(fs.readFileSync('test/fixtures/test_write.js', 'utf8'), content);
-    test.strictEqual(grunt.file.read('test/fixtures/test_write.js'), content);
+    grunt.file.write(tmpfile.path, content);
+    test.strictEqual(fs.readFileSync(tmpfile.path, 'utf8'), content);
+    test.strictEqual(grunt.file.read(tmpfile.path), content);
+    tmpfile.unlinkSync();
 
+    tmpfile = new Tempfile();
     var octocat = fs.readFileSync('test/fixtures/octocat.png');
-    grunt.file.write('test/fixtures/test_write.png', octocat);
-    test.strictEqual(fs.readFileSync('test/fixtures/test_write.png', 'utf8'), fs.readFileSync('test/fixtures/octocat.png', 'utf8'));
-    test.ok(compare('test/fixtures/test_write.png', 'test/fixtures/octocat.png'), 'both buffers should match');
+    grunt.file.write(tmpfile.path, octocat);
+    test.strictEqual(fs.readFileSync(tmpfile.path, 'utf8'), fs.readFileSync('test/fixtures/octocat.png', 'utf8'));
+    test.ok(compare(tmpfile.path, 'test/fixtures/octocat.png'), 'both buffers should match');
+    tmpfile.unlinkSync();
 
-    ['test/fixtures/test_write.js', 'test/fixtures/test_write.png'].forEach(fs.unlinkSync);
     test.done();
   },
   'copy': function(test) {
     test.expect(6);
-    grunt.file.copy('test/fixtures/a.js', 'test/fixtures/test_copy.js');
-    test.strictEqual(fs.readFileSync('test/fixtures/test_copy.js', 'utf8'), fs.readFileSync('test/fixtures/a.js', 'utf8'));
+    var tmpfile = new Tempfile();
+    grunt.file.copy('test/fixtures/a.js', tmpfile.path);
+    test.strictEqual(fs.readFileSync(tmpfile.path, 'utf8'), fs.readFileSync('test/fixtures/a.js', 'utf8'));
+    tmpfile.unlinkSync();
 
     var tmpltest = '// should src be a string and template process be all good.';
-    grunt.file.copy('test/fixtures/a.js', 'test/fixtures/test_copy.js', {process: function(src) {
+    tmpfile = new Tempfile();
+    grunt.file.copy('test/fixtures/a.js', tmpfile.path, {process: function(src) {
       test.equal(Buffer.isBuffer(src), false);
       test.equal(typeof src, 'string');
       return grunt.template.process(src + '<%= tmpltest %>', {tmpltest: tmpltest});
     }});
-    test.strictEqual(fs.readFileSync('test/fixtures/test_copy.js', 'utf8'), grunt.util.normalizelf(fs.readFileSync('test/fixtures/a.js', 'utf8')) + tmpltest);
+    test.strictEqual(fs.readFileSync(tmpfile.path, 'utf8'), grunt.util.normalizelf(fs.readFileSync('test/fixtures/a.js', 'utf8')) + tmpltest);
+    tmpfile.unlinkSync();
 
-    grunt.file.copy('test/fixtures/octocat.png', 'test/fixtures/test_copy.png');
-    test.strictEqual(fs.readFileSync('test/fixtures/test_copy.png', 'utf8'), fs.readFileSync('test/fixtures/octocat.png', 'utf8'));
-    test.ok(compare('test/fixtures/test_copy.png', 'test/fixtures/octocat.png'), 'both buffers should match');
+    tmpfile = new Tempfile();
+    grunt.file.copy('test/fixtures/octocat.png', tmpfile.path);
+    test.strictEqual(fs.readFileSync(tmpfile.path, 'utf8'), fs.readFileSync('test/fixtures/octocat.png', 'utf8'));
+    test.ok(compare(tmpfile.path, 'test/fixtures/octocat.png'), 'both buffers should match');
+    tmpfile.unlinkSync();
 
-    ['test/fixtures/test_copy.js', 'test/fixtures/test_copy.png'].forEach(fs.unlinkSync);
     test.done();
   },
   'exists': function(test) {

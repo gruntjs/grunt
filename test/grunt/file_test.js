@@ -344,7 +344,7 @@ exports['file'] = {
     test.done();
   },
   'mkdir': function(test) {
-    test.expect(6);
+    test.expect(5);
     // In Nodejs 0.8.0, existsSync moved from path -> fs.
     var existsSync = fs.existsSync || path.existsSync;
 
@@ -362,11 +362,6 @@ exports['file'] = {
     test.throws(function() {
       grunt.file.mkdir(path.join(tmpdir.path, 'aa/bb/xx/yy'));
     }, 'Should throw if a path cannot be created (ENOTDIR).');
-
-    fs.chmodSync(path.join(tmpdir.path, 'aa/bb'), parseInt('0555', 8));
-    test.throws(function() {
-      grunt.file.mkdir(path.join(tmpdir.path, 'aa/bb/dd'));
-    }, 'Should throw if a path cannot be created (EACCES).');
 
     test.done();
   },

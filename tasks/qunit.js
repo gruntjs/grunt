@@ -102,6 +102,11 @@ module.exports = function(grunt) {
       grunt.log.error();
       grunt.warn('PhantomJS unable to load "' + url + '" URI.', 90);
     },
+    done_redirect: function(url) {
+      grunt.verbose.write('Running PhantomJS...').or.write('...');
+      grunt.log.error();
+      grunt.warn('PhantomJS redirected to "' + url + '" URI.', 90);
+    },
     done_timeout: function() {
       grunt.log.writeln();
       grunt.warn('PhantomJS timed out, possibly due to a missing QUnit start() call.', 90);

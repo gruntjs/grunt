@@ -66,6 +66,24 @@ var options = {
 };
 ```
 
+### grunt.file.delete
+Delete the specified filepath. Will delete files and folders recursively.
+
+_Will not delete files outside the current working directory unless the `--force` command-line option is specified._
+
+```javascript
+grunt.file.delete(filepath [, options])
+```
+
+The `options` object has one possible property:
+
+```javascript
+var options = {
+  // Enable deleting outside the current working directory
+  force: true
+};
+```
+
 ### grunt.file.mkdir
 Works like `mkdir -p`. Create a directory along with any intermediate directories. If `mode` isn't specified, it defaults to `0777 & (~process.umask())`.
 

@@ -9,8 +9,8 @@ var Tempfile = require('temporary/lib/file');
 var Tempdir = require('temporary/lib/dir');
 
 var tmpdir = new Tempdir();
-fs.symlink(path.resolve('test/fixtures/octocat.png'), path.join(tmpdir.path, 'octocat.png'), 'file');
-fs.symlink(path.resolve('test/fixtures/expand'), path.join(tmpdir.path, 'expand'), 'dir');
+fs.symlinkSync(path.resolve('test/fixtures/octocat.png'), path.join(tmpdir.path, 'octocat.png'), 'file');
+fs.symlinkSync(path.resolve('test/fixtures/expand'), path.join(tmpdir.path, 'expand'), 'dir');
 
 exports['file.match'] = {
   'empty set': function(test) {

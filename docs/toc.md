@@ -9,6 +9,7 @@
 * [The grunt API](api.md) - Complete API documentation here!
 * [FAQ](faq.md) - Frequently asked questions, along with their answers.
 * [Exit codes](exit_codes.md) - A list of all built-in grunt exit codes.
+* [Migration Guide](migration_guide.md) - A guide for upgrading to the latest version of Grunt.
 
 ## Built-in tasks
 

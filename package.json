@@ -3,7 +3,7 @@
   "description": "A task-based command line build tool for JavaScript projects.",
   "version": "0.4.0a",
   "author": "\"Cowboy\" Ben Alman (http://benalman.com/)",
-  "homepage": "http://github.com/cowboy/grunt",
+  "homepage": "http://gruntjs.com/",
   "repository": {
     "type": "git",
     "url": "git://github.com/cowboy/grunt.git"

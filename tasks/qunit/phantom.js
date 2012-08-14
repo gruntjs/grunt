@@ -83,6 +83,9 @@ page.onResourceReceived = function(request) {
     sendDebugMessage('onResourceReceived', request.url);
   }
 };
+page.onUrlChanged = function(newUrl) {
+  sendMessage(['done_redirect', newUrl]);
+};
 
 page.open(url, function(status) {
   // Only execute this code if QUnit has not yet been injected.

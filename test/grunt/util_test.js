@@ -2,6 +2,8 @@
 
 var grunt = require('../../lib/grunt');
 
+var path = require('path');
+
 exports['util.callbackify'] = {
   'return': function(test) {
     test.expect(1);
@@ -78,6 +80,99 @@ exports['util'] = {
     }
     test.done();
   }
+};
+
+exports['util.spawn'] = {
+  setUp: function(done) {
+    this.script = path.resolve('test/fixtures/spawn.js');
+    done();
+  },
+  'exit code 0': function(test) {
+    test.expect(6);
+    grunt.util.spawn({
+      cmd: 'node',
+      args: [ this.script, 0 ],
+    }, function(err, result, code) {
+      test.equals(err, null);
+      test.equals(code, 0);
+      test.equals(result.stdout, 'stdout');
+      test.equals(result.stderr, 'stderr');
+      test.equals(result.code, 0);
+      test.equals(String(result), 'stdout');
+      test.done();
+    });
+  },
+  'exit code 0, fallback': function(test) {
+    test.expect(6);
+    grunt.util.spawn({
+      cmd: 'node',
+      args: [ this.script, 0 ],
+      fallback: 'ignored if exit code is 0'
+    }, function(err, result, code) {
+      test.equals(err, null);
+      test.equals(code, 0);
+      test.equals(result.stdout, 'stdout');
+      test.equals(result.stderr, 'stderr');
+      test.equals(result.code, 0);
+      test.equals(String(result), 'stdout');
+      test.done();
+    });
+  },
+  'non-zero exit code': function(test) {
+    test.expect(6);
+    grunt.util.spawn({
+      cmd: 'node',
+      args: [ this.script, 123 ],
+    }, function(err, result, code) {
+      test.equals(err, result);
+      test.equals(code, 123);
+      test.equals(result.stdout, 'stdout');
+      test.equals(result.stderr, 'stderr');
+      test.equals(result.code, 123);
+      test.equals(String(result), 'stderr');
+      test.done();
+    });
+  },
+  'non-zero exit code, fallback': function(test) {
+    test.expect(6);
+    grunt.util.spawn({
+      cmd: 'node',
+      args: [ this.script, 123 ],
+      fallback: 'custom fallback'
+    }, function(err, result, code) {
+      test.equals(err, null);
+      test.equals(code, 123);
+      test.equals(result.stdout, 'stdout');
+      test.equals(result.stderr, 'stderr');
+      test.equals(result.code, 123);
+      test.equals(String(result), 'custom fallback');
+      test.done();
+    });
+  },
+  'cmd not found': function(test) {
+    test.expect(3);
+    grunt.util.spawn({
+      cmd: 'nodewtfmisspelled',
+    }, function(err, result, code) {
+      test.equals(err, result);
+      test.equals(code, 127);
+      test.equals(result.code, 127);
+      test.done();
+    });
+  },
+  'cmd not found, fallback': function(test) {
+    test.expect(4);
+    grunt.util.spawn({
+      cmd: 'nodewtfmisspelled',
+      fallback: 'use a fallback or good luck'
+    }, function(err, result, code) {
+      test.equals(err, null);
+      test.equals(code, 127);
+      test.equals(result.code, 127);
+      test.equals(String(result), 'use a fallback or good luck');
+      test.done();
+    });
+  },
 };
 
 exports['util.underscore.string'] = function(test) {

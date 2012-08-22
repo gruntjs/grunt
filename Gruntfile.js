@@ -14,7 +14,7 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     test: {
-      all: ['test/**/*.js']
+      all: ['test/{grunt,tasks,util}/**/*.js']
     },
     lint: {
       all: [

@@ -90,7 +90,7 @@ exports['util.spawn'] = {
   'exit code 0': function(test) {
     test.expect(6);
     grunt.util.spawn({
-      cmd: 'node',
+      cmd: process.execPath,
       args: [ this.script, 0 ],
     }, function(err, result, code) {
       test.equals(err, null);
@@ -105,7 +105,7 @@ exports['util.spawn'] = {
   'exit code 0, fallback': function(test) {
     test.expect(6);
     grunt.util.spawn({
-      cmd: 'node',
+      cmd: process.execPath,
       args: [ this.script, 0 ],
       fallback: 'ignored if exit code is 0'
     }, function(err, result, code) {
@@ -121,7 +121,7 @@ exports['util.spawn'] = {
   'non-zero exit code': function(test) {
     test.expect(6);
     grunt.util.spawn({
-      cmd: 'node',
+      cmd: process.execPath,
       args: [ this.script, 123 ],
     }, function(err, result, code) {
       test.equals(err, result);
@@ -136,7 +136,7 @@ exports['util.spawn'] = {
   'non-zero exit code, fallback': function(test) {
     test.expect(6);
     grunt.util.spawn({
-      cmd: 'node',
+      cmd: process.execPath,
       args: [ this.script, 123 ],
       fallback: 'custom fallback'
     }, function(err, result, code) {

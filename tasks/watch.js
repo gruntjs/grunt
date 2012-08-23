@@ -12,6 +12,7 @@ module.exports = function(grunt) {
   // Nodejs libs.
   var fs = require('fs');
   var path = require('path');
+  var pathExistsSync = fs.existsSync || path.existsSync;
 
   // ==========================================================================
   // TASKS
@@ -116,7 +117,7 @@ module.exports = function(grunt) {
         watchedFiles[filepath] = fs.watch(filepath, function(event) {
           var mtime;
           // Has the file been deleted?
-          var deleted = !path.existsSync(filepath);
+          var deleted = !pathExistsSync(filepath);
           if (deleted) {
             // If file was deleted, stop watching file.
             unWatchFile(filepath);

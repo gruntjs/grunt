@@ -11,91 +11,45 @@
 
 module.exports = function(grunt) {
 
-  // External libs.
-  var uglifyjs = require('uglify-js');
-  var gzip = require('gzip-js');
-
-  // ==========================================================================
-  // TASKS
-  // ==========================================================================
+  // Internal lib.
+  var minTools = require('./lib/min').init(grunt);
 
   grunt.registerMultiTask('min', 'Minify files with UglifyJS.', function() {
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({
-      separator: null,
       banner: '',
       uglify: {}
     });
 
-    // The source files to be concatenated.
-    var files = grunt.file.expandFiles(this.file.src);
-
-    // If banner wasn't specified, use empty string. Otherwise process banner
-    // and add a linefeed.
+    // Process banner.
     var banner = grunt.template.process(options.banner);
 
-    // Concat specified files. This should really be a single, pre-built (and
-    // linted) file, but it supports any number of files.
-    var max = grunt.helper('concat', files, {separator: options.separator});
+    // Iterate over all specified file groups.
+    this.files.forEach(function(fileObj) {
+      // The source file to be minified.
+      var srcpath = fileObj.src[0];
+      var files = grunt.file.expandFiles(srcpath);
+      // Abort if source didn't match any files.
+      if (files.length === 0) {
+        grunt.log.error('Source file "' + srcpath + '" not found.');
+        return;
+      }
 
-    // Concat banner + minified source.
-    var min = banner + grunt.helper('uglify', max, options.uglify);
+      // Get source of specified file.
+      var max = grunt.file.read(files[0]);
+      // Concat banner + minified source.
+      var min = banner + minTools.uglify(max, options.uglify);
 
-    // Write the destination file.
-    grunt.file.write(this.file.dest, min);
+      // Write the destination file.
+      grunt.file.write(fileObj.dest, min);
+      // Print a success message.
+      grunt.log.writeln('File "' + fileObj.dest + '" created.');
+      // ...and report some size information.
+      minTools.info(min, max);
+    }, this);
 
-    // Fail task if errors were logged.
-    if (this.errorCount) { return false; }
-
-    // Otherwise, print a success message....
-    grunt.log.writeln('File "' + this.file.dest + '" created.');
-    // ...and report some size information.
-    grunt.helper('min_max_info', min, max);
-  });
-
-  // ==========================================================================
-  // HELPERS
-  // ==========================================================================
-
-  // Minify with UglifyJS.
-  // From https://github.com/mishoo/UglifyJS
-  grunt.registerHelper('uglify', function(src, options) {
-    if (!options) { options = {}; }
-    var jsp = uglifyjs.parser;
-    var pro = uglifyjs.uglify;
-    var ast, pos;
-    var msg = 'Minifying with UglifyJS...';
-    grunt.verbose.write(msg);
-    try {
-      ast = jsp.parse(src);
-      ast = pro.ast_mangle(ast, options.mangle || {});
-      ast = pro.ast_squeeze(ast, options.squeeze || {});
-      src = pro.gen_code(ast, options.codegen || {});
-      // Success!
-      grunt.verbose.ok();
-      // UglifyJS adds a trailing semicolon only when run as a binary.
-      // So we manually add the trailing semicolon when using it as a module.
-      // https://github.com/mishoo/UglifyJS/issues/126
-      return src + ';';
-    } catch(e) {
-      // Something went wrong.
-      grunt.verbose.or.write(msg);
-      pos = '['.red + ('L' + e.line).yellow + ':'.red + ('C' + e.col).yellow + ']'.red;
-      grunt.log.error().writeln(pos + ' ' + (e.message + ' (position: ' + e.pos + ')').yellow);
-      grunt.warn('UglifyJS found errors.', 10);
-    }
-  });
-
-  // Return gzipped source.
-  grunt.registerHelper('gzip', function(src) {
-    return src ? gzip.zip(src, {}) : '';
-  });
-
-  // Output some size info about a file.
-  grunt.registerHelper('min_max_info', function(min, max) {
-    var gzipSize = String(grunt.helper('gzip', min).length);
-    grunt.log.writeln('Uncompressed size: ' + String(max.length).green + ' bytes.');
-    grunt.log.writeln('Compressed size: ' + gzipSize.green + ' bytes gzipped (' + String(min.length).green + ' bytes minified).');
+    // Fail task if any errors were logged.
+    if (this.errorCount > 0) { return false; }
   });
 
 };

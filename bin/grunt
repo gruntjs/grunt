@@ -2,6 +2,8 @@
 
 // Nodejs lib.
 var path = require('path');
+var fs = require('fs');
+
 
 // Badass internal grunt lib.
 var findup = require('../lib/util/findup');
@@ -10,7 +12,7 @@ var findup = require('../lib/util/findup');
 var dir = path.resolve(findup(process.cwd(), 'grunt.js'), '../node_modules/grunt');
 
 // If grunt is installed locally, use it. Otherwise use this grunt.
-if (!path.existsSync(dir)) { dir = '../lib/grunt'; }
+if (!(fs.existsSync || path.existsSync)(dir)) { dir = '../lib/grunt'; }
 
 // Run grunt.
 require(dir).cli();

@@ -21,21 +21,21 @@ exports.warnOn = '*';
 // The actual init template.
 exports.template = function(grunt, init, done) {
 
-  grunt.helper('prompt', {}, [
+  init.process({}, [
     // Prompt for these values.
-    grunt.helper('prompt_for', 'name'),
-    grunt.helper('prompt_for', 'description'),
-    grunt.helper('prompt_for', 'version'),
-    grunt.helper('prompt_for', 'repository'),
-    grunt.helper('prompt_for', 'homepage'),
-    grunt.helper('prompt_for', 'bugs'),
-    grunt.helper('prompt_for', 'licenses'),
-    grunt.helper('prompt_for', 'author_name'),
-    grunt.helper('prompt_for', 'author_email'),
-    grunt.helper('prompt_for', 'author_url'),
-    grunt.helper('prompt_for', 'node_version'),
-    grunt.helper('prompt_for', 'main'),
-    grunt.helper('prompt_for', 'npm_test')
+    init.prompt('name'),
+    init.prompt('description'),
+    init.prompt('version'),
+    init.prompt('repository'),
+    init.prompt('homepage'),
+    init.prompt('bugs'),
+    init.prompt('licenses'),
+    init.prompt('author_name'),
+    init.prompt('author_email'),
+    init.prompt('author_url'),
+    init.prompt('node_version'),
+    init.prompt('main'),
+    init.prompt('npm_test')
   ], function(err, props) {
     props.keywords = [];
 

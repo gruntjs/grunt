@@ -24,7 +24,7 @@ exports.warnOn = 'Gruntfile.js';
 // The actual init template.
 exports.template = function(grunt, init, done) {
 
-  grunt.helper('prompt', {}, [
+  init.process({}, [
     // Prompt for these values.
     {
       name: 'dom',

@@ -27,24 +27,24 @@ exports.warnOn = '*';
 // The actual init template.
 exports.template = function(grunt, init, done) {
 
-  grunt.helper('prompt', {type: 'jquery'}, [
+  init.process({type: 'jquery'}, [
     // Prompt for these values.
-    grunt.helper('prompt_for', 'name'),
-    grunt.helper('prompt_for', 'title', function(value, data, done) {
+    init.prompt('name'),
+    init.prompt('title', function(value, data, done) {
       // Fix jQuery capitalization.
       value = value.replace(/jquery/gi, 'jQuery');
       done(null, value);
     }),
-    grunt.helper('prompt_for', 'description', 'The best jQuery plugin ever.'),
-    grunt.helper('prompt_for', 'version'),
-    grunt.helper('prompt_for', 'repository'),
-    grunt.helper('prompt_for', 'homepage'),
-    grunt.helper('prompt_for', 'bugs'),
-    grunt.helper('prompt_for', 'licenses', 'MIT GPL-2.0'),
-    grunt.helper('prompt_for', 'author_name'),
-    grunt.helper('prompt_for', 'author_email'),
-    grunt.helper('prompt_for', 'author_url'),
-    grunt.helper('prompt_for', 'jquery_version')
+    init.prompt('description', 'The best jQuery plugin ever.'),
+    init.prompt('version'),
+    init.prompt('repository'),
+    init.prompt('homepage'),
+    init.prompt('bugs'),
+    init.prompt('licenses', 'MIT GPL-2.0'),
+    init.prompt('author_name'),
+    init.prompt('author_email'),
+    init.prompt('author_url'),
+    init.prompt('jquery_version')
   ], function(err, props) {
     // A few additional properties.
     props.jqueryjson = props.name + '.jquery.json';

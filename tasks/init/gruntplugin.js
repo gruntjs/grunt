@@ -22,23 +22,23 @@ exports.warnOn = '*';
 // The actual init template.
 exports.template = function(grunt, init, done) {
 
-  grunt.helper('prompt', {type: 'grunt'}, [
+  init.process({type: 'grunt'}, [
     // Prompt for these values.
-    grunt.helper('prompt_for', 'name', function(value, props, done) {
+    init.prompt('name', function(value, props, done) {
       // Prepend grunt- to default name.
       done(null, 'grunt-' + value);
     }),
-    grunt.helper('prompt_for', 'description', 'The best grunt plugin ever.'),
-    grunt.helper('prompt_for', 'version'),
-    grunt.helper('prompt_for', 'repository'),
-    grunt.helper('prompt_for', 'homepage'),
-    grunt.helper('prompt_for', 'bugs'),
-    grunt.helper('prompt_for', 'licenses'),
-    grunt.helper('prompt_for', 'author_name'),
-    grunt.helper('prompt_for', 'author_email'),
-    grunt.helper('prompt_for', 'author_url'),
-    grunt.helper('prompt_for', 'grunt_version'),
-    grunt.helper('prompt_for', 'node_version', grunt.package.engines.node)
+    init.prompt('description', 'The best grunt plugin ever.'),
+    init.prompt('version'),
+    init.prompt('repository'),
+    init.prompt('homepage'),
+    init.prompt('bugs'),
+    init.prompt('licenses'),
+    init.prompt('author_name'),
+    init.prompt('author_email'),
+    init.prompt('author_url'),
+    init.prompt('grunt_version'),
+    init.prompt('node_version', grunt.package.engines.node)
   ], function(err, props) {
     // Set a few grunt-plugin-specific properties.
     props.short_name = props.name.replace(/^grunt[\-_]?/, '');

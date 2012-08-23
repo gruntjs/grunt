@@ -17,9 +17,9 @@ module.exports = function(grunt) {
   // External libs.
   var semver = require('semver');
 
-  var prompt = require('prompt');
-  prompt.message = '[' + '?'.green + ']';
-  prompt.delimiter = ' ';
+  // Internal libs.
+  var git = require('./lib/git').init(grunt);
+  var prompt = require('./lib/prompt').init(grunt);
 
   // ==========================================================================
   // TASKS
@@ -89,6 +89,10 @@ module.exports = function(grunt) {
 
     // Useful init sub-task-specific utilities.
     var init = {
+      // Expose prompt interface on init object.
+      process: prompt.process,
+      prompt: prompt.prompt,
+      prompts: prompt.prompts,
       // Expose any user-specified default init values.
       defaults: grunt.task.readDefaults('init/defaults.json'),
       // Expose rename rules for this template.
@@ -265,131 +269,11 @@ module.exports = function(grunt) {
     }].concat(args));
   });
 
-  // ==========================================================================
-  // HELPERS
-  // ==========================================================================
-
-  // Prompt user to override default values passed in obj.
-  grunt.registerHelper('prompt', function(defaults, options, done) {
-    // If defaults are omitted, shuffle arguments a bit.
-    if (grunt.util.kindOf(defaults) === 'array') {
-      done = options;
-      options = defaults;
-      defaults = {};
-    }
-
-    // Keep track of any "sanitize" functions for later use.
-    var sanitize = {};
-    options.forEach(function(option) {
-      if (option.sanitize) {
-        sanitize[option.name] = option.sanitize;
-      }
-    });
-
-    // Add one final "are you sure?" prompt.
-    if (options.length > 0) {
-      options.push({
-        message: 'Do you need to make any changes to the above before continuing?'.green,
-        name: 'ANSWERS_VALID',
-        default: 'y/N'
-      });
-    }
-
-    // Ask user for input. This is in an IIFE because it has to execute at least
-    // once, and might be repeated.
-    (function ask() {
-      grunt.log.subhead('Please answer the following:');
-      var result = grunt.util._.clone(defaults);
-      // Loop over each prompt option.
-      grunt.util.async.forEachSeries(options, function(option, done) {
-        var defaultValue;
-        grunt.util.async.forEachSeries(['default', 'altDefault'], function(prop, next) {
-          if (typeof option[prop] === 'function') {
-            // If the value is a function, execute that function, using the
-            // value passed into the return callback as the new default value.
-            option[prop](defaultValue, result, function(err, value) {
-              defaultValue = String(value);
-              next();
-            });
-          } else {
-            // Otherwise, if the value actually exists, use it.
-            if (prop in option) {
-              defaultValue = option[prop];
-            }
-            next();
-          }
-        }, function() {
-          // Handle errors (there should never be errors).
-          option.default = defaultValue;
-          delete option.altDefault;
-          // Wrap validator so that answering '?' always fails.
-          var validator = option.validator;
-          option.validator = function(line, next) {
-            if (line === '?') {
-              return next(false);
-            } else if (validator) {
-              if (validator.test) {
-                return next(validator.test(line));
-              } else if (typeof validator === 'function') {
-                return validator.length < 2 ? next(validator(line)) : validator(line, next);
-              }
-            }
-            next(true);
-          };
-          // Actually get user input.
-          prompt.start();
-          prompt.getInput(option, function(err, line) {
-            if (err) { return done(err); }
-            option.validator = validator;
-            result[option.name] = line;
-            done();
-          });
-        });
-      }, function(err) {
-        // After all prompt questions have been answered...
-        if (/n/i.test(result.ANSWERS_VALID)) {
-          // User accepted all answers. Suspend prompt.
-          prompt.pause();
-          // Clean up.
-          delete result.ANSWERS_VALID;
-          // Iterate over all results.
-          grunt.util.async.forEachSeries(Object.keys(result), function(name, next) {
-            // If this value needs to be sanitized, process it now.
-            if (sanitize[name]) {
-              sanitize[name](result[name], result, function(err, value) {
-                if (err) {
-                  result[name] = err;
-                } else if (arguments.length === 2) {
-                  result[name] = value === 'none' ? '' : value;
-                }
-                next();
-              });
-            } else {
-              if (result[name] === 'none') { result[name] = ''; }
-              next();
-            }
-          }, function(err) {
-            // Done!
-            grunt.log.writeln();
-            done(err, result);
-          });
-        } else {
-          // Otherwise update the default value for each user prompt option...
-          options.slice(0, -1).forEach(function(option) {
-            option.default = result[option.name];
-          });
-          // ...and start over again.
-          ask();
-        }
-      });
-    }());
-  });
-
   // Built-in prompt options for the prompt_for helper.
   // These generally follow the node "prompt" module convention, except:
   // * The "default" value can be a function which is executed at run-time.
   // * An optional "sanitize" function has been added to post-process data.
-  var prompts = {
+  grunt.util._.extend(prompt.prompts, {
     name: {
       message: 'Project name',
       default: function(value, data, done) {
@@ -454,7 +338,7 @@ module.exports = function(grunt) {
       message: 'Project git repository',
       default: function(value, data, done) {
         // Change any git@...:... uri to git://.../... format.
-        grunt.helper('git_origin', function(err, result) {
+        git.origin(function(err, result) {
           if (err) {
             // Attempt to guess at the repo name. Maybe we'll get lucky!
             result = 'git://github.com/' + (process.env.USER || process.env.USERNAME || '???') + '/' +
@@ -467,7 +351,7 @@ module.exports = function(grunt) {
       },
       sanitize: function(value, data, done) {
         // An additional computed "git_user" property.
-        var repo = grunt.helper('github_web_url', data.repository);
+        var repo = git.githubUrl(data.repository);
         var parts;
         if (repo != null) {
           parts = repo.split('/');
@@ -491,7 +375,7 @@ module.exports = function(grunt) {
       message: 'Project homepage',
       // If GitHub is the origin, the (potential) homepage is easy to figure out.
       default: function(value, data, done) {
-        done(null, grunt.helper('github_web_url', data.repository) || 'none');
+        done(null, git.githubUrl(data.repository) || 'none');
       },
       warning: 'Should be a public URL.'
     },
@@ -499,7 +383,7 @@ module.exports = function(grunt) {
       message: 'Project issues tracker',
       // If GitHub is the origin, the issues tracker is easy to figure out.
       default: function(value, data, done) {
-        done(null, grunt.helper('github_web_url', data.repository, 'issues') || 'none');
+        done(null, git.githubUrl(data.repository, 'issues') || 'none');
       },
       warning: 'Should be a public URL.'
     },
@@ -577,59 +461,6 @@ module.exports = function(grunt) {
       default: '~' + grunt.version,
       warning: 'Must be a valid semantic version range descriptor.'
     }
-  };
-
-  // Expose prompts object so that prompt_for prompts can be added or modified.
-  grunt.registerHelper('prompt_for_obj', function() {
-    return prompts;
-  });
-
-  // Commonly-used prompt options with meaningful default values.
-  grunt.registerHelper('prompt_for', function(name, altDefault) {
-    // Clone the option so the original options object doesn't get modified.
-    var option = grunt.util._.clone(prompts[name]);
-    option.name = name;
-
-    var defaults = grunt.task.readDefaults('init/defaults.json');
-    if (name in defaults) {
-      // A user default was specified for this option, so use its value.
-      option.default = defaults[name];
-    } else if (arguments.length === 2) {
-      // An alternate default was specified, so use it.
-      option.altDefault = altDefault;
-    }
-    return option;
-  });
-
-  // Get the git origin url from the current repo (if possible).
-  grunt.registerHelper('git_origin', function(done) {
-    grunt.util.spawn({
-      cmd: 'git',
-      args: ['remote', '-v']
-    }, function(err, result, code) {
-      var re = /^origin\s/;
-      var lines;
-      if (!err) {
-        lines = String(result).split('\n').filter(re.test, re);
-        if (lines.length > 0) {
-          done(null, lines[0].split(/\s/)[1]);
-          return;
-        }
-      }
-      done(true, 'none');
-    });
-  });
-
-  // Generate a GitHub web URL from a GitHub repo URI.
-  var githubWebUrlRe = /^.+(?:@|:\/\/)(github.com)[:\/](.+?)(?:\.git|\/)?$/;
-  grunt.registerHelper('github_web_url', function(uri, suffix) {
-    var matches = githubWebUrlRe.exec(uri);
-    if (!matches) { return null; }
-    var url = 'https://' + matches[1] + '/' + matches[2];
-    if (suffix) {
-      url += '/' + suffix.replace(/^\//, '');
-    }
-    return url;
   });
 
 };

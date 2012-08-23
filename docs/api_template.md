@@ -11,15 +11,17 @@ See the [template lib source](../lib/grunt/template.js) for more information.
 ## The template API
 
 ### grunt.template.process
-Process an [Underscore.js template](http://underscorejs.org/#template) string. The `template` argument will be processed recursively until there are no more templates to process. If `data` is omitted, the entire [config object](api_config.md) is used.
+Process an [Underscore.js template](http://underscorejs.org/#template) string. The `template` argument will be processed recursively until there are no more templates to process.
 
-The default template delimiters are `<% %>` but if `options.delimiters` is set to a valid delimiter name, those template delimiters will be used instead. See the `grunt.template.setDelimiters` method for a list of valid delimiter names.
+The default data object is the entire [config object](api_config.md), but if `options.data` is set, that object will be used instead. The default template delimiters are `<% %>` but if `options.delimiters` is set to a valid delimiter name, those template delimiters will be used instead.
+
+_See the `grunt.template.setDelimiters` method for a list of valid delimiter names._
 
 ```javascript
-grunt.template.process(template, data, options)
+grunt.template.process(template [, options])
 ```
 
-Inside templates, the `grunt` object is exposed so that you can do things like `<%= grunt.template.today('yyyy') %>`. _Note that if the `data` object already has a `grunt` property, the `grunt` API will not be accessible in templates._
+Inside templates, the `grunt` object is exposed so that you can do things like `<%= grunt.template.today('yyyy') %>`. _Note that if the data object already has a `grunt` property, the `grunt` API will not be accessible in templates._
 
 In this example, the `baz` property is processed recursively until there are no more `<% %>` templates to process.
 
@@ -29,7 +31,7 @@ var obj = {
   bar: 'b<%= foo %>d',
   baz: 'a<%= bar %>e'
 };
-grunt.template.process('<%= baz %>', obj) // 'abcde'
+grunt.template.process('<%= baz %>', {data: obj}) // 'abcde'
 ```
 
 ### grunt.template.setDelimiters
@@ -40,7 +42,7 @@ _You probably won't need to use this method, because you'll be using `grunt.temp
 Valid names:
 
 * `config` - use `<% %>` style delimiters (default)
-* `init` - use `{% %}` style delimiters (reserved for [init task](task_init.md) templates)
+* `init` - use `{% %}` style delimiters (used in [init task](task_init.md) templates)
 * `user` - use `[% %]` style delimiters (not used internally in grunt)
 
 ```javascript

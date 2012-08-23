@@ -113,7 +113,7 @@ module.exports = function(grunt) {
           // Get the destination filepath.
           var dest = init.renames[src];
           // Create a property for this file.
-          files[dest ? grunt.template.process(dest, props, {delimiters: 'init'}) : src] = obj.rel;
+          files[dest ? grunt.template.process(dest, {data: props, delimiters: 'init'}) : src] = obj.rel;
         });
         return files;
       },
@@ -164,7 +164,7 @@ module.exports = function(grunt) {
       copyAndProcess: function(files, props, options) {
         options = grunt.util._.defaults(options || {}, {
           process: function(contents) {
-            return grunt.template.process(contents, props, {delimiters: 'init'});
+            return grunt.template.process(contents, {data: props, delimiters: 'init'});
           }
         });
         Object.keys(files).forEach(function(destpath) {

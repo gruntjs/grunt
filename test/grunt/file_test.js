@@ -290,7 +290,7 @@ exports['file'] = {
     grunt.file.copy('test/fixtures/a.js', tmpfile.path, {process: function(src) {
       test.equal(Buffer.isBuffer(src), false);
       test.equal(typeof src, 'string');
-      return grunt.template.process(src + '<%= tmpltest %>', {tmpltest: tmpltest});
+      return grunt.template.process(src + '<%= tmpltest %>', {data: {tmpltest: tmpltest}});
     }});
     test.strictEqual(fs.readFileSync(tmpfile.path, 'utf8'), grunt.util.normalizelf(fs.readFileSync('test/fixtures/a.js', 'utf8')) + tmpltest);
     tmpfile.unlinkSync();

@@ -11,54 +11,51 @@
 
 module.exports = function(grunt) {
 
-  // ==========================================================================
-  // TASKS
-  // ==========================================================================
+  // Internal lib.
+  var stripBanner = require('./lib/comment').stripBanner;
 
   grunt.registerMultiTask('concat', 'Concatenate files.', function() {
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({
-      separator: null,
-      banner: ''
+      separator: grunt.util.linefeed,
+      banner: '',
+      stripBanners: false,
+      process: false
     });
 
-    // The source files to be concatenated.
-    var files = grunt.file.expandFiles(this.file.src);
+    // Normalize boolean options that accept options objects.
+    if (options.stripBanners === true) { options.stripBanners = {}; }
+    if (options.process === true) { options.process = {}; }
 
-    // If banner wasn't specified, use empty string. Otherwise process banner
-    // and add a linefeed.
+    // Process banner.
     var banner = grunt.template.process(options.banner);
 
-    // Concat banner + specified files.
-    var src = banner + grunt.helper('concat', files, {separator: options.separator});
+    // Iterate over all specified file groups.
+    this.files.forEach(function(fileObj) {
+      // The source files to be concatenated.
+      var files = grunt.file.expandFiles(fileObj.src);
 
-    // Write the destination file.
-    grunt.file.write(this.file.dest, src);
+      // Concat banner + specified files.
+      var src = banner + files.map(function(filepath) {
+        // Read file source.
+        var src = grunt.file.read(filepath);
+        // Process files as templates if requested.
+        if (options.process) {
+          src = grunt.template.process(src, options.process);
+        }
+        // Strip banners if requested.
+        if (options.stripBanners) {
+          src = stripBanner(src, options.stripBanners);
+        }
+        return src;
+      }).join(grunt.util.normalizelf(options.separator));
 
-    // Fail task if errors were logged.
-    if (this.errorCount) { return false; }
+      // Write the destination file.
+      grunt.file.write(fileObj.dest, src);
 
-    // Otherwise, print a success message.
-    grunt.log.writeln('File "' + this.file.dest + '" created.');
-  });
-
-  // ==========================================================================
-  // HELPERS
-  // ==========================================================================
-
-  // Concat source files and/or directives.
-  grunt.registerHelper('concat', function(files, options) {
-    // Passed options override default options.
-    options = grunt.util._.defaults(options || {}, {
-      separator: grunt.util.linefeed
-    });
-    // If files were specified, iterate over each file, joining them on the
-    // specified separator (or the default).
-    return files ? files.map(function(filepath) {
-      // If the filepath is a directive, return its expanded value, otherwise
-      // read the filepath's contents and return that.
-      return grunt.task.directive(filepath, grunt.file.read);
-    }).join(grunt.util.normalizelf(options.separator)) : '';
+      // Print a success message.
+      grunt.log.writeln('File "' + fileObj.dest + '" created.');
+    }, this);
   });
 
 };

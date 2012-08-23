@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/cowboy/grunt.png)](http://travis-ci.org/cowboy/grunt)
 # grunt
 Grunt is a task-based command line build tool for JavaScript projects.
 

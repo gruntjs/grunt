@@ -14,10 +14,10 @@ exports['task.normalizeMultiTaskFiles'] = {
     test.expect(6);
 
     test.deepEqual(grunt.task.normalizeMultiTaskFiles('src/file1.js', 'dist/built.js'), [
-      {dest: 'dist/built.js', src: 'src/file1.js'}
+      {dest: 'dist/built.js', src: ['src/file1.js']}
     ], 'should normalize destTarget: srcString.');
 
-    test.deepEqual(grunt.task.normalizeMultiTaskFiles(['src/file1.js', 'src/file2.js'], 'dist/built.js'), [
+    test.deepEqual(grunt.task.normalizeMultiTaskFiles([['src/file1.js'], ['src/file2.js']], 'dist/built.js'), [
       {dest: 'dist/built.js', src: ['src/file1.js', 'src/file2.js']}
     ], 'should normalize destTarget: srcArray.');
 
@@ -31,20 +31,20 @@ exports['task.normalizeMultiTaskFiles'] = {
     test.deepEqual(grunt.task.normalizeMultiTaskFiles({
       files: {
         'dist/built-a.js': 'src/file1.js',
-        'dist/built-b.js': ['src/file1.js', 'src/file2.js']
+        'dist/built-b.js': ['src/file1.js', [['src/file2.js']]]
       }
     }, 'target'), [
-      {dest: 'dist/built-a.js', src: 'src/file1.js'},
+      {dest: 'dist/built-a.js', src: ['src/file1.js']},
       {dest: 'dist/built-b.js', src: ['src/file1.js', 'src/file2.js']}
     ], 'should normalize target: {files: {destTarget: srcStuff, ...}}.');
 
     test.deepEqual(grunt.task.normalizeMultiTaskFiles({
       files: [
         {'dist/built-a.js': 'src/file1.js'},
-        {'dist/built-b.js': ['src/file1.js', 'src/file2.js']}
+        {'dist/built-b.js': [[['src/file1.js'], 'src/file2.js']]}
       ]
     }, 'target'), [
-      {dest: 'dist/built-a.js', src: 'src/file1.js'},
+      {dest: 'dist/built-a.js', src: ['src/file1.js']},
       {dest: 'dist/built-b.js', src: ['src/file1.js', 'src/file2.js']}
     ], 'should normalize target: {files: [{destTarget: srcStuff}, ...]}.');
 
@@ -54,7 +54,7 @@ exports['task.normalizeMultiTaskFiles'] = {
         {dest: 'dist/built-b.js', src: ['src/file1.js', 'src/file2.js']}
       ]
     }, 'target'), [
-      {dest: 'dist/built-a.js', src: 'src/file1.js'},
+      {dest: 'dist/built-a.js', src: ['src/file1.js']},
       {dest: 'dist/built-b.js', src: ['src/file1.js', 'src/file2.js']}
     ], 'should normalize target: {files: [{src: srcStuff, dest: destStuff}, ...]}.');
 
@@ -78,7 +78,7 @@ exports['task.normalizeMultiTaskFiles'] = {
         {dest: 'dist/built-<%= TEST %>-b.js', src: ['src/file1-<%= TEST %>.js', 'src/file2-<%= TEST %>.js']}
       ]
     }, 'target'), [
-      {dest: 'dist/built-123-a.js', src: 'src/file1-123.js'},
+      {dest: 'dist/built-123-a.js', src: ['src/file1-123.js']},
       {dest: 'dist/built-123-b.js', src: ['src/file1-123.js', 'src/file2-123.js']}
     ], 'should process templates recursively.');
 

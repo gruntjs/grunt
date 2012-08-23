@@ -443,7 +443,7 @@ module.exports = function(grunt) {
           args: ['describe', '--tags'],
           fallback: ''
         }, function(err, result, code) {
-          result = result.split('-')[0];
+          result = String(result).split('-')[0];
           done(null, semver.valid(result) || '0.1.0');
         });
       },
@@ -480,7 +480,7 @@ module.exports = function(grunt) {
             args: ['config', '--get', 'github.user'],
             fallback: ''
           }, function(err, result, code) {
-            data.git_user = result || process.env.USER || process.env.USERNAME || '???';
+            data.git_user = String(result) || process.env.USER || process.env.USERNAME || '???';
             done();
           });
         }
@@ -610,7 +610,7 @@ module.exports = function(grunt) {
       var re = /^origin\s/;
       var lines;
       if (!err) {
-        lines = result.split('\n').filter(re.test, re);
+        lines = String(result).split('\n').filter(re.test, re);
         if (lines.length > 0) {
           done(null, lines[0].split(/\s/)[1]);
           return;

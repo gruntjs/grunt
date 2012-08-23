@@ -21,19 +21,20 @@ module.exports = function(grunt) {
     // Task configuration.{% if (min_concat) { %}
     concat: {
       options: {
-        banner: '<config:banner>'
+        banner: '<%= banner %>',
+        stripBanners: true
       },
       dist: {
-        src: ['<file_strip_banner:{%= lib_dir %}/{%= file_name %}.js>'],
+        src: ['{%= lib_dir %}/{%= file_name %}.js'],
         dest: 'dist/{%= file_name %}.js'
       }
     },
     min: {
       options: {
-        banner: '<config:banner>'
+        banner: '<%= banner %>'
       },
       dist: {
-        src: ['<config:concat.dist.dest>'],
+        src: '<%= concat.dist.dest %>',
         dest: 'dist/{%= file_name %}.min.js'
       }
     },{% } %}

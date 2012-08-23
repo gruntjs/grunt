@@ -14,19 +14,20 @@ module.exports = function(grunt) {
     // Task configuration.
     concat: {
       options: {
-        banner: '<config:banner>'
+        banner: '<%= banner %>',
+        stripBanners: true
       },
       dist: {
-        src: ['<file_strip_banner:lib/<%= pkg.name %>.js>'],
+        src: ['lib/<%= pkg.name %>.js'],
         dest: 'dist/<%= pkg.name %>.js'
       },
     },
     min: {
       options: {
-        banner: '<config:banner>'
+        banner: '<%= banner %>'
       },
       dist: {
-        src: ['<config:concat.dist.dest>'],
+        src: '<%= concat.dist.dest %>',
         dest: 'dist/<%= pkg.name %>.min.js'
       },
     },

@@ -16,12 +16,13 @@ QUnit.config.reorder = false;
 // Run tests serially, not in parallel.
 QUnit.config.autorun = false;
 
-// Send messages to the parent zombie.js process via alert! Good times!!
+// Send messages to the parent PhantomJS process via alert! Good times!!
 function sendMessage() {
   var args = [].slice.call(arguments);
   alert(JSON.stringify(args));
 }
 
+// These methods connect QUnit to PhantomJS.
 QUnit.log = function(obj) {
   // What is this I don’t even
   if (obj.message === '[object Object], undefined:undefined') { return; }
@@ -29,29 +30,29 @@ QUnit.log = function(obj) {
   var actual = QUnit.jsDump.parse(obj.actual);
   var expected = QUnit.jsDump.parse(obj.expected);
   // Send it.
-  sendMessage('log', obj.result, actual, expected, obj.message, obj.source);
+  sendMessage('qunit.log', obj.result, actual, expected, obj.message, obj.source);
 };
 
 QUnit.testStart = function(obj) {
-  sendMessage('testStart', obj.name);
+  sendMessage('qunit.testStart', obj.name);
 };
 
 QUnit.testDone = function(obj) {
-  sendMessage('testDone', obj.name, obj.failed, obj.passed, obj.total);
+  sendMessage('qunit.testDone', obj.name, obj.failed, obj.passed, obj.total);
 };
 
 QUnit.moduleStart = function(obj) {
-  sendMessage('moduleStart', obj.name);
+  sendMessage('qunit.moduleStart', obj.name);
 };
 
 QUnit.moduleDone = function(obj) {
-  sendMessage('moduleDone', obj.name, obj.failed, obj.passed, obj.total);
+  sendMessage('qunit.moduleDone', obj.name, obj.failed, obj.passed, obj.total);
 };
 
 QUnit.begin = function() {
-  sendMessage('begin');
+  sendMessage('qunit.begin');
 };
 
 QUnit.done = function(obj) {
-  sendMessage('done', obj.failed, obj.passed, obj.total, obj.runtime);
+  sendMessage('qunit.done', obj.failed, obj.passed, obj.total, obj.runtime);
 };

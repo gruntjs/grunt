@@ -30,5 +30,4 @@ module.exports = function(grunt) {
     }
     return jsons[filepath];
   });
-
 };

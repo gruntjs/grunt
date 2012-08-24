@@ -1,6 +1,7 @@
 'use strict';
 
-var grunt = require('../../lib/grunt');
+var grunt = require('../../../lib/grunt');
+var lint = require('../../../tasks/lib/lint').init(grunt).lint;
 
 // In case the grunt being used to test is different than the grunt being
 // tested, initialize the task and config subsystems.
@@ -13,8 +14,9 @@ exports['lint'] = function(test) {
   test.expect(1);
   grunt.log.muted = true;
 
-  grunt.helper('lint', grunt.file.read('test/fixtures/lint.txt'));
+  test.doesNotThrow(function() {
+    lint(grunt.file.read('test/fixtures/lint.txt'));
+  }, 'It should not blow up if an error occurs on character 0.');
 
-  test.ok(true, 'It should not blow up if an error occurs on character 0.');
   test.done();
 };

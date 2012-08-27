@@ -42,6 +42,7 @@ For projects already using grunt, you're done. Otherwise, if you're adding grunt
 ## Release History
 _(Until v1.0.0, this will only be updated when major or breaking changes are made)_
 
+* 2012/08/27 - v0.3.13 - Fixed Node.js 0.8.x path.existsSync warning. Updated connect, nodeunit, uglify-js deps to latest. Updated docs. Grunt plugins generated with init:gruntplugin no longer include grunt as a dependency. Added preliminary support for "collection" plugins.
 * 2012/07/30 - v0.3.12 - Fixing a bug in node 0.8.x where utils.spawn would terminate before receiving all child stdout.
 * 2012/06/25 - v0.3.10 - Updating a few dependencies to work with node 0.8.x (0.6.x should still work).
 * 2012/04/18 - v0.3.9 - The min task (via the uglify helper) now appends a semicolon to the end of the generated source.

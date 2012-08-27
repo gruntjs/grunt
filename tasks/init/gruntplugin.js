@@ -45,7 +45,6 @@ exports.template = function(grunt, init, done) {
     props.main = 'Gruntfile.js';
     props.npm_test = 'grunt test';
     props.bin = 'bin/' + props.name;
-    props.dependencies = {grunt: props.grunt_version};
     props.keywords = ['gruntplugin'];
 
     // Files to copy (and process).

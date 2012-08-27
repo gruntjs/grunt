@@ -3,13 +3,13 @@
 # server (built-in task)
 Start a static web server.
 
-## About <a name="about" href="#about" title="Link to this section">⚑</a>
+## About
 
 This task starts a static web server on a specified port, at a specified path, which runs as long as grunt is running. Once grunt's tasks have completed, the web server stops.
 
 _Need some help getting started with grunt? Visit the [getting started](getting_started.md) page. And if you're creating your own tasks or helpers, be sure to check out the [types of tasks](types_of_tasks.md) page as well as the [API documentation](api.md)._
 
-## A Very Important Note <a name="a-very-important-note" href="#a-very-important-note" title="Link to this section">⚑</a>
+## A Very Important Note
 Your `grunt.js` gruntfile **must** contain this code, once and **only** once. If it doesn't, grunt won't work. For the sake of brevity, this "wrapper" code has been omitted from all examples on this page, but it needs to be there.
 
 ```javascript
@@ -18,7 +18,7 @@ module.exports = function(grunt) {
 };
 ```
 
-## Project configuration <a name="project-configuration" href="#project-configuration" title="Link to this section">⚑</a>
+## Project configuration
 
 This example shows a brief overview of the [config](api_config.md) properties used by the `server` task. For a more in-depth explanation, see the usage examples.
 
@@ -30,9 +30,9 @@ grunt.initConfig({
 });
 ```
 
-## Usage examples <a name="usage-examples" href="#usage-examples" title="Link to this section">⚑</a>
+## Usage examples
 
-### Basic Use <a name="basic-use" href="#basic-use" title="Link to this section">⚑</a>
+### Basic Use
 
 In this example, `grunt server` will start a static web server at `http://localhost:8000/`, with its base path set to the gruntfile's directory. Of course, it will then immediately stop serving files, because grunt exits automatically when there are no more tasks to run.
 
@@ -48,7 +48,7 @@ grunt.initConfig({
 });
 ```
 
-### Roll Your Own <a name="roll-your-own" href="#roll-your-own" title="Link to this section">⚑</a>
+### Roll Your Own
 
 Unlike the previous example, in this example the `grunt server` command will run a completely custom `server` task, because it has been overridden. This version is hard-coded to start a static web server at `http://localhost:1234/`, with its base path set to `www-root` subdirectory.
 

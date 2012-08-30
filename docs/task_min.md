@@ -119,12 +119,12 @@ In this example, running `grunt min:dist` (or `grunt min` because `min` is a [mu
 
 This generated banner will be the contents of the `meta.banner` underscore template string interpolated with the config object. In this case, those properties are the values imported from the `package.json` file (which are available via the `pkg` config property) plus today's date.
 
-_Note: you don't have to use an external JSON file. It's completely valid to create the `pkg` object inline in the config. That being said, if you already have a JSON file, you might as well reference it. See the [directives](helpers_directives.md) page for more information on the `<banner>` and `<json>` directives and their options._
+_Note: you don't have to use an external JSON file. It's completely valid to create the `pkg` object inline in the config. That being said, if you already have a JSON file, you might as well reference it.
 
 ```javascript
 // Project configuration.
 grunt.initConfig({
-  pkg: '<json:package.json>',
+  pkg: grunt.file.readJSON('package.json'),
   meta: {
     banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
       '<%= grunt.template.today("yyyy-mm-dd") %> */'

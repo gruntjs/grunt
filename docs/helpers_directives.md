@@ -15,7 +15,4 @@ Expands to the value of the `prop.subprop` config property. This can be any numb
 ### `<config_process:prop.subprop>`
 Like the `<config>` directive, but recursively processes `<% %>` templates as well. This directive is just a wrapper around the [grunt.config.process](api_config.md#gruntconfigprocess) method.
 
-### `<json:file.json>`
-Expand to the object parsed from file.json via [grunt.file.readJSON](api_file.md#gruntfilereadjson).
-
 Take a look at the [api documentation](api.md) and [example Gruntfiles](example_gruntfiles.md) for directive creation and usage examples.

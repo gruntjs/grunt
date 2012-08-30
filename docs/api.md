@@ -78,7 +78,7 @@ _Note that the method listed below is also available on the [grunt.config](api_c
 ### grunt.initConfig
 Initialize a configuration object for the current project. The specified `configObject` is used by tasks and helpers and can also be accessed using the [grunt.config](api_config.md) method. Nearly every project's [Gruntfile](getting_started.md) will call this method.
 
-Note that any specified `<config>` and `<json>` [directives](api_task.md) will be automatically processed when the config object is initialized.
+Note that any specified `<config>` [directives](api_task.md) will be automatically processed when the config object is initialized.
 
 ```javascript
 grunt.initConfig(configObject)

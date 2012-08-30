@@ -20,7 +20,7 @@ Initialize a configuration object for the current project. The specified `config
 grunt.config.init(configObject)
 ```
 
-Note that any specified `<config>` and `<json>` [directives](api_task.md) will be automatically processed when the config object is initialized.
+Note that any specified `<config>` [directives](api_task.md) will be automatically processed when the config object is initialized.
 
 This example contains sample config data for the [lint task](task_lint.md):
 
@@ -65,7 +65,7 @@ Set a value into the project's grunt configuration.
 grunt.config.set(prop, value)
 ```
 
-Note that any specified `<config>` and `<json>` [directives](api_task.md) will be automatically processed when the config data is set.
+Note that any specified `<config>` [directives](api_task.md) will be automatically processed when the config data is set.
 
 ### grunt.config.escape
 Escape `.` dots in the given `propString`. This should be used for property names that contain dots.

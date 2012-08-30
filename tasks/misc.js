@@ -21,14 +21,4 @@ module.exports = function(grunt) {
   // Get a config property and process it as a template.
   grunt.registerHelper('config_process', grunt.config.process);
 
-  // Read a JSON file. Most useful as a directive like <json:package.json>.
-  var jsons = {};
-  grunt.registerHelper('json', function(filepath) {
-    // Don't re-fetch if being called as a directive and JSON is already cached.
-    if (!this.directive || !(filepath in jsons)) {
-      jsons[filepath] = grunt.file.readJSON(filepath);
-    }
-    return jsons[filepath];
-  });
-
 };

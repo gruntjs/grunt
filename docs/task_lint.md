@@ -92,7 +92,7 @@ Building on the previous example, if you want to avoid duplication, you can use 
 ```javascript
 // Project configuration.
 grunt.initConfig({
-  pkg: '<json:package.json>',
+  pkg: grunt.file.readJSON('package.json'),
   concat: {
     dist: {
       src: ['src/foo.js', 'src/bar.js'],

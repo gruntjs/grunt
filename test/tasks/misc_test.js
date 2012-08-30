@@ -15,11 +15,3 @@ exports['config'] = function(test) {
   test.deepEqual(grunt.helper('config', 'meta'), grunt.config('meta'), 'It should just pass through to config.');
   test.done();
 };
-
-exports['json'] = function(test) {
-  test.expect(2);
-  var obj = grunt.helper('json', 'test/fixtures/test.json');
-  test.equal(obj.foo, 'bar', 'JSON properties should be available as-defined.');
-  test.deepEqual(obj.baz, [1, 2, 3], 'JSON properties should be available as-defined.');
-  test.done();
-};

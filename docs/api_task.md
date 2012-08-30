@@ -296,7 +296,7 @@ _This method is also available as [grunt.helper](api.md)._
 ## Directives
 Directives are essentially string placeholders for helper functions, specified as values in the [config object](getting_started.md).
 
-A good example of directives would be the `<json:package.json>` and `<config:lint.all>` directives in grunt's own [Gruntfile](../Gruntfile.js). Or the `<file_strip_banner:src/grunt-jquery-example.js>` directive in the [sample jQuery plugin gruntfile](https://github.com/cowboy/grunt-jquery-example/blob/master/Gruntfile.js).
+A good example of directives would be the `<config:lint.all>` directive in grunt's own [Gruntfile](../Gruntfile.js).
 
 See the list of [built-in directives](helpers_directives.md) for examples.
 

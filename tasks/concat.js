@@ -12,7 +12,7 @@
 module.exports = function(grunt) {
 
   // Internal lib.
-  var stripBanner = require('./lib/comment').stripBanner;
+  var comment = require('./lib/comment').init(grunt);
 
   grunt.registerMultiTask('concat', 'Concatenate files.', function() {
     // Merge task-specific and/or target-specific options with these defaults.
@@ -45,7 +45,7 @@ module.exports = function(grunt) {
         }
         // Strip banners if requested.
         if (options.stripBanners) {
-          src = stripBanner(src, options.stripBanners);
+          src = comment.stripBanner(src, options.stripBanners);
         }
         return src;
       }).join(grunt.util.normalizelf(options.separator));

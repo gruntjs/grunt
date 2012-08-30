@@ -110,26 +110,31 @@ exports.init = function(grunt) {
     // Build an array of optional PhantomJS --args, deleting those keys from
     // the options object.
     var args = [];
-    Object.keys(options).forEach(function(key) {
-      if (/^--/.test(key)) {
-        args.push(key + '=' + options[key]);
-        delete options.key;
+    Object.keys(options.options).forEach(function(key) {
+      if (/^\-\-/.test(key)) {
+        args.push(key + '=' + options.options[key]);
+        delete options.options[key];
       }
     });
+
+    // Keep -- PhantomJS flags first, followed by grunt-specific args.
+    args.push(
+      // The main PhantomJS script file.
+      grunt.task.getFile('lib/phantomjs/bootstrap.js'),
+      // The temporary file used for communications.
+      tempfile.path,
+      // URL or path to the page .html test file to run.
+      pageUrl,
+      // Additional PhantomJS options.
+      JSON.stringify(options.options)
+    );
+
+    grunt.log.debug(JSON.stringify(args));
 
     // Actually spawn PhantomJS.
     return grunt.util.spawn({
       cmd: 'phantomjs',
-      args: [
-        // The main PhantomJS script file.
-        grunt.task.getFile('lib/phantomjs/bootstrap.js'),
-        // The temporary file used for communications.
-        tempfile.path,
-        // URL or path to the page .html test file to run.
-        pageUrl,
-        // Additional PhantomJS options.
-        JSON.stringify(options.options),
-      ].concat(args)
+      args: args
     }, function(err, result, code) {
       if (!err) { return; }
       // Something went horribly wrong.

@@ -31,5 +31,4 @@
 ## Development
 
 * [Contributing to grunt](contributing.md) - Development advice.
-
-<!-- * [Grunt plugins](plugins.md) - -->
+* [Grunt plugins](plugins.md) - Developing and sharing grunt plugins.

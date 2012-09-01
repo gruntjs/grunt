@@ -100,10 +100,6 @@ grunt.initConfig({
   test: {},
   // Configuration options for the "watch" task.
   watch: {},
-  // Global configuration options for JSHint.
-  jshint: {},
-  // Global configuration options for UglifyJS.
-  uglify: {}
 });
 ```
 

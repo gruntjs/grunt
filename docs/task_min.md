@@ -27,8 +27,6 @@ This example shows a brief overview of the [config](api_config.md) properties us
 ```javascript
 // Project configuration.
 grunt.initConfig({
-  // Project metadata, used by the (now deprecated) <banner> directive.
-  meta: {},
   // Lists of files to be minified with UglifyJS.
   min: {}
 });

@@ -60,7 +60,7 @@ For example, my `defaults.json` file looks like this, because I want to use a sl
 }
 ```
 
-_Note: until all the built-in prompts have been documented, you can find each prompt name by looking for the `prompt_for` helpers' argument in the [init templates' source .js files](../tasks/init)._
+_Note: until all the built-in prompts have been documented, you can find each prompt name in the [init templates' source .js files](../tasks/init)._
 
 ## Overriding template files
 You can override any init template file, even the init template itself.
@@ -157,28 +157,6 @@ exports.template = function(grunt, init, done) {
 
 ## Inside an init template
 _(Documentation coming soon)_
-
-<!--### The prompt helper
-EXPLAIN
-
-```javascript
-grunt.helper('prompt' [, defaults] [, options], done)
-```
-
-### The prompt_for helper
-EXPLAIN
-
-```javascript
-grunt.helper('prompt_for', name [, default])
-```
-
-### init.method
-EXPLAIN
-
-```javascript
-init.method()
-```
--->
 
 ## Built-in prompts
 _(Documentation coming soon)_

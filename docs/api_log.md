@@ -139,15 +139,13 @@ grunt.log.table(widths, texts)
 A common pattern is to only log when in `--verbose` mode OR if an error occurs, like so:
 
 ```javascript
-grunt.registerHelper('something', function(arg) {
-  var result;
+grunt.registerTask('something', 'Do something interesting.', function(arg) {
   var msg = 'Doing something...';
   grunt.verbose.write(msg);
   try {
-    result = doSomethingThatThrowsAnExceptionOnError(arg);
+    doSomethingThatThrowsAnExceptionOnError(arg);
     // Success!
     grunt.verbose.ok();
-    return result;
   } catch(e) {
     // Something went wrong.
     grunt.verbose.or.write(msg).error().error(e.message);

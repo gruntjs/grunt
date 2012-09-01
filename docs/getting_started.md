@@ -9,7 +9,7 @@ Each time grunt is run, it looks in the current directory for a file named `Grun
 
 * Project configuration
 * Loading grunt plugins or tasks folders
-* Tasks and helpers
+* Custom tasks
 
 This is an example of a very basic sample Gruntfile that does all three of these things.
 
@@ -83,7 +83,8 @@ _Also note that you don't need to specify configuration settings for tasks that 
 ```javascript
 // Project configuration.
 grunt.initConfig({
-  // Project metadata, used by some directives, helpers and tasks.
+  // Arbitrary project metadata. This could be data loaded from a .json file
+  // or specified inline.
   meta: {},
   // Lists of files to be concatenated, used by the "concat" task.
   concat: {},
@@ -108,19 +109,19 @@ grunt.initConfig({
 
 ## Loading grunt plugins or tasks folders
 
-While you can define [tasks and helpers](api.md) in your project's Gruntfile, you can also load tasks from external sources.
+While you can define [tasks](api.md) in your project's Gruntfile, you can also load tasks from external sources.
 
 ```javascript
-// Load tasks and helpers from the "tasks" directory, relative to Gruntfile.js.
+// Load tasks from the "tasks" directory, relative to Gruntfile.js.
 grunt.loadTasks('tasks');
 
-// Load tasks and helpers from the "grunt-sample" Npm-installed grunt plugin.
+// Load tasks from the "grunt-sample" Npm-installed grunt plugin.
 grunt.loadNpmTasks('grunt-sample');
 ```
 
-_Note: loading externally defined tasks and helpers in this way is preferred to loading them via the analogous `--tasks` and `--npm` command-line options. This is because when tasks are created or loaded in the Gruntfile, the tasks effectively become part of the project and will always be used (provided they are available) whenever `grunt` is run._
+_Note: loading externally defined tasks in this way is preferred to loading them via the analogous `--tasks` and `--npm` command-line options. This is because when tasks are created or loaded in the Gruntfile, the tasks effectively become part of the project and will always be used (provided they are available) whenever `grunt` is run._
 
-## Tasks and helpers
+## Custom tasks
 
 You aren't required to define tasks in your project Gruntfile, because grunt provides a number of built-in tasks. That being said, until you define a `default` task, grunt won't know what to do when you run it just as `grunt` without specifying any tasks, because grunt doesn't provide a default `default` task.
 

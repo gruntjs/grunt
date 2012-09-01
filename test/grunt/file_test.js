@@ -57,13 +57,6 @@ exports['file.match'] = {
     test.deepEqual(grunt.file.match([['*.js', '*.css'], ['*.*', '*.js']], ['foo.js', 'bar.css']), ['foo.js', 'bar.css'], 'should process nested pattern arrays correctly.');
     test.done();
   },
-  'no directives': function(test) {
-    test.expect(2);
-    grunt.registerHelper('omg', function() {});
-    test.deepEqual(grunt.file.match(['*.js', '<omg>'], 'foo.js'), ['foo.js'], 'should filter out directives.');
-    test.deepEqual(grunt.file.match(['<omg:a:b>', '*.js'], 'foo.js'), ['foo.js'], 'should filter out directives.');
-    test.done();
-  },
   'exclusion': function(test) {
     test.expect(5);
     test.deepEqual(grunt.file.match(['!*.js'], ['foo.js', 'bar.js']), [], 'solitary exclusion should match nothing');
@@ -181,16 +174,6 @@ exports['file.expand*'] = {
   'flatten': function(test) {
     test.expect(1);
     test.deepEqual(grunt.file.expand([['**/*.js'], ['**/*.css', 'js/*.js']]), ['js/bar.js', 'js/foo.js', 'css/baz.css', 'css/qux.css'], 'should match.');
-    test.done();
-  },
-  'directives': function(test) {
-    // test.expect(3);
-    grunt.registerHelper('omg', function() {});
-    test.deepEqual(grunt.file.expand('<omg>'), ['<omg>'], 'should retain valid directives.');
-    test.deepEqual(grunt.file.expand(['**/*.js', '<omg>']), ['js/bar.js', 'js/foo.js', '<omg>'], 'should retain valid directives.');
-    test.deepEqual(grunt.file.expand(['<omg>', '**/*.js', '<omg>']), ['<omg>', 'js/bar.js', 'js/foo.js', '<omg>'], 'should retain duplicate directives.');
-    test.deepEqual(grunt.file.expand(['<nonexistent>', '**/*.js', '<nonexistent>']), ['js/bar.js', 'js/foo.js'], 'should discard invalid directives.');
-    test.deepEqual(grunt.file.expand(['<omg:a:b>', '**/*.js']), ['<omg:a:b>', 'js/bar.js', 'js/foo.js'], 'should retain valid directives with arguments.');
     test.done();
   },
   'exclusion': function(test) {

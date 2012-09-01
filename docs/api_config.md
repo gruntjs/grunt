@@ -14,7 +14,7 @@ Note that any method marked with a ☃ (unicode snowman) is also available direc
 _Note that the method listed below is also available on the `grunt` object as [grunt.initConfig](api.md)._
 
 ### grunt.config.init ☃
-Initialize a configuration object for the current project. The specified `configObject` is used by tasks and helpers and can also be accessed using the `grunt.config` method. Nearly every project's [Gruntfile](getting_started.md) will call this method.
+Initialize a configuration object for the current project. The specified `configObject` is used by tasks and can be accessed using the `grunt.config` method. Nearly every project's [Gruntfile](getting_started.md) will call this method.
 
 ```javascript
 grunt.config.init(configObject)

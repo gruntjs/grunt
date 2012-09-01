@@ -27,10 +27,9 @@ exports['{%= short_name %}'] = {
     // setup here
     done();
   },
-  'helper': function(test) {
+  'task': function(test) {
     test.expect(1);
     // tests here
-    test.equal(grunt.helper('{%= short_name %}'), '{%= short_name %}!!!', 'should return the correct value.');
     test.done();
   }
 };

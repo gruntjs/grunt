@@ -10,7 +10,7 @@ Run [QUnit][qunit] unit tests in a headless [PhantomJS][phantom] instance.
 
 This task is a [multi task](types_of_tasks.md), meaning that grunt will automatically iterate over all `qunit` targets if a target is not specified.
 
-_Need some help getting started with grunt? Visit the [getting started](getting_started.md) page. And if you're creating your own tasks or helpers, be sure to check out the [types of tasks](types_of_tasks.md) page as well as the [API documentation](api.md)._
+_Need some help getting started with grunt? Visit the [getting started](getting_started.md) page. And if you're creating your own tasks, be sure to check out the [types of tasks](types_of_tasks.md) page as well as the [API documentation](api.md)._
 
 ### QUnit
 

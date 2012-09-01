@@ -7,7 +7,7 @@ Concatenate one or more input files into an output file.
 
 This task is a [multi task](types_of_tasks.md), meaning that grunt will automatically iterate over all `concat` targets if a target is not specified.
 
-_Need some help getting started with grunt? Visit the [getting started](getting_started.md) page. And if you're creating your own tasks or helpers, be sure to check out the [types of tasks](types_of_tasks.md) page as well as the [API documentation](api.md)._
+_Need some help getting started with grunt? Visit the [getting started](getting_started.md) page. And if you're creating your own tasks, be sure to check out the [types of tasks](types_of_tasks.md) page as well as the [API documentation](api.md)._
 
 ## A Very Important Note
 Your Gruntfile **must** contain this code, once and **only** once. If it doesn't, grunt won't work. For the sake of brevity, this "wrapper" code has been omitted from all examples on this page, but it needs to be there.
@@ -25,8 +25,6 @@ This example shows a brief overview of the [Gruntfile](getting_started.md) confi
 ```javascript
 // Project configuration.
 grunt.initConfig({
-  // Project metadata, used by the (now deprecated) <banner> directive.
-  meta: {},
   // Lists of files to be concatenated.
   concat: {}
 });
@@ -156,14 +154,6 @@ grunt.initConfig({
     }
   }
 });
-```
-
-## Helpers
-
-A generic `concat` helper is available for use in any other task where file and/or [directive](helpers_directives.md) concatenation might be useful. In this example, a `;` separator is specified, although it defaults to linefeed if omitted:
-
-```javascript
-var fooPlusBar = grunt.helper('concat', ['foo.txt', 'bar.txt'], {separator: ';'});
 ```
 
 See the [concat task source](../tasks/concat.js) for more information.

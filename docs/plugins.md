@@ -27,7 +27,7 @@ Other than that, it's not too much more than a specific directory structure, con
 
 1. Run `npm install -g grunt-yourplugin`. This installs the plugin globally, which contains its own internal grunt (the version specified in the plugin's package.json).
 2. A new `grunt-yourplugin` binary should be globally available.
-3. When run from that binary, the internal grunt runs, and provides grunt's internal tasks and helpers plus all the plugin's tasks and helpers.
+3. When run from that binary, the internal grunt runs, and provides grunt's internal tasks plus all the plugin's tasks.
 
 Notes:
 
@@ -38,7 +38,7 @@ Notes:
 1. Grunt should already have been installed globally with `npm install -g grunt`.
 2. In your project's root, next to the Gruntfile, run `npm install grunt-yourplugin`.
 3. Add [grunt.loadNpmTasks('grunt-yourplugin')](api.md) into the project's Gruntfile.
-2. Run `grunt` and all of the `grunt-yourplugin` tasks and helpers should be available in addition to those already provided by grunt..
+2. Run `grunt` and all of the `grunt-yourplugin` tasks should be available in addition to those already provided by grunt..
 
 Notes:
 

@@ -9,7 +9,7 @@ Minify files with [UglifyJS][uglify].
 
 This task is a [multi task](types_of_tasks.md), meaning that grunt will automatically iterate over all `min` targets if a target is not specified.
 
-_Need some help getting started with grunt? Visit the [getting started](getting_started.md) page. And if you're creating your own tasks or helpers, be sure to check out the [types of tasks](types_of_tasks.md) page as well as the [API documentation](api.md)._
+_Need some help getting started with grunt? Visit the [getting started](getting_started.md) page. And if you're creating your own tasks, be sure to check out the [types of tasks](types_of_tasks.md) page as well as the [API documentation](api.md)._
 
 ## A Very Important Note
 Your Gruntfile **must** contain this code, once and **only** once. If it doesn't, grunt won't work. For the sake of brevity, this "wrapper" code has been omitted from all examples on this page, but it needs to be there.
@@ -161,32 +161,6 @@ grunt.initConfig({
     codegen: {quote_keys: true}
   }
 });
-```
-
-## Helpers
-
-A generic `uglify` helper is available for use in any other task where file minification might be useful. For example:
-
-```javascript
-var src = grunt.file.read('example.js');
-var minSrc = grunt.helper('uglify', {mangle: {except: ['zomg']}});
-```
-
-A generic `gzip` helper is available for use in any other task where gzipped text might be useful. For example:
-
-```javascript
-var src = grunt.file.read('example.js');
-var gzipSrc = grunt.helper('gzip', src);
-grunt.log.writeln('Original size: ' + src.length + ' bytes.');
-grunt.log.writeln('Gzipped size: ' + gzipSrc.length + ' bytes.');
-```
-
-To this end, a specialized `min_max_info` helper is available for use in any other task where before-compression & after-compression sizes need to be logged. For example:
-
-```javascript
-var src = grunt.file.read('example.js');
-var minSrc = grunt.helper('uglify', {mangle: {except: ['zomg']}});
-grunt.helper('min_max_info', minSrc, src);
 ```
 
 See the [min task source](../tasks/min.js) for more information.

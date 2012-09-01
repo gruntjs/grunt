@@ -8,7 +8,7 @@ See the [fail lib source](../lib/grunt/fail.js) for more information.
 
 ## The fail API
 
-If something explodes (or is about to explode) inside a helper or task, it can force grunt to abort. See the [exit codes documentation](exit_codes.md) for a list of all built-in grunt exit codes.
+If something explodes (or is about to explode) inside a task, it can force grunt to abort. See the [exit codes documentation](exit_codes.md) for a list of all built-in grunt exit codes.
 
 Note that any method marked with a ☃ (unicode snowman) is also available directly on the `grunt` object. Just so you know. See the [API main page](api.md) for more usage information.
 

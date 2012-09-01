@@ -269,7 +269,7 @@ module.exports = function(grunt) {
     }].concat(args));
   });
 
-  // Built-in prompt options for the prompt_for helper.
+  // Built-in prompt options.
   // These generally follow the node "prompt" module convention, except:
   // * The "default" value can be a function which is executed at run-time.
   // * An optional "sanitize" function has been added to post-process data.

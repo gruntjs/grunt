@@ -36,14 +36,8 @@ And if you're creating a [grunt plugin](plugins.md) or just organizing tasks int
 module.exports = function(grunt) {
 
   // Create a new task.
-  grunt.registerTask('awesome', 'Print out "awesome!!!"', function() {
-    var awesome = grunt.helper('awesome');
-    grunt.log.write(awesome);
-  });
-
-  // Register a helper.
-  grunt.registerHelper('awesome', function() {
-    return 'awesome!!!';
+  grunt.registerTask('awesome', 'Print out some awesome stuff.', function() {
+    grunt.log.write('The ' + this.name + ' task is awesome...').ok();
   });
 
 };
@@ -65,7 +59,7 @@ module.exports = function(grunt) {
 * [grunt.event](api_event.md) - Event emitting via the [EventEmitter2](https://github.com/hij1nx/EventEmitter2) library.
 * [grunt.util](api_util.md) - Miscellaneous utilities, including Underscore.js, Async and Hooker.
 * [grunt.template](api_template.md) - Underscore.js template processing and other template-related methods.
-* [grunt.task](api_task.md) - Register and run tasks and helpers, load external tasks.
+* [grunt.task](api_task.md) - Register, run and load external tasks.
 * [grunt.file](api_file.md) - Wildcard expansion, file reading, writing, directory traversing.
 * [grunt.config](api_config.md) - Access project-specific configuration data defined in the [Gruntfile](getting_started.md).
 * [grunt.log](api_log.md), [grunt.verbose](api_log.md) - Output messages to the console.
@@ -76,7 +70,7 @@ _Note that the method listed below is also available on the [grunt.config](api_c
 
 
 ### grunt.initConfig
-Initialize a configuration object for the current project. The specified `configObject` is used by tasks and helpers and can also be accessed using the [grunt.config](api_config.md) method. Nearly every project's [Gruntfile](getting_started.md) will call this method.
+Initialize a configuration object for the current project. The specified `configObject` is used by tasks and can be accessed using the [grunt.config](api_config.md) method. Nearly every project's [Gruntfile](getting_started.md) will call this method.
 
 Note that any specified `<% %>` [template strings](api_template.md) will only be processed when config data is retrieved via a [grunt.config](api_config.md) method.
 
@@ -305,7 +299,7 @@ grunt.initConfig({
 
 
 ## Loading Externally-Defined Tasks
-For most projects, tasks and helpers will be defined in the [Gruntfile](getting_started.md). For larger projects, or in cases where tasks and helpers need to be shared across projects, tasks can be loaded from one or more external directories or Npm-installed grunt plugins.
+For most projects, tasks will be defined in the [Gruntfile](getting_started.md). For larger projects, or in cases where tasks need to be shared across projects, tasks can be loaded from one or more external directories or Npm-installed grunt plugins.
 
 _Note that the methods listed below are also available on the [grunt.task](api_task.md) object in addition to the `grunt` object._
 
@@ -320,7 +314,7 @@ _This method is an alias for the [grunt.task.loadTasks](api_task.md) method._
 
 
 ### grunt.loadNpmTasks
-Load tasks and helpers from the specified grunt plugin. This plugin must be installed locally via npm, and must be relative to the [Gruntfile](getting_started.md). Grunt plugins can be created by using the [gruntplugin init template](task_init.md).
+Load tasks from the specified grunt plugin. This plugin must be installed locally via npm, and must be relative to the [Gruntfile](getting_started.md). Grunt plugins can be created by using the [gruntplugin init template](task_init.md).
 
 ```javascript
 grunt.loadNpmTasks(pluginName)
@@ -329,68 +323,8 @@ grunt.loadNpmTasks(pluginName)
 _This method is an alias for the [grunt.task.loadNpmTasks](api_task.md) method._
 
 
-## Defining and Executing Helpers
-Helpers are utility functions that can be used by any task.
-
-For example, in the [min task](../tasks/min.js), the majority of the actual minification work is done in an `uglify` helper, so that other tasks can utilize that minification code if they want to.
-
-See the list of [built-in helpers](helpers_directives.md) for examples.
-
-_Note that the methods listed below are also available on the [grunt.task](api_task.md) object in addition to the `grunt` object._
-
-### grunt.registerHelper
-Register a helper function that can be used by any task. When called as a directive, `this.directive` will be true inside of the helper.
-
-```javascript
-grunt.registerHelper(helperName, helperFunction)
-```
-
-In this example helper, the numbers `1` and `2` are passed in and the value `3` is returned.
-
-```javascript
-grunt.registerHelper('add_two_nums', function(a, b) {
-  return a + b;
-});
-```
-
-_This method is an alias for the [grunt.task.registerHelper](api_task.md) method._
-
-### grunt.renameHelper
-Rename a helper. This might be useful if you want to override the default behavior of a helper, while retaining the old name (to avoid having to completely recreate an already-made task just because you needed to override or extend a built-in helper).
-
-```javascript
-grunt.renameHelper(oldname, newname)
-```
-
-_This method is an alias for the [grunt.task.renameHelper](api_task.md) method._
-
-### grunt.unregisterHelpers
-Unregister one or more helpers. This will make the specified helpers no longer available for use. The helper list can be an array of helper names or individual helper name arguments.
-
-```javascript
-grunt.unregisterHelpers(helperList)
-```
-
-_This method is an alias for the [grunt.task.unregisterHelpers](api_task.md) method._
-
-### grunt.helper
-Invoke a registered helper function.
-
-```javascript
-grunt.helper(helperName [, arguments...])
-```
-
-In this example, the previously defined `add_two_nums` helper is invoked.
-
-```javascript
-grunt.helper('add_two_nums', 1, 2) // 3
-```
-
-_This method is an alias for the [grunt.task.helper](api_task.md) method._
-
-
 ## Warnings and Fatal Errors
-If something explodes (or is about to explode) inside a helper or task, it can force grunt to abort. See the [exit codes documentation](exit_codes.md) for a list of all built-in grunt exit codes.
+If something explodes (or is about to explode) inside a task, it can force grunt to abort. See the [exit codes documentation](exit_codes.md) for a list of all built-in grunt exit codes.
 
 ### grunt.warn
 Display a warning and abort grunt immediately. Grunt will continue processing tasks if the `--force` command-line option was specified. The `error` argument can be a string message or an error object.

@@ -2,7 +2,7 @@
 
 # [The grunt API](api.md) / grunt.task
 
-Register and run tasks and helpers, load external tasks.
+Register, run and load external tasks.
 
 See the [task lib source](../lib/grunt/task.js) and [task util lib source](../lib/util/task.js) for more information.
 
@@ -214,7 +214,7 @@ grunt.initConfig({
 
 
 ## Loading Externally-Defined Tasks
-For most projects, tasks and helpers will be defined in the [Gruntfile](getting_started.md). For larger projects, or in cases where tasks and helpers need to be shared across projects, tasks can be loaded from one or more external directories or Npm-installed grunt plugins.
+For most projects, tasks will be defined in the [Gruntfile](getting_started.md). For larger projects, or in cases where tasks need to be shared across projects, tasks can be loaded from one or more external directories or Npm-installed grunt plugins.
 
 ### grunt.task.loadTasks ☃
 Load task-related files from the specified directory, relative to the [Gruntfile](getting_started.md). This method can be used to load task-related files from a local grunt plugin by specifying the path to that plugin's "tasks" subdirectory.
@@ -227,109 +227,13 @@ _This method is also available as [grunt.loadTasks](api.md)._
 
 
 ### grunt.task.loadNpmTasks ☃
-Load tasks and helpers from the specified grunt plugin. This plugin must be installed locally via npm, and must be relative to the [Gruntfile](getting_started.md). Grunt plugins can be created by using the [gruntplugin init template](task_init.md).
+Load tasks from the specified grunt plugin. This plugin must be installed locally via npm, and must be relative to the [Gruntfile](getting_started.md). Grunt plugins can be created by using the [gruntplugin init template](task_init.md).
 
 ```javascript
 grunt.task.loadNpmTasks(pluginName)
 ```
 
 _This method is also available as [grunt.loadNpmTasks](api.md)._
-
-
-## Helpers
-Helpers are utility functions that can be used by any task.
-
-For example, in the [min task](../tasks/min.js), the majority of the actual minification work is done in an `uglify` helper, so that other tasks can utilize that minification code if they want to.
-
-See the list of [built-in helpers](helpers_directives.md) for examples.
-
-### grunt.task.registerHelper ☃
-Register a helper function that can be used by any task. When called as a directive, `this.directive` will be true inside of the helper.
-
-```javascript
-grunt.task.registerHelper(helperName, helperFunction)
-```
-
-In this example helper, the numbers `1` and `2` are passed in and the value `3` is returned.
-
-```javascript
-grunt.task.registerHelper("add_two_nums", function(a, b) {
-  return a + b;
-});
-```
-
-_This method is also available as [grunt.registerHelper](api.md)._
-
-### grunt.task.renameHelper ☃
-Rename a helper. This might be useful if you want to override the default behavior of a helper, while retaining the old name (to avoid having to completely recreate an already-made task just because you needed to override or extend a built-in helper).
-
-```javascript
-grunt.task.renameHelper(oldname, newname)
-```
-
-_This method is also available as [grunt.renameHelper](api.md)._
-
-### grunt.task.unregisterHelpers ☃
-Unregister one or more helpers. This will make the specified helpers no longer available for use. The helper list can be an array of helper names or individual helper name arguments.
-
-```javascript
-grunt.task.unregisterHelpers(helperList)
-```
-
-_This method is also available as [grunt.unregisterHelpers](api.md)._
-
-### grunt.task.helper ☃
-Invoke a registered helper function.
-
-```javascript
-grunt.task.helper(helperName [, arguments...])
-```
-
-In this example, the previously defined `add_two_nums` helper is invoked.
-
-```javascript
-grunt.task.helper("add_two_nums", 1, 2) // 3
-```
-
-_This method is also available as [grunt.helper](api.md)._
-
-## Directives
-Directives are essentially string placeholders for helper functions, specified as values in the [config object](getting_started.md).
-
-See the list of [built-in directives](helpers_directives.md) for examples.
-
-### grunt.task.directive
-Manually execute a helper based on the passed string directive, returning its value. Note that this only works for synchronous helpers. When called as a directive, `this.directive` will be true inside of the helper.
-
-```javascript
-grunt.task.directive(directive)
-```
-
-In this example, note that the arguments passed into the helper must be coerced into numbers because all directive arguments are passed into the helper as strings.
-
-```javascript
-grunt.task.registerHelper('add_two_numbers', function(a, b) {
-  return Number(a) + Number(b);
-});
-
-grunt.task.directive('<add_two_numbers:1:2>') // 3
-```
-
-### grunt.task.getDirectiveParts
-Split a valid directive into its components. Returns `null` if the string can't be parsed as a directive or if the directive doesn't match an existing helper.
-
-```javascript
-grunt.task.getDirectiveParts(directive)
-```
-
-In this example, the directive can't be parsed initially because the appropriate helper hasn't been defined. Once the helper has been defined, the directive can be parsed.
-
-```javascript
-grunt.task.getDirectiveParts('<foo:bar:baz>') // null
-
-grunt.task.registerHelper('foo', function() {});
-grunt.task.getDirectiveParts('<foo:bar:baz>') // ['foo', 'bar', 'baz']
-```
 
 
 ## Queueing Tasks
@@ -359,7 +263,7 @@ For a given tasks file or related task "extra" file, these paths will be searche
 
 1. The grunt user tasks directory, ie. `grunt.file.userDir('tasks')`.
 2. Npm-installed [grunt plugins](plugins.md) or tasks directories specified on the command-line via the `--tasks` option.
-3. Npm-installed grunt plugins, tasks directories or individual tasks and helpers specified in the [Gruntfile](getting_started.md).
+3. Npm-installed grunt plugins, tasks directories or individual tasks specified in the [Gruntfile](getting_started.md).
 4. Task directories built-in to a Npm-installed grunt plugin run via its `grunt-` named binary.
 5. The [built-in grunt tasks directory](../tasks).
 

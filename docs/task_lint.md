@@ -9,7 +9,7 @@ Validate files with [JSHint][jshint].
 
 This task is a [multi task](types_of_tasks.md), meaning that grunt will automatically iterate over all `lint` targets if a target is not specified.
 
-_Need some help getting started with grunt? Visit the [getting started](getting_started.md) page. And if you're creating your own tasks or helpers, be sure to check out the [types of tasks](types_of_tasks.md) page as well as the [API documentation](api.md)._
+_Need some help getting started with grunt? Visit the [getting started](getting_started.md) page. And if you're creating your own tasks, be sure to check out the [types of tasks](types_of_tasks.md) page as well as the [API documentation](api.md)._
 
 ## A Very Important Note
 Your Gruntfile **must** contain this code, once and **only** once. If it doesn't, grunt won't work. For the sake of brevity, this "wrapper" code has been omitted from all examples on this page, but it needs to be there.
@@ -233,16 +233,6 @@ The `.jshintrc` file must be valid JSON and would look something like this:
   "trailing": true,
   "undef": true
 }
-```
-
-## Helpers
-
-A generic `lint` helper is available for use in any other task where file linting might be useful. For example:
-
-```javascript
-var filename = 'example.js';
-var src = grunt.file.read(filename);
-grunt.helper('lint', src, {browser: true}, {jQuery: true}, filename);
 ```
 
 See the [lint task source](../tasks/lint.js) for more information.

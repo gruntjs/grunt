@@ -28,10 +28,6 @@
 [qunit]: http://docs.jquery.com/QUnit
 [phantom]: http://www.phantomjs.org/
 
-## Other built-ins
-
-* [Helpers and Directives](helpers_directives.md) - Ones not specifically covered in other task documentation.
-
 ## Development
 
 * [Contributing to grunt](contributing.md) - Development advice.

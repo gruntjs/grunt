@@ -296,8 +296,6 @@ _This method is also available as [grunt.helper](api.md)._
 ## Directives
 Directives are essentially string placeholders for helper functions, specified as values in the [config object](getting_started.md).
 
-A good example of directives would be the `<config:lint.all>` directive in grunt's own [Gruntfile](../Gruntfile.js).
-
 See the list of [built-in directives](helpers_directives.md) for examples.
 
 ### grunt.task.directive

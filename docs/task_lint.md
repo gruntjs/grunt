@@ -87,7 +87,7 @@ _Note: in the above example, a default [alias task](types_of_tasks.md) was creat
 
 ### Dynamic filenames
 
-Building on the previous example, if you want to avoid duplication, you can use a [directive](helpers_directives.md) like `'<config:concat.dist.dest>'` in place of `'dist/output.js'` in the `afterconcat` lint target. This allows you to generate the output filename dynamically. In this example, the `concat:dist` destination filename is generated from the `name` and `version` properties of the referenced `package.json` file through the `pkg` config property.
+Building on the previous example, if you want to avoid duplication, you can use `<% %>` [template strings](api_template.md) in the config data. This allows you to determine strings like filenames dynamically. In this example, the `concat:dist` destination filename is generated from the `name` and `version` properties of the referenced `package.json` file through the `pkg` config property.
 
 ```javascript
 // Project configuration.
@@ -101,7 +101,7 @@ grunt.initConfig({
   },
   lint: {
     beforeconcat: ['src/foo.js', 'src/bar.js'],
-    afterconcat: ['<config:concat.dist.dest>']
+    afterconcat: ['<%= concat.dist.dest %>']
   }
 });
 ```

@@ -49,7 +49,7 @@ grunt.initConfig({
     all: ['test/**/*.html']
   },
   watch: {
-    files: ['<config:lint.files>', '<config:lint.qunit>']
+    files: ['<%= lint.files %>', '<%= lint.qunit %>']
     tasks: ['lint', 'qunit']
   }
 });
@@ -74,7 +74,7 @@ grunt.initConfig({
   },
   watch: {
     lint: {
-      files: '<config:lint.files>',
+      files: '<%= lint.files %>',
       tasks: ['lint']
     },
     qunit: {

@@ -1,7 +1,7 @@
 [Grunt homepage](http://gruntjs.com/) | [Documentation table of contents](toc.md)
 
 # concat (built-in task)
-Concatenate one or more input files (and/or [directives](helpers_directives.md) output, like `<config_process>`) into an output file.
+Concatenate one or more input files into an output file.
 
 ## About
 

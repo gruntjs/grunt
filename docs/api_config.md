@@ -20,7 +20,7 @@ Initialize a configuration object for the current project. The specified `config
 grunt.config.init(configObject)
 ```
 
-Note that any specified `<config>` [directives](api_task.md) will be automatically processed when the config object is initialized.
+Note that any specified `<% %>` [template strings](api_template.md) will only be processed when config data is retrieved.
 
 This example contains sample config data for the [lint task](task_lint.md):
 
@@ -56,7 +56,35 @@ Get a value from the project's grunt configuration. If `prop` is specified, that
 grunt.config.get([prop])
 ```
 
-Any `<% %>` templates in returned values will not be automatically processed, but can be processed afterwards using the [grunt.template.process](api_template.md) method. If you want to do both at once, the `grunt.config.process` method can be used.
+#### Recursive template processing
+Note that any `<% %>` [template strings](api_template.md) will be recursively processed via the [grunt.template.process](api_template.md) method. Raw values can be accessed via the `grunt.config.getRaw` method.
+
+If any retrieved value is entirely a single `'<%= foo %>'` or `'<%= foo.bar %>'` template string, and the specified `foo` or `foo.bar` property is a non-string (and not `null` or `undefined`) value, it will be expanded to the _actual_ value. That, combined with the fact that the [grunt.file.expand](api_file.md) method will automatically flatten arrays, can be extremely useful.
+
+For example:
+
+```javascript
+grunt.initConfig({
+  basename: 'foo',
+  extension: 'txt',
+  file: '<%= basename %>.<%= extension %>',
+  files: ['<%= file %>', 'bar.txt'],
+  files2: ['<%= files %>', 'baz.txt']
+});
+
+grunt.config.get('file')   // 'foo.txt'
+grunt.config.get('files')  // ['foo.txt', 'bar.txt']
+grunt.config.get('files2') // [['foo.txt', 'bar.txt'], 'baz.txt']
+```
+
+### grunt.config.getRaw
+Get a value from the project's grunt configuration. If `prop` is specified, that property's value is returned, or `null` if that property is not defined. If `prop` isn't specified, a copy of the entire config object is returned.
+
+```javascript
+grunt.config.getRaw([prop])
+```
+
+Note that any specified `<% %>` [template strings](api_template.md) will NOT be processed when config data is retrieved via this method.
 
 ### grunt.config.set
 Set a value into the project's grunt configuration.
@@ -65,7 +93,7 @@ Set a value into the project's grunt configuration.
 grunt.config.set(prop, value)
 ```
 
-Note that any specified `<config>` [directives](api_task.md) will be automatically processed when the config data is set.
+Note that any specified `<% %>` [template strings](api_template.md) will only be processed when config data is retrieved.
 
 ### grunt.config.escape
 Escape `.` dots in the given `propString`. This should be used for property names that contain dots.
@@ -74,18 +102,11 @@ Escape `.` dots in the given `propString`. This should be used for property name
 grunt.config.escape(propString)
 ```
 
-### grunt.config.process
-Behaves like `grunt.config.get`, but additionally recursively processes all `<% %>` templates in the returned data.
-
-```javascript
-grunt.config.process([prop])
-```
-
 ## Requiring Config Data
 _Note that the method listed below is also available inside tasks on the `this` object as [this.requiresConfig](api.md)._
 
 ### grunt.config.requires ☆
-Fail the current task if one or more required config properties is missing. One or more string or array config properties may be specified.
+Fail the current task if one or more required config properties is missing, `null` or `undefined`. One or more string or array config properties may be specified.
 
 ```javascript
 grunt.config.requires(prop [, prop [, ...]])

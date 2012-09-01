@@ -72,11 +72,11 @@ module.exports = function(grunt) {
     },{% } %}
     watch: {
       gruntfile: {
-        files: '<config:lint.gruntfile.src>',
+        files: '<%= lint.gruntfile.src %>',
         tasks: ['lint:gruntfile']
       },
       lib_test: {
-        files: '<config:lint.lib_test.src>',
+        files: '<%= lint.lib_test.src %>',
         tasks: ['lint:lib_test', '{%= test_task %}']
       }
     }

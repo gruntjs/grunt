@@ -151,12 +151,12 @@ module.exports = function(grunt) {
 
   grunt.registerMultiTask('test', 'Run unit tests with nodeunit.', function() {
     // File paths.
-    var filepaths = grunt.file.expandFiles(this.file.src);
+    var files = grunt.file.expandFiles(grunt.util._.pluck(this.files, 'src'));
     // Clear all tests' cached require data, in case this task is run inside a
     // "watch" task loop.
-    grunt.file.clearRequireCache(filepaths);
+    grunt.file.clearRequireCache(files);
     // Run test(s)... asynchronously!
-    nodeunit.reporters.grunt.run(filepaths, {}, this.async());
+    nodeunit.reporters.grunt.run(files, {}, this.async());
   });
 
 };

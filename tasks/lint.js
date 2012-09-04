@@ -43,7 +43,7 @@ module.exports = function(grunt) {
     grunt.verbose.writeflags(options.globals, 'JSHint globals');
 
     // Lint specified files.
-    var files = grunt.file.expandFiles(this.file.src);
+    var files = grunt.file.expandFiles(grunt.util._.pluck(this.files, 'src'));
     files.forEach(function(filepath) {
       lint(grunt.file.read(filepath), options.options, options.globals, filepath);
     });

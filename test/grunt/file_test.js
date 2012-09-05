@@ -286,6 +286,41 @@ exports['file'] = {
 
     test.done();
   },
+  'delete': function(test) {
+    test.expect(2);
+    var oldBase = process.cwd();
+    var cwd = path.resolve(tmpdir.path, 'delete', 'folder');
+    grunt.file.mkdir(cwd);
+    grunt.file.setBase(tmpdir.path);
+
+    grunt.file.write(path.join(cwd, 'test.js'), 'var test;');
+    test.ok(grunt.file.delete(cwd), 'should return true after deleting file.');
+    test.equal(grunt.file.exists(cwd), false, 'file should have been deleted.');
+    grunt.file.setBase(oldBase);
+    test.done();
+  },
+  'delete outside working directory': function(test) {
+    test.expect(3);
+    var oldBase = process.cwd();
+    var oldWarn = grunt.fail.warn;
+    grunt.fail.warn = function() {};
+
+    var cwd = path.resolve(tmpdir.path, 'delete', 'folder');
+    var outsidecwd = path.resolve(tmpdir.path, 'delete', 'outsidecwd');
+    grunt.file.mkdir(cwd);
+    grunt.file.mkdir(outsidecwd);
+    grunt.file.setBase(cwd);
+
+    grunt.file.write(path.join(outsidecwd, 'test.js'), 'var test;');
+    test.equal(grunt.file.delete(path.join(outsidecwd, 'test.js')), false, 'should not delete anything outside the cwd.');
+
+    test.ok(grunt.file.delete(path.join(outsidecwd), {force:true}), 'should delete outside cwd using the --force.');
+    test.equal(grunt.file.exists(outsidecwd), false, 'file outside cwd should have been deleted using the --force.');
+
+    grunt.file.setBase(oldBase);
+    grunt.fail.warn = oldWarn;
+    test.done();
+  },
   'exists': function(test) {
     test.expect(6);
     test.ok(grunt.file.exists('test/fixtures/octocat.png'), 'files exist.');

@@ -22,8 +22,8 @@ module.exports = function(grunt) {
         'lib/**/*.js',
         'tasks/*.js',
         'tasks/*/*.js',
-        'test/**/*.js',
-        '!test/fixtures/**/*.js'
+        'tasks/lib/**/*.js',
+        '<%= nodeunit.all %>'
       ],
       options: {
         options: {

@@ -29,7 +29,7 @@ module.exports = function(grunt) {
         dest: 'dist/{%= file_name %}.js'
       }
     },
-    min: {
+    uglify: {
       options: {
         banner: '<%= banner %>'
       },
@@ -38,7 +38,7 @@ module.exports = function(grunt) {
         dest: 'dist/{%= file_name %}.min.js'
       }
     },{% } %}
-    lint: {
+    jshint: {
       options: {
         options: {
           curly: true,
@@ -64,25 +64,25 @@ module.exports = function(grunt) {
         src: ['{%= lib_dir %}/**/*.js', '{%= test_dir %}/**/*.js']
       }
     },{% if (dom) { %}
-    qunit: {
+    {%= test_task %}: {
       files: ['{%= test_dir %}/**/*.html']
     },{% } else { %}
-    test: {
+    {%= test_task %}: {
       files: ['{%= test_dir %}/**/*.js']
     },{% } %}
     watch: {
       gruntfile: {
-        files: '<%= lint.gruntfile.src %>',
-        tasks: ['lint:gruntfile']
+        files: '<%= jshint.gruntfile.src %>',
+        tasks: ['jshint:gruntfile']
       },
       lib_test: {
-        files: '<%= lint.lib_test.src %>',
-        tasks: ['lint:lib_test', '{%= test_task %}']
+        files: '<%= jshint.lib_test.src %>',
+        tasks: ['jshint:lib_test', '{%= test_task %}']
       }
     }
   });
 
   // Default task.
-  grunt.registerTask('default', ['lint', '{%= test_task %}'{%= min_concat ? ", 'concat', 'min'" : "" %}]);
+  grunt.registerTask('default', ['jshint', '{%= test_task %}'{%= min_concat ? ", 'concat', 'uglify'" : "" %}]);
 
 };

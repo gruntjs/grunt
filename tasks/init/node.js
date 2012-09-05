@@ -36,7 +36,7 @@ exports.template = function(grunt, init, done) {
     init.prompt('author_url'),
     init.prompt('node_version'),
     init.prompt('main'),
-    init.prompt('npm_test')
+    init.prompt('npm_test', 'grunt nodeunit')
   ], function(err, props) {
     props.keywords = [];
 

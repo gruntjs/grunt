@@ -22,7 +22,7 @@ module.exports = function(grunt) {
         dest: 'dist/<%= pkg.name %>.js'
       },
     },
-    min: {
+    uglify: {
       options: {
         banner: '<%= banner %>'
       },
@@ -31,10 +31,10 @@ module.exports = function(grunt) {
         dest: 'dist/<%= pkg.name %>.min.js'
       },
     },
-    test: {
+    nodeunit: {
       files: ['test/**/*.js']
     },
-    lint: {
+    jshint: {
       options: {
         jshintrc: '.jshintrc'
       },
@@ -53,21 +53,21 @@ module.exports = function(grunt) {
     },
     watch: {
       gruntfile: {
-        files: '<%= lint.gruntfile.src %>',
-        tasks: ['lint:gruntfile']
+        files: '<%= jshint.gruntfile.src %>',
+        tasks: ['jshint:gruntfile']
       },
       lib: {
-        files: '<%= lint.lib.src %>',
-        tasks: ['lint:lib', 'test']
+        files: '<%= jshint.lib.src %>',
+        tasks: ['jshint:lib', 'nodeunit']
       },
       test: {
-        files: '<%= lint.test.src %>',
-        tasks: ['lint:test', 'test']
+        files: '<%= jshint.test.src %>',
+        tasks: ['jshint:test', 'nodeunit']
       },
     },
   });
 
   // Default task.
-  grunt.registerTask('default', ['lint', 'test', 'concat', 'min']);
+  grunt.registerTask('default', ['jshint', 'nodeunit', 'concat', 'uglify']);
 
 };

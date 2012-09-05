@@ -453,7 +453,7 @@ module.exports = function(grunt) {
     },
     npm_test: {
       message: 'Npm test command',
-      default: 'grunt test',
+      default: 'grunt',
       warning: 'Must be an executable command.'
     },
     grunt_version: {

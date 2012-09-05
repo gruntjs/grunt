@@ -48,7 +48,7 @@ exports.template = function(grunt, init, done) {
     props.dom = /y/i.test(props.dom);
     props.min_concat = /y/i.test(props.min_concat);
     props.package_json = /y/i.test(props.package_json);
-    props.test_task = props.dom ? 'qunit' : 'test';
+    props.test_task = props.dom ? 'qunit' : 'nodeunit';
     props.file_name = props.package_json ? '<%= pkg.name %>' : 'FILE_NAME';
 
     // Find the first `preferred` item existing in `arr`.

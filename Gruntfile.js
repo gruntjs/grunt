@@ -13,10 +13,10 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
-    test: {
+    nodeunit: {
       all: ['test/{grunt,tasks,util}/**/*.js']
     },
-    lint: {
+    jshint: {
       all: [
         'Gruntfile.js',
         'lib/**/*.js',
@@ -44,15 +44,15 @@ module.exports = function(grunt) {
     },
     watch: {
       scripts: {
-        files: '<%= lint.all %>',
-        tasks: ['lint', 'test']
+        files: ['<%= jshint.all %>'],
+        tasks: ['jshint', 'nodeunit']
       }
     }
   });
 
   // Default task.
-  grunt.registerTask('default', ['lint', 'test']);
+  grunt.registerTask('default', ['jshint', 'nodeunit']);
 
   // Unregister unused tasks.
-  grunt.unregisterTasks('concat', 'min', 'init', 'server', 'qunit');
+  grunt.unregisterTasks('concat', 'uglify', 'init', 'server', 'qunit');
 };

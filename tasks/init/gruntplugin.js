@@ -43,7 +43,7 @@ exports.template = function(grunt, init, done) {
     // Set a few grunt-plugin-specific properties.
     props.short_name = props.name.replace(/^grunt[\-_]?/, '');
     props.main = 'Gruntfile.js';
-    props.npm_test = 'grunt test';
+    props.npm_test = 'grunt nodeunit';
     props.bin = 'bin/' + props.name;
     props.keywords = ['gruntplugin'];
 

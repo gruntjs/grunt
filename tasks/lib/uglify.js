@@ -18,7 +18,7 @@ exports.init = function(grunt) {
 
   // Minify with UglifyJS.
   // From https://github.com/mishoo/UglifyJS
-  exports.uglify = function(src, options) {
+  exports.minify = function(src, options) {
     if (!options) { options = {}; }
     var jsp = uglifyjs.parser;
     var pro = uglifyjs.uglify;

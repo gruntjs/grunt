@@ -78,7 +78,7 @@ Note that any specified `<% %>` [template strings](api_template.md) will only be
 grunt.initConfig(configObject)
 ```
 
-This example contains sample config data for the [lint task](task_lint.md):
+This example contains sample config data for the [jshint task](task_jshint.md):
 
 ```javascript
 grunt.initConfig({
@@ -154,7 +154,7 @@ _This method is an alias for the [grunt.task.registerTask](api_task.md) method._
 ### grunt.registerMultiTask
 Register a "multi task." A multi task is a task that implicitly iterates over all of its named sub-properties (AKA targets) if no target was specified. In addition to the default properties and methods, extra multi task-specific properties are available inside the task function as properties of the `this` object.
 
-Many of the built-in tasks, including the [lint task](task_lint.md), [concat task](task_concat.md) and [min task](task_min.md) are multi tasks.
+Many of the built-in tasks, including the [jshint task](task_jshint.md), [concat task](task_concat.md) and [uglify task](task_uglify.md) are multi tasks.
 
 ```javascript
 grunt.registerMultiTask(taskName, description, taskFunction)

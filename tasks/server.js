@@ -22,10 +22,17 @@ module.exports = function(grunt) {
   // ==========================================================================
 
   grunt.registerTask('server', 'Start a static web server.', function() {
-    // Get values from config, or use defaults.
-    var port = grunt.config('server.port') || 8000;
-    var base = path.resolve(grunt.config('server.base') || '.');
+    // Merge task-specific options with these defaults.
+    var options = this.options({
+      port: 8000,
+      base: '.',
+      keepalive: false
+    });
 
+    // Connect requires the base path to be absolute.
+    var base = path.resolve(options.base);
+
+    // Sweet, sweet middleware.
     var middleware = [
       // Serve static files.
       connect.static(base),
@@ -41,8 +48,18 @@ module.exports = function(grunt) {
     }
 
     // Start server.
-    grunt.log.writeln('Starting static web server on port ' + port + '.');
-    connect.apply(null, middleware).listen(port);
+    grunt.log.writeln('Starting static web server on port ' + options.port + '.');
+    connect.apply(null, middleware).listen(options.port);
+
+    // So many people expect this task to keep alive that I'm adding an option
+    // for it. Running the task explicitly as grunt:keepalive will override any
+    // value stored in the config. Have fun, people.
+    if (this.flags.keepalive || options.keepalive) {
+      // This is now an async task. Since we don't store a handle to the "done"
+      // function, this task will never, ever, ever terminate. Have fun!
+      this.async();
+      grunt.log.write('Waiting forever...');
+    }
   });
 
 };

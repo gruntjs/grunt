@@ -40,19 +40,17 @@ module.exports = function(grunt) {
     },{% } %}
     jshint: {
       options: {
-        options: {
-          curly: true,
-          eqeqeq: true,
-          immed: true,
-          latedef: true,
-          newcap: true,
-          noarg: true,
-          sub: true,
-          undef: true,
-          boss: true,
-          eqnull: true{% if (dom) { %},
-          browser: true{% } %}
-        },
+        curly: true,
+        eqeqeq: true,
+        immed: true,
+        latedef: true,
+        newcap: true,
+        noarg: true,
+        sub: true,
+        undef: true,
+        boss: true,
+        eqnull: true,{% if (dom) { %}
+        browser: true,{% } %}
         globals: {{% if (jquery) { %}
           jQuery: true
         {% } %}}

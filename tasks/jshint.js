@@ -16,36 +16,35 @@ module.exports = function(grunt) {
 
   grunt.registerMultiTask('jshint', 'Validate files with JSHint.', function() {
     // Merge task-specific and/or target-specific options with these defaults.
-    var options = this.options({
-      options: {},
-      globals: {},
-      jshintrc: null
-    });
+    var options = this.options();
 
-    // If a jshintrc file was specified, read it.
-    var jshintrc;
+    // Read JSHint options from a specified jshintrc file.
     if (options.jshintrc) {
-      jshintrc = grunt.file.readJSON(options.jshintrc);
-      delete options.jshintrc;
-      // JSHint options and globals will be read from jshintrc file.
-      options.options = jshintrc;
-      options.globals = {};
-      if (jshintrc.predef) {
-        // Temp kluge for https://github.com/jshint/node-jshint/issues/104
-        jshintrc.predef.forEach(function(key) {
-          options.globals[key] = true;
-        });
-        delete jshintrc.predef;
-      }
+      options = grunt.file.readJSON(options.jshintrc);
     }
+    // If globals weren't specified, initialize them as an empty object.
+    if (!options.globals) {
+      options.globals = {};
+    }
+    // Convert deprecated "predef" array into globals.
+    // Also see https://github.com/jshint/node-jshint/issues/104
+    if (options.predef) {
+      options.predef.forEach(function(key) {
+        options.globals[key] = true;
+      });
+      delete options.predef;
+    }
+    // Extract globals from options.
+    var globals = options.globals;
+    delete options.globals;
 
-    grunt.verbose.writeflags(options.options, 'JSHint options');
-    grunt.verbose.writeflags(options.globals, 'JSHint globals');
+    grunt.verbose.writeflags(options, 'JSHint options');
+    grunt.verbose.writeflags(globals, 'JSHint globals');
 
     // Lint specified files.
     var files = grunt.file.expandFiles(grunt.util._.pluck(this.files, 'src'));
     files.forEach(function(filepath) {
-      jshint.lint(grunt.file.read(filepath), options.options, options.globals, filepath);
+      jshint.lint(grunt.file.read(filepath), options, globals, filepath);
     });
 
     // Fail task if errors were logged.

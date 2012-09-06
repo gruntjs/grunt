@@ -321,6 +321,41 @@ exports['file'] = {
     grunt.fail.warn = oldWarn;
     test.done();
   },
+  'dont delete current working directory': function(test) {
+    test.expect(2);
+    var oldBase = process.cwd();
+    var oldWarn = grunt.fail.warn;
+    grunt.fail.warn = function() {};
+
+    var cwd = path.resolve(tmpdir.path, 'dontdelete', 'folder');
+    grunt.file.mkdir(cwd);
+    grunt.file.setBase(cwd);
+
+    test.equal(grunt.file.delete(cwd), false, 'should not delete the cwd.');
+    test.ok(grunt.file.exists(cwd), 'the cwd should exist.');
+
+    grunt.file.setBase(oldBase);
+    grunt.fail.warn = oldWarn;
+    test.done();
+  },
+  'dont actually delete with no-write option on': function(test) {
+    test.expect(2);
+    var oldNoWrite = grunt.option('write');
+    grunt.option('write', false);
+
+    var oldBase = process.cwd();
+    var cwd = path.resolve(tmpdir.path, 'dontdelete', 'folder');
+    grunt.file.mkdir(cwd);
+    grunt.file.setBase(tmpdir.path);
+
+    grunt.file.write(path.join(cwd, 'test.js'), 'var test;');
+    test.ok(grunt.file.delete(cwd), 'should return true after not actually deleting file.');
+    test.equal(grunt.file.exists(cwd), true, 'file should NOT have been deleted.');
+    grunt.file.setBase(oldBase);
+
+    grunt.option('write', oldNoWrite);
+    test.done();
+  },
   'exists': function(test) {
     test.expect(6);
     test.ok(grunt.file.exists('test/fixtures/octocat.png'), 'files exist.');

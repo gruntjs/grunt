@@ -69,7 +69,9 @@ var options = {
 ### grunt.file.delete
 Delete the specified filepath. Will delete files and folders recursively.
 
-_Will not delete files outside the current working directory unless the `--force` command-line option is specified._
+_Will not delete the current working directory or files outside the current working directory unless the `--force` command-line option is specified._
+
+_If the `--no-write` command-line option is specified, the filepath won't actually be deleted._
 
 ```javascript
 grunt.file.delete(filepath [, options])
@@ -79,7 +81,8 @@ The `options` object has one possible property:
 
 ```javascript
 var options = {
-  // Enable deleting outside the current working directory
+  // Enable deleting outside the current working directory. This option may
+  // be overridden by the --force command-line option.
   force: true
 };
 ```

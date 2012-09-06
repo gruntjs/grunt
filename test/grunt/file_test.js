@@ -208,20 +208,36 @@ exports['file.expand*'] = {
   }
 };
 
-// test helper
-//
-// compare - to effectively compare Buffers, we would need something like
-// bnoordhuis/buffertools, but I'd rather not add a new dependency for the sake
-// of testing.
-//
-// So we're relying on comparisons between the `hex` of buffers to do that,
-// seems to be reliant enough to cover our test needs with file copy.
-function compare(actual, expected, encoding) {
-  encoding = encoding || 'hex';
-  return fs.readFileSync(actual, encoding) === fs.readFileSync(expected, encoding);
-}
+// Compare two buffers. Returns true if they are equivalent.
+var compareBuffers = function(buf1, buf2) {
+  if (!Buffer.isBuffer(buf1) || !Buffer.isBuffer(buf2)) { return false; }
+  if (buf1.length !== buf2.length) { return false; }
+  for (var i = 0; i < buf2.length; i++) {
+    if (buf1[i] !== buf2[i]) { return false; }
+  }
+  return true;
+};
+
+// Compare two files. If an encoding was specified, use that. Otherwise,
+// compare files as buffers. Returns true if they are equivalent.
+var compareFiles = function(filepath1, filepath2, encoding) {
+  return compareBuffers(fs.readFileSync(filepath1), fs.readFileSync(filepath2));
+};
 
 exports['file'] = {
+  setUp: function(done) {
+    this.defaultEncoding = grunt.file.defaultEncoding;
+    grunt.file.defaultEncoding = 'utf8';
+    this.string = 'Ação é isso aí\n';
+    this.object = {foo: 'Ação é isso aí', bar: ['ømg', 'pønies']};
+    this.writeOption = grunt.option('write');
+    done();
+  },
+  tearDown: function(done) {
+    grunt.file.defaultEncoding = this.defaultEncoding;
+    grunt.option('write', this.writeOption);
+    done();
+  },
   'isPathAbsolute': function(test) {
     test.expect(2);
     test.ok(grunt.file.isPathAbsolute(path.resolve('test/fixtures/a.js')), 'should return true');
@@ -229,60 +245,188 @@ exports['file'] = {
     test.done();
   },
   'read': function(test) {
-    test.expect(4);
-    test.strictEqual(grunt.file.read('test/fixtures/a.js'), fs.readFileSync('test/fixtures/a.js', 'utf8'));
-    test.strictEqual(grunt.file.read('test/fixtures/octocat.png'), fs.readFileSync('test/fixtures/octocat.png', 'utf8'));
-    test.strictEqual(grunt.file.read('test/fixtures/no_BOM.txt'), 'foo', 'file should be read as-expected.');
-    test.strictEqual(grunt.file.read('test/fixtures/BOM.txt'), 'foo', 'BOM should be stripped from string.');
+    test.expect(5);
+    test.strictEqual(grunt.file.read('test/fixtures/utf8.txt'), this.string, 'file should be read as utf8 by default.');
+    test.strictEqual(grunt.file.read('test/fixtures/iso-8859-1.txt', {encoding: 'iso-8859-1'}), this.string, 'file should be read using the specified encoding.');
+    test.ok(compareBuffers(grunt.file.read('test/fixtures/octocat.png', {encoding: null}), fs.readFileSync('test/fixtures/octocat.png')), 'file should be read as a buffer if encoding is specified as null.');
+    test.strictEqual(grunt.file.read('test/fixtures/BOM.txt'), 'foo', 'file should have BOM stripped.');
+
+    grunt.file.defaultEncoding = 'iso-8859-1';
+    test.strictEqual(grunt.file.read('test/fixtures/iso-8859-1.txt'), this.string, 'changing the default encoding should work.');
+    test.done();
+  },
+  'readJSON': function(test) {
+    test.expect(3);
+    var obj;
+    obj = grunt.file.readJSON('test/fixtures/utf8.json');
+    test.deepEqual(obj, this.object, 'file should be read as utf8 by default and parsed correctly.');
+
+    obj = grunt.file.readJSON('test/fixtures/iso-8859-1.json', {encoding: 'iso-8859-1'});
+    test.deepEqual(obj, this.object, 'file should be read using the specified encoding.');
+
+    grunt.file.defaultEncoding = 'iso-8859-1';
+    obj = grunt.file.readJSON('test/fixtures/iso-8859-1.json');
+    test.deepEqual(obj, this.object, 'changing the default encoding should work.');
     test.done();
   },
   'readYAML': function(test) {
-    test.expect(2);
-    var obj = grunt.file.readYAML('test/fixtures/test.yaml');
-    test.equal(obj.foo, 'bar', 'YAML properties should be available as-defined.');
-    test.deepEqual(obj.baz, [1, 2, 3], 'YAML properties should be available as-defined.');
+    test.expect(3);
+    var obj;
+    obj = grunt.file.readYAML('test/fixtures/utf8.yaml');
+    test.deepEqual(obj, this.object, 'file should be read as utf8 by default and parsed correctly.');
+
+    obj = grunt.file.readYAML('test/fixtures/iso-8859-1.yaml', {encoding: 'iso-8859-1'});
+    test.deepEqual(obj, this.object, 'file should be read using the specified encoding.');
+
+    grunt.file.defaultEncoding = 'iso-8859-1';
+    obj = grunt.file.readYAML('test/fixtures/iso-8859-1.yaml');
+    test.deepEqual(obj, this.object, 'changing the default encoding should work.');
     test.done();
   },
   'write': function(test) {
-    test.expect(4);
-    var tmpfile = new Tempfile();
-    var content = 'var a = "foobar";';
-    grunt.file.write(tmpfile.path, content);
-    test.strictEqual(fs.readFileSync(tmpfile.path, 'utf8'), content);
-    test.strictEqual(grunt.file.read(tmpfile.path), content);
+    test.expect(5);
+    var tmpfile;
+    tmpfile = new Tempfile();
+    grunt.file.write(tmpfile.path, this.string);
+    test.strictEqual(fs.readFileSync(tmpfile.path, 'utf8'), this.string, 'file should be written as utf8 by default.');
+    tmpfile.unlinkSync();
+
+    tmpfile = new Tempfile();
+    grunt.file.write(tmpfile.path, this.string, {encoding: 'iso-8859-1'});
+    test.strictEqual(grunt.file.read(tmpfile.path, {encoding: 'iso-8859-1'}), this.string, 'file should be written using the specified encoding.');
+    tmpfile.unlinkSync();
+
+    grunt.file.defaultEncoding = 'iso-8859-1';
+    tmpfile = new Tempfile();
+    grunt.file.write(tmpfile.path, this.string);
+    grunt.file.defaultEncoding = 'utf8';
+    test.strictEqual(grunt.file.read(tmpfile.path, {encoding: 'iso-8859-1'}), this.string, 'changing the default encoding should work.');
     tmpfile.unlinkSync();
 
     tmpfile = new Tempfile();
     var octocat = fs.readFileSync('test/fixtures/octocat.png');
     grunt.file.write(tmpfile.path, octocat);
-    test.strictEqual(fs.readFileSync(tmpfile.path, 'utf8'), fs.readFileSync('test/fixtures/octocat.png', 'utf8'));
-    test.ok(compare(tmpfile.path, 'test/fixtures/octocat.png'), 'both buffers should match');
+    test.ok(compareBuffers(fs.readFileSync(tmpfile.path), octocat), 'buffers should always be written as-specified, with no attempt at re-encoding.');
     tmpfile.unlinkSync();
 
+    grunt.option('write', false);
+    var filepath = path.join(tmpdir.path, 'should-not-exist.txt');
+    grunt.file.write(filepath, 'test');
+    test.equal(grunt.file.exists(filepath), false, 'file should NOT be created if --no-write was specified.');
     test.done();
   },
   'copy': function(test) {
-    test.expect(6);
-    var tmpfile = new Tempfile();
-    grunt.file.copy('test/fixtures/a.js', tmpfile.path);
-    test.strictEqual(fs.readFileSync(tmpfile.path, 'utf8'), fs.readFileSync('test/fixtures/a.js', 'utf8'));
+    test.expect(4);
+    var tmpfile;
+    tmpfile = new Tempfile();
+    grunt.file.copy('test/fixtures/utf8.txt', tmpfile.path);
+    test.ok(compareFiles(tmpfile.path, 'test/fixtures/utf8.txt'), 'files should just be copied as encoding-agnostic by default.');
     tmpfile.unlinkSync();
 
-    var tmpltest = '// should src be a string and template process be all good.';
     tmpfile = new Tempfile();
-    grunt.file.copy('test/fixtures/a.js', tmpfile.path, {process: function(src) {
-      test.equal(Buffer.isBuffer(src), false);
-      test.equal(typeof src, 'string');
-      return grunt.template.process(src + '<%= tmpltest %>', {data: {tmpltest: tmpltest}});
-    }});
-    test.strictEqual(fs.readFileSync(tmpfile.path, 'utf8'), grunt.util.normalizelf(fs.readFileSync('test/fixtures/a.js', 'utf8')) + tmpltest);
+    grunt.file.copy('test/fixtures/iso-8859-1.txt', tmpfile.path);
+    test.ok(compareFiles(tmpfile.path, 'test/fixtures/iso-8859-1.txt'), 'files should just be copied as encoding-agnostic by default.');
     tmpfile.unlinkSync();
 
     tmpfile = new Tempfile();
     grunt.file.copy('test/fixtures/octocat.png', tmpfile.path);
-    test.strictEqual(fs.readFileSync(tmpfile.path, 'utf8'), fs.readFileSync('test/fixtures/octocat.png', 'utf8'));
-    test.ok(compare(tmpfile.path, 'test/fixtures/octocat.png'), 'both buffers should match');
+    test.ok(compareFiles(tmpfile.path, 'test/fixtures/octocat.png'), 'files should just be copied as encoding-agnostic by default.');
     tmpfile.unlinkSync();
+
+    grunt.option('write', false);
+    var filepath = path.join(tmpdir.path, 'should-not-exist.txt');
+    grunt.file.copy('test/fixtures/utf8.txt', filepath);
+    test.equal(grunt.file.exists(filepath), false, 'file should NOT be created if --no-write was specified.');
+    test.done();
+  },
+  'copy and process': function(test) {
+    test.expect(12);
+    var tmpfile;
+    tmpfile = new Tempfile();
+    grunt.file.copy('test/fixtures/utf8.txt', tmpfile.path, {
+      process: function(src) {
+        test.equal(Buffer.isBuffer(src), false, 'when no encoding is specified, use default encoding and process src as a string');
+        test.equal(typeof src, 'string', 'when no encoding is specified, use default encoding and process src as a string');
+        return 'føø' + src + 'bår';
+      }
+    });
+    test.equal(grunt.file.read(tmpfile.path), 'føø' + this.string + 'bår', 'file should be saved as properly encoded processed string.');
+    tmpfile.unlinkSync();
+
+    tmpfile = new Tempfile();
+    grunt.file.copy('test/fixtures/iso-8859-1.txt', tmpfile.path, {
+      encoding: 'iso-8859-1',
+      process: function(src) {
+        test.equal(Buffer.isBuffer(src), false, 'use specified encoding and process src as a string');
+        test.equal(typeof src, 'string', 'use specified encoding and process src as a string');
+        return 'føø' + src + 'bår';
+      }
+    });
+    test.equal(grunt.file.read(tmpfile.path, {encoding: 'iso-8859-1'}), 'føø' + this.string + 'bår', 'file should be saved as properly encoded processed string.');
+    tmpfile.unlinkSync();
+
+    tmpfile = new Tempfile();
+    grunt.file.copy('test/fixtures/utf8.txt', tmpfile.path, {
+      encoding: null,
+      process: function(src) {
+        test.ok(Buffer.isBuffer(src), 'when encoding is specified as null, process src as a buffer');
+        return new Buffer('føø' + src.toString() + 'bår');
+      }
+    });
+    test.equal(grunt.file.read(tmpfile.path), 'føø' + this.string + 'bår', 'file should be saved as the buffer returned by process.');
+    tmpfile.unlinkSync();
+
+    grunt.file.defaultEncoding = 'iso-8859-1';
+    tmpfile = new Tempfile();
+    grunt.file.copy('test/fixtures/iso-8859-1.txt', tmpfile.path, {
+      process: function(src) {
+        test.equal(Buffer.isBuffer(src), false, 'use non-utf8 default encoding and process src as a string');
+        test.equal(typeof src, 'string', 'use non-utf8 default encoding and process src as a string');
+        return 'føø' + src + 'bår';
+      }
+    });
+    test.equal(grunt.file.read(tmpfile.path), 'føø' + this.string + 'bår', 'file should be saved as properly encoded processed string.');
+    tmpfile.unlinkSync();
+
+    var filepath = path.join(tmpdir.path, 'should-not-exist.txt');
+    grunt.file.copy('test/fixtures/iso-8859-1.txt', filepath, {
+      process: function(src) {
+        return false;
+      }
+    });
+    test.equal(grunt.file.exists(filepath), false, 'file should NOT be created if process returns false.');
+    test.done();
+  },
+  'copy and process, noprocess': function(test) {
+    test.expect(4);
+    var tmpfile;
+    tmpfile = new Tempfile();
+    grunt.file.copy('test/fixtures/utf8.txt', tmpfile.path, {
+      noProcess: true,
+      process: function(src) {
+        return 'føø' + src + 'bår';
+      }
+    });
+    test.equal(grunt.file.read(tmpfile.path), this.string, 'file should not have been processed.');
+    tmpfile.unlinkSync();
+
+    ['process', 'noprocess', 'othernoprocess'].forEach(function(filename) {
+      var filepath = path.join(tmpdir.path, filename);
+      grunt.file.copy('test/fixtures/utf8.txt', filepath);
+      var tmpfile = new Tempfile();
+      grunt.file.copy(filepath, tmpfile.path, {
+        noProcess: ['**/*no*'],
+        process: function(src) {
+          return 'føø' + src + 'bår';
+        }
+      });
+      if (filename === 'process') {
+        test.equal(grunt.file.read(tmpfile.path), 'føø' + this.string + 'bår', 'file should have been processed.');
+      } else {
+        test.equal(grunt.file.read(tmpfile.path), this.string, 'file should not have been processed.');
+      }
+      tmpfile.unlinkSync();
+    }, this);
 
     test.done();
   },
@@ -314,8 +458,8 @@ exports['file'] = {
     grunt.file.write(path.join(outsidecwd, 'test.js'), 'var test;');
     test.equal(grunt.file.delete(path.join(outsidecwd, 'test.js')), false, 'should not delete anything outside the cwd.');
 
-    test.ok(grunt.file.delete(path.join(outsidecwd), {force:true}), 'should delete outside cwd using the --force.');
-    test.equal(grunt.file.exists(outsidecwd), false, 'file outside cwd should have been deleted using the --force.');
+    test.ok(grunt.file.delete(path.join(outsidecwd), {force:true}), 'should delete outside cwd when using the --force.');
+    test.equal(grunt.file.exists(outsidecwd), false, 'file outside cwd should have been deleted when using the --force.');
 
     grunt.file.setBase(oldBase);
     grunt.fail.warn = oldWarn;
@@ -340,7 +484,6 @@ exports['file'] = {
   },
   'dont actually delete with no-write option on': function(test) {
     test.expect(2);
-    var oldNoWrite = grunt.option('write');
     grunt.option('write', false);
 
     var oldBase = process.cwd();
@@ -350,10 +493,9 @@ exports['file'] = {
 
     grunt.file.write(path.join(cwd, 'test.js'), 'var test;');
     test.ok(grunt.file.delete(cwd), 'should return true after not actually deleting file.');
-    test.equal(grunt.file.exists(cwd), true, 'file should NOT have been deleted.');
+    test.equal(grunt.file.exists(cwd), true, 'file should NOT be deleted if --no-write was specified.');
     grunt.file.setBase(oldBase);
 
-    grunt.option('write', oldNoWrite);
     test.done();
   },
   'exists': function(test) {

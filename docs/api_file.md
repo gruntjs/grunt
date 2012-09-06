@@ -7,38 +7,65 @@ Wildcard expansion, file reading, writing, directory traversing.
 See the [file lib source](../lib/grunt/file.js) for more information.
 
 ## The file API
-There are many provided methods for reading and writing files, as well as traversing the filesystem and finding files by wildcard patterns. Many of these methods are wrappers around core Node.js file functionality, but with additional error handling and logging.
+There are many provided methods for reading and writing files, as well as traversing the filesystem and finding files by wildcard patterns. Many of these methods are wrappers around core Node.js file functionality, but with additional error handling, logging and character encoding normalization.
 
 _Note: all file paths are relative to the [Gruntfile](getting_started.md) unless the current working directory is changed with `grunt.file.setBase` or the `--base` command-line option._
 
-### grunt.file.read
-Read and return a file's contents. The `encoding` argument defaults to `utf8` if unspecified.
+### grunt.file.defaultEncoding
+Set this property to change the default encoding used by all `grunt.file` methods. Defaults to `'utf8'`. If you do have to change this value, it's recommended that you change it as early as possible inside your [Gruntfile](getting_started.md).
 
 ```javascript
-grunt.file.read(filepath, encoding)
+grunt.file.defaultEncoding = 'utf8';
+```
+
+### grunt.file.read
+Read and return a file's contents. Returns a string, unless `options.encoding` is `null` in which case it returns a [Buffer](http://nodejs.org/docs/latest/api/buffer.html).
+
+```javascript
+grunt.file.read(filepath [, options])
+```
+
+The `options` object has these possible properties:
+
+```javascript
+var options = {
+  // If an encoding is not specified, default to grunt.file.defaultEncoding.
+  // If specified as null, returns a non-decoded Buffer instead of a string.
+  encoding: encodingName
+};
 ```
 
 ### grunt.file.readJSON
-Read a file's contents, parsing the data as JSON and returning the result.
+Read a file's contents, parsing the data as JSON and returning the result. See `grunt.file.read` for a list of supported options.
 
 ```javascript
-grunt.file.readJSON(filepath)
+grunt.file.readJSON(filepath [, options])
 ```
 
 ### grunt.file.readYAML
-Read a file's contents, parsing the data as YAML and returning the result.
+Read a file's contents, parsing the data as YAML and returning the result. See `grunt.file.read` for a list of supported options.
 
 ```javascript
-grunt.file.readYAML(filepath)
+grunt.file.readYAML(filepath [, options])
 ```
 
 ### grunt.file.write
-Write the specified contents to a file, creating intermediate directories if necessary.
+Write the specified contents to a file, creating intermediate directories if necessary. Strings will be encoded using the specified character encoding, [Buffers](http://nodejs.org/docs/latest/api/buffer.html) will be written to disk as-specified.
 
 _If the `--no-write` command-line option is specified, the file won't actually be written._
 
 ```javascript
-grunt.file.write(filepath, contents)
+grunt.file.write(filepath, contents [, options])
+```
+
+The `options` object has these possible properties:
+
+```javascript
+var options = {
+  // If an encoding is not specified, default to grunt.file.defaultEncoding.
+  // If `contents` is a Buffer, encoding is ignored.
+  encoding: encodingName
+};
 ```
 
 ### grunt.file.copy
@@ -54,14 +81,17 @@ The `options` object has these possible properties:
 
 ```javascript
 var options = {
-  // If specified, the file contents will be parsed as `utf8` and passed into
-  // the function, whose return value will be used as the destination file's
-  // contents. If this function returns false, the file copy will be aborted.
+  // If an encoding is not specified, default to grunt.file.defaultEncoding.
+  // If null, the `process` function will receive a Buffer instead of String.
+  encoding: encodingName,
+  // The source file contents are passed into this function, whose return
+  // value will be used as the destination file's contents. If this function
+  // returns `false`, the file copy will be aborted.
   process: processFunction,
-  // These optional wildcard patterns will be matched against the filepath using
-  // grunt.file.isMatch. If a specified wildcard pattern matches, the file will
-  // not be processed via `processFunction`. Note that `true` may also be
-  // specified to prevent processing.
+  // These optional wildcard patterns will be matched against the filepath
+  // (not the filename) using grunt.file.isMatch. If any specified wildcard
+  // pattern matches, the file won't be processed via the `process` function.
+  // If `true` is specified, processing will be prevented.
   noProcess: wildcardPatterns
 };
 ```

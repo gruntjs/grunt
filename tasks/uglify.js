@@ -38,7 +38,7 @@ module.exports = function(grunt) {
       // Get source of specified file.
       var max = grunt.file.read(files[0]);
       // Concat banner + minified source.
-      var min = banner + uglify.minify(max, options.uglify);
+      var min = banner + uglify.minify(max, options);
 
       // Write the destination file.
       grunt.file.write(fileObj.dest, min);

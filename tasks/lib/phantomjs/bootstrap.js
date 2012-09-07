@@ -47,16 +47,37 @@ setInterval(function() {
 // Create a new page.
 var page = require('webpage').create();
 
-// The client page must send its messages via alert(jsonstring).
-page.onAlert = function(args) {
-  sendMessage(JSON.parse(args));
+// Inject bridge script into client page.
+var injected;
+var inject = function() {
+  if (injected) { return; }
+  // Inject client-side helper script.
+  sendMessage('inject', options.inject);
+  page.injectJs(options.inject);
+  injected = true;
 };
 
 // Keep track if the client-side helper script already has been injected.
-var injected;
 page.onUrlChanged = function(newUrl) {
   injected = false;
   sendMessage('onUrlChanged', newUrl);
+};
+
+// The client page must send its messages via alert(jsonstring).
+page.onAlert = function(str) {
+  // The only thing that should ever alert "inject" is the custom event
+  // handler this script adds to be executed on DOMContentLoaded.
+  if (str === 'inject') {
+    inject();
+    return;
+  }
+  // Otherwise, parse the specified message string and send it back to grunt.
+  // Unless there's a parse error. Then, complain.
+  try {
+    sendMessage(JSON.parse(str));
+  } catch(err) {
+    sendMessage('error.invalidJSON', str);
+  }
 };
 
 // Relay console logging messages.
@@ -76,21 +97,30 @@ page.onResourceReceived = function(request) {
 };
 
 page.onError = function(msg, trace) {
-  sendMessage('onError', msg, trace);
+  sendMessage('error.onError', msg, trace);
+};
+
+// Run before the page is loaded.
+page.onInitialized = function() {
+  sendMessage('onInitialized');
+  // Abort if there is no bridge to inject.
+  if (!options.inject) { return; }
+  // Tell the client that when DOMContentLoaded fires, it needs to tell this
+  // script to inject the bridge. This should ensure that the bridge gets
+  // injected before any other DOMContentLoaded or window.load event handler.
+  page.evaluate(function() {
+    /*jshint browser:true, devel:true */
+    document.addEventListener('DOMContentLoaded', function() {
+      alert('inject');
+    }, false);
+  });
 };
 
 // Run when the page has finished loading.
 page.onLoadFinished = function(status) {
   // The window has loaded.
   sendMessage('onLoadFinished', status);
-  if (status === 'success') {
-    if (options.inject && !injected) {
-      // Inject client-side helper script, but only if it has not yet been
-      // injected.
-      sendMessage('inject', options.inject);
-      page.injectJs(options.inject);
-    }
-  } else {
+  if (status !== 'success') {
     // File loading failure.
     sendMessage('fail.load', url);
     phantom.exit();

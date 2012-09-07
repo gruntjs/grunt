@@ -27,8 +27,12 @@ exports.init = function(grunt) {
     grunt.verbose.write(msg);
     try {
       ast = jsp.parse(src);
-      ast = pro.ast_mangle(ast, options.mangle || {});
-      ast = pro.ast_squeeze(ast, options.squeeze || {});
+      if (options.mangle !== false) {
+        ast = pro.ast_mangle(ast, options.mangle || {});
+      }
+      if (options.squeeze !== false) {
+        ast = pro.ast_squeeze(ast, options.squeeze || {});
+      }
       src = pro.gen_code(ast, options.codegen || {});
       // Success!
       grunt.verbose.ok();

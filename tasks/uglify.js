@@ -13,6 +13,7 @@ module.exports = function(grunt) {
 
   // Internal lib.
   var uglify = require('./lib/uglify').init(grunt);
+  var minlib = require('./lib/min').init(grunt);
 
   grunt.registerMultiTask('uglify', 'Minify files with UglifyJS.', function() {
     // Merge task-specific and/or target-specific options with these defaults.
@@ -45,7 +46,7 @@ module.exports = function(grunt) {
       // Print a success message.
       grunt.log.writeln('File "' + fileObj.dest + '" created.');
       // ...and report some size information.
-      uglify.info(min, max);
+      minlib.info(min, max);
     }, this);
 
     // Fail task if any errors were logged.

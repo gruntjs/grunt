@@ -12,14 +12,14 @@
 module.exports = function(grunt) {
 
   // Internal lib.
-  var uglify = require('./lib/uglify').init(grunt);
+  var esprima = require('./lib/esprima').init(grunt);
   var minlib = require('./lib/min').init(grunt);
 
-  grunt.registerMultiTask('uglify', 'Minify files with UglifyJS.', function() {
+  grunt.registerMultiTask('esprima', 'Minify files with Esprima.', function() {
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({
       banner: '',
-      uglify: {}
+      esprima: {}
     });
 
     // Process banner.
@@ -39,7 +39,7 @@ module.exports = function(grunt) {
       // Get source of specified file.
       var max = grunt.file.read(files[0]);
       // Concat banner + minified source.
-      var min = banner + uglify.minify(max, options);
+      var min = banner + esprima.minify(max, options);
 
       // Write the destination file.
       grunt.file.write(fileObj.dest, min);

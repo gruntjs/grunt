@@ -45,6 +45,8 @@ exports.init = function(grunt) {
     options.esprima = options.esprima||{};
     options.esprima.comment = true;
 
+    options.escodegen = options.escodegen||{ format: { compact: true }};
+
     var ast, pos;
     var msg = 'Minifying with UglifyJS...';
     grunt.verbose.write(msg);

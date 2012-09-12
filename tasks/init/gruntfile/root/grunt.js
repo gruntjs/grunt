@@ -26,7 +26,7 @@ module.exports = function(grunt) {
       files: ['{%= test_dir %}/**/*.html']
     },{% } else { %}
     test: {
-      files: ['{%= test_dir %}/**/*.js']
+      files: ['{%= test_dir %}/**/*_test.js']
     },{% } %}{% if (min_concat) { %}
     concat: {
       dist: {

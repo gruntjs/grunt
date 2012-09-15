@@ -52,7 +52,6 @@ exports.init = function(grunt) {
     var placeholderregex = new RegExp(tabstr, 'g');
     // Lint.
     var result = jshint(src, options || {}, globals || {});
-    var data = jshint.data();
     // Attempt to work around JSHint erroneously reporting bugs.
     // if (!result) {
     //   // Filter out errors that shouldn't be reported.
@@ -62,7 +61,7 @@ exports.init = function(grunt) {
     //   // If no errors are left, JSHint actually succeeded.
     //   result = jshint.errors.length === 0;
     // }
-    if (result && !data.unused) {
+    if (result) {
       // Success!
       grunt.verbose.ok();
       return;
@@ -70,23 +69,6 @@ exports.init = function(grunt) {
     // Something went wrong.
     grunt.verbose.or.write(msg);
     grunt.log.error();
-    // Iterate over all unused variables
-    var varsByLine = {};
-    if (data.unused) {
-      data.unused.forEach(function(unused) {
-        var line = unused.line;
-        var vars = varsByLine[line] = varsByLine[line] || [];
-        vars.push(unused.name);
-      });
-      Object.keys(varsByLine).forEach(function(line) {
-        // Manually increment errorcount since we're not using grunt.log.error().
-        grunt.fail.errorcount++;
-        var vars = varsByLine[line];
-        grunt.log.writeln('['.red + ('L' + line).yellow + ']'.red +
-          (' Unused variable' + (vars.length === 1 ? '' : 's') + ': ').yellow +
-          grunt.log.wordlist(vars, {color: false, separator: ', '.yellow}));
-      });
-    }
     // Iterate over all errors.
     jshint.errors.forEach(function(e) {
       // Sometimes there's no error object.

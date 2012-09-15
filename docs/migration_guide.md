@@ -45,7 +45,7 @@ This list outlines the changes and improvements made for 0.4.0.
 * [task.run](api_task.md#grunttaskrun), [task.registerTask](api_task.md#grunttaskregistertask-%E2%98%83) no longer supports a space-separated list of of tasks.
 * Task names and arguments may now contain spaces.
 * `grunt.task.current.files` or `this.files` in a task, contains a normalized list of files.
-* [grunt.task.current.file or this.file](api_task.md#thisfile--grunttaskcurrentfile) in a task, is the first file for backwards compatibility.
+* `grunt.task.current.file` or `this.file` has been removed. Use `this.files` instead.
 * [grunt.task.current.options or this.options](api_task.md#thisoptions--grunttaskcurrentoptions) in a task, returns a task specific options object.
 * `grunt.task.splitArgs` added to split colon separated params but not escaped `\\:` colons.
 * [grunt.task.unregisterTasks](api_task.md#grunttaskunregistertasks-%E2%98%83) and [grunt.task.unregisterHelpers](api_task.md#grunttaskunregisterhelpers-%E2%98%83) added to unregister one or more tasks or helpers.
@@ -61,18 +61,28 @@ This list outlines the changes and improvements made for 0.4.0.
 
 ## lint task
 
-* The `jshint` config is deprecated. `options` and `globals` are now located in the `lint.options` config.
+* The `lint` task was renamed to `jshint`.
+* The `jshint` config is deprecated. `options` and `globals` are now located in the `jshint.options` config.
 * Lint will report unused vars.
 * Lint will look for and read `.jshintrc` files.
 
 ## min task
 
-* The `uglify` config is deprecated and now located in the `min.options` config.
+* The `min` task was renamed to `uglify`.
+* The `uglify` config is deprecated and now located in the `uglify.options` config.
 
 ## qunit task
 
 * The qunit task will fail on versions of PhantomJS pre-1.4.0.
 
+## server task
+
+* Now supports a `--keepalive` option and flag.
+
+## test task
+
+* The `test` task was renamed to `nodeunit`.
+
 ## helpers
 
-* `banner` helper and directive has been deprecated. Please use the more general [config_process](helpers_directives.md#config_processpropsubprop) helper and/or directive (which does NOT automatically add a trailing newline!) instead.
+* Helpers and directives have all been removed on [ebb6674](https://github.com/cowboy/grunt/commit/ebb6674b498ccd42f9bd4c6bf539b0b163498217).

@@ -52,7 +52,7 @@ module.exports = function(grunt) {
     currentModule = name;
   });
 
-  phantomjs.on('qunit.moduleDone', function(name, failed, passed, total) {
+  phantomjs.on('qunit.moduleDone', function(name/*, failed, passed, total*/) {
     delete unfinished[name];
   });
 
@@ -70,7 +70,7 @@ module.exports = function(grunt) {
     grunt.verbose.write(currentTest + '...');
   });
 
-  phantomjs.on('qunit.testDone', function(name, failed, passed, total) {
+  phantomjs.on('qunit.testDone', function(name, failed/*, passed, total*/) {
     // Log errors if necessary, otherwise success.
     if (failed > 0) {
       // list assertions
@@ -172,7 +172,7 @@ module.exports = function(grunt) {
       });
     },
     // All tests have been run.
-    function(err) {
+    function() {
       // Log results.
       if (status.failed > 0) {
         grunt.warn(status.failed + '/' + status.total + ' assertions failed (' +

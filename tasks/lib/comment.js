@@ -9,7 +9,7 @@
 
 'use strict';
 
-exports.init = function(grunt) {
+exports.init = function(/*grunt*/) {
   var exports = {};
 
   // Return the given source cude with any leading banner comment stripped.

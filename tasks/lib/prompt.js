@@ -96,7 +96,7 @@ exports.init = function(grunt) {
             done();
           });
         });
-      }, function(err) {
+      }, function() {
         // After all prompt questions have been answered...
         if (/n/i.test(result.ANSWERS_VALID)) {
           // User accepted all answers. Suspend prompt.

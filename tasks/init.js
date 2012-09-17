@@ -326,7 +326,7 @@ module.exports = function(grunt) {
           cmd: 'git',
           args: ['describe', '--tags'],
           fallback: ''
-        }, function(err, result, code) {
+        }, function(err, result) {
           result = String(result).split('-')[0];
           done(null, semver.valid(result) || '0.1.0');
         });
@@ -363,7 +363,7 @@ module.exports = function(grunt) {
             cmd: 'git',
             args: ['config', '--get', 'github.user'],
             fallback: ''
-          }, function(err, result, code) {
+          }, function(err, result) {
             data.git_user = String(result) || process.env.USER || process.env.USERNAME || '???';
             done();
           });

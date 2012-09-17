@@ -49,7 +49,7 @@ exports['Tasks'] = {
     task.registerTask('y', ['a', 'b', 'c d']);
     task.registerTask('z', ['a', 'b', 'nonexistent', 'c d']);
     task.options({
-      error: function(e) {
+      error: function() {
         result.push('!' + this.name);
       },
       done: function() {
@@ -371,7 +371,7 @@ exports['Tasks'] = {
     task.registerTask('p', 'Push task name onto result.', result.pushTaskname);
 
     task.options({
-      error: function(e) {
+      error: function() {
         result.push('!' + this.name);
         task.clearQueue({untilMarker: true});
       },
@@ -414,7 +414,7 @@ exports['Tasks'] = {
       result.push(this.name);
     });
     task.options({
-      error: function(e) {
+      error: function() {
         result.push('!' + this.name);
       },
       done: function() {

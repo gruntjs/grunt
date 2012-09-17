@@ -220,7 +220,7 @@ var compareBuffers = function(buf1, buf2) {
 
 // Compare two files. If an encoding was specified, use that. Otherwise,
 // compare files as buffers. Returns true if they are equivalent.
-var compareFiles = function(filepath1, filepath2, encoding) {
+var compareFiles = function(filepath1, filepath2) {
   return compareBuffers(fs.readFileSync(filepath1), fs.readFileSync(filepath2));
 };
 
@@ -390,7 +390,7 @@ exports['file'] = {
 
     var filepath = path.join(tmpdir.path, 'should-not-exist.txt');
     grunt.file.copy('test/fixtures/iso-8859-1.txt', filepath, {
-      process: function(src) {
+      process: function() {
         return false;
       }
     });

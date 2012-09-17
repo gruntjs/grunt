@@ -17,7 +17,7 @@ exports.init = function(grunt) {
     grunt.util.spawn({
       cmd: 'git',
       args: ['remote', '-v']
-    }, function(err, result, code) {
+    }, function(err, result) {
       var re = /^origin\s/;
       var lines;
       if (!err) {

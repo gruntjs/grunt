@@ -63,8 +63,8 @@ This list outlines the changes and improvements made for 0.4.0.
 
 * The `lint` task was renamed to `jshint`.
 * The `jshint` config is deprecated. `options` and `globals` are now located in the `jshint.options` config.
-* Lint will report unused vars.
 * Lint will look for and read `.jshintrc` files.
+* JSHint upgraded to 0.9 which supports the `unused` var option.
 
 ## min task
 

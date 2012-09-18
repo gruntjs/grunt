@@ -21,7 +21,7 @@ module.exports = function(grunt) {
         src: ['lib/**/*.js']
       },
       test: {
-        src: ['test/**/*.js']
+        src: ['test/**/*_test.js']
       },
     },
     watch: {

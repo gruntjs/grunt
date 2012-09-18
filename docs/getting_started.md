@@ -50,7 +50,7 @@ module.exports = function(grunt) {
 
 Each grunt task relies on configuration information defined in an object passed to the [grunt.initConfig](api.md) method.
 
-For example, this basic config defines a list of files to be linted when the [lint task](task_lint.md) is run on the command line via `grunt lint`.
+For example, this basic config defines a list of files to be linted when the [jshint task](task_jshint.md) is run on the command line via `grunt lint`.
 
 ```javascript
 // Project configuration.
@@ -61,7 +61,7 @@ grunt.initConfig({
 });
 ```
 
-_Note: the [lint task](task_lint.md) is an example of a [multi task](api.md). You can run all targets of any multi task by just specifying the name of the task. In this case, running `grunt lint` would automatically run the `all` target and any others that might exist under `lint` instead of you having to run `grunt lint:all` explicitly._
+_Note: the [jshint task](task_jshint.md) is an example of a [multi task](api.md). You can run all targets of any multi task by just specifying the name of the task. In this case, running `grunt lint` would automatically run the `all` target and any others that might exist under `lint` instead of you having to run `grunt lint:all` explicitly._
 
 In another example, this very simple configuration saved in the root of a [jQuery repository](https://github.com/jquery/jquery) clone allows the jQuery QUnit unit tests to be run via grunt with `grunt qunit`. Note that even though jQuery's unit tests run in grunt doesn't mean they're going to actually pass. QUnit is running headless, after all!
 

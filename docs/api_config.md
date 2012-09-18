@@ -22,7 +22,7 @@ grunt.config.init(configObject)
 
 Note that any specified `<% %>` [template strings](api_template.md) will only be processed when config data is retrieved.
 
-This example contains sample config data for the [lint task](task_lint.md):
+This example contains sample config data for the [jshint task](task_jshint.md):
 
 ```javascript
 grunt.config.init({

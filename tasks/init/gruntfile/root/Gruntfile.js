@@ -60,7 +60,7 @@ module.exports = function(grunt) {
         src: 'Gruntfile.js'
       },
       lib_test: {
-        src: ['{%= lib_dir %}/**/*.js', '{%= test_dir %}/**/*.js']
+        src: ['{%= lib_dir %}/**/*.js', '{%= test_dir %}/**/*_test.js']
       }
     },{% if (dom) { %}
     {%= test_task %}: {

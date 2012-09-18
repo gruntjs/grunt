@@ -32,7 +32,7 @@ module.exports = function(grunt) {
       },
     },
     nodeunit: {
-      files: ['test/**/*.js']
+      files: ['test/**/*_test.js']
     },
     jshint: {
       options: {

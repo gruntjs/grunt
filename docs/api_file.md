@@ -158,6 +158,24 @@ Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_pa
 grunt.file.isPathAbsolute(path1 [, path2 [, ...]])
 ```
 
+### grunt.file.isPathCwd
+Is a given file path the CWD? Returns a boolean.
+
+Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
+
+```javascript
+grunt.file.isPathCwd(path1 [, path2 [, ...]])
+```
+
+### grunt.file.isPathInCwd
+Is a given file path inside the CWD? Note: CWD is not _inside_ CWD. Returns a boolean.
+
+Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
+
+```javascript
+grunt.file.isPathInCwd(path1 [, path2 [, ...]])
+```
+
 ### grunt.file.userDir
 Return a file path relative to the user's `.grunt` directory, which is `%USERPROFILE%\.grunt\` on Windows, and `~/.grunt/` on OS X or Linux. If no file path is specified, the base user `.grunt` directory path will be returned. If the specified path is not found, `null` is returned.
 
@@ -170,7 +188,7 @@ grunt.file.userDir([path1, [, path2 [, ...]]])
 ```
 
 ### grunt.file.setBase
-Change grunt's current working directory. By default, all file paths are relative to the [Gruntfile](getting_started.md). This works just like the `--base` command-line option.
+Change grunt's current working directory (CWD). By default, all file paths are relative to the [Gruntfile](getting_started.md). This works just like the `--base` command-line option.
 
 ```javascript
 grunt.file.setBase(path1 [, path2 [, ...]])

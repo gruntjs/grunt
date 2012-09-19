@@ -244,6 +244,30 @@ exports['file'] = {
     test.equal(grunt.file.isPathAbsolute('test/fixtures/a.js'), false, 'should return false');
     test.done();
   },
+  'isPathCwd': function(test) {
+    test.expect(8);
+    test.ok(grunt.file.isPathCwd(process.cwd()), 'cwd is cwd');
+    test.ok(grunt.file.isPathCwd('.'), 'cwd is cwd');
+    test.equal(grunt.file.isPathCwd('test'), false, 'subdirectory is not cwd');
+    test.equal(grunt.file.isPathCwd(path.resolve('test')), false, 'subdirectory is not cwd');
+    test.equal(grunt.file.isPathCwd('..'), false, 'parent is not cwd');
+    test.equal(grunt.file.isPathCwd(path.resolve('..')), false, 'parent is not cwd');
+    test.equal(grunt.file.isPathCwd('/'), false, 'root is not cwd (I hope)');
+    test.equal(grunt.file.isPathCwd('nonexistent'), false, 'nonexistent path is not cwd');
+    test.done();
+  },
+  'isPathInCwd': function(test) {
+    test.expect(8);
+    test.equal(grunt.file.isPathInCwd(process.cwd()), false, 'cwd is not IN cwd');
+    test.equal(grunt.file.isPathInCwd('.'), false, 'cwd is not IN cwd');
+    test.ok(grunt.file.isPathInCwd('test'), 'subdirectory is in cwd');
+    test.ok(grunt.file.isPathInCwd(path.resolve('test')), 'subdirectory is in cwd');
+    test.equal(grunt.file.isPathInCwd('..'), false, 'parent is not in cwd');
+    test.equal(grunt.file.isPathInCwd(path.resolve('..')), false, 'parent is not in cwd');
+    test.equal(grunt.file.isPathInCwd('/'), false, 'root is not in cwd (I hope)');
+    test.equal(grunt.file.isPathInCwd('nonexistent'), false, 'nonexistent path is not in cwd');
+    test.done();
+  },
   'read': function(test) {
     test.expect(5);
     test.strictEqual(grunt.file.read('test/fixtures/utf8.txt'), this.string, 'file should be read as utf8 by default.');

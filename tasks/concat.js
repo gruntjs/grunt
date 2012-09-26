@@ -32,11 +32,17 @@ module.exports = function(grunt) {
 
     // Iterate over all specified file groups.
     this.files.forEach(function(fileObj) {
-      // The source files to be concatenated.
-      var files = grunt.file.expandFiles(fileObj.src);
+      // The source files to be concatenated. The "nonull" option is used
+      // to retain invalid files/patterns so they can be warned about.
+      var files = grunt.file.expand({nonull: true}, fileObj.src);
 
       // Concat banner + specified files.
       var src = banner + files.map(function(filepath) {
+        // Warn if a source file/pattern was invalid.
+        if (!grunt.file.exists(filepath)) {
+          grunt.log.error('Source file "' + filepath + '" not found.');
+          return '';
+        }
         // Read file source.
         var src = grunt.file.read(filepath);
         // Process files as templates if requested.

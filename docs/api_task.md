@@ -282,7 +282,7 @@ grunt.task.searchDirs
 
 
 ## File Lists and Wildcards
-Wildcard patterns are resolved using the [glob-whatev library](https://github.com/cowboy/node-glob-whatev). See the [minimatch](https://github.com/isaacs/minimatch) module documentation for more details on supported wildcard patterns.
+Wildcard patterns are resolved using the [glob library](https://github.com/isaacs/node-glob). See the [minimatch](https://github.com/isaacs/minimatch) module documentation for more details on supported wildcard patterns and matching options.
 
 There are also a number of [generic file listing methods](api_file.md) that list files relative to the [Gruntfile](getting_started.md).
 

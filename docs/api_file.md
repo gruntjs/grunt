@@ -198,7 +198,7 @@ Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_pa
 
 
 ## File Lists and Wildcards
-Wildcard patterns are resolved using the [glob-whatev library](https://github.com/cowboy/node-glob-whatev). See the [minimatch](https://github.com/isaacs/minimatch) module documentation for more details on supported wildcard patterns and matching options.
+Wildcard patterns are resolved using the [glob library](https://github.com/isaacs/node-glob). See the [minimatch](https://github.com/isaacs/minimatch) module documentation for more details on supported wildcard patterns and matching options.
 
 There are also a number of [task-specific file listing methods](api_task.md) that find files inside grunt plugins and task directories.
 
@@ -211,7 +211,11 @@ grunt.file.expand([options, ] patterns)
 
 File paths are relative to the [Gruntfile](getting_started.md) unless the current working directory is changed with `grunt.file.setBase` or the `--base` command-line option.
 
-The `options` object supports all [minimatch](https://github.com/isaacs/minimatch) options. For example, if `options.matchBase` is true, patterns without slashes will match against the basename of the path even if it contains slashes, eg. pattern `*.js` will match filepath `path/to/file.js`.
+The `options` object supports all [minimatch](https://github.com/isaacs/minimatch) options. Here are a few examples of where these options might be useful:
+
+* If `options.matchBase` is true, patterns without slashes will match against the basename of the path even if it contains slashes, eg. pattern `*.js` will match filepath `path/to/file.js`.
+* If `options.nonull` is true, patterns that fail to match anything will be returned in the result set. This allows further testing with `grunt.file.exists` to determine if any of the specified patterns were invalid.
+* If `options.cwd` is set, patterns will be matched relative to that path, and all returned filepaths will also be relative to that path.
 
 ### grunt.file.expandDirs
 This method behaves the same as `grunt.file.expand` except it only returns directory paths.
@@ -307,4 +311,7 @@ Returns false if the path doesn't exist.
 ## External libraries
 
 ### grunt.file.glob
-[glob-whatev](https://github.com/cowboy/node-glob-whatev) - Synchronous file globbing utility.
+[glob](https://github.com/isaacs/node-glob) - File globbing utility.
+
+### grunt.file.minimatch
+[minimatch](https://github.com/isaacs/minimatch) - File pattern matching utility.

@@ -114,17 +114,24 @@ exports['file.expand*'] = {
     done();
   },
   'basic matching': function(test) {
-    test.expect(7);
+    test.expect(9);
     test.deepEqual(grunt.file.expand('**/*.js'), ['js/bar.js', 'js/foo.js'], 'should match.');
     test.deepEqual(grunt.file.expand('**/*.js', '**/*.css'), ['js/bar.js', 'js/foo.js', 'css/baz.css', 'css/qux.css'], 'should match.');
     test.deepEqual(grunt.file.expand(['**/*.js', '**/*.css']), ['js/bar.js', 'js/foo.js', 'css/baz.css', 'css/qux.css'], 'should match.');
     test.deepEqual(grunt.file.expand('**d*/**'), [
+      'deep',
+      'deep/deep.txt',
+      'deep/deeper',
+      'deep/deeper/deeper.txt',
+      'deep/deeper/deepest',
+      'deep/deeper/deepest/deepest.txt'], 'should match files and directories.');
+    test.deepEqual(grunt.file.expand({mark: true}, '**d*/**'), [
       'deep/',
       'deep/deep.txt',
       'deep/deeper/',
       'deep/deeper/deeper.txt',
       'deep/deeper/deepest/',
-      'deep/deeper/deepest/deepest.txt'], 'should match files and directories.');
+      'deep/deeper/deepest/deepest.txt'], 'the minimatch "mark" option ensures directories end in /.');
     test.deepEqual(grunt.file.expandFiles('**d*/**'), [
       'deep/deep.txt',
       'deep/deeper/deeper.txt',
@@ -132,11 +139,16 @@ exports['file.expand*'] = {
     test.deepEqual(grunt.file.expand('**d*/**/'), [
       'deep/',
       'deep/deeper/',
-      'deep/deeper/deepest/'], 'should match directories only.');
-    test.deepEqual(grunt.file.expandDirs('**d*/**'), [
+      'deep/deeper/deepest/'], 'should match directories, arbitrary / at the end appears in matches.');
+    // test.ok(true);
+    test.deepEqual(grunt.file.expand({mark: true}, '**d*/**/'), [
       'deep/',
       'deep/deeper/',
-      'deep/deeper/deepest/'], 'should match directories only.');
+      'deep/deeper/deepest/'], 'should match directories, arbitrary / at the end appears in matches.');
+    test.deepEqual(grunt.file.expandDirs('**d*/**'), [
+      'deep',
+      'deep/deeper',
+      'deep/deeper/deepest'], 'should match directories only.');
     test.done();
   },
   'no matches': function(test) {
@@ -147,9 +159,11 @@ exports['file.expand*'] = {
     test.done();
   },
   'unique': function(test) {
-    test.expect(2);
+    test.expect(4);
     test.deepEqual(grunt.file.expand('**/*.js', 'js/*.js'), ['js/bar.js', 'js/foo.js'], 'file list should be uniqed.');
     test.deepEqual(grunt.file.expand('**/*.js', '**/*.css', 'js/*.js'), ['js/bar.js', 'js/foo.js', 'css/baz.css', 'css/qux.css'], 'file list should be uniqed.');
+    test.deepEqual(grunt.file.expand('js', 'js/'), ['js', 'js/'], 'mixed non-ending-/ and ending-/ dirs will not be uniqed by default.');
+    test.deepEqual(grunt.file.expand({mark: true}, 'js', 'js/'), ['js/'], 'mixed non-ending-/ and ending-/ dirs will be uniqed when "mark" is specified.');
     test.done();
   },
   'file order': function(test) {
@@ -200,12 +214,19 @@ exports['file.expand*'] = {
   'options.cwd': function(test) {
     test.expect(4);
     var opts = {cwd: path.resolve(process.cwd(), '..')};
-    test.deepEqual(grunt.file.expand(opts, ['expand/js', 'expand/js/*']), ['expand/js/', 'expand/js/bar.js', 'expand/js/foo.js'], 'should match.');
+    test.deepEqual(grunt.file.expand(opts, ['expand/js', 'expand/js/*']), ['expand/js', 'expand/js/bar.js', 'expand/js/foo.js'], 'should match.');
     test.deepEqual(grunt.file.expandFiles(opts, ['expand/js', 'expand/js/*']), ['expand/js/bar.js', 'expand/js/foo.js'], 'should match.');
-    test.deepEqual(grunt.file.expandDirs(opts, ['expand/js', 'expand/js/*']), ['expand/js/'], 'should match.');
+    test.deepEqual(grunt.file.expandDirs(opts, ['expand/js', 'expand/js/*']), ['expand/js'], 'should match.');
     test.deepEqual(grunt.file.expandFiles(opts, ['expand/js', 'expand/js/*', '!**/b*.js']), ['expand/js/foo.js'], 'should negate properly.');
     test.done();
-  }
+  },
+  'options.nonull': function(test) {
+    test.expect(2);
+    var opts = {nonull: true};
+    test.deepEqual(grunt.file.expand(opts, ['js/a*', 'js/b*', 'js/c*']), ['js/a*', 'js/bar.js', 'js/c*'], 'non-matching patterns should be returned in result set.');
+    test.deepEqual(grunt.file.expand(opts, ['js/foo.js', 'js/bar.js', 'js/baz.js']), ['js/foo.js', 'js/bar.js', 'js/baz.js'], 'non-matching filenames should be returned in result set.');
+    test.done();
+  },
 };
 
 // Compare two buffers. Returns true if they are equivalent.

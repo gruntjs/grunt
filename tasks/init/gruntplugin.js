@@ -46,7 +46,7 @@ exports.template = function(grunt, init, done) {
     props.npm_test = 'grunt test';
     props.keywords = ['gruntplugin'];
     props.devDependencies = {
-      'grunt-contrib-clean': '*'
+      'grunt-contrib-clean': '0.4.0a'
     };
 
     // Files to copy (and process).

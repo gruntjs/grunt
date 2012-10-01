@@ -36,7 +36,12 @@ module.exports = function(grunt) {
         boss: true,
         eqnull: true,
         node: true,
-        es5: true
+        es5: true,
+        strict: false,
+        maxparams: 5,
+        maxdepth: 4,
+        maxstatements: 33,
+        maxcomplexity: 15
       },
       globals: {}
     }

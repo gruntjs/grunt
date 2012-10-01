@@ -2,7 +2,7 @@
 
 # Plugins
 
-This section is a work in progress. Grunt currently has preliminary plugin support, but it might be a little while before plugins work perfectly. If you have any suggestions or comments, please [file an issue](/cowboy/grunt/issues) and we'll work it all out!
+This section is a work in progress. Grunt currently has preliminary plugin support, but it might be a little while before plugins work perfectly. If you have any suggestions or comments, please [file an issue](/gruntjs/grunt/issues) and we'll work it all out!
 
 ## Why create a grunt plugin?
 

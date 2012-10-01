@@ -113,10 +113,10 @@ send "echo -e '
 Want to learn more? Check \[grunt\]\[grunt\] out.
 
 \[grunt\]: http://gruntjs.com/
-\[issues\]: https://github.com/cowboy/grunt/issues
-\[init\]: https://github.com/cowboy/grunt/blob/master/docs/task_init.md
-\[expect\]: https://github.com/cowboy/grunt/blob/master/dev/init.exp
-\[prev\]: https://github.com/cowboy/$project/tree/HEAD~1
+\[issues\]: https://github.com/gruntjs/grunt/issues
+\[init\]: https://github.com/gruntjs/grunt/blob/master/docs/task_init.md
+\[expect\]: https://github.com/gruntjs/grunt/blob/master/dev/init.exp
+\[prev\]: https://github.com/gruntjs/$project/tree/HEAD~1
 
 Note that this entire build process is automated by a rather complex \[expect
 script\]\[expect\], which is used to automate grunt in order to facilitate the

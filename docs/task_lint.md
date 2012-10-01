@@ -108,7 +108,7 @@ grunt.initConfig({
 
 ### Specifying JSHint options and globals
 
-In this example, taken from the [Sample jQuery plugin Gruntfile](https://github.com/cowboy/grunt-jquery-example/blob/master/Gruntfile.js), custom JSHint `options` and `globals` are specified. These options are explained in the [JSHint documentation](http://www.jshint.com/options/).
+In this example, taken from the [Sample jQuery plugin Gruntfile](https://github.com/gruntjs/grunt-jquery-example/blob/master/Gruntfile.js), custom JSHint `options` and `globals` are specified. These options are explained in the [JSHint documentation](http://www.jshint.com/options/).
 
 _Note: config `lint.options.options` and `lint.options.globals` apply to the entire project, but can be overridden with per-target options and per-file comments like `/*global exports:false*/`._
 

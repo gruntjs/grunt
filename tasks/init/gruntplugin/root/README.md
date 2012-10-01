@@ -19,8 +19,8 @@ grunt.loadNpmTasks('{%= name %}');
 
 If the plugin was installed correctly, running `grunt --help` at the command line should list the newly-installed plugin's task(s) as a local Npm module task.
 
-[grunt]: https://github.com/cowboy/grunt
-[Getting Started]: https://github.com/cowboy/grunt/blob/devel/docs/getting_started.md
+[grunt]: http://gruntjs.com/
+[Getting Started]: https://github.com/gruntjs/grunt/blob/devel/docs/getting_started.md
 
 ## Overview
 In your project's Gruntfile, add a section named `{%= short_name %}` to the data object passed into `grunt.initConfig()`.

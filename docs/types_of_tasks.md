@@ -48,7 +48,7 @@ grunt.initConfig({
 });
 ```
 
-While it's probably most useful for you to check out the JavaScript source of the [built-in tasks](https://github.com/cowboy/grunt/tree/master/tasks), this example shows how you might define your own multi task:
+While it's probably most useful for you to check out the JavaScript source of the [built-in tasks](https://github.com/gruntjs/grunt/tree/master/tasks), this example shows how you might define your own multi task:
 
 ```javascript
 /*global config:true, task:true*/
@@ -249,4 +249,4 @@ grunt.registerTask('foo', 'My "foo" task.', function() {
 });
 ```
 
-Take a look at the [built-in tasks](https://github.com/cowboy/grunt/tree/master/tasks) for more examples.
+Take a look at the [built-in tasks](https://github.com/gruntjs/grunt/tree/master/tasks) for more examples.

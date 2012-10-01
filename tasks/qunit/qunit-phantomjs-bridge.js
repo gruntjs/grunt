@@ -4,7 +4,7 @@
  *
  * Copyright (c) 2012 "Cowboy" Ben Alman
  * Licensed under the MIT license.
- * http://benalman.com/about/license/
+ * https://github.com/gruntjs/grunt/blob/master/LICENSE-MIT
  */
 
 /*global QUnit:true, alert:true*/

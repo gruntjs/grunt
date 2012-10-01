@@ -10,7 +10,7 @@ Join the [freenode](http://freenode.net/) #grunt IRC channel. We've got a bot an
 
 ## Filing issues
 
-If something isn't working like you think it should, read the [API documentation](api.md). If it still isn't working like you think it should, [file an issue](https://github.com/cowboy/grunt/issues). If you'd like to chat directly, pop into IRC.
+If something isn't working like you think it should, read the [API documentation](api.md). If it still isn't working like you think it should, [file an issue](https://github.com/gruntjs/grunt/issues). If you'd like to chat directly, pop into IRC.
 
 ## Cloning grunt
 

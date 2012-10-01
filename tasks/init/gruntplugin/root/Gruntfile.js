@@ -13,6 +13,11 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     jshint: {
+      all: [
+        'Gruntfile.js',
+        'tasks/*.js',
+        '<config:nodeunit.tests>'
+      ],
       options: {
         curly: true,
         eqeqeq: true,
@@ -27,11 +32,6 @@ module.exports = function(grunt) {
         node: true,
         es5: true,
       },
-      all: [
-        'Gruntfile.js',
-        'tasks/*.js',
-        '<config:nodeunit.tests>'
-      ],
     },
 
     // Before generating any new files, remove any previously-created files.

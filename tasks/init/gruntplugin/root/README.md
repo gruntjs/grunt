@@ -41,10 +41,16 @@ grunt.initConfig({
 ## Options
 
 ### options.separator
-A string value that is ues to do something with whatever. Defaults to `, `.
+Type: `String`
+Default value: `',  '`
+
+A string value that is used to do something with whatever.
 
 ### options.punctuation
-A string value that is ues to do something else with whatever else. Defaults to `.`.
+Type: `String`
+Default value: `'.'`
+
+A string value that is used to do something else with whatever else.
 
 ## Usage Examples
 

@@ -2,7 +2,7 @@
 
 # [The grunt API](api.md) / grunt.template
 
-Underscore.js template processing and other template-related methods.
+Lo-Dash template processing and other template-related methods.
 
 Template strings can be processed manually using the provided template functions. In addition, the [config.get](api_config.md) method (used by many tasks) automatically expands `<% %>` style template strings specified as config data inside the [Gruntfile](getting_started.md).
 
@@ -11,7 +11,7 @@ See the [template lib source](../lib/grunt/template.js) for more information.
 ## The template API
 
 ### grunt.template.process
-Process an [Underscore.js template](http://underscorejs.org/#template) string. The `template` argument will be processed recursively until there are no more templates to process.
+Process an [Lo-Dash template](http://lodash.com/docs/#template) string. The `template` argument will be processed recursively until there are no more templates to process.
 
 The default data object is the entire [config object](api_config.md), but if `options.data` is set, that object will be used instead. The default template delimiters are `<% %>` but if `options.delimiters` is set to a valid delimiter name, those template delimiters will be used instead.
 
@@ -35,7 +35,7 @@ grunt.template.process('<%= baz %>', {data: obj}) // 'abcde'
 ```
 
 ### grunt.template.setDelimiters
-Set the [Underscore.js template](http://underscorejs.org/#template) delimiters to a predefined set in case you `grunt.util._.template` needs to be called manually.
+Set the [Lo-Dash template](http://lodash.com/docs/#template) delimiters to a predefined set in case you `grunt.util._.template` needs to be called manually.
 
 _You probably won't need to use this method, because you'll be using `grunt.template.process` which uses this method internally._
 
@@ -50,7 +50,7 @@ grunt.template.setDelimiters(name)
 ```
 
 ### grunt.template.addDelimiters
-Add a named set of [Underscore.js template](http://underscorejs.org/#template) delimiters. A few sets have already been added for your convenience, see the `grunt.template.setDelimiters` method for a list.
+Add a named set of [Lo-Dash template](http://lodash.com/docs/#template) delimiters. A few sets have already been added for your convenience, see the `grunt.template.setDelimiters` method for a list.
 
 _You probably won't need to use this method, because the built-in delimiters should be sufficient._
 

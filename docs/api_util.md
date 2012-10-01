@@ -2,7 +2,7 @@
 
 # [The grunt API](api.md) / grunt.util
 
-Miscellaneous utilities, including Underscore.js, Async and Hooker.
+Miscellaneous utilities, including Lo-Dash, Async and Hooker.
 
 _Note: `grunt.utils` was renamed to `grunt.util` and deprecated in grunt v0.4.0. Please ensure that your custom tasks are are up-to-date._
 
@@ -150,10 +150,10 @@ An internal library for task running.
 ## External libraries
 
 ### grunt.util._
-[Underscore.js](http://underscorejs.org/) - Tons of super-useful array, function and object utility methods.
+[Lo-Dash](http://lodash.com/) - Tons of super-useful array, function and object utility methods.
 [Underscore.string](https://github.com/epeli/underscore.string) - Tons of string utility methods.
 
-Note that Underscore.string is mixed into `grunt.util._` but is also available as `grunt.util._.str` for methods that conflict with existing Underscore.js methods.
+Note that Underscore.string is mixed into `grunt.util._` but is also available as `grunt.util._.str` for methods that conflict with existing Lo-Dash methods.
 
 ### grunt.util.async
 [Async](https://github.com/caolan/async) - Async utilities for node and the browser.

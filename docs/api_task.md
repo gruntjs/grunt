@@ -1,4 +1,4 @@
-[Grunt homepage](https://github.com/cowboy/grunt) | [Documentation table of contents](toc.md)
+[Grunt homepage](https://github.com/gruntjs/grunt) | [Documentation table of contents](toc.md)
 
 # [The grunt API](api.md) / grunt.task
 
@@ -266,7 +266,7 @@ _This method is also available as [grunt.helper](api.md)._
 ## Directives
 Directives are essentially string placeholders for helper functions, specified as values in the [config object](getting_started.md).
 
-A good example of directives would be the `<json:package.json>` and `<config:lint.all>` directives in grunt's own [grunt.js gruntfile](../grunt.js). Or the `<banner>` and `<file_strip_banner:src/grunt-jquery-example.js>` directives in the [sample jQuery plugin gruntfile](https://github.com/cowboy/grunt-jquery-example/blob/master/grunt.js).
+A good example of directives would be the `<json:package.json>` and `<config:lint.all>` directives in grunt's own [grunt.js gruntfile](../grunt.js). Or the `<banner>` and `<file_strip_banner:src/grunt-jquery-example.js>` directives in the [sample jQuery plugin gruntfile](https://github.com/gruntjs/grunt-jquery-example/blob/master/grunt.js).
 
 See the list of [built-in directives](helpers_directives.md) for examples.
 

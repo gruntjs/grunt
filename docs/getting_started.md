@@ -1,4 +1,4 @@
-[Grunt homepage](https://github.com/cowboy/grunt) | [Documentation table of contents](toc.md)
+[Grunt homepage](https://github.com/gruntjs/grunt) | [Documentation table of contents](toc.md)
 
 # Getting Started
 

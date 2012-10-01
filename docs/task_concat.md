@@ -1,4 +1,4 @@
-[Grunt homepage](https://github.com/cowboy/grunt) | [Documentation table of contents](toc.md)
+[Grunt homepage](https://github.com/gruntjs/grunt) | [Documentation table of contents](toc.md)
 
 # concat (built-in task)
 Concatenate one or more input files (and/or [directives](helpers_directives.md) output, like `<banner>`) into an output file.

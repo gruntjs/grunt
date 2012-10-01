@@ -1,10 +1,10 @@
 /*
  * grunt
- * https://github.com/cowboy/grunt
+ * http://gruntjs.com/
  *
  * Copyright (c) 2012 "Cowboy" Ben Alman
  * Licensed under the MIT license.
- * http://benalman.com/about/license/
+ * https://github.com/gruntjs/grunt/blob/master/LICENSE-MIT
  */
 
 // Basic template description.
@@ -12,7 +12,7 @@ exports.description = 'Create a grunt plugin, including Nodeunit unit tests.';
 
 // Template-specific notes to be displayed before question prompts.
 exports.notes = 'The grunt plugin system is still under development. For ' +
-  'more information, see the docs at https://github.com/cowboy/grunt/blob/master/docs/plugins.md';
+  'more information, see the docs at https://github.com/gruntjs/grunt/blob/master/docs/plugins.md';
 
 // Any existing file or directory matching this wildcard will cause a warning.
 exports.warnOn = '*';

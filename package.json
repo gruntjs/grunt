@@ -3,18 +3,18 @@
   "description": "A task-based command line build tool for JavaScript projects.",
   "version": "0.3.15",
   "author": "\"Cowboy\" Ben Alman (http://benalman.com/)",
-  "homepage": "http://github.com/cowboy/grunt",
+  "homepage": "http://github.com/gruntjs/grunt",
   "repository": {
     "type": "git",
-    "url": "git://github.com/cowboy/grunt.git"
+    "url": "git://github.com/gruntjs/grunt.git"
   },
   "bugs": {
-    "url" : "http://github.com/cowboy/grunt/issues"
+    "url" : "http://github.com/gruntjs/grunt/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "http://github.com/cowboy/grunt/blob/master/LICENSE-MIT"
+      "url": "http://github.com/gruntjs/grunt/blob/master/LICENSE-MIT"
     }
   ],
   "main": "lib/grunt",

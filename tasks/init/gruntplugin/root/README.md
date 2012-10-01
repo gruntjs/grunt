@@ -11,8 +11,8 @@ Then add this line to your project's `grunt.js` gruntfile:
 grunt.loadNpmTasks('{%= full_name %}');
 ```
 
-[grunt]: https://github.com/cowboy/grunt
-[getting_started]: https://github.com/cowboy/grunt/blob/master/docs/getting_started.md
+[grunt]: http://gruntjs.com/
+[getting_started]: https://github.com/gruntjs/grunt/blob/master/docs/getting_started.md
 
 ## Documentation
 _(Coming soon)_

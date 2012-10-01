@@ -1,10 +1,10 @@
 /*
  * grunt
- * https://github.com/cowboy/grunt
+ * http://gruntjs.com/
  *
  * Copyright (c) 2012 "Cowboy" Ben Alman
  * Licensed under the MIT license.
- * http://benalman.com/about/license/
+ * https://github.com/gruntjs/grunt/blob/master/LICENSE-MIT
  */
 
 module.exports = function(grunt) {
@@ -244,7 +244,7 @@ module.exports = function(grunt) {
           ' the command line, this task should work). Unfortunately, ' +
           'PhantomJS cannot be installed automatically via npm or grunt. ' +
           'See the grunt FAQ for PhantomJS installation instructions: ' +
-          'https://github.com/cowboy/grunt/blob/master/docs/faq.md'
+          'https://github.com/gruntjs/grunt/blob/master/docs/faq.md'
         );
         grunt.warn('PhantomJS not found.', options.code);
       } else {

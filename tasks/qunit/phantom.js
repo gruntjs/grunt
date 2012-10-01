@@ -1,10 +1,10 @@
 /*
  * grunt
- * https://github.com/cowboy/grunt
+ * http://gruntjs.com/
  *
  * Copyright (c) 2012 "Cowboy" Ben Alman
  * Licensed under the MIT license.
- * http://benalman.com/about/license/
+ * https://github.com/gruntjs/grunt/blob/master/LICENSE-MIT
  */
 
 /*global phantom:true*/

@@ -50,7 +50,7 @@ send "mkdir $project && cd $project\r"
 expect "$ "
 send "git init\r"
 expect "$ "
-send "git remote add origin git@github.com:cowboy/$project.git\r"
+send "git remote add origin git@github.com:gruntjs/$project.git\r"
 
 # Note that the "--no-color" will be stripped out later.
 expect "$ "
@@ -112,11 +112,11 @@ expect "$ "
 send "echo -e '
 Want to learn more? Check \[grunt\]\[grunt\] out.
 
-\[grunt\]: https://github.com/cowboy/grunt
-\[issues\]: https://github.com/cowboy/grunt/issues
-\[init\]: https://github.com/cowboy/grunt/blob/master/docs/task_init.md
-\[expect\]: https://github.com/cowboy/grunt/blob/master/dev/init.exp
-\[prev\]: https://github.com/cowboy/$project/tree/HEAD~1
+\[grunt\]: http://gruntjs.com/
+\[issues\]: https://github.com/gruntjs/grunt/issues
+\[init\]: https://github.com/gruntjs/grunt/blob/master/docs/task_init.md
+\[expect\]: https://github.com/gruntjs/grunt/blob/master/dev/init.exp
+\[prev\]: https://github.com/gruntjs/$project/tree/HEAD~1
 
 Note that this entire build process is automated by a rather complex \[expect
 script\]\[expect\], which is used to automate grunt in order to facilitate the

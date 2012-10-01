@@ -1,1 +1,1 @@
-[Grunt homepage](https://github.com/cowboy/grunt) | [Documentation table of contents](/cowboy/grunt/blob/master/docs/toc.md)
+[Grunt homepage](https://github.com/gruntjs/grunt) | [Documentation table of contents](/gruntjs/grunt/blob/master/docs/toc.md)

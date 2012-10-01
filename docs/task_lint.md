@@ -1,4 +1,4 @@
-[Grunt homepage](https://github.com/cowboy/grunt) | [Documentation table of contents](toc.md)
+[Grunt homepage](https://github.com/gruntjs/grunt) | [Documentation table of contents](toc.md)
 
 # lint (built-in task)
 Validate files with [JSHint][jshint].
@@ -108,7 +108,7 @@ grunt.initConfig({
 
 ### Specifying JSHint options and globals
 
-In this example, taken from the [Sample jQuery plugin gruntfile](https://github.com/cowboy/grunt-jquery-example/blob/master/grunt.js), custom JSHint `options` and `globals` are specified. These options are explained in the [JSHint documentation](http://www.jshint.com/options/).
+In this example, taken from the [Sample jQuery plugin gruntfile](https://github.com/gruntjs/grunt-jquery-example/blob/master/grunt.js), custom JSHint `options` and `globals` are specified. These options are explained in the [JSHint documentation](http://www.jshint.com/options/).
 
 _Note: config `jshint.options` and `jshint.globals` apply to the entire project, but can be overridden with per-file comments like `/*global exports:false*/`._
 

@@ -1,53 +1,85 @@
+/*
+ * {%= name %}
+ * {%= homepage %}
+ *
+ * Copyright (c) {%= grunt.template.today('yyyy') %} {%= author_name %}
+ * Licensed under the {%= licenses.join(', ') %} license{%= licenses.length === 1 ? '' : 's' %}.
+ */
+
 'use strict';
 
 module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
-    nodeunit: {
-      files: ['test/**/*.js']
-    },
     jshint: {
       options: {
-        jshintrc: '.jshintrc'
+        curly: true,
+        eqeqeq: true,
+        immed: true,
+        latedef: true,
+        newcap: true,
+        noarg: true,
+        sub: true,
+        undef: true,
+        boss: true,
+        eqnull: true,
+        node: true,
+        es5: true,
       },
-      gruntfile: {
-        src: 'Gruntfile.js'
+      all: [
+        'Gruntfile.js',
+        'tasks/*.js',
+        '<config:nodeunit.tests>'
+      ],
+    },
+
+    // Before generating any new files, remove any previously-created files.
+    clean: {
+      tests: ['tmp'],
+    },
+
+    // Configuration to be run (and then tested).
+    {%= short_name %}: {
+      default_options: {
+        options: {
+        },
+        files: {
+          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123'],
+        },
       },
-      bin: {
-        src: ['bin/{%= name %}']
-      },
-      lib: {
-        src: ['lib/**/*.js']
-      },
-      test: {
-        src: ['test/**/*.js']
+      custom_options: {
+        options: {
+          separator: ': ',
+          punctuation: ' !!!',
+        },
+        files: {
+          'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123'],
+        },
       },
     },
-    watch: {
-      gruntfile: {
-        files: '<%= jshint.gruntfile.src %>',
-        tasks: ['jshint:gruntfile']
-      },
-      bin: {
-        files: '<%= jshint.bin.src %>',
-        tasks: ['jshint:bin']
-      },
-      lib: {
-        files: '<%= jshint.lib.src %>',
-        tasks: ['jshint:lib', 'nodeunit']
-      },
-      test: {
-        files: '<%= jshint.test.src %>',
-        tasks: ['jshint:test', 'nodeunit']
-      },
+
+    // Unit tests.
+    nodeunit: {
+      tests: ['test/*_test.js'],
     },
+
   });
 
-  // Load local tasks.
+  // Actually load this plugin's task(s).
   grunt.loadTasks('tasks');
 
-  // Default task.
-  grunt.registerTask('default', ['jshint', 'nodeunit']);
+  // The clean plugin helps in testing.
+  //grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.registerTask('clean', 'Clean up some shizzle.', function() {
+    if (grunt.file.exists('tmp')) { grunt.file.delete('tmp'); }
+  });
+
+  // Whenever the "test" task is run, first clean the "tmp" dir, then run this
+  // plugin's task(s), then test the result.
+  grunt.registerTask('test', ['clean', '{%= short_name %}', 'nodeunit']);
+
+  // By default, lint and run all tests.
+  grunt.registerTask('default', ['jshint', 'test']);
 
 };

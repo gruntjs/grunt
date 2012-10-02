@@ -526,7 +526,7 @@ module.exports = function(grunt) {
     },
     jquery_version: {
       message: 'Required jQuery version',
-      default: '>= 1.6',
+      default: '*',
       warning: 'Must be a valid semantic version range descriptor.'
     },
     node_version: {

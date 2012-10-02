@@ -17,7 +17,7 @@ exports.notes = '_Project name_ should not contain "jquery" or "js" and ' +
   'the word "jQuery", although it may. For example, a plugin titled "Awesome ' +
   'jQuery Plugin" might have the name "awesome-plugin". For more information ' +
   'please see the documentation at ' +
-  'https://github.com/jquery/plugins.jquery.com/blob/master/docs/jquery.json.md';
+  'https://github.com/jquery/plugins.jquery.com/blob/master/docs/manifest.md';
 
 // Any existing file or directory matching this wildcard will cause a warning.
 exports.warnOn = '*';
@@ -38,7 +38,7 @@ exports.template = function(grunt, init, done) {
     grunt.helper('prompt_for', 'repository'),
     grunt.helper('prompt_for', 'homepage'),
     grunt.helper('prompt_for', 'bugs'),
-    grunt.helper('prompt_for', 'licenses', 'MIT GPL'),
+    grunt.helper('prompt_for', 'licenses', 'MIT'),
     grunt.helper('prompt_for', 'author_name'),
     grunt.helper('prompt_for', 'author_email'),
     grunt.helper('prompt_for', 'author_url'),

@@ -11,7 +11,7 @@ There are a number of grunt projects.
 In addition, each individual grunt-contrib plugin is a separate repository listed on the [gruntjs org homepage](https://github.com/gruntjs).
 
 ## Filing issues
-If something isn't working like you think it should, please read the documentation first. If you'd like to chat with someone, [pop into IRC](#discussing-grunt) and ask your question there (no PMs please).
+If something isn't working like you think it should, please read the documentation first. If you'd like to chat with someone, [pop into IRC](#discussing-grunt) and ask your question there.
 
 The best way to ensure an issue gets addressed is to file it in the appropriate issues tracker.
 
@@ -34,7 +34,9 @@ Try to [reduce your code](http://www.webkit.org/quality/reduction.html) to the b
 If we can't reproduce the issue, we can't fix it. Please list the exact steps required to reproduce the issue. Include versions of your OS, Node.js, grunt, etc. Include relevant logs or sample code.
 
 ## Discussing grunt
-Join the [freenode](http://freenode.net/) #grunt IRC channel. We've got a bot and everything.
+Join the [freenode](http://freenode.net/) IRC #grunt channel. We've got a bot and everything.
+
+_No private messages, please._
 
 ## Modifying grunt
 First, ensure that you have the latest [Node.js](http://nodejs.org/) and [npm](http://npmjs.org/) installed.

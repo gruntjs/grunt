@@ -452,6 +452,7 @@ module.exports = function(grunt) {
         if (repo != null) {
           parts = repo.split('/');
           data.git_user = parts[parts.length - 2];
+          data.git_repo = parts[parts.length - 1];
           done();
         } else {
           // Attempt to pull the data from the user's git config.
@@ -461,6 +462,7 @@ module.exports = function(grunt) {
             fallback: ''
           }, function(err, result, code) {
             data.git_user = result || process.env.USER || process.env.USERNAME || '???';
+            data.git_repo = path.basename(process.cwd());
             done();
           });
         }

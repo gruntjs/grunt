@@ -20,4 +20,4 @@ var dir = path.resolve(gruntfile, '../node_modules/grunt');
 if (!existsSync(dir)) { dir = '../lib/grunt'; }
 
 // Run grunt.
-require(dir).npmTasks(['grunt-init']).cli();
+require(dir).cli();

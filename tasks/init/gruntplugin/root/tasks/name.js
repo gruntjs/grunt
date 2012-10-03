@@ -13,7 +13,7 @@ module.exports = function(grunt) {
   // Please see the grunt documentation for more information regarding task
   // creation: https://github.com/gruntjs/grunt/blob/devel/docs/toc.md
 
-  grunt.registerMultiTask('{%= short_name %}', 'Your task description goes here.', function() {
+  grunt.registerMultiTask('{%= short_name %}', '{%= description.split("'").join("\\'") %}', function() {
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({
       punctuation: '.',

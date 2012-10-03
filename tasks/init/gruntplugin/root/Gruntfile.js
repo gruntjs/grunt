@@ -16,7 +16,7 @@ module.exports = function(grunt) {
       all: [
         'Gruntfile.js',
         'tasks/*.js',
-        '<config:nodeunit.tests>'
+        '<%= nodeunit.tests %>'
       ],
       options: {
         curly: true,

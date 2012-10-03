@@ -70,5 +70,8 @@
     "which": "~1.0.5",
     "js-yaml": "~1.0.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "grunt-contrib-jshint": "0.1.0",
+    "grunt-contrib-nodeunit": "0.1.0"
+  }
 }

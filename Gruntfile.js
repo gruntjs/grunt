@@ -49,9 +49,13 @@ module.exports = function(grunt) {
     }
   });
 
+  // These plugins provide necessary tasks.
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-nodeunit');
+
   // Default task.
   grunt.registerTask('default', ['jshint', 'nodeunit']);
 
   // Unregister unused tasks.
-  grunt.unregisterTasks('concat', 'uglify', 'init', 'server', 'qunit');
+  grunt.unregisterTasks('concat', 'init', 'qunit');
 };

@@ -437,7 +437,7 @@ module.exports = function(grunt) {
         grunt.helper('git_origin', function(err, result) {
           if (err) {
             // Attempt to guess at the repo name. Maybe we'll get lucky!
-            result = 'git://github.com/' + (process.env.USER || process.env.USERNAME || '???') + '/' +
+            result = 'git://github.com/' + (data.author_github_username || process.env.USER || process.env.USERNAME || '???') + '/' +
               data.name + '.git';
           } else {
             result = result.replace(/^git@([^:]+):/, 'git://$1/');
@@ -494,6 +494,12 @@ module.exports = function(grunt) {
         'specify any number of custom licenses.',
       // Split the string on spaces.
       sanitize: function(value, data, done) { done(value.split(/\s+/)); }
+    },
+    author_github_username: {
+      message: 'Github usernmae',
+      default: function(value, data, done) {
+        done(null, process.env.USER || process.env.USERNAME);
+      }
     },
     author_name: {
       message: 'Author name',

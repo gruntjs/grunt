@@ -1,0 +1,23 @@
+body {
+  font-family: helvetica,'Georgia',arial,sans-serif;
+  background-color: #fafbf1;
+  color: #3C3C3C;
+}
+
+h1 {
+  font-size: 24px;
+  line-height: 48px;
+  font-weight: 100;
+  letter-spacing: 1px;
+  border-bottom: 1px solid #3c3c3c;
+}
+
+h1 strong {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+#container {
+  width: 980px;
+  margin:  0 auto;
+}

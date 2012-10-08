@@ -57,5 +57,5 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['jshint', 'nodeunit']);
 
   // Unregister unused tasks.
-  grunt.unregisterTasks('concat', 'init', 'qunit');
+  grunt.unregisterTasks('init');
 };

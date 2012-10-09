@@ -1,0 +1,6 @@
+{
+  "js/name.js": "js/{%= name %}.js",
+  "js/name.coffee": "js/{%= name %}.coffee",
+  "spec/coffeescripts/nameSpec.coffee": "spec/coffeescripts/{%= name %}Spec.coffee",
+  "spec/javascripts/nameSpec.js": "spec/javascripts/{%= name %}Spec.js"
+}

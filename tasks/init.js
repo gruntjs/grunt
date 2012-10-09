@@ -496,7 +496,7 @@ module.exports = function(grunt) {
       sanitize: function(value, data, done) { done(value.split(/\s+/)); }
     },
     author_github_username: {
-      message: 'Github usernmae',
+      message: 'Github username',
       default: function(value, data, done) {
         done(null, process.env.USER || process.env.USERNAME);
       }

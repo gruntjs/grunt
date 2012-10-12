@@ -22,6 +22,7 @@ module.exports = function(grunt) {
   grunt.registerTask('server', 'Start a static web server.', function() {
     // Get values from config, or use defaults.
     var port = grunt.config('server.port') || 8000;
+    var host = grunt.config('server.host') || 'localhost';
     var base = path.resolve(grunt.config('server.base') || '.');
 
     var middleware = [
@@ -39,8 +40,8 @@ module.exports = function(grunt) {
     }
 
     // Start server.
-    grunt.log.writeln('Starting static web server on port ' + port + '.');
-    connect.apply(null, middleware).listen(port);
+    grunt.log.writeln('Starting static web server on ' + host + ':' + port + '.');
+    connect.apply(null, middleware).listen(port, host);
   });
 
 };

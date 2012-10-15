@@ -341,7 +341,7 @@ _This method is an alias for the [grunt.fail.warn](api_fail.md) method._
 Display a warning and abort grunt immediately. The `error` argument can be a string message or an error object.
 
 ```javascript
-grunt.fail(error [, errorcode])
+grunt.fatal(error [, errorcode])
 ```
 
 If `--debug 9` is specified on the command-line and an error object was specified, a stack trace will be logged.

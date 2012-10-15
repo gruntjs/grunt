@@ -189,6 +189,8 @@ module.exports = function(grunt) {
       grunt.helper('phantomjs', {
         code: 90,
         args: [
+          // PhantomJS options.
+          '--config=' + grunt.task.getFile('qunit/phantom.json'),
           // The main script file.
           grunt.task.getFile('qunit/phantom.js'),
           // The temporary file used for communications.
@@ -196,9 +198,7 @@ module.exports = function(grunt) {
           // The QUnit helper file to be injected.
           grunt.task.getFile('qunit/qunit.js'),
           // URL to the QUnit .html test file to run.
-          url,
-          // PhantomJS options.
-          '--config=' + grunt.task.getFile('qunit/phantom.json')
+          url
         ],
         done: function(err) {
           if (err) {

@@ -15,7 +15,13 @@ module.exports = function(grunt) {
       all: ['test/**/*.js']
     },
     lint: {
-      all: ['grunt.js', 'lib/**/*.js', 'tasks/*.js', 'tasks/*/*.js', 'test/**/*.js']
+      all: [
+        'grunt.js',
+        'lib/**/*.js',
+        'tasks/*.js',
+        'tasks/*/*.js',
+        'test/{grunt,tasks,util}/*.js'
+      ]
     },
     watch: {
       scripts: {
@@ -36,7 +42,8 @@ module.exports = function(grunt) {
         boss: true,
         eqnull: true,
         node: true,
-        es5: true
+        es5: true,
+        strict: false
       },
       globals: {}
     }

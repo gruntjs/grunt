@@ -15,7 +15,8 @@ exports['jshint'] = function(test) {
   var filePath = 'test/fixtures/lintTest.js',
       options = {
         asi: true,
-        laxcomma: true
+        laxcomma: true,
+        maxparams: 3
       },
       globals = {
         node: true

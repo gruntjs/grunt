@@ -42,6 +42,7 @@ For projects already using grunt, you're done. Otherwise, if you're adding grunt
 ## Release History
 _(Until v1.0.0, this will only be updated when major or breaking changes are made)_
 
+* 2012/10/15 - v0.3.17 - Updating JSHint to 0.9.1. Better stack traces. And a few QUnit task fixes.
 * 2012/10/01 - v0.3.16 - Updated URLs to reflect new website and source location. Tweaks to the "jquery" and "commonjs" init templates. Fixed an issue when exiting due to warning or fatal error.
 * 2012/09/04 - v0.3.15 - Fixing a minor problem with renaming multi tasks.
 * 2012/08/29 - v0.3.14 - Grunt plugins lacking package.json keywords should work again.

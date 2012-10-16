@@ -16,7 +16,7 @@ Note that any method marked with a ☃ (unicode snowman) is also available direc
 Display a warning and abort grunt immediately. Grunt will continue processing tasks if the `--force` command-line option was specified. The `error` argument can be a string message or an error object.
 
 ```javascript
-grunt.warn(error [, errorcode])
+grunt.fail.warn(error [, errorcode])
 ```
 
 If `--debug 9` is specified on the command-line and an error object was specified, a stack trace will be logged.
@@ -27,7 +27,7 @@ _This method is also available as [grunt.warn](api.md)._
 Display a warning and abort grunt immediately. The `error` argument can be a string message or an error object.
 
 ```javascript
-grunt.fail(error [, errorcode])
+grunt.fail.fatal(error [, errorcode])
 ```
 
 If `--debug 9` is specified on the command-line and an error object was specified, a stack trace will be logged.

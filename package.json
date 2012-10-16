@@ -20,7 +20,7 @@
   "main": "lib/grunt",
   "bin": "bin/grunt",
   "scripts": {
-    "test": "grunt npm-test"
+    "test": "./bin/grunt npm-test"
   },
   "engines": {
     "node": ">= 0.8.0"

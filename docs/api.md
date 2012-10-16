@@ -373,10 +373,3 @@ The current grunt version, as a string. This is just a shortcut to the `grunt.pa
 ```javascript
 grunt.version
 ```
-
-### grunt.npmTasks
-Inside a [grunt plugin](plugins.md) bin script, this method _must_ be called to inform grunt where to look for that plugin's tasks files. The `npmModuleName` must be the grunt plugin's Npm module name. The [gruntplugin init template](task_init.md), will automatically configure this for you.
-
-```javascript
-grunt.npmTasks(npmModuleName)
-```

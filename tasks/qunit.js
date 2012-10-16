@@ -164,7 +164,7 @@ module.exports = function(grunt) {
           var args = JSON.parse(line);
           var method = args.shift();
           // Execute method if it exists.
-          if (phantomHandlers[method]) {
+          if (phantomHandlers.hasOwnProperty(method) && (typeof phantomHandlers[method] == 'function')) {
             phantomHandlers[method].apply(null, args);
           }
           // If the method name started with test, return true. Because the

@@ -67,7 +67,7 @@ grunt.initConfig({
 
 In this example, running `grunt concat:dist` (or `grunt concat` because `concat` is a [multi task](types_of_tasks.md)) will first strip any preexisting banner comment from the `src/project.js` file, then concatenate the result with a newly-generated banner comment, writing the output to `dist/built.js`.
 
-This generated banner will be the contents of the `meta.banner` underscore template string interpolated with the config object. In this case, those properties are the values imported from the `package.json` file (which are available via the `pkg` config property) plus today's date.
+This generated banner will be the contents of the `concat.options.banner` underscore template string interpolated with the config object. In this case, those properties are the values imported from the `package.json` file (which are available via the `pkg` config property) plus today's date.
 
 _Note: you don't have to use an external JSON file. It's completely valid to create the `pkg` object inline in the config. That being said, if you already have a JSON file, you might as well reference it.
 
@@ -75,13 +75,14 @@ _Note: you don't have to use an external JSON file. It's completely valid to cre
 // Project configuration.
 grunt.initConfig({
   pkg: grunt.file.readJSON('package.json'),
-  meta: {
-    banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
-      '<%= grunt.template.today("yyyy-mm-dd") %> */'
-  },
   concat: {
+    options: {
+      banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
+        '<%= grunt.template.today("yyyy-mm-dd") %> */',
+      stripBanners: true
+    },
     dist: {
-      src: ['<banner>', '<file_strip_banner:src/project.js>'],
+      src: ['src/project.js'],
       dest: 'dist/built.js'
     }
   }

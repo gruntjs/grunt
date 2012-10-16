@@ -4,8 +4,6 @@
 
 Miscellaneous utilities, including Lo-Dash, Async and Hooker.
 
-_Note: `grunt.utils` was renamed to `grunt.util` and deprecated in grunt v0.4.0. Please ensure that your custom tasks are are up-to-date._
-
 See the [util lib source](../lib/grunt/util.js) for more information.
 
 ## The util API

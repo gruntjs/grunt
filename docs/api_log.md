@@ -149,7 +149,7 @@ grunt.registerTask('something', 'Do something interesting.', function(arg) {
   } catch(e) {
     // Something went wrong.
     grunt.verbose.or.write(msg).error().error(e.message);
-    grunt.fail.warn('Something went wrong.', 50);
+    grunt.fail.warn('Something went wrong.');
   }
 });
 ```
@@ -162,6 +162,6 @@ An explanation of the above code:
   1. `grunt.verbose.or.write(msg)` logs the message (no newline) if not in `--verbose` mode, and returns the `notverbose` object.
   2. `.error()` logs ERROR in red, with a newline, and returns the `notverbose` object.
   3. `.error(e.message);` logs the actual error message (and returns the `notverbose` object).
-4. `grunt.fail.warn('Something went wrong.', 50);` logs a warning in bright yellow, exiting grunt with exit code 50, unless `--force` was specified.
+4. `grunt.fail.warn('Something went wrong.');` logs a warning in bright yellow, exiting grunt with exit code 1, unless `--force` was specified.
 
 Take a look at the [built-in tasks source code](../tasks) for more examples.

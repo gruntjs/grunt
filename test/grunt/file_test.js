@@ -258,36 +258,6 @@ exports['file'] = {
     grunt.option('write', this.writeOption);
     done();
   },
-  'isPathAbsolute': function(test) {
-    test.expect(2);
-    test.ok(grunt.file.isPathAbsolute(path.resolve('test/fixtures/a.js')), 'should return true');
-    test.equal(grunt.file.isPathAbsolute('test/fixtures/a.js'), false, 'should return false');
-    test.done();
-  },
-  'isPathCwd': function(test) {
-    test.expect(8);
-    test.ok(grunt.file.isPathCwd(process.cwd()), 'cwd is cwd');
-    test.ok(grunt.file.isPathCwd('.'), 'cwd is cwd');
-    test.equal(grunt.file.isPathCwd('test'), false, 'subdirectory is not cwd');
-    test.equal(grunt.file.isPathCwd(path.resolve('test')), false, 'subdirectory is not cwd');
-    test.equal(grunt.file.isPathCwd('..'), false, 'parent is not cwd');
-    test.equal(grunt.file.isPathCwd(path.resolve('..')), false, 'parent is not cwd');
-    test.equal(grunt.file.isPathCwd('/'), false, 'root is not cwd (I hope)');
-    test.equal(grunt.file.isPathCwd('nonexistent'), false, 'nonexistent path is not cwd');
-    test.done();
-  },
-  'isPathInCwd': function(test) {
-    test.expect(8);
-    test.equal(grunt.file.isPathInCwd(process.cwd()), false, 'cwd is not IN cwd');
-    test.equal(grunt.file.isPathInCwd('.'), false, 'cwd is not IN cwd');
-    test.ok(grunt.file.isPathInCwd('test'), 'subdirectory is in cwd');
-    test.ok(grunt.file.isPathInCwd(path.resolve('test')), 'subdirectory is in cwd');
-    test.equal(grunt.file.isPathInCwd('..'), false, 'parent is not in cwd');
-    test.equal(grunt.file.isPathInCwd(path.resolve('..')), false, 'parent is not in cwd');
-    test.equal(grunt.file.isPathInCwd('/'), false, 'root is not in cwd (I hope)');
-    test.equal(grunt.file.isPathInCwd('nonexistent'), false, 'nonexistent path is not in cwd');
-    test.done();
-  },
   'read': function(test) {
     test.expect(5);
     test.strictEqual(grunt.file.read('test/fixtures/utf8.txt'), this.string, 'file should be read as utf8 by default.');
@@ -543,46 +513,6 @@ exports['file'] = {
 
     test.done();
   },
-  'exists': function(test) {
-    test.expect(6);
-    test.ok(grunt.file.exists('test/fixtures/octocat.png'), 'files exist.');
-    test.ok(grunt.file.exists('test', 'fixtures', 'octocat.png'), 'should work for paths in parts.');
-    test.ok(grunt.file.exists('test/fixtures'), 'directories exist.');
-    test.ok(grunt.file.exists(path.join(tmpdir.path, 'octocat.png')), 'file links exist.');
-    test.ok(grunt.file.exists(path.join(tmpdir.path, 'expand')), 'directory links exist.');
-    test.equal(grunt.file.exists('test/fixtures/does/not/exist'), false, 'nonexistent files do not exist.');
-    test.done();
-  },
-  'isLink': function(test) {
-    test.expect(6);
-    test.equals(grunt.file.isLink('test/fixtures/octocat.png'), false, 'files are not links.');
-    test.equals(grunt.file.isLink('test/fixtures'), false, 'directories are not links.');
-    test.ok(grunt.file.isLink(path.join(tmpdir.path, 'octocat.png')), 'file links are links.');
-    test.ok(grunt.file.isLink(path.join(tmpdir.path, 'expand')), 'directory links are links.');
-    test.ok(grunt.file.isLink(tmpdir.path, 'octocat.png'), 'should work for paths in parts.');
-    test.equals(grunt.file.isLink('test/fixtures/does/not/exist'), false, 'nonexistent files are not links.');
-    test.done();
-  },
-  'isDir': function(test) {
-    test.expect(6);
-    test.equals(grunt.file.isDir('test/fixtures/octocat.png'), false, 'files are not directories.');
-    test.ok(grunt.file.isDir('test/fixtures'), 'directories are directories.');
-    test.ok(grunt.file.isDir('test', 'fixtures'), 'should work for paths in parts.');
-    test.equals(grunt.file.isDir(path.join(tmpdir.path, 'octocat.png')), false, 'file links are not directories.');
-    test.ok(grunt.file.isDir(path.join(tmpdir.path, 'expand')), 'directory links are directories.');
-    test.equals(grunt.file.isDir('test/fixtures/does/not/exist'), false, 'nonexistent files are not directories.');
-    test.done();
-  },
-  'isFile': function(test) {
-    test.expect(6);
-    test.ok(grunt.file.isFile('test/fixtures/octocat.png'), 'files are files.');
-    test.ok(grunt.file.isFile('test', 'fixtures', 'octocat.png'), 'should work for paths in parts.');
-    test.equals(grunt.file.isFile('test/fixtures'), false, 'directories are not files.');
-    test.ok(grunt.file.isFile(path.join(tmpdir.path, 'octocat.png')), 'file links are files.');
-    test.equals(grunt.file.isFile(path.join(tmpdir.path, 'expand')), false, 'directory links are not files.');
-    test.equals(grunt.file.isFile('test/fixtures/does/not/exist'), false, 'nonexistent files are not files.');
-    test.done();
-  },
   'mkdir': function(test) {
     test.expect(5);
     // In Nodejs 0.8.0, existsSync moved from path -> fs.
@@ -625,5 +555,97 @@ exports['file'] = {
 
     test.deepEqual(actual, expected, 'paths and arguments should match.');
     test.done();
-  }
+  },
+  'exists': function(test) {
+    test.expect(6);
+    test.ok(grunt.file.exists('test/fixtures/octocat.png'), 'files exist.');
+    test.ok(grunt.file.exists('test', 'fixtures', 'octocat.png'), 'should work for paths in parts.');
+    test.ok(grunt.file.exists('test/fixtures'), 'directories exist.');
+    test.ok(grunt.file.exists(path.join(tmpdir.path, 'octocat.png')), 'file links exist.');
+    test.ok(grunt.file.exists(path.join(tmpdir.path, 'expand')), 'directory links exist.');
+    test.equal(grunt.file.exists('test/fixtures/does/not/exist'), false, 'nonexistent files do not exist.');
+    test.done();
+  },
+  'isLink': function(test) {
+    test.expect(6);
+    test.equals(grunt.file.isLink('test/fixtures/octocat.png'), false, 'files are not links.');
+    test.equals(grunt.file.isLink('test/fixtures'), false, 'directories are not links.');
+    test.ok(grunt.file.isLink(path.join(tmpdir.path, 'octocat.png')), 'file links are links.');
+    test.ok(grunt.file.isLink(path.join(tmpdir.path, 'expand')), 'directory links are links.');
+    test.ok(grunt.file.isLink(tmpdir.path, 'octocat.png'), 'should work for paths in parts.');
+    test.equals(grunt.file.isLink('test/fixtures/does/not/exist'), false, 'nonexistent files are not links.');
+    test.done();
+  },
+  'isDir': function(test) {
+    test.expect(6);
+    test.equals(grunt.file.isDir('test/fixtures/octocat.png'), false, 'files are not directories.');
+    test.ok(grunt.file.isDir('test/fixtures'), 'directories are directories.');
+    test.ok(grunt.file.isDir('test', 'fixtures'), 'should work for paths in parts.');
+    test.equals(grunt.file.isDir(path.join(tmpdir.path, 'octocat.png')), false, 'file links are not directories.');
+    test.ok(grunt.file.isDir(path.join(tmpdir.path, 'expand')), 'directory links are directories.');
+    test.equals(grunt.file.isDir('test/fixtures/does/not/exist'), false, 'nonexistent files are not directories.');
+    test.done();
+  },
+  'isFile': function(test) {
+    test.expect(6);
+    test.ok(grunt.file.isFile('test/fixtures/octocat.png'), 'files are files.');
+    test.ok(grunt.file.isFile('test', 'fixtures', 'octocat.png'), 'should work for paths in parts.');
+    test.equals(grunt.file.isFile('test/fixtures'), false, 'directories are not files.');
+    test.ok(grunt.file.isFile(path.join(tmpdir.path, 'octocat.png')), 'file links are files.');
+    test.equals(grunt.file.isFile(path.join(tmpdir.path, 'expand')), false, 'directory links are not files.');
+    test.equals(grunt.file.isFile('test/fixtures/does/not/exist'), false, 'nonexistent files are not files.');
+    test.done();
+  },
+  'isPathAbsolute': function(test) {
+    test.expect(5);
+    test.ok(grunt.file.isPathAbsolute('/foo'), 'should return true');
+    test.ok(grunt.file.isPathAbsolute('/foo/'), 'should return true');
+    test.equal(grunt.file.isPathAbsolute('foo'), false, 'should return false');
+    test.ok(grunt.file.isPathAbsolute(path.resolve('test/fixtures/a.js')), 'should return true');
+    test.equal(grunt.file.isPathAbsolute('test/fixtures/a.js'), false, 'should return false');
+    test.done();
+  },
+  'arePathsEquivalent': function(test) {
+    test.expect(5);
+    test.ok(grunt.file.arePathsEquivalent('/foo'), 'should return true');
+    test.ok(grunt.file.arePathsEquivalent('/foo', '/foo/', '/foo/../foo/'), 'should return true');
+    test.ok(grunt.file.arePathsEquivalent(process.cwd(), '.', './', 'test/..'), 'should return true');
+    test.equal(grunt.file.arePathsEquivalent(process.cwd(), '..'), false, 'should return false');
+    test.equal(grunt.file.arePathsEquivalent('.', '..'), false, 'should return false');
+    test.done();
+  },
+  'doesPathContain': function(test) {
+    test.expect(6);
+    test.ok(grunt.file.doesPathContain('/foo', '/foo/bar'), 'should return true');
+    test.ok(grunt.file.doesPathContain('/foo/', '/foo/bar/baz', '/foo/bar', '/foo/whatever'), 'should return true');
+    test.equal(grunt.file.doesPathContain('/foo', '/foo'), false, 'should return false');
+    test.equal(grunt.file.doesPathContain('/foo/xyz', '/foo/xyz/123', '/foo/bar/baz'), false, 'should return false');
+    test.equal(grunt.file.doesPathContain('/foo/xyz', '/foo'), false, 'should return false');
+    test.ok(grunt.file.doesPathContain(process.cwd(), 'test', 'test/fixtures', 'lib'), 'should return true');
+    test.done();
+  },
+  'isPathCwd': function(test) {
+    test.expect(8);
+    test.ok(grunt.file.isPathCwd(process.cwd()), 'cwd is cwd');
+    test.ok(grunt.file.isPathCwd('.'), 'cwd is cwd');
+    test.equal(grunt.file.isPathCwd('test'), false, 'subdirectory is not cwd');
+    test.equal(grunt.file.isPathCwd(path.resolve('test')), false, 'subdirectory is not cwd');
+    test.equal(grunt.file.isPathCwd('..'), false, 'parent is not cwd');
+    test.equal(grunt.file.isPathCwd(path.resolve('..')), false, 'parent is not cwd');
+    test.equal(grunt.file.isPathCwd('/'), false, 'root is not cwd (I hope)');
+    test.equal(grunt.file.isPathCwd('nonexistent'), false, 'nonexistent path is not cwd');
+    test.done();
+  },
+  'isPathInCwd': function(test) {
+    test.expect(8);
+    test.equal(grunt.file.isPathInCwd(process.cwd()), false, 'cwd is not IN cwd');
+    test.equal(grunt.file.isPathInCwd('.'), false, 'cwd is not IN cwd');
+    test.ok(grunt.file.isPathInCwd('test'), 'subdirectory is in cwd');
+    test.ok(grunt.file.isPathInCwd(path.resolve('test')), 'subdirectory is in cwd');
+    test.equal(grunt.file.isPathInCwd('..'), false, 'parent is not in cwd');
+    test.equal(grunt.file.isPathInCwd(path.resolve('..')), false, 'parent is not in cwd');
+    test.equal(grunt.file.isPathInCwd('/'), false, 'root is not in cwd (I hope)');
+    test.equal(grunt.file.isPathInCwd('nonexistent'), false, 'nonexistent path is not in cwd');
+    test.done();
+  },
 };

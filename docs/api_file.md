@@ -149,54 +149,6 @@ function callback(abspath, rootdir, subdir, filename) {
 }
 ```
 
-### grunt.file.isPathAbsolute
-Is a given file path absolute? Returns a boolean.
-
-Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
-
-```javascript
-grunt.file.isPathAbsolute(path1 [, path2 [, ...]])
-```
-
-### grunt.file.isPathCwd
-Is a given file path the CWD? Returns a boolean.
-
-Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
-
-```javascript
-grunt.file.isPathCwd(path1 [, path2 [, ...]])
-```
-
-### grunt.file.isPathInCwd
-Is a given file path inside the CWD? Note: CWD is not _inside_ CWD. Returns a boolean.
-
-Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
-
-```javascript
-grunt.file.isPathInCwd(path1 [, path2 [, ...]])
-```
-
-### grunt.file.userDir
-Return a file path relative to the user's `.grunt` directory, which is `%USERPROFILE%\.grunt\` on Windows, and `~/.grunt/` on OS X or Linux. If no file path is specified, the base user `.grunt` directory path will be returned. If the specified path is not found, `null` is returned.
-
-Windows users: `%USERPROFILE%` is generally your `Documents and Settings` directory.
-
-_Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path._
-
-```javascript
-grunt.file.userDir([path1, [, path2 [, ...]]])
-```
-
-### grunt.file.setBase
-Change grunt's current working directory (CWD). By default, all file paths are relative to the [Gruntfile](getting_started.md). This works just like the `--base` command-line option.
-
-```javascript
-grunt.file.setBase(path1 [, path2 [, ...]])
-```
-
-Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
-
-
 ## File Lists and Wildcards
 Wildcard patterns are resolved using the [glob library](https://github.com/isaacs/node-glob). See the [minimatch](https://github.com/isaacs/minimatch) module documentation for more details on supported wildcard patterns and matching options.
 
@@ -304,6 +256,70 @@ grunt.file.isFile(path1 [, path2 [, ...]])
 ```
 
 Returns false if the path doesn't exist.
+
+### grunt.file.isPathAbsolute
+Is a given file path absolute? Returns a boolean.
+
+Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
+
+```javascript
+grunt.file.isPathAbsolute(path1 [, path2 [, ...]])
+```
+
+### grunt.file.arePathsEquivalent
+Do all the specified paths refer to the same path? Returns a boolean.
+
+```javascript
+grunt.file.arePathsEquivalent(path1 [, path2 [, ...]])
+```
+
+### grunt.file.doesPathContain
+Are all descendant path(s) contained within the specified ancestor path? Returns a boolean.
+
+_Note: does not check to see if paths actually exist._
+
+```javascript
+grunt.file.doesPathContain(ancestorPath, descendantPath1 [, descendantPath2 [, ...]])
+```
+
+### grunt.file.isPathCwd
+Is a given file path the CWD? Returns a boolean.
+
+Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
+
+```javascript
+grunt.file.isPathCwd(path1 [, path2 [, ...]])
+```
+
+### grunt.file.isPathInCwd
+Is a given file path inside the CWD? Note: CWD is not _inside_ CWD. Returns a boolean.
+
+Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
+
+```javascript
+grunt.file.isPathInCwd(path1 [, path2 [, ...]])
+```
+
+### grunt.file.userDir
+Return a file path relative to the user's `.grunt` directory, which is `%USERPROFILE%\.grunt\` on Windows, and `~/.grunt/` on OS X or Linux. If no file path is specified, the base user `.grunt` directory path will be returned. If the specified path is not found, `null` is returned.
+
+Windows users: `%USERPROFILE%` is generally your `Documents and Settings` directory.
+
+_Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path._
+
+```javascript
+grunt.file.userDir([path1, [, path2 [, ...]]])
+```
+
+### grunt.file.setBase
+Change grunt's current working directory (CWD). By default, all file paths are relative to the [Gruntfile](getting_started.md). This works just like the `--base` command-line option.
+
+```javascript
+grunt.file.setBase(path1 [, path2 [, ...]])
+```
+
+Like the Node.js [path.join](http://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2) method, this method will join all arguments together and normalize the resulting path.
+
 
 ## External libraries
 

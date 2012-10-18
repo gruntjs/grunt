@@ -35,7 +35,6 @@ This list outlines the changes and improvements made for 0.4.0.
 * [grunt.file.isFile](api_file.md#gruntfileisfile) added to return a boolean if the given path is a file.
 * [match](api_file.md#gruntfilematch) added to match wildcard patterns against one or more file paths then return an uniqued array of all files matched.
 * [grunt.file.readYAML](api_file.md#gruntfilereadyaml) added to parse YAML files using `js-yaml`.
-* [grunt.file.watchFiles](api_file.md#gruntfilewatchfiles) added containing an array of files being watched by the watch task.
 * `mode` argument added to [file.mkdir](api_file.md#gruntfilemkdir) and now defaults to the systems umask.
 * [grunt.file.read](api_file.md#gruntfileread) strips BOMs which was causing issues with JSHint.
 * [grunt.file.delete](api_file.md#gruntfiledelete) added for recursively removing files and folders.

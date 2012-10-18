@@ -263,9 +263,6 @@ The `options` object supports all [minimatch](https://github.com/isaacs/minimatc
 ### grunt.file.isMatch
 This method behaves similarly to `grunt.file.match` except it simply returns `true` if any files were matched, otherwise `false`.
 
-### grunt.file.watchFiles
-An object with two properties, `grunt.file.watchFiles.changed` and `grunt.file.watchFiles.deleted` that each contain an array of files changed or deleted since the last time the [watch task](task_watch.md) was run. If the watch task hasn't run, both properties will be `null`.
-
 ### grunt.file.exists
 Does the given path exist? Returns a boolean.
 

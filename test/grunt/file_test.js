@@ -239,8 +239,7 @@ var compareBuffers = function(buf1, buf2) {
   return true;
 };
 
-// Compare two files. If an encoding was specified, use that. Otherwise,
-// compare files as buffers. Returns true if they are equivalent.
+// Compare two files. Returns true if they are equivalent.
 var compareFiles = function(filepath1, filepath2) {
   return compareBuffers(fs.readFileSync(filepath1), fs.readFileSync(filepath2));
 };

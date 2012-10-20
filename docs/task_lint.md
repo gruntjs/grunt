@@ -110,7 +110,7 @@ grunt.initConfig({
 
 In this example, taken from the [Sample jQuery plugin Gruntfile](https://github.com/gruntjs/grunt-init-jquery-sample/blob/master/Gruntfile.js), custom JSHint `options` and `globals` are specified. These options are explained in the [JSHint documentation](http://www.jshint.com/options/).
 
-_Note: config `lint.options.options` and `lint.options.globals` apply to the entire project, but can be overridden with per-target options and per-file comments like `/*global exports:false*/`._
+_Note: config `lint.options` and `lint.options.globals` apply to the entire project, but can be overridden with per-target options and per-file comments like `/*global exports:false*/`._
 
 ```javascript
 // Project configuration.
@@ -118,18 +118,16 @@ grunt.initConfig({
   lint: {
     all: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js'],
     options: {
-      options: {
-        curly: true,
-        eqeqeq: true,
-        immed: true,
-        latedef: true,
-        newcap: true,
-        noarg: true,
-        sub: true,
-        undef: true,
-        eqnull: true,
-        browser: true
-      },
+      curly: true,
+      eqeqeq: true,
+      immed: true,
+      latedef: true,
+      newcap: true,
+      noarg: true,
+      sub: true,
+      undef: true,
+      eqnull: true,
+      browser: true,
       globals: {
         jQuery: true
       }
@@ -150,7 +148,7 @@ grunt.initConfig({
   lint: {
     // Default JSHint options.
     options: {
-      options: {curly: true},
+      curly: true,
       globals: {}
     },
     all: {
@@ -159,8 +157,10 @@ grunt.initConfig({
       },
       // Just for the lint:all target.
       options: {
-        options: {browser: true},
-        globals: {jQuery: true}
+        browser: true,
+        globals: {
+          jQuery: true
+        }
       }
     },
     grunt: {
@@ -169,8 +169,14 @@ grunt.initConfig({
       },
       // Just for the lint:grunt target.
       options: {
-        options: {node: true},
-        globals: {task: true, config: true, file: true, log: true, template: true}
+        node: true,
+        globals: {
+          task: true,
+          config: true,
+          file: true,
+          log: true,
+          template: true
+        }
       }
     },
     tests: {
@@ -179,8 +185,15 @@ grunt.initConfig({
       },
       // Just for the lint:tests target.
       options: {
-        options: {jquery: true},
-        globals: {module: true, test: true, ok: true, equal: true, deepEqual: true, QUnit: true}
+        jquery: true,
+        globals: {
+          module: true,
+          test: true,
+          ok: true,
+          equal: true,
+          deepEqual: true,
+          QUnit: true
+        }
       }
     }
   }
@@ -198,7 +211,7 @@ grunt.initConfig({
     options: {
       // Default JSHint resource file
       jshintrc: '.jshintrc',
-      options: {curly: true}
+      curly: true
     },
     all: {
       files: {

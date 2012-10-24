@@ -1,5 +1,7 @@
 [Grunt homepage](http://gruntjs.com/) | [Documentation table of contents](toc.md)
 
+# THIS DOCUMENT IS INCOMPLETE AND OUTDATED
+
 # 0.4.0 Migration Guide
 This list outlines the changes and improvements made for 0.4.0.
 

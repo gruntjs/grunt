@@ -1,135 +1,209 @@
 [Grunt homepage](http://gruntjs.com/) | [Documentation table of contents](toc.md)
 
-# Getting Started
+# Getting Started With Grunt
 
-**If you're starting from scratch, check out the [init task](task_init.md), which will set up a new grunt-based project for you. Even if you don't ultimately use the files that are generated, you can very quickly learn how grunt works.**
+## The `grunt` CLI
+In order to facilitate running grunt, it's recommended that you install the grunt CLI (command line interface) with this command:
 
-## The Gruntfile.js file, aka "Gruntfile"
-Each time grunt is run, it looks in the current directory for a file named `Gruntfile.js`. If this file is not found, grunt continues looking in parent directories until that file is found. This file is typically placed in the root of your project repository, and is a valid JavaScript file comprised of these parts:
+```bash
+npm install -g grunt
+```
 
-* Project configuration
-* Loading grunt plugins or tasks folders
-* Custom tasks
+_Note that depending on how [npm][] was installed, you may need to use `sudo` or run your command shell as Administrator._
 
-This is an example of a very basic sample Gruntfile that does all three of these things.
+This should put `grunt` in the system path and allow it to be run from anywhere within a project's directory structure. In addition, it makes the built-in [init task][] available via `grunt init`.
 
-```javascript
+Some specifics about the grunt CLI:
+
+ * Each time `grunt` is run, it looks in the current directory for a [gruntfile](#the-gruntfile). If this file is not found, grunt continues looking in parent directories until that file is found. If no gruntfile is found, grunt will exit with an error.
+ * Regardless of which version of grunt is installed globally—as long as it's >= v0.4.0—the globally installed grunt CLI will auto-load the local version of grunt installed via `npm install`, as specified in [package.json](#packagejson).
+ * It's entirely possible to run grunt without the CLI installed, but instead of running `grunt` you'll need to run the locally-installed grunt's bin script. This script will be in `node_modules/.bin/grunt` relative to your project's package.json file.
+
+## Working with an existing grunt project
+Assuming the project has a [package.json](#packagejson) file and the [grunt cli](#the-grunt-cli) is already installed, in the root directory of the project (next to package.json) run `npm install` to install the correct version of grunt and any grunt plugins or other project dependencies.
+
+When that's done (assuming the project has a [gruntfile](#the-gruntfile)), the `grunt --help` command will list available tasks and options, or you can just run `grunt` and see what happens.
+
+Check out that project's README or documentation for more specific instructions.
+
+If you prefer bulleted lists, this might help:
+
+1. `npm install`
+1. `grunt`
+1. drink beers
+
+## Starting a new grunt project
+A typical grunt project will need these two files (in addition to your actual project files):
+
+**[package.json](#packagejson)**
+This file is used by [npm][] to store metadata for projects published as npm modules. Because grunt and grunt plugins are published as npm modules, they will be installed by the `npm install` command when listed as [dependencies][] or [devDependencies][] inside this file.
+
+**[The gruntfile](#the-gruntfile)**
+This file is named `Gruntfile.js` (or `Gruntfile.coffee`) and is used by grunt to configure or define tasks and load grunt plugins.
+
+### package.json
+This file is used by [npm][] to store metadata for projects published as npm modules. Because grunt and grunt plugins are published as npm modules, they will be installed by the `npm install` command when listed as [dependencies][] or [devDependencies][] inside the package.json file.
+
+Technically, grunt doesn't care about this file; it doesn't inherently use it in any way. That being said, you'll want to create a `package.json` file for your project to ensure that the correct versions of grunt and grunt plugins are installed when the `npm install` command is run.
+
+#### Dependency management with npm
+Grunt and grunt plugins are [dependencies][] of your project. In order for grunt to perform tasks like linting source code, unit testing, or minifying files, grunt and any grunt plugins your project requires must first be installed with [npm][]. Because npm installs dependencies locally to a project, it's possible to work concurrently on multiple projects that each require different versions of grunt or grunt plugins.
+
+_Note that while grunt and grunt plugins are used to automate project development, they are not usually used by the project itself. Because of this, they are considered development dependencies and are specified inside package.json as [devDependencies][]._
+
+#### Creating a package.json file
+The package.json file belongs in the root directory of your project, next to [the gruntfile](#the-gruntfile), and should be committed with your project source.
+
+There are a few ways to create a package.json file for your project:
+
+* A package.json file is automatically generated by most [init task][] templates. This is the preferred method for new projects, as long as your project corresponds to an existing template.
+* The [npm init][] command will create a basic package.json file for you.
+* You can create a [package.json file manually][package.json]; it just needs to be valid JSON.
+
+[init task]: task_init.md
+[npm]: https://npmjs.org/
+[npm init]: https://npmjs.org/doc/init.html
+[package.json]: https://npmjs.org/doc/json.html
+[dependencies]: https://npmjs.org/doc/json.html#dependencies
+[devDependencies]: https://npmjs.org/doc/json.html#devDependencies
+[tilde version range]: https://npmjs.org/doc/json.html#Tilde-Version-Ranges
+
+#### Specifying grunt and grunt plugins in package.json
+The easiest way to add grunt and grunt plugins to a project package.json is with the `npm install --save-dev NPMMODULE` command. Assuming a package.json file exists, not only will `NPMMODULE` be installed locally, but it will added to the [devDependencies][] section using a [tilde version range][].
+
+For example, this will install the latest version of grunt, and add it to package.json under the devDependencies section:
+
+```bash
+npm install --save-dev grunt
+```
+
+The same can be done for grunt plugins. Just be sure to commit the updated package.json file with your project when you're done!
+
+#### Specifying metadata in package.json
+If your project is an [npm][] module, you'll already be specifying project-specific metadata like `name`, `version` and `description` in package.json. If not, you can still store metadata in package.json and use `grunt.file.readJSON('package.json')` inside [the gruntfile](#the-gruntfile) to retrieve that data.
+
+### The gruntfile
+This file is named `Gruntfile.js` (or `Gruntfile.coffee`) and is used by grunt to configure or define tasks and load grunt plugins. The gruntfile is a valid JavaScript (or CoffeeScript) file, placed in the root directory of your project—next to the [package.json](#packagejson) file—and should be committed with your project source.
+
+A gruntfile is typically comprised of the following parts:
+
+* The "wrapper" function
+* Project and task configuration
+* Loading grunt plugins
+* Defining custom tasks
+
+#### An example gruntfile
+
+In the following gruntfile, project metadata is imported into the grunt config from the [package.json](#packagejson) file and the [uglify task][] is configured to minify a source file and generate a banner comment dynamically using that metadata.
+
+[uglify task]: https://github.com/gruntjs/grunt-contrib-uglify
+
+```js
 module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
-    lint: {
-      all: ['Gruntfile.js', 'lib/**/*.js', 'test/**/*.js']
-    },
-    jshint: {
+    pkg: grunt.file.readJSON('package.json'),
+    uglify: {
       options: {
-        browser: true
+        banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+      },
+      dist: {
+        src: 'src/<%= pkg.name %>.js',
+        dest: 'dist/<%= pkg.name %>.min.js'
       }
     }
   });
 
-  // Load tasks from "grunt-sample" grunt plugin installed via Npm.
-  grunt.loadNpmTasks('grunt-sample');
+  // Load the plugin that provides the "uglify" task.
+  grunt.loadNpmTasks('grunt-contrib-uglify');
 
-  // Default task.
-  grunt.registerTask('default', ['lint', 'sample']);
+  // Default task(s).
+  grunt.registerTask('default', ['uglify']);
 
 };
 ```
 
-## A Very Important Note
-Your Gruntfile **must** contain this code, once and **only** once. If it doesn't, grunt won't work. For the sake of brevity, this "wrapper" code has been omitted from all future examples on this page, but it needs to be there. Like in the previous example.
+#### The "wrapper" function
+Every gruntfile (and grunt plugin) uses this basic format, and all of your grunt code will be specified inside this function:
 
-```javascript
+```js
 module.exports = function(grunt) {
-  // Your grunt code goes in here.
+  // Do grunt-related things in here
 };
 ```
 
-## Project configuration
+#### Project and task configuration
+Most grunt tasks rely on configuration data defined in an object passed to the [grunt.initConfig](api.md) method.
 
-Each grunt task relies on configuration information defined in an object passed to the [grunt.initConfig](api.md) method.
+In this example, `grunt.file.readJSON('package.json')` imports the JSON metadata stored in [package.json](#packagejson) into the grunt config. Because `<% %>` template strings may reference any config properties (even non-string values!), configuration data like filepaths and file lists may be specified this way to reduce repetition.
 
-For example, this basic config defines a list of files to be linted when the [lint task](task_lint.md) is run on the command line via `grunt lint`.
+You may store any arbitrary data inside of the configuration object, and as long as it doesn't conflict with properties your tasks require, it will be otherwise ignored. Also, because this is JavaScript you're not limited to JSON; you may use any valid JavaScript here. This allows you to programmatically generate the configuration if necessary.
 
-```javascript
+Like most tasks, the [uglify task][] expects its options, targets and files to be specified in a task-named property of the configuration object. Here, the `banner` option is specified, along with a single uglify target named `dist` that minifies a single source file to a single destination file.
+
+((( link out to the options object page and file lists page )))
+
+```js
 // Project configuration.
 grunt.initConfig({
-  lint: {
-    all: ['lib/*.js', 'test/*.js', 'Gruntfile.js']
+  pkg: grunt.file.readJSON('package.json'),
+  uglify: {
+    options: {
+      banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+    },
+    dist: {
+      src: 'src/<%= pkg.name %>.js',
+      dest: 'dist/<%= pkg.name %>.min.js'
+    }
   }
 });
 ```
 
-_Note: the [lint task](task_lint.md) is an example of a [multi task](api.md). You can run all targets of any multi task by just specifying the name of the task. In this case, running `grunt lint` would automatically run the `all` target and any others that might exist under `lint` instead of you having to run `grunt lint:all` explicitly._
+#### Loading grunt plugins
+Many commonly used tasks like [concatenation][], [minification][uglify task] and [linting][] are available as [grunt plugins][]. As long as a plugin is specified in [package.json](#packagejson) as a dependency and installed via `npm install` it may be enabled inside grunt with a simple command:
 
-In another example, this very simple configuration saved in the root of a [jQuery repository](https://github.com/jquery/jquery) clone allows the jQuery QUnit unit tests to be run via grunt with `grunt qunit`. Note that even though jQuery's unit tests run in grunt doesn't mean they're going to actually pass. QUnit is running headless, after all!
+[concatenation]: https://github.com/gruntjs/grunt-contrib-concat
+[linting]: https://github.com/gruntjs/grunt-contrib-jshint
+[grunt plugins]: TODO
+[custom tasks]: TODO
 
-```javascript
-// Project configuration.
-grunt.initConfig({
-  qunit: {
-    index: ['test/index.html']
-  }
-});
+```js
+// Load the plugin that provides the "uglify" task.
+grunt.loadNpmTasks('grunt-contrib-uglify');
 ```
 
-You can store any arbitrary information inside of the configuration object, and as long as it doesn't conflict with a property one of your tasks is using, it will be ignored. Also, because this is JavaScript and not JSON, you can use any valid JavaScript here. This allows you to programmatically generate the configuration object, if necessary.
+#### Defining custom tasks
+If your project only uses tasks provided by [grunt plugins][], you might not need to define any custom tasks. That being said, if you want grunt to perform one or more tasks by default when just running `grunt`, you'll need to create a default task.
 
-See the documentation [table of contents](toc.md) for a list of tasks whose documentation will explain their specific configuration requirements.
+The easiest way to define a default task is to create an [alias task][custom tasks]:
 
-_Also note that you don't need to specify configuration settings for tasks that you don't use._
-
-```javascript
-// Project configuration.
-grunt.initConfig({
-  // Arbitrary project metadata. This could be data loaded from a .json file
-  // or specified inline.
-  meta: {},
-  // Lists of files to be concatenated, used by the "concat" task.
-  concat: {},
-  // Lists of files to be linted with JSHint, used by the "lint" task.
-  lint: {},
-  // Lists of files to be minified with UglifyJS, used by the "min" task.
-  min: {},
-  // Lists of files or URLs to be unit tested with QUnit, used by the "qunit" task.
-  qunit: {},
-  // Configuration options for the "server" task.
-  server: {},
-  // Lists of files to be unit tested with Nodeunit, used by the "test" task.
-  test: {},
-  // Configuration options for the "watch" task.
-  watch: {},
-});
+```js
+// Default task(s).
+grunt.registerTask('default', ['uglify']);
 ```
 
-## Loading grunt plugins or tasks folders
+In this example, when running `grunt` (or `grunt default`) on the command line, the uglify task will be run. This does the same thing as if `grunt uglify` was run on the command line.
 
-While you can define [tasks](api.md) in your project's Gruntfile, you can also load tasks from external sources.
+Also, tasks in external `.js` files can be loaded from a directory with the [grunt.loadTasks][] method.
 
-```javascript
-// Load tasks from the "tasks" directory, relative to Gruntfile.js.
-grunt.loadTasks('tasks');
+[grunt.loadTasks]: https://github.com/gruntjs/grunt/blob/devel/docs/api.md#loading-externally-defined-tasks
 
-// Load tasks from the "grunt-sample" Npm-installed grunt plugin.
-grunt.loadNpmTasks('grunt-sample');
+((( link out to the custom tasks page )))
+
+#### The simplest possible gruntfile
+If you don't need pre-made tasks and don't need to import any metadata, but would still like to use grunt in a project, you can create a very simple gruntfile with no config, where the default task is just [a function][custom tasks], like so:
+
+```js
+module.exports = function(grunt) {
+
+  // A very basic default task.
+  grunt.registerTask('default', 'Log some stuff.', function() {
+    grunt.log.write('Logging some stuff...').ok();
+  });
+
+};
 ```
 
-_Note: loading externally defined tasks in this way is preferred to loading them via the analogous `--tasks` and `--npm` command-line options. This is because when tasks are created or loaded in the Gruntfile, the tasks effectively become part of the project and will always be used (provided they are available) whenever `grunt` is run._
+((( link out to the custom tasks page again? link to some example gruntfiles? api docs? etc??? )))
 
-## Custom tasks
-
-You aren't required to define tasks in your project Gruntfile, because grunt provides a number of built-in tasks. That being said, until you define a `default` task, grunt won't know what to do when you run it just as `grunt` without specifying any tasks, because grunt doesn't provide a default `default` task.
-
-The easiest way to define the default task is to create an [alias task](api.md).
-
-In the following example, a default task is defined that, when invoked by specifying `grunt` or `grunt default` on the command line, will execute the `lint`, `qunit`, `concat` and `min` tasks in-order. It behaves exactly as if `grunt lint qunit concat min` was run on the command line.
-
-```javascript
-// Default task.
-grunt.registerTask('default', ['lint', 'qunit', 'concat', 'min']);
-```
-
-_Note: choose the default tasks that make the most sense for your project. If you find yourself commonly executing other groups of tasks, create as many named aliases as you need!_
-
-Take a look at the [example Gruntfiles](example_gruntfiles.md) or check out the [init task](task_init.md) for more configuration examples.

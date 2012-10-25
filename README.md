@@ -6,20 +6,6 @@ _Grunt is currently in beta. While I'm already using it on multiple projects, it
 ## Getting started
 Be sure to read the [getting started guide](/gruntjs/grunt/blob/master/docs/getting_started.md), which is a complete guide to configuring grunt for your project. In addition, check out the [example Gruntfiles](/gruntjs/grunt/blob/master/docs/example_gruntfiles.md) which highlight a number of fairly common configurations.
 
-## Built-in tasks
-As of now, grunt has the following predefined tasks that you can use in your project:
-
-* [concat](/gruntjs/grunt/blob/master/docs/task_concat.md) - Concatenate files.
-* [init](/gruntjs/grunt/blob/master/docs/task_init.md) - Generate project scaffolding from a predefined template.
-* [lint](/gruntjs/grunt/blob/master/docs/task_lint.md) - Validate files with [JSHint][jshint].
-* [min](/gruntjs/grunt/blob/master/docs/task_min.md) - Minify files with [UglifyJS][uglify].
-* [qunit](/gruntjs/grunt/blob/master/docs/task_qunit.md) - Run [QUnit][qunit] unit tests in a headless [PhantomJS][phantom] instance.
-* [server](/gruntjs/grunt/blob/master/docs/task_server.md) - Start a static web server.
-* [test](/gruntjs/grunt/blob/master/docs/task_test.md) - Run unit tests with [nodeunit][nodeunit].
-* [watch](/gruntjs/grunt/blob/master/docs/task_watch.md) - Run predefined tasks whenever watched files change.
-
-_(More documentation forthcoming)_
-
 ## Custom tasks
 In addition to the built-in tasks, you can create your own tasks. Don't like a built-in task's default behavior? Override it. Check out the [grunt API documentation](/gruntjs/grunt/blob/master/docs/api.md) and the [built-in tasks source](/gruntjs/grunt/blob/master/tasks) for everything you need to know about creating custom tasks.
 

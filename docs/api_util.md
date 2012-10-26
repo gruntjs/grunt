@@ -82,8 +82,8 @@ The done function accepts these arguments:
 
 ```javascript
 function doneFunction(error, result, code) {
-  // If the exit code was non-zero and a fallback wasn't specified, the error
-  // object is the same as the result object.
+  // If the exit code was non-zero and a fallback wasn't specified, an Error
+  // object, otherwise null.
   error
   // The result object is an object with the properties .stdout, .stderr, and
   // .code (exit code).

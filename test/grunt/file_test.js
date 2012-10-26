@@ -515,13 +515,10 @@ exports['file'] = {
   },
   'mkdir': function(test) {
     test.expect(5);
-    // In Nodejs 0.8.0, existsSync moved from path -> fs.
-    var existsSync = fs.existsSync || path.existsSync;
-
     test.doesNotThrow(function() {
       grunt.file.mkdir(tmpdir.path);
     }, 'Should not explode if the directory already exists.');
-    test.ok(existsSync(tmpdir.path), 'path should still exist.');
+    test.ok(fs.existsSync(tmpdir.path), 'path should still exist.');
 
     test.doesNotThrow(function() {
       grunt.file.mkdir(path.join(tmpdir.path, 'aa/bb/cc'));

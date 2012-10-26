@@ -119,12 +119,13 @@ exports['util.spawn'] = {
     });
   },
   'non-zero exit code': function(test) {
-    test.expect(6);
+    test.expect(7);
     grunt.util.spawn({
       cmd: process.execPath,
       args: [ this.script, 123 ],
     }, function(err, result, code) {
-      test.equals(err, result);
+      test.ok(err instanceof Error);
+      test.equals(err.message, 'stderr');
       test.equals(code, 123);
       test.equals(result.stdout, 'stdout');
       test.equals(result.stderr, 'stderr');
@@ -154,7 +155,7 @@ exports['util.spawn'] = {
     grunt.util.spawn({
       cmd: 'nodewtfmisspelled',
     }, function(err, result, code) {
-      test.equals(err, result);
+      test.ok(err instanceof Error);
       test.equals(code, 127);
       test.equals(result.code, 127);
       test.done();

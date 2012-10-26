@@ -86,6 +86,7 @@ exports['config'] = {
   },
   'config.requires': function(test) {
     test.expect(8);
+    grunt.log.muted = true;
     test.doesNotThrow(function() { grunt.config.requires('foo'); }, 'This property exists.');
     test.doesNotThrow(function() { grunt.config.requires('obj.foo'); }, 'This property exists.');
     test.doesNotThrow(function() { grunt.config.requires('foo', 'obj.foo', 'obj.foo2'); }, 'These properties exist.');
@@ -94,6 +95,7 @@ exports['config'] = {
     test.throws(function() { grunt.config.requires('obj.xyz'); }, 'This property does not exist.');
     test.throws(function() { grunt.config.requires('foo', 'obj.foo', 'obj.xyz'); }, 'One property does not exist.');
     test.throws(function() { grunt.config.requires('foo', ['obj', 'foo'], ['obj', 'xyz']); }, 'One property does not exist.');
+    grunt.log.muted = false;
     test.done();
   },
 };

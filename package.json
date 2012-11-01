@@ -21,7 +21,6 @@
   "bin": "bin/grunt",
   "scripts": {
     "test": "./bin/grunt npm-test",
-    "preinstall": "node ./misc/preinstall"
   },
   "engines": {
     "node": ">= 0.8.0"

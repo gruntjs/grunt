@@ -13,7 +13,7 @@ npm install -g grunt-cli
 
 This will put the `grunt` command in your system path, allowing it to be run from anywhere.
 
-**Notes:** You may need to use `sudo` or run your command shell as Administrator to do this. Also, if you have installed grunt globally in the past, you will need to remove the globally-installed grunt with `npm uninstall -g grunt` first.
+**Notes:** You may need to use `sudo` or run your command shell as Administrator to do this. Also, if you have installed grunt globally in the past, you will need to remove it with `npm uninstall -g grunt` first.
 
 ## How the CLI works
 

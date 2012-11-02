@@ -20,7 +20,7 @@
   "main": "lib/grunt",
   "bin": "bin/grunt",
   "scripts": {
-    "test": "./bin/grunt npm-test"
+    "test": "./node_modules/.bin/grunt npm-test"
   },
   "engines": {
     "node": ">= 0.8.0"
@@ -66,6 +66,7 @@
     "temporary": "~0.0.4",
     "grunt-contrib-jshint": "0.1.0",
     "grunt-contrib-nodeunit": "0.1.0",
-    "grunt-contrib-watch": "0.1.0"
+    "grunt-contrib-watch": "0.1.0",
+    "grunt-cli": "~0.1.0"
   }
 }

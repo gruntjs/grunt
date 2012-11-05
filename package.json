@@ -25,7 +25,6 @@
   "engines": {
     "node": ">= 0.8.0"
   },
-  "preferGlobal": true,
   "keywords": [
     "async",
     "cli",

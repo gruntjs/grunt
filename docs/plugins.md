@@ -12,7 +12,7 @@ Publishing a "grunt plugin" to Npm gives you 3 possible things:
 2. A custom global binary that is like "some version of grunt, plus your specific extra stuff."
 3. Either 1 or 2, depending on whether the plugin was installed globally or locally via Npm.
 
-Other than that, it's not too much more than a specific directory structure, contain some number of task files. You load a plugin locally installed via Npm via [grunt.loadNpmTasks](api.md), and you load tasks from a directory via [grunt.loadTasks](api.md).
+Other than that, it's not too much more than a specific directory structure, containing some number of task files. You load a plugin locally, installed via npm, via [grunt.loadNpmTasks](api.md), and you load tasks from a directory via [grunt.loadTasks](api.md).
 
 ## Plugin creation and development
 

@@ -23,7 +23,8 @@ module.exports = function(grunt) {
         'tasks/*.js',
         'tasks/*/*.js',
         'tasks/lib/**/*.js',
-        '<%= nodeunit.all %>'
+        '<%= nodeunit.all %>',
+        'test/gruntfile/*.js',
       ],
       options: {
         curly: true,

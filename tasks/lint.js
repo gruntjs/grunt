@@ -19,7 +19,7 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('lint', 'Validate files with JSHint.', function() {
     // Get flags and globals, allowing target-specific options and globals to
     // override the default options and globals.
-    var options, globals, tmp;
+    var options, globals, tmp, maxAllowedErrors;
 
     tmp = grunt.config(['jshint', this.target, 'options']);
     if (typeof tmp === 'object') {
@@ -30,6 +30,15 @@ module.exports = function(grunt) {
       options = grunt.config('jshint.options');
     }
     grunt.verbose.writeflags(options, 'Options');
+
+    tmp = grunt.config(['jshint', this.target, 'maxAllowedErrors']);
+    if (tmp !== undefined) {
+      grunt.verbose.writeln('Using "' + this.target + '" JSHint maxAllowedErrors.');
+      maxAllowedErrors = tmp;
+    } else {
+      grunt.verbose.writeln('Using master JSHint maxAllowedErrors.');
+      maxAllowedErrors = grunt.config('jshint.maxAllowedErrors');
+    }
 
     tmp = grunt.config(['jshint', this.target, 'globals']);
     if (typeof tmp === 'object') {
@@ -44,7 +53,7 @@ module.exports = function(grunt) {
     // Lint specified files.
 		handleResult(grunt.file.expandFiles(this.file.src).map(function(filepath) {
 				return lint(grunt.file.read(filepath), options, globals, filepath);
-		}), options);
+		}), options, maxAllowedErrors);
 
     // Fail task if errors were logged.
     if (this.errorCount) { return false; }
@@ -105,7 +114,7 @@ module.exports = function(grunt) {
 
   // Lint source code with JSHint.
   grunt.registerHelper('lint', function(src, options, globals, extraMsg) {
-	  handleResult([lint(src, options, globals, extraMsg)], options);
+	  handleResult([lint(src, options, globals, extraMsg)], options, 0);
   });
 
   function lint(src, options, globals, extraMsg) {
@@ -125,7 +134,7 @@ module.exports = function(grunt) {
 		return { msg: extraMsg, errors: jshint.errors || [] };
 	}
 
-	function handleResult(errors, options) {
+	function handleResult(errors, options, maxAllowedErrors) {
 			var errorCount = 0;
 			errors.forEach(function(e) {
 					errorCount += e.errors.length;
@@ -141,7 +150,7 @@ module.exports = function(grunt) {
 					e.errors.forEach(function(errorInstance) {
 							logError(tabstr, placeholderregex, errorInstance, function(line) {
 									var msg = (e.msg ? e.msg + ' : ' : '');
-									if (errorCount <= (options.maxAllowedErrors || 0)) {
+									if (errorCount <= (maxAllowedErrors || 0)) {
 											grunt.verbose.writeln(msg + line);
 									} else {
 											grunt.log.writeln(msg + line);
@@ -149,8 +158,11 @@ module.exports = function(grunt) {
 							});
 					});
 			});
-			if(errorCount > (options.maxAllowedErrors || 0)) {
-					grunt.fail.errorcount += errorCount;
+			if(errorCount > (maxAllowedErrors || 0)) {
+				grunt.log.writeln('Lint errors ' + errorCount + ' > ' + maxAllowedErrors);
+				grunt.fail.errorcount += errorCount;
+			} else {
+				grunt.log.ok('Lint errors ' + errorCount + ' <= allowed ' + maxAllowedErrors);
 			}
 	}
 };

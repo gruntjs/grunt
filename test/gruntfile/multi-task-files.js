@@ -65,6 +65,8 @@ module.exports = function(grunt) {
 
   var results = {};
 
+  var counters = [];
+  var counter = -1;
   grunt.registerMultiTask('run', 'Store stuff for later testing.', function() {
     var key = this.nameArgs;
     var result = results[key];
@@ -75,6 +77,18 @@ module.exports = function(grunt) {
       options: this.options({d: 9}),
       file: this.file
     });
+
+    // Test asynchronous-ness.
+    var done;
+    if (counter++ % 2 === 0) {
+      done = this.async();
+      setTimeout(function() {
+        counters.push(counter);
+        done();
+      }, 10);
+    } else {
+      counters.push(counter);
+    }
   });
 
   var expecteds = {
@@ -135,27 +149,41 @@ module.exports = function(grunt) {
 };
 
   var assert = require('assert');
+  var test = function(name, fn) {
+    try {
+      fn();
+    } catch (err) {
+      grunt.log.subhead('Assertion Failure in ' + name);
+      console.log('Actual\n', JSON.stringify(err.actual));
+      console.log('Expected\n', JSON.stringify(err.expected));
+      throw new Error(err.message);
+    }
+  };
 
-  grunt.registerTask('test', 'Actually test results.', function() {
+  grunt.registerTask('test', 'Test file and option objects.', function() {
     var key = 'run:' + this.nameArgs.replace(/^.*?:/, '');
     var all = key === 'run:all';
     var actual = all ? results : results[key];
     var expected = all ? expecteds : expecteds[key];
 
-    try {
+    test(this.name, function() {
       assert.deepEqual(actual, expected, 'Actual should match expected.');
-    } catch (err) {
-      grunt.log.subhead('Assertion Failure in ' + key);
-      console.log('Actual\n', JSON.stringify(err.actual));
-      console.log('Expected\n', JSON.stringify(err.expected));
-      throw new Error(err.message);
-    }
+    });
 
     if (all) {
       results = {};
     } else {
       delete results[key];
     }
+  });
+
+  grunt.registerTask('test:counters', 'Test function execution order.', function() {
+    test(this.name, function() {
+      assert.equal(counters.length, counter + 1, 'Task functions should have run the correct number of times.');
+      var expected = [];
+      for (var i = 0; i < counters.length; i++) { expected.push(i); }
+      assert.deepEqual(counters, expected, 'Task functions should have actually executed in-order.');
+    });
   });
 
   grunt.registerTask('default', [
@@ -175,6 +203,7 @@ module.exports = function(grunt) {
     'test:long2',
     'run:long3',
     'test:long3',
+    'test:counters',
   ]);
 
 };

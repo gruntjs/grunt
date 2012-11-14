@@ -47,7 +47,10 @@ module.exports = function(grunt) {
         files: ['<%= jshint.all %>'],
         tasks: ['jshint', 'nodeunit']
       }
-    }
+    },
+    subgrunt: {
+      all: ['test/gruntfile/*.js']
+    },
   });
 
   // These plugins provide necessary tasks.
@@ -56,11 +59,32 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   // "npm test" runs these tasks
-  grunt.registerTask('npm-test', ['jshint', 'nodeunit']);
+  grunt.registerTask('npm-test', ['jshint', 'nodeunit', 'subgrunt']);
 
   // Default task.
-  grunt.registerTask('default', ['jshint', 'nodeunit']);
+  grunt.registerTask('default', ['jshint', 'nodeunit', 'subgrunt']);
 
   // Unregister unused tasks.
   grunt.unregisterTasks('init');
+
+  // Run sub-grunt files, because right now, testing tasks is a pain.
+  grunt.registerMultiTask('subgrunt', 'Run a sub-gruntfile.', function() {
+    var path = require('path');
+    var files = grunt.file.expandFiles(this.file.src);
+    grunt.util.async.forEachSeries(files, function(gruntfile, next) {
+      grunt.util.spawn({
+        cmd: process.argv[1],
+        args: ['--gruntfile', path.resolve(gruntfile)],
+      }, function(error, result) {
+        if (error) {
+          grunt.log.error(result.stdout).writeln();
+          next(new Error('Error running sub-gruntfile "' + gruntfile + '".'));
+        } else {
+          grunt.verbose.ok(result.stdout);
+          next();
+        }
+      });
+    }, this.async());
+  });
+
 };

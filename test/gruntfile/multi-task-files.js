@@ -7,6 +7,9 @@
  * https://github.com/gruntjs/grunt/blob/master/LICENSE-MIT
  */
 
+// For now, run this "test suite" with:
+// grunt --gruntfile ./test/gruntfile/multi-task-files.js
+
 'use strict';
 
 module.exports = function(grunt) {
@@ -53,7 +56,10 @@ module.exports = function(grunt) {
           {dest: 'dist/built-<%= version %>-5a.js', src: ['src/file.js', 'src/file_5a.js'], extra: 456},
           {dest: 'dist/built-<%= version %>-5b.js', src: ['src/file.js', 'src/file_5b.js'], extra: 789},
         ]
-      }
+      },
+      // Need to ensure the task function is run if no files or options were
+      // specified!
+      no_files_or_options: {},
     },
   });
 
@@ -120,7 +126,13 @@ module.exports = function(grunt) {
         file: {dest: 'dist/built-1.0.0-5b.js', src: ['src/file.js', 'src/file_5b.js'], extra: 789},
       },
     ],
-  };
+    'run:no_files_or_options': [
+      {
+        options: {a: 1, b: 11, d: 9},
+        file: {},
+      },
+    ],
+};
 
   var assert = require('assert');
 
@@ -149,6 +161,8 @@ module.exports = function(grunt) {
   grunt.registerTask('default', [
     'run',
     'test:all',
+    'run:no_files_or_options',
+    'test:no_files_or_options',
     'run:dist/built.js',
     'test:dist/built.js',
     'run:dist/built1.js',

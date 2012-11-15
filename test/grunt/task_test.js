@@ -10,53 +10,75 @@ if (grunt.task.searchDirs.length === 0) {
 }
 
 exports['task.normalizeMultiTaskFiles'] = {
+  setUp: function(done) {
+    this.cwd = process.cwd();
+    process.chdir('test/fixtures/files');
+    done();
+  },
+  tearDown: function(done) {
+    process.chdir(this.cwd);
+    done();
+  },
   'normalize': function(test) {
     test.expect(6);
+    var actual, expected;
 
-    test.deepEqual(grunt.task.normalizeMultiTaskFiles('src/file1.js', 'dist/built.js'), [
-      {dest: 'dist/built.js', src: ['src/file1.js']}
-    ], 'should normalize destTarget: srcString.');
+    actual = grunt.task.normalizeMultiTaskFiles('src/*1.js', 'dist/built.js');
+    expected = [
+      {dest: 'dist/built.js', srcRaw: ['src/*1.js'], src: ['src/file1.js']}
+    ];
+    test.deepEqual(actual, expected, 'should normalize destTarget: srcString.');
 
-    test.deepEqual(grunt.task.normalizeMultiTaskFiles([['src/file1.js'], ['src/file2.js']], 'dist/built.js'), [
-      {dest: 'dist/built.js', src: ['src/file1.js', 'src/file2.js']}
-    ], 'should normalize destTarget: srcArray.');
+    actual = grunt.task.normalizeMultiTaskFiles([['src/*1.js'], ['src/*2.js']], 'dist/built.js');
+    expected = [
+      {dest: 'dist/built.js', srcRaw: ['src/*1.js', 'src/*2.js'], src: ['src/file1.js', 'src/file2.js']}
+    ];
+    test.deepEqual(actual, expected, 'should normalize destTarget: srcArray.');
 
-    test.deepEqual(grunt.task.normalizeMultiTaskFiles({
-      src: ['src/file1.js', 'src/file2.js'],
+    actual = grunt.task.normalizeMultiTaskFiles({
+      src: ['src/*1.js', 'src/*2.js'],
       dest: 'dist/built.js'
-    }, 'target'), [
-      {dest: 'dist/built.js', src: ['src/file1.js', 'src/file2.js']}
-    ], 'should normalize target: {src: srcStuff, dest: destStuff}.');
+    }, 'target');
+    expected = [
+      {dest: 'dist/built.js', srcRaw: ['src/*1.js', 'src/*2.js'], src: ['src/file1.js', 'src/file2.js']}
+    ];
+    test.deepEqual(actual, expected, 'should normalize target: {src: srcStuff, dest: destStuff}.');
 
-    test.deepEqual(grunt.task.normalizeMultiTaskFiles({
+    actual = grunt.task.normalizeMultiTaskFiles({
       files: {
-        'dist/built-a.js': 'src/file1.js',
-        'dist/built-b.js': ['src/file1.js', [['src/file2.js']]]
+        'dist/built-a.js': 'src/*1.js',
+        'dist/built-b.js': ['src/*1.js', [['src/*2.js']]]
       }
-    }, 'target'), [
-      {dest: 'dist/built-a.js', src: ['src/file1.js']},
-      {dest: 'dist/built-b.js', src: ['src/file1.js', 'src/file2.js']}
-    ], 'should normalize target: {files: {destTarget: srcStuff, ...}}.');
+    }, 'target');
+    expected = [
+      {dest: 'dist/built-a.js', srcRaw: ['src/*1.js'], src: ['src/file1.js']},
+      {dest: 'dist/built-b.js', srcRaw: ['src/*1.js', 'src/*2.js'], src: ['src/file1.js', 'src/file2.js']}
+    ];
+    test.deepEqual(actual, expected, 'should normalize target: {files: {destTarget: srcStuff, ...}}.');
 
-    test.deepEqual(grunt.task.normalizeMultiTaskFiles({
+    actual = grunt.task.normalizeMultiTaskFiles({
       files: [
-        {'dist/built-a.js': 'src/file1.js'},
-        {'dist/built-b.js': [[['src/file1.js'], 'src/file2.js']]}
+        {'dist/built-a.js': 'src/*.whoops'},
+        {'dist/built-b.js': [[['src/*1.js'], 'src/*2.js']]}
       ]
-    }, 'target'), [
-      {dest: 'dist/built-a.js', src: ['src/file1.js']},
-      {dest: 'dist/built-b.js', src: ['src/file1.js', 'src/file2.js']}
-    ], 'should normalize target: {files: [{destTarget: srcStuff}, ...]}.');
+    }, 'target');
+    expected = [
+      {dest: 'dist/built-a.js', srcRaw: ['src/*.whoops'], src: []},
+      {dest: 'dist/built-b.js', srcRaw: ['src/*1.js', 'src/*2.js'], src: ['src/file1.js', 'src/file2.js']}
+    ];
+    test.deepEqual(actual, expected, 'should normalize target: {files: [{destTarget: srcStuff}, ...]}.');
 
-    test.deepEqual(grunt.task.normalizeMultiTaskFiles({
+    actual = grunt.task.normalizeMultiTaskFiles({
       files: [
-        {dest: 'dist/built-a.js', src: 'src/file1.js'},
-        {dest: 'dist/built-b.js', src: ['src/file1.js', 'src/file2.js']}
+        {dest: 'dist/built-a.js', src: 'src/*2.js'},
+        {dest: 'dist/built-b.js', src: ['src/*1.js', 'src/*2.js']}
       ]
-    }, 'target'), [
-      {dest: 'dist/built-a.js', src: ['src/file1.js']},
-      {dest: 'dist/built-b.js', src: ['src/file1.js', 'src/file2.js']}
-    ], 'should normalize target: {files: [{src: srcStuff, dest: destStuff}, ...]}.');
+    }, 'target');
+    expected = [
+      {dest: 'dist/built-a.js', srcRaw: ['src/*2.js'], src: ['src/file2.js']},
+      {dest: 'dist/built-b.js', srcRaw: ['src/*1.js', 'src/*2.js'], src: ['src/file1.js', 'src/file2.js']}
+    ];
+    test.deepEqual(actual, expected, 'should normalize target: {files: [{src: srcStuff, dest: destStuff}, ...]}.');
 
     test.done();
   },
@@ -72,15 +94,17 @@ exports['task.normalizeMultiTaskFiles'] = {
       PROP3: '3'
     });
 
-    test.deepEqual(grunt.task.normalizeMultiTaskFiles({
+    var actual = grunt.task.normalizeMultiTaskFiles({
       files: [
-        {dest: 'dist/built-<%= TEST %>-a.js', src: 'src/file1-<%= TEST %>.js'},
-        {dest: 'dist/built-<%= TEST %>-b.js', src: ['src/file1-<%= TEST %>.js', 'src/file2-<%= TEST %>.js']}
+        {dest: 'dist/built-<%= TEST %>-a.js', src: 'src/file?-<%= TEST %>.js'},
+        {dest: 'dist/built-<%= TEST %>-b.js', src: ['src/*1-<%= TEST %>.js', 'src/*2-<%= TEST %>.js']}
       ]
-    }, 'target'), [
-      {dest: 'dist/built-123-a.js', src: ['src/file1-123.js']},
-      {dest: 'dist/built-123-b.js', src: ['src/file1-123.js', 'src/file2-123.js']}
-    ], 'should process templates recursively.');
+    }, 'target');
+    var expected = [
+      {dest: 'dist/built-123-a.js', srcRaw: ['src/file?-123.js'], src: ['src/file1-123.js', 'src/file2-123.js']},
+      {dest: 'dist/built-123-b.js', srcRaw: ['src/*1-123.js', 'src/*2-123.js'], src: ['src/file1-123.js', 'src/file2-123.js']}
+    ];
+    test.deepEqual(actual, expected, 'should process templates recursively.');
 
     test.done();
   }

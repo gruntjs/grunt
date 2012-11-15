@@ -13,23 +13,25 @@
 'use strict';
 
 module.exports = function(grunt) {
+  grunt.file.setBase('../fixtures/files');
+
   grunt.initConfig({
-    version: '1.0.0',
+    build: '123',
     run: {
       options: {a: 1, b: 11},
       // This is the "compact" format, where the target name is actually the
       // dest filename. Doesn't support per-target options, templated dest, or
       // >1 srcs-dest grouping.
-      'dist/built.js': 'src/file.js',
-      'dist/built1.js': ['src/file.js', 'src/file_1a.js'],
+      'dist/built.js': 'src/*1.js',
+      'dist/built1.js': ['src/*1.js', 'src/*2.js'],
       // This is the "medium" format. The target name is arbitrary and can be
       // used like "grunt run:built". Supports per-target options, templated
       // dest, and arbitrary "extra" paramters. Doesn't support >1 srcs-dest
       // grouping.
       built: {
         options: {a: 2, c: 22},
-        src: ['src/file.js', 'src/file_2a.js'],
-        dest: 'dist/built-<%= version %>.js',
+        src: ['src/*1.js', 'src/*2.js'],
+        dest: 'dist/built-<%= build %>.js',
         extra: 123,
       },
       // This is the "full" format. The target name is arbitrary and can be
@@ -38,23 +40,23 @@ module.exports = function(grunt) {
       long1: {
         options: {a: 3, c: 33},
         files: {
-          'dist/built-<%= version %>-3a.js': ['src/file.js', 'src/file_3a.js'],
-          'dist/built-<%= version %>-3b.js': ['src/file.js', 'src/file_3b.js'],
+          'dist/built-<%= build %>-a.js': ['src/*1.js'],
+          'dist/built-<%= build %>-b.js': ['src/*1.js', 'src/*2.js'],
         }
       },
       long2: {
         options: {a: 4, c: 44},
         files: [
-          {'dist/built-<%= version %>-4a.js': ['src/file.js', 'src/file_4a.js']},
-          {'dist/built-<%= version %>-4b.js': ['src/file.js', 'src/file_4b.js']},
+          {'dist/built-<%= build %>-a.js': ['src/*.whoops']},
+          {'dist/built-<%= build %>-b.js': ['src/*1.js', 'src/*2.js']},
         ]
       },
       // This "full" variant supports per srcs-dest arbitrary "extra" paramters.
       long3: {
         options: {a: 5, c: 55},
         files: [
-          {dest: 'dist/built-<%= version %>-5a.js', src: ['src/file.js', 'src/file_5a.js'], extra: 456},
-          {dest: 'dist/built-<%= version %>-5b.js', src: ['src/file.js', 'src/file_5b.js'], extra: 789},
+          {dest: 'dist/built-<%= build %>-a.js', src: ['src/*2.js'], extra: 456},
+          {dest: 'dist/built-<%= build %>-b.js', src: ['src/*1.js', 'src/*2.js'], extra: 789},
         ]
       },
       // Need to ensure the task function is run if no files or options were
@@ -95,49 +97,88 @@ module.exports = function(grunt) {
     'run:dist/built.js': [
       {
         options: {a: 1, b: 11, d: 9},
-        file: {dest: 'dist/built.js', src: ['src/file.js']},
+        file: {
+          dest: 'dist/built.js',
+          srcRaw: ['src/*1.js'],
+          src: ['src/file1.js'],
+        },
       },
     ],
     'run:dist/built1.js': [
       {
         options: {a: 1, b: 11, d: 9},
-        file: {dest: 'dist/built1.js', src: ['src/file.js', 'src/file_1a.js']},
+        file: {
+          dest: 'dist/built1.js',
+          srcRaw: ['src/*1.js', 'src/*2.js'],
+          src: ['src/file1.js', 'src/file2.js'],
+        },
       },
     ],
     'run:built': [
       {
         options: {a: 2, b: 11, c: 22, d: 9},
-        file: {dest: 'dist/built-1.0.0.js', src: ['src/file.js', 'src/file_2a.js'], extra: 123},
+        file: {
+          dest: 'dist/built-123.js',
+          srcRaw: ['src/*1.js', 'src/*2.js'],
+          src: ['src/file1.js', 'src/file2.js'],
+          extra: 123,
+        },
       },
     ],
     'run:long1': [
       {
         options: {a: 3, b: 11, c: 33, d: 9},
-        file: {dest: 'dist/built-1.0.0-3a.js', src: ['src/file.js', 'src/file_3a.js']},
+        file: {
+          dest: 'dist/built-123-a.js',
+          srcRaw: ['src/*1.js'],
+          src: ['src/file1.js'],
+        },
       },
       {
         options: {a: 3, b: 11, c: 33, d: 9},
-        file: {dest: 'dist/built-1.0.0-3b.js', src: ['src/file.js', 'src/file_3b.js']},
+        file: {
+          dest: 'dist/built-123-b.js',
+          srcRaw: ['src/*1.js', 'src/*2.js'],
+          src: ['src/file1.js', 'src/file2.js'],
+        },
       },
     ],
     'run:long2': [
       {
         options: {a: 4, b: 11, c: 44, d: 9},
-        file: {dest: 'dist/built-1.0.0-4a.js', src: ['src/file.js', 'src/file_4a.js']},
+        file: {
+          dest: 'dist/built-123-a.js',
+          srcRaw: ['src/*.whoops'],
+          src: [],
+        },
       },
       {
         options: {a: 4, b: 11, c: 44, d: 9},
-        file: {dest: 'dist/built-1.0.0-4b.js', src: ['src/file.js', 'src/file_4b.js']},
+        file: {
+          dest: 'dist/built-123-b.js',
+          srcRaw: ['src/*1.js', 'src/*2.js'],
+          src: ['src/file1.js', 'src/file2.js'],
+        },
       },
     ],
     'run:long3': [
       {
         options: {a: 5, b: 11, c: 55, d: 9},
-        file: {dest: 'dist/built-1.0.0-5a.js', src: ['src/file.js', 'src/file_5a.js'], extra: 456},
+        file: {
+          dest: 'dist/built-123-a.js',
+          srcRaw: ['src/*2.js'],
+          src: ['src/file2.js'],
+          extra: 456,
+        },
       },
       {
         options: {a: 5, b: 11, c: 55, d: 9},
-        file: {dest: 'dist/built-1.0.0-5b.js', src: ['src/file.js', 'src/file_5b.js'], extra: 789},
+        file: {
+          dest: 'dist/built-123-b.js',
+          srcRaw: ['src/*1.js', 'src/*2.js'],
+          src: ['src/file1.js', 'src/file2.js'],
+          extra: 789,
+        },
       },
     ],
     'run:no_files_or_options': [
@@ -187,8 +228,6 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('default', [
-    'run',
-    'test:all',
     'run:no_files_or_options',
     'test:no_files_or_options',
     'run:dist/built.js',
@@ -203,6 +242,8 @@ module.exports = function(grunt) {
     'test:long2',
     'run:long3',
     'test:long3',
+    'run',
+    'test:all',
     'test:counters',
   ]);
 

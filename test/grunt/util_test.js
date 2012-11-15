@@ -174,6 +174,31 @@ exports['util.spawn'] = {
       test.done();
     });
   },
+  'grunt': function(test) {
+    test.expect(3);
+    grunt.util.spawn({
+      grunt: true,
+      args: [ '--gruntfile', 'test/fixtures/Gruntfile-print-text.js', 'print:foo' ],
+    }, function(err, result, code) {
+      test.equals(err, null);
+      test.equals(code, 0);
+      test.ok(/^OUTPUT: foo/m.test(result.stdout), 'stdout should contain output indicating the grunt task was run.');
+      test.done();
+    });
+  },
+  'grunt (with cwd)': function(test) {
+    test.expect(3);
+    grunt.util.spawn({
+      grunt: true,
+      args: [ '--gruntfile', 'Gruntfile-print-text.js', 'print:foo' ],
+      opts: {cwd: 'test/fixtures'},
+    }, function(err, result, code) {
+      test.equals(err, null);
+      test.equals(code, 0);
+      test.ok(/^OUTPUT: foo/m.test(result.stdout), 'stdout should contain output indicating the grunt task was run.');
+      test.done();
+    });
+  },
 };
 
 exports['util.underscore.string'] = function(test) {

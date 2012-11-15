@@ -68,6 +68,10 @@ The `options` object has these possible properties:
 var options = {
   // The command to execute. It should be in the system path.
   cmd: commandToExecute,
+  // If specified, the same grunt bin that is currently running will be
+  // spawned as the child command, instead of the "cmd" option. Defaults
+  // to false.
+  grunt: boolean,
   // An array of arguments to pass to the command.
   args: arrayOfArguments,
   // Additional options for the Node.js child_process spawn method.

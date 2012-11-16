@@ -2,13 +2,6 @@
 
 var grunt = require('../../lib/grunt');
 
-// In case the grunt being used to test is different than the grunt being
-// tested, initialize the task and config subsystems.
-if (grunt.task.searchDirs.length === 0) {
-  grunt.task.init([]);
-  grunt.config.init({});
-}
-
 // Helper for testing stdout
 var hooker = grunt.util.hooker;
 var stdoutEqual = function(test, callback, expected) {

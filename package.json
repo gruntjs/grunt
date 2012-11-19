@@ -18,7 +18,6 @@
     }
   ],
   "main": "lib/grunt",
-  "bin": "bin/grunt",
   "scripts": {
     "test": "./node_modules/.bin/grunt npm-test"
   },

@@ -73,8 +73,8 @@ module.exports = function(grunt) {
     var files = grunt.file.expandFiles(this.file.src);
     grunt.util.async.forEachSeries(files, function(gruntfile, next) {
       grunt.util.spawn({
-        cmd: process.argv[0],
-        args: [process.argv[1], '--gruntfile', path.resolve(gruntfile)],
+        grunt: true,
+        args: ['--gruntfile', path.resolve(gruntfile)],
       }, function(error, result) {
         if (error) {
           grunt.log.error(result.stdout).writeln();

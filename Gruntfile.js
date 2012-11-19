@@ -59,10 +59,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   // "npm test" runs these tasks
-  grunt.registerTask('npm-test', ['jshint', 'nodeunit', 'subgrunt']);
+  grunt.registerTask('test', ['jshint', 'nodeunit', 'subgrunt']);
 
   // Default task.
-  grunt.registerTask('default', ['jshint', 'nodeunit', 'subgrunt']);
+  grunt.registerTask('default', ['test']);
 
   // Unregister unused tasks.
   grunt.unregisterTasks('init');

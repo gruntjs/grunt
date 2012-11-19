@@ -66,6 +66,6 @@
     "grunt-contrib-jshint": "0.1.0",
     "grunt-contrib-nodeunit": "0.1.0",
     "grunt-contrib-watch": "0.1.0",
-    "grunt-cli": "~0.1.0"
+    "grunt-cli": "~0.1.1"
   }
 }

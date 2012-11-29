@@ -199,6 +199,22 @@ exports['util.spawn'] = {
       test.done();
     });
   },
+  'spawn stio inherit': function(test) {
+    test.expect(1);
+
+    grunt.util.spawn({
+        cmd: 'echo',
+        args: ['"hello world"'],
+        opts: {
+             stdio: 'inherit'
+        },
+        fallback: 'none'
+      },
+      function(error, result) {
+        test.equals(result.stdout, '', 'Nothing will be passed to the stdout string when spawn stdio is configured for inherit');
+        test.done();
+      });
+  }
 };
 
 exports['util.underscore.string'] = function(test) {

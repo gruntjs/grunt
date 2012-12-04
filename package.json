@@ -49,7 +49,6 @@
     "dateformat": "1.0.2-1.2.3",
     "eventemitter2": "~0.4.9",
     "glob": "~3.1.13",
-    "grunt-init": "0.1.0",
     "hooker": "~0.2.3",
     "iconv-lite": "~0.2.5",
     "minimatch": "~0.2.6",

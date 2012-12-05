@@ -9,7 +9,7 @@
     "url": "git://github.com/gruntjs/grunt.git"
   },
   "bugs": {
-    "url" : "http://github.com/gruntjs/grunt/issues"
+    "url": "http://github.com/gruntjs/grunt/issues"
   },
   "licenses": [
     {
@@ -60,7 +60,8 @@
     "underscore": "~1.2.4",
     "underscore.string": "~2.1.1",
     "temporary": "~0.0.4",
-    "gzip-js": "~0.3.1"
+    "gzip-js": "~0.3.1",
+    "phantomjs": "~0.2.3"
   },
   "devDependencies": {}
 }

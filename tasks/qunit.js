@@ -12,6 +12,7 @@ module.exports = function(grunt) {
   // Nodejs libs.
   var fs = require('fs');
   var path = require('path');
+  var phantomjs = require('phantomjs');
 
   // External libs.
   var Tempfile = require('temporary/lib/file');
@@ -230,27 +231,15 @@ module.exports = function(grunt) {
 
   grunt.registerHelper('phantomjs', function(options) {
     return grunt.utils.spawn({
-      cmd: 'phantomjs',
+      cmd: phantomjs.path,
       args: options.args
     }, function(err, result, code) {
       if (!err) { return options.done(null); }
       // Something went horribly wrong.
       grunt.verbose.or.writeln();
       grunt.log.write('Running PhantomJS...').error();
-      if (code === 127) {
-        grunt.log.errorlns(
-          'In order for this task to work properly, PhantomJS must be ' +
-          'installed and in the system PATH (if you can run "phantomjs" at' +
-          ' the command line, this task should work). Unfortunately, ' +
-          'PhantomJS cannot be installed automatically via npm or grunt. ' +
-          'See the grunt FAQ for PhantomJS installation instructions: ' +
-          'https://github.com/gruntjs/grunt/blob/master/docs/faq.md'
-        );
-        grunt.warn('PhantomJS not found.', options.code);
-      } else {
-        result.split('\n').forEach(grunt.log.error, grunt.log);
-        grunt.warn('PhantomJS exited unexpectedly with exit code ' + code + '.', options.code);
-      }
+      result.split('\n').forEach(grunt.log.error, grunt.log);
+      grunt.warn('PhantomJS exited unexpectedly with exit code ' + code + '.', options.code);
       options.done(code);
     });
   });

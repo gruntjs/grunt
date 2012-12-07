@@ -10,7 +10,10 @@
 'use strict';
 
 module.exports = function(grunt) {
-
+  // console.log(grunt.template.process('<%= nodeunit.all %>'));
+  grunt.registerTask('xyz', '', function() {
+    return false;
+  });
   // Project configuration.
   grunt.initConfig({
     nodeunit: {

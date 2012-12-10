@@ -1,29 +1,17 @@
 # grunt [![Build Status](https://secure.travis-ci.org/gruntjs/grunt.png?branch=devel)](http://travis-ci.org/gruntjs/grunt)
 Grunt is a task-based command line build tool for JavaScript projects.
 
-_Grunt is currently in beta. While I'm already using it on multiple projects, it might have a minor issue or two. And things might change before its final release, based on your feedback. Please try it out in a project, and [make suggestions][issues] or [report bugs][issues]!_
-
-## Getting started
-Be sure to read the [getting started guide](/gruntjs/grunt/blob/master/docs/getting_started.md), which is a complete guide to configuring grunt for your project. In addition, check out the [example Gruntfiles](/gruntjs/grunt/blob/master/docs/example_gruntfiles.md) which highlight a number of fairly common configurations.
-
-## Custom tasks
-In addition to the built-in tasks, you can create your own tasks. Don't like a built-in task's default behavior? Override it. Check out the [grunt API documentation](/gruntjs/grunt/blob/master/docs/api.md) and the [built-in tasks source](/gruntjs/grunt/blob/master/tasks) for everything you need to know about creating custom tasks.
+## Introduction
+Check out our [getting started guide] for a primer on how to use grunt.
 
 ## Documentation
-Take a look at the [documentation table of contents][docs] for all the things.
+Take a look at our [wiki] for all the things.
 
-## Why does grunt exist?
-Doing all this stuff manually is a total pain, and building all this stuff into a gigantic Makefile / Jakefile / Cakefile / Rakefile / ?akefile that's maintained across all my projects was also becoming a total pain. Since I always found myself performing the same tasks over and over again, for every project, it made sense to build a task-based build tool.
+## Support / Contributing
+Before you make an issue, please read our [contribution guide].
 
-Being primarily a JavaScript developer, I decided to use [Node.js][node] and [npm][npm] because the dependencies I most care about ([JSHint][jshint] and [UglifyJS][uglify]) were already npm modules. That being said, while Node.js was designed to support highly-concurrent asynchronous-IO-driven web servers, it was clearly NOT designed to make command-line build tools. But none of that matters, because grunt works. Just install it and see.
+You can find the grunt team in [#grunt on irc.freenode.net](irc://irc.freenode.net/#grunt).
 
-## Installing grunt
-
-Grunt is available as an [npm][npm] module. If you install grunt globally via `npm install -g grunt`, it will be available for use in all of your projects. Once grunt has been installed, you can type `grunt --help` at the command line for more information. And if you want to see grunt "grunt" itself, cd into grunt's directory and type `grunt`
-
-_Note: in Windows, you may need to run grunt as `grunt.cmd`. See the [FAQ](/gruntjs/grunt/blob/master/docs/faq.md) for more Windows-specific information._
-
-For projects already using grunt, you're done. Otherwise, if you're adding grunt to an existing project or starting from scratch, check out the [getting started guide](/gruntjs/grunt/blob/master/docs/getting_started.md), which is a complete guide to configuring grunt for your project.
 
 ## Release History
 _(Until v1.0.0, this will only be updated when major or breaking changes are made)_
@@ -45,14 +33,9 @@ _(Until v1.0.0, this will only be updated when major or breaking changes are mad
 * 2012/01/11 - v0.1.0 - Initial release.
 
 ## License
-Copyright (c) 2012 "Cowboy" Ben Alman  
+Copyright (c) 2012 "Cowboy" Ben Alman, contributors
 Licensed under the MIT license.  
 <https://github.com/gruntjs/grunt/blob/master/LICENSE-MIT>
-
-
-[docs]: /gruntjs/grunt/blob/master/docs/toc.md
-[docs-init]: /gruntjs/grunt/blob/master/docs/task_init.md
-[issues]: /gruntjs/grunt/issues
 
 [node]: http://nodejs.org/
 [npm]: http://npmjs.org/
@@ -61,3 +44,6 @@ Licensed under the MIT license.
 [nodeunit]: https://github.com/caolan/nodeunit
 [qunit]: http://docs.jquery.com/QUnit
 [phantom]: http://www.phantomjs.org/
+[contribution guide]: http://gruntjs.com/contributing
+[getting started guide]: http://gruntjs.com/getting-started
+[wiki]: http://github.com/gruntjs/grunt/wiki

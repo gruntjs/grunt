@@ -229,6 +229,74 @@ exports['file.expand*'] = {
   },
 };
 
+exports['file.fileMapping'] = {
+  setUp: function(done) {
+    this.cwd = process.cwd();
+    process.chdir('test/fixtures');
+    done();
+  },
+  tearDown: function(done) {
+    process.chdir(this.cwd);
+    done();
+  },
+  'basic matching': function(test) {
+    test.expect(2);
+
+    var actual = grunt.file.fileMapping(['expand/**/*.txt'], 'dest');
+    var expected = {
+      'dest/expand/deep/deep.txt': 'expand/deep/deep.txt',
+      'dest/expand/deep/deeper/deeper.txt': 'expand/deep/deeper/deeper.txt',
+      'dest/expand/deep/deeper/deepest/deepest.txt': 'expand/deep/deeper/deepest/deepest.txt',
+    };
+    test.deepEqual(actual, expected, 'basic src-dest options');
+
+    actual = grunt.file.fileMapping(['expand/**/*.txt'], 'dest/');
+    test.deepEqual(actual, expected, 'destBase should behave the same both with or without trailing slash');
+
+    test.done();
+  },
+  'flatten': function(test) {
+    test.expect(1);
+    var actual = grunt.file.fileMapping(['expand/**/*.txt'], 'dest', {flatten: true});
+    var expected = {
+      'dest/deep.txt': 'expand/deep/deep.txt',
+      'dest/deeper.txt': 'expand/deep/deeper/deeper.txt',
+      'dest/deepest.txt': 'expand/deep/deeper/deepest/deepest.txt',
+    };
+    test.deepEqual(actual, expected, 'dest paths should be flattened pre-destBase+destPath join');
+    test.done();
+  },
+  'cwd': function(test) {
+    test.expect(1);
+    var actual = grunt.file.fileMapping(['**/*.txt'], 'dest', {cwd: 'expand'});
+    var expected = {
+      'dest/deep/deep.txt': 'expand/deep/deep.txt',
+      'dest/deep/deeper/deeper.txt': 'expand/deep/deeper/deeper.txt',
+      'dest/deep/deeper/deepest/deepest.txt': 'expand/deep/deeper/deepest/deepest.txt',
+    };
+    test.deepEqual(actual, expected, 'cwd should be stripped from front of destPath, pre-destBase+destPath join');
+    test.done();
+  },
+  'rename': function(test) {
+    test.expect(1);
+    var actual = grunt.file.fileMapping(['**/*.txt'], 'dest', {
+      cwd: 'expand',
+      flatten: true,
+      rename: function(destBase, destPath, options) {
+        return path.join(destBase, options.cwd, 'o-m-g', destPath);
+      }
+    });
+    var expected = {
+      'dest/expand/o-m-g/deep.txt': 'expand/deep/deep.txt',
+      'dest/expand/o-m-g/deeper.txt': 'expand/deep/deeper/deeper.txt',
+      'dest/expand/o-m-g/deepest.txt': 'expand/deep/deeper/deepest/deepest.txt',
+    };
+    test.deepEqual(actual, expected, 'custom rename function should be used to build dest, post-flatten');
+    test.done();
+  },
+};
+
+
 // Compare two buffers. Returns true if they are equivalent.
 var compareBuffers = function(buf1, buf2) {
   if (!Buffer.isBuffer(buf1) || !Buffer.isBuffer(buf2)) { return false; }

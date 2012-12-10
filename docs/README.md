@@ -1,1 +1,1 @@
-[Grunt homepage](http://gruntjs.com/) | [Documentation table of contents](/gruntjs/grunt/blob/master/docs/toc.md)
+The docs have moved! Please view them on the [grunt wiki](https://github.com/gruntjs/grunt/wiki).

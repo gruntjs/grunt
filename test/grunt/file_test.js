@@ -229,7 +229,7 @@ exports['file.expand*'] = {
   },
 };
 
-exports['file.fileMapping'] = {
+exports['file.expandMapping'] = {
   setUp: function(done) {
     this.cwd = process.cwd();
     process.chdir('test/fixtures');
@@ -242,7 +242,7 @@ exports['file.fileMapping'] = {
   'basic matching': function(test) {
     test.expect(2);
 
-    var actual = grunt.file.fileMapping(['expand/**/*.txt'], 'dest');
+    var actual = grunt.file.expandMapping(['expand/**/*.txt'], 'dest');
     var expected = {
       'dest/expand/deep/deep.txt': 'expand/deep/deep.txt',
       'dest/expand/deep/deeper/deeper.txt': 'expand/deep/deeper/deeper.txt',
@@ -250,14 +250,14 @@ exports['file.fileMapping'] = {
     };
     test.deepEqual(actual, expected, 'basic src-dest options');
 
-    actual = grunt.file.fileMapping(['expand/**/*.txt'], 'dest/');
+    actual = grunt.file.expandMapping(['expand/**/*.txt'], 'dest/');
     test.deepEqual(actual, expected, 'destBase should behave the same both with or without trailing slash');
 
     test.done();
   },
   'flatten': function(test) {
     test.expect(1);
-    var actual = grunt.file.fileMapping(['expand/**/*.txt'], 'dest', {flatten: true});
+    var actual = grunt.file.expandMapping(['expand/**/*.txt'], 'dest', {flatten: true});
     var expected = {
       'dest/deep.txt': 'expand/deep/deep.txt',
       'dest/deeper.txt': 'expand/deep/deeper/deeper.txt',
@@ -268,7 +268,7 @@ exports['file.fileMapping'] = {
   },
   'cwd': function(test) {
     test.expect(1);
-    var actual = grunt.file.fileMapping(['**/*.txt'], 'dest', {cwd: 'expand'});
+    var actual = grunt.file.expandMapping(['**/*.txt'], 'dest', {cwd: 'expand'});
     var expected = {
       'dest/deep/deep.txt': 'expand/deep/deep.txt',
       'dest/deep/deeper/deeper.txt': 'expand/deep/deeper/deeper.txt',
@@ -279,7 +279,7 @@ exports['file.fileMapping'] = {
   },
   'rename': function(test) {
     test.expect(1);
-    var actual = grunt.file.fileMapping(['**/*.txt'], 'dest', {
+    var actual = grunt.file.expandMapping(['**/*.txt'], 'dest', {
       cwd: 'expand',
       flatten: true,
       rename: function(destBase, destPath, options) {

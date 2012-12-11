@@ -64,9 +64,6 @@ module.exports = function(grunt) {
   // Default task.
   grunt.registerTask('default', ['test']);
 
-  // Unregister unused tasks.
-  grunt.unregisterTasks('init');
-
   // Run sub-grunt files, because right now, testing tasks is a pain.
   grunt.registerMultiTask('subgrunt', 'Run a sub-gruntfile.', function() {
     var path = require('path');

@@ -78,24 +78,6 @@ exports['Tasks'] = {
     test.throws(function() { task.run('nothing'); }, 'It should not be accessible by its previous name and throw an exception.');
     test.done();
   },
-  'Task#unregisterTasks': function(test) {
-    test.expect(8);
-    var task = this.task;
-    task.registerTask('a', 'Do nothing.', function() {});
-    task.registerTask('b', 'Do nothing.', function() {});
-    task.registerTask('c', 'Do nothing.', function() {});
-    task.registerTask('d', 'Do nothing.', ['a', 'b']);
-    task.registerTask('e', 'Do nothing.', ['c', 'd']);
-    test.equal(task.unregisterTasks('a'), task, 'It should unregister the task and chain.');
-    test.equal('a' in task._tasks, false, 'The task should have been deleted.');
-    test.equal(task.unregisterTasks('b', 'c'), task, 'It should unregister the tasks and chain.');
-    test.equal('b' in task._tasks, false, 'The task should have been deleted.');
-    test.equal('c' in task._tasks, false, 'The task should have been deleted.');
-    test.equal(task.unregisterTasks(['d', 'e']), task, 'It should unregister the tasks and chain.');
-    test.equal('d' in task._tasks, false, 'The task should have been deleted.');
-    test.equal('e' in task._tasks, false, 'The task should have been deleted.');
-    test.done();
-  },
   'Task#run (exception handling)': function(test) {
     test.expect(4);
     var task = this.task;

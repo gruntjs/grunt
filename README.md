@@ -1,4 +1,4 @@
-# grunt [![Build Status](https://secure.travis-ci.org/gruntjs/grunt.png?branch=devel)](http://travis-ci.org/gruntjs/grunt)
+# grunt [![Build Status](https://secure.travis-ci.org/gruntjs/grunt.png?branch=master)](http://travis-ci.org/gruntjs/grunt)
 Grunt is a task-based command line build tool for JavaScript projects.
 
 ## Introduction

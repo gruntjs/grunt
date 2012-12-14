@@ -174,6 +174,37 @@ exports['util.spawn'] = {
       test.done();
     });
   },
+  'cmd not in path': function(test) {
+    test.expect(6);
+    var win32 = process.platform === 'win32';
+    grunt.util.spawn({
+      cmd: 'test/fixtures/exec' + (win32 ? '.cmd' : '.sh'),
+    }, function(err, result, code) {
+      test.equals(err, null);
+      test.equals(code, 0);
+      test.equals(result.stdout, 'done');
+      test.equals(result.stderr, '');
+      test.equals(result.code, 0);
+      test.equals(String(result), 'done');
+      test.done();
+    });
+  },
+  'cmd not in path (with cwd)': function(test) {
+    test.expect(6);
+    var win32 = process.platform === 'win32';
+    grunt.util.spawn({
+      cmd: './exec' + (win32 ? '.cmd' : '.sh'),
+      opts: {cwd: 'test/fixtures'},
+    }, function(err, result, code) {
+      test.equals(err, null);
+      test.equals(code, 0);
+      test.equals(result.stdout, 'done');
+      test.equals(result.stderr, '');
+      test.equals(result.code, 0);
+      test.equals(String(result), 'done');
+      test.done();
+    });
+  },
   'grunt': function(test) {
     test.expect(3);
     grunt.util.spawn({

@@ -178,7 +178,7 @@ exports['util.spawn'] = {
     test.expect(6);
     var win32 = process.platform === 'win32';
     grunt.util.spawn({
-      cmd: 'test/fixtures/exec' + (win32 ? '.cmd' : '.sh'),
+      cmd: 'test\\fixtures\\exec' + (win32 ? '.cmd' : '.sh'),
     }, function(err, result, code) {
       test.equals(err, null);
       test.equals(code, 0);

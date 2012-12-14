@@ -2,7 +2,10 @@
 
 var grunt = require('../../lib/grunt');
 
+var fs = require('fs');
 var path = require('path');
+
+var Tempfile = require('temporary/lib/file');
 
 exports['util.callbackify'] = {
   'return': function(test) {
@@ -229,6 +232,24 @@ exports['util.spawn'] = {
       test.ok(/^OUTPUT: foo/m.test(result.stdout), 'stdout should contain output indicating the grunt task was run.');
       test.done();
     });
+  },
+  'custom stdio stream(s)': function(test) {
+    test.expect(5);
+    var stdoutFile = new Tempfile();
+    var stdout = fs.openSync(stdoutFile.path, 'a');
+    var child = grunt.util.spawn({
+      cmd: 'echo',
+      args: ['hello world'],
+      opts: {stdio: [null, stdout, null]},
+    }, function(err, result, code) {
+      test.equals(code, 0);
+      test.equals(fs.readFileSync(stdoutFile.path), 'hello world\n', 'Child process stdout should have been captured via custom stream.');
+      stdoutFile.unlinkSync();
+      test.equals(result.stdout, '', 'Nothing will be passed to the stdout string when spawn stdio is a custom stream.');
+      test.done();
+    });
+    test.ok(!child.stdout, 'child should not have a stdout property.');
+    test.ok(child.stderr, 'child should have a stderr property.');
   },
 };
 

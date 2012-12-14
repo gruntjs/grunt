@@ -481,7 +481,7 @@ exports['file'] = {
     test.done();
   },
   'copy and process, noprocess': function(test) {
-    test.expect(4);
+    test.expect(6);
     var tmpfile;
     tmpfile = new Tempfile();
     grunt.file.copy('test/fixtures/utf8.txt', tmpfile.path, {
@@ -510,6 +510,25 @@ exports['file'] = {
       }
       tmpfile.unlinkSync();
     }, this);
+
+    tmpfile = new Tempfile();
+    grunt.file.copy('test/fixtures/octocat.png', tmpfile.path, {
+      process: function() {
+        return 'content';
+      }
+    });
+    test.notEqual(grunt.file.read(tmpfile.path), 'content', 'file should not have been processed.');
+    tmpfile.unlinkSync();
+
+    tmpfile = new Tempfile();
+    grunt.file.copy('test/fixtures/utf8.txt', tmpfile.path, {
+      process: function(src) {
+        return 'føø' + src + 'bår';
+      },
+      noProcessExt: ['txt']
+    });
+    test.equal(grunt.file.read(tmpfile.path), this.string, 'file should not have been processed.');
+    tmpfile.unlinkSync();
 
     test.done();
   },

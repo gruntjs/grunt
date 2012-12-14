@@ -234,22 +234,26 @@ exports['util.spawn'] = {
     });
   },
   'custom stdio stream(s)': function(test) {
-    test.expect(5);
+    test.expect(6);
     var stdoutFile = new Tempfile();
+    var stderrFile = new Tempfile();
     var stdout = fs.openSync(stdoutFile.path, 'a');
+    var stderr = fs.openSync(stderrFile.path, 'a');
     var child = grunt.util.spawn({
-      cmd: 'echo',
-      args: ['hello world'],
-      opts: {stdio: [null, stdout, null]},
+      cmd: process.execPath,
+      args: [ this.script, 0 ],
+      opts: {stdio: [null, stdout, stderr]},
     }, function(err, result, code) {
       test.equals(code, 0);
-      test.equals(fs.readFileSync(stdoutFile.path), 'hello world\n', 'Child process stdout should have been captured via custom stream.');
+      test.equals(String(fs.readFileSync(stdoutFile.path)), 'stdout\n', 'Child process stdout should have been captured via custom stream.');
+      test.equals(String(fs.readFileSync(stderrFile.path)), 'stderr\n', 'Child process stderr should have been captured via custom stream.');
       stdoutFile.unlinkSync();
+      stderrFile.unlinkSync();
       test.equals(result.stdout, '', 'Nothing will be passed to the stdout string when spawn stdio is a custom stream.');
       test.done();
     });
     test.ok(!child.stdout, 'child should not have a stdout property.');
-    test.ok(child.stderr, 'child should have a stderr property.');
+    test.ok(!child.stderr, 'child should not have a stderr property.');
   },
 };
 

@@ -663,8 +663,8 @@ exports['file'] = {
   },
   'isPathAbsolute': function(test) {
     test.expect(5);
-    test.ok(grunt.file.isPathAbsolute('/foo'), 'should return true');
-    test.ok(grunt.file.isPathAbsolute('/foo/'), 'should return true');
+    test.ok(grunt.file.isPathAbsolute(path.resolve('/foo')), 'should return true');
+    test.ok(grunt.file.isPathAbsolute(path.resolve('/foo') + path.sep), 'should return true');
     test.equal(grunt.file.isPathAbsolute('foo'), false, 'should return false');
     test.ok(grunt.file.isPathAbsolute(path.resolve('test/fixtures/a.js')), 'should return true');
     test.equal(grunt.file.isPathAbsolute('test/fixtures/a.js'), false, 'should return false');

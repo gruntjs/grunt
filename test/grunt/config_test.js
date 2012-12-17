@@ -12,12 +12,12 @@ exports['config'] = {
       obj: {
         foo: '<%= meta.foo %>',
         foo2: '<%= obj.foo %>',
-        arr: ['foo', '<%= obj.foo2 %>'],
-        arr2: ['<%= arr %>', '<%= obj.arr %>'],
+        Arr: ['foo', '<%= obj.foo2 %>'],
+        arr2: ['<%= arr %>', '<%= obj.Arr %>'],
       },
       bar: 'bar',
       arr: ['foo', '<%= obj.foo2 %>'],
-      arr2: ['<%= arr %>', '<%= obj.arr %>'],
+      arr2: ['<%= arr %>', '<%= obj.Arr %>'],
     });
     done();
   },
@@ -54,9 +54,9 @@ exports['config'] = {
     test.equal(grunt.config.get('obj.foo2'), 'bar', 'Should process deeply nested templates recursively.');
     test.equal(grunt.config.get(['obj', 'foo2']), 'bar', 'Should process deeply nested templates recursively.');
     test.deepEqual(grunt.config.get('arr'), ['foo', 'bar'], 'Should process templates in arrays.');
-    test.deepEqual(grunt.config.get('obj.arr'), ['foo', 'bar'], 'Should process templates in arrays.');
-    test.deepEqual(grunt.config.get('arr2'), [['foo', 'bar'], ['foo', 'bar']], 'Should expand <%= arr %> and <%= obj.arr %> values as objects if possible.');
-    test.deepEqual(grunt.config.get(['obj', 'arr2']), [['foo', 'bar'], ['foo', 'bar']], 'Should expand <%= arr %> and <%= obj.arr %> values as objects if possible.');
+    test.deepEqual(grunt.config.get('obj.Arr'), ['foo', 'bar'], 'Should process templates in arrays.');
+    test.deepEqual(grunt.config.get('arr2'), [['foo', 'bar'], ['foo', 'bar']], 'Should expand <%= arr %> and <%= obj.Arr %> values as objects if possible.');
+    test.deepEqual(grunt.config.get(['obj', 'arr2']), [['foo', 'bar'], ['foo', 'bar']], 'Should expand <%= arr %> and <%= obj.Arr %> values as objects if possible.');
     test.done();
   },
   'config.set': function(test) {

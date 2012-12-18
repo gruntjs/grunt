@@ -1,6 +1,8 @@
 'use strict';
 
 var grunt = require('../../lib/grunt');
+var fs = require('fs');
+var Tempfile = require('temporary/lib/file');
 
 // Helper for testing stdout
 var hooker = grunt.util.hooker;
@@ -115,5 +117,22 @@ exports['log'] = {
     }, 'test: foo, bar\n');
 
     test.done();
-  }
+  },
+  'stream': function(test) {
+    test.expect(2);
+    stdoutEqual(test, function() {
+      var tmpfile = new Tempfile();
+      var writeStream = fs.createWriteStream(tmpfile.path);
+
+      grunt.log.pipe(writeStream);
+      grunt.log.write('foo');
+      grunt.log.writeln('bar');
+
+      writeStream.on('close', function() {
+        test.equal(grunt.file.read(tmpfile.path), 'foobar\n');
+        test.done();
+      });
+      writeStream.end();
+    }, 'foobar\n');
+  },
 };

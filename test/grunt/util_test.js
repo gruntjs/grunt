@@ -255,6 +255,30 @@ exports['util.spawn'] = {
     test.ok(!child.stdout, 'child should not have a stdout property.');
     test.ok(!child.stderr, 'child should not have a stderr property.');
   },
+  'returns errors to calling process': function(test) {
+    test.expect(2);
+    grunt.util.spawn({
+      grunt: true,
+      args: [ '--gruntfile', 'test/fixtures/Gruntfile-assertion-error.js', 'assertFail:bad' ],
+    }, function(err, result, code) {
+      test.equals(code, 3, 'should return an error code on assertion failure');
+      var outHasFail = /Fatal error: tddplz/.test(result.stdout);
+      test.ok(outHasFail, 'stdout should contain output indicating failure.');
+      test.done();
+    });
+  },
+  'ignoreAssertions allows us to continue': function(test) {
+    test.expect(2);
+    grunt.util.spawn({
+      grunt: true,
+      args: [ '--gruntfile', 'test/fixtures/Gruntfile-assertion-error.js', 'assertFail:ok' ],
+    }, function(err, result, code) {
+      test.equals(code, 0, 'with ignoreAssertions, should get no error code.');
+      var outHasFail = /Fatal error: tddplz/.test(result.stdout);
+      test.ok(!outHasFail, 'stderr should not contain failure output.');
+      test.done();
+    });
+  },
 };
 
 exports['util.underscore.string'] = function(test) {

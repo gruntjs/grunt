@@ -243,11 +243,11 @@ exports['file.expandMapping'] = {
     test.expect(2);
 
     var actual = grunt.file.expandMapping(['expand/**/*.txt'], 'dest');
-    var expected = {
-      'dest/expand/deep/deep.txt': 'expand/deep/deep.txt',
-      'dest/expand/deep/deeper/deeper.txt': 'expand/deep/deeper/deeper.txt',
-      'dest/expand/deep/deeper/deepest/deepest.txt': 'expand/deep/deeper/deepest/deepest.txt',
-    };
+    var expected = [
+      {dest: 'dest/expand/deep/deep.txt', src: 'expand/deep/deep.txt'},
+      {dest: 'dest/expand/deep/deeper/deeper.txt', src: 'expand/deep/deeper/deeper.txt'},
+      {dest: 'dest/expand/deep/deeper/deepest/deepest.txt', src: 'expand/deep/deeper/deepest/deepest.txt'},
+    ];
     test.deepEqual(actual, expected, 'basic src-dest options');
 
     actual = grunt.file.expandMapping(['expand/**/*.txt'], 'dest/');
@@ -258,22 +258,22 @@ exports['file.expandMapping'] = {
   'flatten': function(test) {
     test.expect(1);
     var actual = grunt.file.expandMapping(['expand/**/*.txt'], 'dest', {flatten: true});
-    var expected = {
-      'dest/deep.txt': 'expand/deep/deep.txt',
-      'dest/deeper.txt': 'expand/deep/deeper/deeper.txt',
-      'dest/deepest.txt': 'expand/deep/deeper/deepest/deepest.txt',
-    };
+    var expected = [
+      {dest: 'dest/deep.txt', src: 'expand/deep/deep.txt'},
+      {dest: 'dest/deeper.txt', src: 'expand/deep/deeper/deeper.txt'},
+      {dest: 'dest/deepest.txt', src: 'expand/deep/deeper/deepest/deepest.txt'},
+    ];
     test.deepEqual(actual, expected, 'dest paths should be flattened pre-destBase+destPath join');
     test.done();
   },
   'cwd': function(test) {
     test.expect(1);
     var actual = grunt.file.expandMapping(['**/*.txt'], 'dest', {cwd: 'expand'});
-    var expected = {
-      'dest/deep/deep.txt': 'expand/deep/deep.txt',
-      'dest/deep/deeper/deeper.txt': 'expand/deep/deeper/deeper.txt',
-      'dest/deep/deeper/deepest/deepest.txt': 'expand/deep/deeper/deepest/deepest.txt',
-    };
+    var expected = [
+      {dest: 'dest/deep/deep.txt', src: 'expand/deep/deep.txt'},
+      {dest: 'dest/deep/deeper/deeper.txt', src: 'expand/deep/deeper/deeper.txt'},
+      {dest: 'dest/deep/deeper/deepest/deepest.txt', src: 'expand/deep/deeper/deepest/deepest.txt'},
+    ];
     test.deepEqual(actual, expected, 'cwd should be stripped from front of destPath, pre-destBase+destPath join');
     test.done();
   },
@@ -286,11 +286,11 @@ exports['file.expandMapping'] = {
         return path.join(destBase, options.cwd, 'o-m-g', destPath);
       }
     });
-    var expected = {
-      'dest/expand/o-m-g/deep.txt': 'expand/deep/deep.txt',
-      'dest/expand/o-m-g/deeper.txt': 'expand/deep/deeper/deeper.txt',
-      'dest/expand/o-m-g/deepest.txt': 'expand/deep/deeper/deepest/deepest.txt',
-    };
+    var expected = [
+      {dest: 'dest/expand/o-m-g/deep.txt', src: 'expand/deep/deep.txt'},
+      {dest: 'dest/expand/o-m-g/deeper.txt', src: 'expand/deep/deeper/deeper.txt'},
+      {dest: 'dest/expand/o-m-g/deepest.txt', src: 'expand/deep/deeper/deepest/deepest.txt'},
+    ];
     test.deepEqual(actual, expected, 'custom rename function should be used to build dest, post-flatten');
     test.done();
   },

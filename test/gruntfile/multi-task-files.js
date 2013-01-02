@@ -99,8 +99,11 @@ module.exports = function(grunt) {
         options: {a: 1, b: 11, d: 9},
         file: {
           dest: 'dist/built.js',
-          srcRaw: ['src/*1.js'],
           src: ['src/file1.js'],
+          orig: {
+            dest: 'dist/built.js',
+            src: ['src/*1.js'],
+          },
         },
       },
     ],
@@ -109,8 +112,11 @@ module.exports = function(grunt) {
         options: {a: 1, b: 11, d: 9},
         file: {
           dest: 'dist/built1.js',
-          srcRaw: ['src/*1.js', 'src/*2.js'],
           src: ['src/file1.js', 'src/file2.js'],
+          orig: {
+            dest: 'dist/built1.js',
+            src: ['src/*1.js', 'src/*2.js'],
+          },
         },
       },
     ],
@@ -119,9 +125,13 @@ module.exports = function(grunt) {
         options: {a: 2, b: 11, c: 22, d: 9},
         file: {
           dest: 'dist/built-123.js',
-          srcRaw: ['src/*1.js', 'src/*2.js'],
           src: ['src/file1.js', 'src/file2.js'],
           extra: 123,
+          orig: {
+            dest: 'dist/built-<%= build %>.js',
+            src: ['src/*1.js', 'src/*2.js'],
+            extra: 123,
+          },
         },
       },
     ],
@@ -130,16 +140,22 @@ module.exports = function(grunt) {
         options: {a: 3, b: 11, c: 33, d: 9},
         file: {
           dest: 'dist/built-123-a.js',
-          srcRaw: ['src/*1.js'],
           src: ['src/file1.js'],
+          orig: {
+            dest: 'dist/built-<%= build %>-a.js',
+            src: ['src/*1.js'],
+          },
         },
       },
       {
         options: {a: 3, b: 11, c: 33, d: 9},
         file: {
           dest: 'dist/built-123-b.js',
-          srcRaw: ['src/*1.js', 'src/*2.js'],
           src: ['src/file1.js', 'src/file2.js'],
+          orig: {
+            dest: 'dist/built-<%= build %>-b.js',
+            src: ['src/*1.js', 'src/*2.js'],
+          },
         },
       },
     ],
@@ -148,16 +164,22 @@ module.exports = function(grunt) {
         options: {a: 4, b: 11, c: 44, d: 9},
         file: {
           dest: 'dist/built-123-a.js',
-          srcRaw: ['src/*.whoops'],
           src: [],
+          orig: {
+            dest: 'dist/built-<%= build %>-a.js',
+            src: ['src/*.whoops'],
+          },
         },
       },
       {
         options: {a: 4, b: 11, c: 44, d: 9},
         file: {
           dest: 'dist/built-123-b.js',
-          srcRaw: ['src/*1.js', 'src/*2.js'],
           src: ['src/file1.js', 'src/file2.js'],
+          orig: {
+            dest: 'dist/built-<%= build %>-b.js',
+            src: ['src/*1.js', 'src/*2.js'],
+          },
         },
       },
     ],
@@ -166,18 +188,26 @@ module.exports = function(grunt) {
         options: {a: 5, b: 11, c: 55, d: 9},
         file: {
           dest: 'dist/built-123-a.js',
-          srcRaw: ['src/*2.js'],
           src: ['src/file2.js'],
           extra: 456,
+          orig: {
+            dest: 'dist/built-<%= build %>-a.js',
+            src: ['src/*2.js'],
+            extra: 456,
+          },
         },
       },
       {
         options: {a: 5, b: 11, c: 55, d: 9},
         file: {
           dest: 'dist/built-123-b.js',
-          srcRaw: ['src/*1.js', 'src/*2.js'],
           src: ['src/file1.js', 'src/file2.js'],
           extra: 789,
+          orig: {
+            src: ['src/*1.js', 'src/*2.js'],
+            dest: 'dist/built-<%= build %>-b.js',
+            extra: 789,
+          },
         },
       },
     ],
@@ -195,8 +225,8 @@ module.exports = function(grunt) {
       fn();
     } catch (err) {
       grunt.log.subhead('Assertion Failure in ' + name);
-      console.log('Actual\n', JSON.stringify(err.actual));
-      console.log('Expected\n', JSON.stringify(err.expected));
+      console.log('Actual\n', JSON.stringify(err.actual, null, 2));
+      console.log('Expected\n', JSON.stringify(err.expected, null, 2));
       throw new Error(err.message);
     }
   };

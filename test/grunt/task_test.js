@@ -145,6 +145,41 @@ exports['task.normalizeMultiTaskFiles'] = {
 
     test.done();
   },
+  'nonull': function(test) {
+    test.expect(2);
+    var actual, expected, value;
+
+    value = {
+      src: ['src/xxx*.js', 'src/yyy*.js'],
+      dest: 'dist/built.js',
+    };
+    actual = grunt.task.normalizeMultiTaskFiles(value, 'ignored');
+    expected = [
+      {
+        dest: value.dest,
+        src: [],
+        orig: value,
+      },
+    ];
+    test.deepEqual(actual, expected, 'if nonull is not set, should not include non-matching patterns.');
+
+    value = {
+      src: ['src/xxx*.js', 'src/yyy*.js'],
+      dest: 'dist/built.js',
+      nonull: true,
+    };
+    actual = grunt.task.normalizeMultiTaskFiles(value, 'ignored');
+    expected = [
+      {
+        dest: value.dest,
+        src: value.src,
+        nonull: true,
+        orig: value,
+      },
+    ];
+    test.deepEqual(actual, expected, 'if nonull is set, should include non-matching patterns.');
+    test.done();
+  },
   'template processing': function(test) {
     test.expect(1);
 

@@ -47,6 +47,15 @@ exports['config'] = {
     test.deepEqual(grunt.config.getRaw('arr'), ['foo', '<%= obj.foo2 %>'], 'Should not process templates.');
     test.done();
   },
+  'config.process': function(test) {
+    test.expect(5);
+    test.equal(grunt.config.process('<%= meta.foo %>'), 'bar', 'Should process templates.');
+    test.equal(grunt.config.process('<%= foo %>'), 'bar', 'Should process templates recursively.');
+    test.equal(grunt.config.process('<%= obj.foo %>'), 'bar', 'Should process deeply nested templates recursively.');
+    test.deepEqual(grunt.config.process(['foo', '<%= obj.foo2 %>']), ['foo', 'bar'], 'Should process templates in arrays.');
+    test.deepEqual(grunt.config.process(['<%= arr %>', '<%= obj.Arr %>']), [['foo', 'bar'], ['foo', 'bar']], 'Should expand <%= arr %> and <%= obj.Arr %> values as objects if possible.');
+    test.done();
+  },
   'config.get': function(test) {
     test.expect(8);
     test.equal(grunt.config.get('foo'), 'bar', 'Should process templates.');

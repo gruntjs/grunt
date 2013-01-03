@@ -17,6 +17,10 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     build: '123',
+    mappings: {
+      dest: 'foo/',
+      ext: '.bar',
+    },
     run: {
       options: {a: 1, b: 11},
       // This is the "compact" format, where the target name is actually the
@@ -58,6 +62,16 @@ module.exports = function(grunt) {
           {dest: 'dist/built-<%= build %>-a.js', src: ['src/*2.js'], extra: 456},
           {dest: 'dist/built-<%= build %>-b.js', src: ['src/*1.js', 'src/*2.js'], extra: 789},
         ]
+      },
+      built_mapping: {
+        options: {a: 6, c: 66},
+        src: ['src/*1.js', 'src/*2.js'],
+        dest: '<%= mappings.dest %>',
+        expand: true,
+        rename: function(destBase, destPath) {
+          return destBase + 'baz/' + destPath.replace(/\.js$/, '<%= mappings.ext %>');
+        },
+        extra: 123
       },
       // Need to ensure the task function is run if no files or options were
       // specified!
@@ -130,6 +144,38 @@ module.exports = function(grunt) {
           orig: {
             dest: 'dist/built-<%= build %>.js',
             src: ['src/*1.js', 'src/*2.js'],
+            extra: 123,
+          },
+        },
+      },
+    ],
+    'run:built_mapping': [
+      {
+        options: {a: 6, b: 11, c: 66, d: 9},
+        file: {
+          dest: 'foo/baz/src/file1.bar',
+          src: ['src/file1.js'],
+          extra: 123,
+          orig: {
+            dest: '<%= mappings.dest %>',
+            src: ['src/*1.js', 'src/*2.js'],
+            expand: true,
+            rename: grunt.config.get('run.built_mapping.rename'),
+            extra: 123,
+          },
+        },
+      },
+      {
+        options: {a: 6, b: 11, c: 66, d: 9},
+        file: {
+          dest: 'foo/baz/src/file2.bar',
+          src: ['src/file2.js'],
+          extra: 123,
+          orig: {
+            dest: '<%= mappings.dest %>',
+            src: ['src/*1.js', 'src/*2.js'],
+            expand: true,
+            rename: grunt.config.get('run.built_mapping.rename'),
             extra: 123,
           },
         },
@@ -266,6 +312,8 @@ module.exports = function(grunt) {
     'test:dist/built1.js',
     'run:built',
     'test:built',
+    'run:built_mapping',
+    'test:built_mapping',
     'run:long1',
     'test:long1',
     'run:long2',

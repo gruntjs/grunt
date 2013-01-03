@@ -180,6 +180,82 @@ exports['task.normalizeMultiTaskFiles'] = {
     test.deepEqual(actual, expected, 'if nonull is set, should include non-matching patterns.');
     test.done();
   },
+  'expandMapping': function(test) {
+    test.expect(3);
+    var actual, expected, value;
+
+    value = {
+      files: [
+        {dest: 'dist/', src: ['src/file?.js'], expand: true},
+        {dest: 'dist/', src: ['file?.js'], expand: true, cwd: 'src'},
+      ]
+    };
+    actual = grunt.task.normalizeMultiTaskFiles(value, 'ignored');
+    expected = [
+      {
+        dest: 'dist/src/file1.js', src: ['src/file1.js'],
+        orig: value.files[0],
+      },
+      {
+        dest: 'dist/src/file2.js', src: ['src/file2.js'],
+        orig: value.files[0],
+      },
+      {
+        dest: 'dist/file1.js', src: ['src/file1.js'],
+        orig: value.files[1],
+      },
+      {
+        dest: 'dist/file2.js', src: ['src/file2.js'],
+        orig: value.files[1],
+      },
+    ];
+    test.deepEqual(actual, expected, 'expand to file mapping, removing cwd from destination paths.');
+
+    value = {
+      files: [
+        {dest: 'dist/', src: ['src/file?.js'], expand: true, flatten: true},
+      ]
+    };
+    actual = grunt.task.normalizeMultiTaskFiles(value, 'ignored');
+    expected = [
+      {
+        dest: 'dist/file1.js', src: ['src/file1.js'],
+        orig: value.files[0],
+      },
+      {
+        dest: 'dist/file2.js', src: ['src/file2.js'],
+        orig: value.files[0],
+      },
+    ];
+    test.deepEqual(actual, expected, 'expand to file mapping, flattening destination paths.');
+
+    value = {
+      files: [
+        {
+          dest: 'dist/',
+          src: ['src/file?.js'],
+          expand: true,
+          rename: function(destBase, destPath) {
+            return destBase + 'min/' + destPath.replace(/(\.js)$/, '.min$1');
+          },
+        },
+      ]
+    };
+    actual = grunt.task.normalizeMultiTaskFiles(value, 'ignored');
+    expected = [
+      {
+        dest: 'dist/min/src/file1.min.js', src: ['src/file1.js'],
+        orig: value.files[0],
+      },
+      {
+        dest: 'dist/min/src/file2.min.js', src: ['src/file2.js'],
+        orig: value.files[0],
+      },
+    ];
+    test.deepEqual(actual, expected, 'expand to file mapping, renaming files.');
+
+    test.done();
+  },
   'template processing': function(test) {
     test.expect(1);
 

@@ -256,41 +256,4 @@ exports['task.normalizeMultiTaskFiles'] = {
 
     test.done();
   },
-  'template processing': function(test) {
-    test.expect(1);
-
-    // Processing "TEST" recursively should return "123"
-    grunt.config.set(['TEST'], '<%= TEST2.PROP %>');
-    grunt.config.set(['TEST2'], {
-      PROP: '<%= TEST2.PROP1 %><%= TEST2.PROP2 + TEST2.PROP3 %>',
-      PROP1: '1',
-      PROP2: '2',
-      PROP3: '3'
-    });
-    grunt.config.set(['TEST3'], ['<%= TEST4 %>']);
-    grunt.config.set(['TEST4'], ['src/f*<%= TEST2.PROP1 %>.js', 'src/f*<%= TEST2.PROP2 %>.js']);
-
-    var value = {
-      files: [
-        {dest: 'dist/built-<%= TEST %>-a.js', src: ['<%= TEST3 %>', 'src/file?-<%= TEST %>.js']},
-        {dest: 'dist/built-<%= TEST %>-b.js', src: ['src/*1-<%= TEST %>.js', 'src/*2-<%= TEST %>.js']}
-      ]
-    };
-    var actual = grunt.task.normalizeMultiTaskFiles(value, 'ignored');
-    var expected = [
-      {
-        dest: 'dist/built-123-a.js',
-        src: ['src/file1.js', 'src/file2.js', 'src/file1-123.js', 'src/file2-123.js'],
-        orig: value.files[0],
-      },
-      {
-        dest: 'dist/built-123-b.js',
-        src: ['src/file1-123.js', 'src/file2-123.js'],
-        orig: value.files[1],
-      }
-    ];
-    test.deepEqual(actual, expected, 'should process templates recursively.');
-
-    test.done();
-  }
 };

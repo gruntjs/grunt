@@ -18,8 +18,12 @@ module.exports = function(grunt) {
   grunt.initConfig({
     build: '123',
     mappings: {
+      cwd: 'src/',
       dest: 'foo/',
       ext: '.bar',
+      rename: function(destBase, destPath) {
+        return destBase + 'baz/' + destPath.replace(/\.js$/, '<%= mappings.ext %>');
+      },
     },
     run: {
       options: {a: 1, b: 11},
@@ -63,15 +67,28 @@ module.exports = function(grunt) {
           {dest: 'dist/built-<%= build %>-b.js', src: ['src/*1.js', 'src/*2.js'], extra: 789},
         ]
       },
+      // File mapping options can be specified in these 2 formats.
       built_mapping: {
         options: {a: 6, c: 66},
-        src: ['src/*1.js', 'src/*2.js'],
-        dest: '<%= mappings.dest %>',
         expand: true,
-        rename: function(destBase, destPath) {
-          return destBase + 'baz/' + destPath.replace(/\.js$/, '<%= mappings.ext %>');
-        },
+        cwd: '<%= mappings.cwd %>',
+        src: ['*1.js', '*2.js'],
+        dest: '<%= mappings.dest %>',
+        rename: '<%= mappings.rename %>',
         extra: 123
+      },
+      long3_mapping: {
+        options: {a: 7, c: 77},
+        files: [
+          {
+            expand: true,
+            cwd: '<%= mappings.cwd %>',
+            src: ['*1.js', '*2.js'],
+            dest: '<%= mappings.dest %>',
+            rename: '<%= mappings.rename %>',
+            extra: 123
+          }
+        ]
       },
       // Need to ensure the task function is run if no files or options were
       // specified!
@@ -142,40 +159,8 @@ module.exports = function(grunt) {
           src: ['src/file1.js', 'src/file2.js'],
           extra: 123,
           orig: {
-            dest: 'dist/built-<%= build %>.js',
+            dest: 'dist/built-123.js',
             src: ['src/*1.js', 'src/*2.js'],
-            extra: 123,
-          },
-        },
-      },
-    ],
-    'run:built_mapping': [
-      {
-        options: {a: 6, b: 11, c: 66, d: 9},
-        file: {
-          dest: 'foo/baz/src/file1.bar',
-          src: ['src/file1.js'],
-          extra: 123,
-          orig: {
-            dest: '<%= mappings.dest %>',
-            src: ['src/*1.js', 'src/*2.js'],
-            expand: true,
-            rename: grunt.config.get('run.built_mapping.rename'),
-            extra: 123,
-          },
-        },
-      },
-      {
-        options: {a: 6, b: 11, c: 66, d: 9},
-        file: {
-          dest: 'foo/baz/src/file2.bar',
-          src: ['src/file2.js'],
-          extra: 123,
-          orig: {
-            dest: '<%= mappings.dest %>',
-            src: ['src/*1.js', 'src/*2.js'],
-            expand: true,
-            rename: grunt.config.get('run.built_mapping.rename'),
             extra: 123,
           },
         },
@@ -188,7 +173,7 @@ module.exports = function(grunt) {
           dest: 'dist/built-123-a.js',
           src: ['src/file1.js'],
           orig: {
-            dest: 'dist/built-<%= build %>-a.js',
+            dest: 'dist/built-123-a.js',
             src: ['src/*1.js'],
           },
         },
@@ -199,7 +184,7 @@ module.exports = function(grunt) {
           dest: 'dist/built-123-b.js',
           src: ['src/file1.js', 'src/file2.js'],
           orig: {
-            dest: 'dist/built-<%= build %>-b.js',
+            dest: 'dist/built-123-b.js',
             src: ['src/*1.js', 'src/*2.js'],
           },
         },
@@ -212,7 +197,7 @@ module.exports = function(grunt) {
           dest: 'dist/built-123-a.js',
           src: [],
           orig: {
-            dest: 'dist/built-<%= build %>-a.js',
+            dest: 'dist/built-123-a.js',
             src: ['src/*.whoops'],
           },
         },
@@ -223,7 +208,7 @@ module.exports = function(grunt) {
           dest: 'dist/built-123-b.js',
           src: ['src/file1.js', 'src/file2.js'],
           orig: {
-            dest: 'dist/built-<%= build %>-b.js',
+            dest: 'dist/built-123-b.js',
             src: ['src/*1.js', 'src/*2.js'],
           },
         },
@@ -237,7 +222,7 @@ module.exports = function(grunt) {
           src: ['src/file2.js'],
           extra: 456,
           orig: {
-            dest: 'dist/built-<%= build %>-a.js',
+            dest: 'dist/built-123-a.js',
             src: ['src/*2.js'],
             extra: 456,
           },
@@ -251,7 +236,7 @@ module.exports = function(grunt) {
           extra: 789,
           orig: {
             src: ['src/*1.js', 'src/*2.js'],
-            dest: 'dist/built-<%= build %>-b.js',
+            dest: 'dist/built-123-b.js',
             extra: 789,
           },
         },
@@ -263,7 +248,75 @@ module.exports = function(grunt) {
         file: {},
       },
     ],
-};
+    'run:built_mapping': [
+      {
+        options: {a: 6, b: 11, c: 66, d: 9},
+        file: {
+          dest: 'foo/baz/file1.bar',
+          src: ['src/file1.js'],
+          extra: 123,
+          orig: {
+            expand: true,
+            cwd: grunt.config.get('mappings.cwd'),
+            src: ['*1.js', '*2.js'],
+            dest: grunt.config.get('mappings.dest'),
+            rename: grunt.config.get('run.built_mapping.rename'),
+            extra: 123,
+          },
+        },
+      },
+      {
+        options: {a: 6, b: 11, c: 66, d: 9},
+        file: {
+          dest: 'foo/baz/file2.bar',
+          src: ['src/file2.js'],
+          extra: 123,
+          orig: {
+            expand: true,
+            cwd: grunt.config.get('run.built_mapping.cwd'),
+            src: ['*1.js', '*2.js'],
+            dest: grunt.config.get('run.built_mapping.dest'),
+            rename: grunt.config.get('run.built_mapping.rename'),
+            extra: 123,
+          },
+        },
+      },
+    ],
+    'run:long3_mapping': [
+      {
+        options: {a: 7, b: 11, c: 77, d: 9},
+        file: {
+          dest: 'foo/baz/file1.bar',
+          src: ['src/file1.js'],
+          extra: 123,
+          orig: {
+            expand: true,
+            cwd: grunt.config.get('mappings.cwd'),
+            src: ['*1.js', '*2.js'],
+            dest: grunt.config.get('mappings.dest'),
+            rename: grunt.config.get('mappings.rename'),
+            extra: 123,
+          },
+        },
+      },
+      {
+        options: {a: 7, b: 11, c: 77, d: 9},
+        file: {
+          dest: 'foo/baz/file2.bar',
+          src: ['src/file2.js'],
+          extra: 123,
+          orig: {
+            expand: true,
+            cwd: grunt.config.get('mappings.cwd'),
+            src: ['*1.js', '*2.js'],
+            dest: grunt.config.get('mappings.dest'),
+            rename: grunt.config.get('run.built_mapping.rename'),
+            extra: 123,
+          },
+        },
+      },
+    ],
+  };
 
   var assert = require('assert');
   var difflet = require('difflet')({indent: 2, comment: true});
@@ -312,14 +365,16 @@ module.exports = function(grunt) {
     'test:dist/built1.js',
     'run:built',
     'test:built',
-    'run:built_mapping',
-    'test:built_mapping',
     'run:long1',
     'test:long1',
     'run:long2',
     'test:long2',
     'run:long3',
     'test:long3',
+    'run:built_mapping',
+    'test:built_mapping',
+    'run:long3_mapping',
+    'test:long3_mapping',
     'run',
     'test:all',
     'test:counters',

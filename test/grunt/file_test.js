@@ -114,7 +114,9 @@ exports['file.expand*'] = {
     done();
   },
   'basic matching': function(test) {
-    test.expect(9);
+    test.expect(11);
+    var expected;
+
     test.deepEqual(grunt.file.expand('**/*.js'), ['js/bar.js', 'js/foo.js'], 'should match.');
     test.deepEqual(grunt.file.expand('**/*.js', '**/*.css'), ['js/bar.js', 'js/foo.js', 'css/baz.css', 'css/qux.css'], 'should match.');
     test.deepEqual(grunt.file.expand(['**/*.js', '**/*.css']), ['js/bar.js', 'js/foo.js', 'css/baz.css', 'css/qux.css'], 'should match.');
@@ -132,10 +134,15 @@ exports['file.expand*'] = {
       'deep/deeper/deeper.txt',
       'deep/deeper/deepest/',
       'deep/deeper/deepest/deepest.txt'], 'the minimatch "mark" option ensures directories end in /.');
-    test.deepEqual(grunt.file.expandFiles('**d*/**'), [
+
+    expected = [
       'deep/deep.txt',
       'deep/deeper/deeper.txt',
-      'deep/deeper/deepest/deepest.txt'], 'should match files only.');
+      'deep/deeper/deepest/deepest.txt'
+    ];
+    test.deepEqual(grunt.file.expandFiles('**d*/**'), expected, 'should match files only.');
+    test.deepEqual(grunt.file.expand({filter: 'isFile'}, '**d*/**'), expected, 'should match files only.');
+
     test.deepEqual(grunt.file.expand('**d*/**/'), [
       'deep/',
       'deep/deeper/',
@@ -145,10 +152,14 @@ exports['file.expand*'] = {
       'deep/',
       'deep/deeper/',
       'deep/deeper/deepest/'], 'should match directories, arbitrary / at the end appears in matches.');
-    test.deepEqual(grunt.file.expandDirs('**d*/**'), [
+
+    expected = [
       'deep',
       'deep/deeper',
-      'deep/deeper/deepest'], 'should match directories only.');
+      'deep/deeper/deepest'
+    ];
+    test.deepEqual(grunt.file.expandDirs('**d*/**'), expected, 'should match directories only.');
+    test.deepEqual(grunt.file.expand({filter: 'isDirectory'}, '**d*/**'), expected, 'should match directories only.');
     test.done();
   },
   'no matches': function(test) {

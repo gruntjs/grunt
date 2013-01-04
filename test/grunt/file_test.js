@@ -277,6 +277,17 @@ exports['file.expandMapping'] = {
     test.deepEqual(actual, expected, 'dest paths should be flattened pre-destBase+destPath join');
     test.done();
   },
+  'ext': function(test) {
+    test.expect(1);
+    var actual = grunt.file.expandMapping(['expand/**/*.txt'], 'dest', {ext: '.foo'});
+    var expected = [
+      {dest: 'dest/expand/deep/deep.foo', src: 'expand/deep/deep.txt'},
+      {dest: 'dest/expand/deep/deeper/deeper.foo', src: 'expand/deep/deeper/deeper.txt'},
+      {dest: 'dest/expand/deep/deeper/deepest/deepest.foo', src: 'expand/deep/deeper/deepest/deepest.txt'},
+    ];
+    test.deepEqual(actual, expected, 'specified extension should be added');
+    test.done();
+  },
   'cwd': function(test) {
     test.expect(1);
     var actual = grunt.file.expandMapping(['**/*.txt'], 'dest', {cwd: 'expand'});

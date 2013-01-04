@@ -266,13 +266,13 @@ module.exports = function(grunt) {
 };
 
   var assert = require('assert');
+  var difflet = require('difflet')({indent: 2, comment: true});
   var test = function(name, fn) {
     try {
       fn();
     } catch (err) {
       grunt.log.subhead('Assertion Failure in ' + name);
-      console.log('Actual\n', JSON.stringify(err.actual, null, 2));
-      console.log('Expected\n', JSON.stringify(err.expected, null, 2));
+      console.log(difflet.compare(err.expected, err.actual));
       throw new Error(err.message);
     }
   };

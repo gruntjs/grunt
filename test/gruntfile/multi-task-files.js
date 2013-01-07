@@ -102,15 +102,10 @@ module.exports = function(grunt) {
   var counter = -1;
   grunt.registerMultiTask('run', 'Store stuff for later testing.', function() {
     var key = this.nameArgs;
-    var result = results[key];
-    if (!result) {
-      result = results[key] = [];
-    }
-    result.push({
+    results[key] = {
       options: this.options({d: 9}),
-      file: this.file
-    });
-
+      files: this.files,
+    };
     // Test asynchronous-ness.
     var done;
     if (counter++ % 2 === 0) {
@@ -125,10 +120,14 @@ module.exports = function(grunt) {
   });
 
   var expecteds = {
-    'run:dist/built.js': [
-      {
-        options: {a: 1, b: 11, d: 9},
-        file: {
+    'run:no_files_or_options': {
+      options: {a: 1, b: 11, d: 9},
+      files: [],
+    },
+    'run:dist/built.js': {
+      options: {a: 1, b: 11, d: 9},
+      files: [
+        {
           dest: 'dist/built.js',
           src: ['src/file1.js'],
           orig: {
@@ -136,12 +135,12 @@ module.exports = function(grunt) {
             src: ['src/*1.js'],
           },
         },
-      },
-    ],
-    'run:dist/built1.js': [
-      {
-        options: {a: 1, b: 11, d: 9},
-        file: {
+      ]
+    },
+    'run:dist/built1.js': {
+      options: {a: 1, b: 11, d: 9},
+      files: [
+        {
           dest: 'dist/built1.js',
           src: ['src/file1.js', 'src/file2.js'],
           orig: {
@@ -149,12 +148,12 @@ module.exports = function(grunt) {
             src: ['src/*1.js', 'src/*2.js'],
           },
         },
-      },
-    ],
-    'run:built': [
-      {
-        options: {a: 2, b: 11, c: 22, d: 9},
-        file: {
+      ]
+    },
+    'run:built': {
+      options: {a: 2, b: 11, c: 22, d: 9},
+      files: [
+        {
           dest: 'dist/built-123.js',
           src: ['src/file1.js', 'src/file2.js'],
           extra: 123,
@@ -164,12 +163,12 @@ module.exports = function(grunt) {
             extra: 123,
           },
         },
-      },
-    ],
-    'run:long1': [
-      {
-        options: {a: 3, b: 11, c: 33, d: 9},
-        file: {
+      ],
+    },
+    'run:long1': {
+      options: {a: 3, b: 11, c: 33, d: 9},
+      files: [
+        {
           dest: 'dist/built-123-a.js',
           src: ['src/file1.js'],
           orig: {
@@ -177,10 +176,7 @@ module.exports = function(grunt) {
             src: ['src/*1.js'],
           },
         },
-      },
-      {
-        options: {a: 3, b: 11, c: 33, d: 9},
-        file: {
+        {
           dest: 'dist/built-123-b.js',
           src: ['src/file1.js', 'src/file2.js'],
           orig: {
@@ -188,12 +184,12 @@ module.exports = function(grunt) {
             src: ['src/*1.js', 'src/*2.js'],
           },
         },
-      },
-    ],
-    'run:long2': [
-      {
-        options: {a: 4, b: 11, c: 44, d: 9},
-        file: {
+      ],
+    },
+    'run:long2': {
+      options: {a: 4, b: 11, c: 44, d: 9},
+      files: [
+        {
           dest: 'dist/built-123-a.js',
           src: [],
           orig: {
@@ -201,10 +197,7 @@ module.exports = function(grunt) {
             src: ['src/*.whoops'],
           },
         },
-      },
-      {
-        options: {a: 4, b: 11, c: 44, d: 9},
-        file: {
+        {
           dest: 'dist/built-123-b.js',
           src: ['src/file1.js', 'src/file2.js'],
           orig: {
@@ -212,12 +205,12 @@ module.exports = function(grunt) {
             src: ['src/*1.js', 'src/*2.js'],
           },
         },
-      },
-    ],
-    'run:long3': [
-      {
-        options: {a: 5, b: 11, c: 55, d: 9},
-        file: {
+      ],
+    },
+    'run:long3': {
+      options: {a: 5, b: 11, c: 55, d: 9},
+      files: [
+        {
           dest: 'dist/built-123-a.js',
           src: ['src/file2.js'],
           extra: 456,
@@ -227,10 +220,7 @@ module.exports = function(grunt) {
             extra: 456,
           },
         },
-      },
-      {
-        options: {a: 5, b: 11, c: 55, d: 9},
-        file: {
+        {
           dest: 'dist/built-123-b.js',
           src: ['src/file1.js', 'src/file2.js'],
           extra: 789,
@@ -240,18 +230,12 @@ module.exports = function(grunt) {
             extra: 789,
           },
         },
-      },
-    ],
-    'run:no_files_or_options': [
-      {
-        options: {a: 1, b: 11, d: 9},
-        file: {},
-      },
-    ],
-    'run:built_mapping': [
-      {
-        options: {a: 6, b: 11, c: 66, d: 9},
-        file: {
+      ],
+    },
+    'run:built_mapping': {
+      options: {a: 6, b: 11, c: 66, d: 9},
+      files: [
+        {
           dest: 'foo/baz/file1.bar',
           src: ['src/file1.js'],
           extra: 123,
@@ -264,10 +248,7 @@ module.exports = function(grunt) {
             extra: 123,
           },
         },
-      },
-      {
-        options: {a: 6, b: 11, c: 66, d: 9},
-        file: {
+        {
           dest: 'foo/baz/file2.bar',
           src: ['src/file2.js'],
           extra: 123,
@@ -280,12 +261,12 @@ module.exports = function(grunt) {
             extra: 123,
           },
         },
-      },
-    ],
-    'run:long3_mapping': [
-      {
-        options: {a: 7, b: 11, c: 77, d: 9},
-        file: {
+      ],
+    },
+    'run:long3_mapping': {
+      options: {a: 7, b: 11, c: 77, d: 9},
+      files: [
+        {
           dest: 'foo/baz/file1.bar',
           src: ['src/file1.js'],
           extra: 123,
@@ -298,10 +279,7 @@ module.exports = function(grunt) {
             extra: 123,
           },
         },
-      },
-      {
-        options: {a: 7, b: 11, c: 77, d: 9},
-        file: {
+        {
           dest: 'foo/baz/file2.bar',
           src: ['src/file2.js'],
           extra: 123,
@@ -314,8 +292,8 @@ module.exports = function(grunt) {
             extra: 123,
           },
         },
-      },
-    ],
+      ],
+    },
   };
 
   var assert = require('assert');

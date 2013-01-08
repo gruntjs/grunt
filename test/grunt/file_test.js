@@ -144,7 +144,7 @@ exports['file.expand*'] = {
     test.done();
   },
   'filter': function(test) {
-    test.expect(4);
+    test.expect(5);
     test.deepEqual(grunt.file.expand({filter: 'isFile'}, '**d*/**'), [
       'deep/deep.txt',
       'deep/deeper/deeper.txt',
@@ -155,6 +155,10 @@ exports['file.expand*'] = {
       'deep/deeper',
       'deep/deeper/deepest'
     ], 'should match directories only.');
+    test.deepEqual(grunt.file.expand({filter: function(filepath) { return (/deepest/).test(filepath); }}, '**'), [
+      'deep/deeper/deepest',
+      'deep/deeper/deepest/deepest.txt',
+    ], 'should filter arbitrarily.');
     test.deepEqual(grunt.file.expand({filter: 'isFile'}, 'js', 'css'), [], 'should fail to match.');
     test.deepEqual(grunt.file.expand({filter: 'isDirectory'}, '**/*.js'), [], 'should fail to match.');
     test.done();

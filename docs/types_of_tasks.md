@@ -48,7 +48,7 @@ grunt.initConfig({
 });
 ```
 
-While it's probably most useful for you to check out the JavaScript source of the [built-in tasks](https://github.com/gruntjs/grunt/tree/master/tasks), this example shows how you might define your own multi task:
+While it's probably most useful for you to check out the JavaScript source of the [built-in tasks](https://github.com/gruntjs/grunt/tree/0.3-stable/tasks), this example shows how you might define your own multi task:
 
 ```javascript
 /*global config:true, task:true*/

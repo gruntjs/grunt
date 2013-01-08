@@ -114,9 +114,7 @@ exports['file.expand*'] = {
     done();
   },
   'basic matching': function(test) {
-    test.expect(11);
-    var expected;
-
+    test.expect(8);
     test.deepEqual(grunt.file.expand('**/*.js'), ['js/bar.js', 'js/foo.js'], 'should match.');
     test.deepEqual(grunt.file.expand('**/*.js', '**/*.css'), ['js/bar.js', 'js/foo.js', 'css/baz.css', 'css/qux.css'], 'should match.');
     test.deepEqual(grunt.file.expand(['**/*.js', '**/*.css']), ['js/bar.js', 'js/foo.js', 'css/baz.css', 'css/qux.css'], 'should match.');
@@ -134,39 +132,31 @@ exports['file.expand*'] = {
       'deep/deeper/deeper.txt',
       'deep/deeper/deepest/',
       'deep/deeper/deepest/deepest.txt'], 'the minimatch "mark" option ensures directories end in /.');
-
-    expected = [
-      'deep/deep.txt',
-      'deep/deeper/deeper.txt',
-      'deep/deeper/deepest/deepest.txt'
-    ];
-    test.deepEqual(grunt.file.expandFiles('**d*/**'), expected, 'should match files only.');
-    test.deepEqual(grunt.file.expand({filter: 'isFile'}, '**d*/**'), expected, 'should match files only.');
-
     test.deepEqual(grunt.file.expand('**d*/**/'), [
       'deep/',
       'deep/deeper/',
       'deep/deeper/deepest/'], 'should match directories, arbitrary / at the end appears in matches.');
-    // test.ok(true);
     test.deepEqual(grunt.file.expand({mark: true}, '**d*/**/'), [
       'deep/',
       'deep/deeper/',
       'deep/deeper/deepest/'], 'should match directories, arbitrary / at the end appears in matches.');
-
-    expected = [
+    test.deepEqual(grunt.file.expand('*.xyz'), [], 'should fail to match.');
+    test.done();
+  },
+  'filter': function(test) {
+    test.expect(4);
+    test.deepEqual(grunt.file.expand({filter: 'isFile'}, '**d*/**'), [
+      'deep/deep.txt',
+      'deep/deeper/deeper.txt',
+      'deep/deeper/deepest/deepest.txt'
+    ], 'should match files only.');
+    test.deepEqual(grunt.file.expand({filter: 'isDirectory'}, '**d*/**'), [
       'deep',
       'deep/deeper',
       'deep/deeper/deepest'
-    ];
-    test.deepEqual(grunt.file.expandDirs('**d*/**'), expected, 'should match directories only.');
-    test.deepEqual(grunt.file.expand({filter: 'isDirectory'}, '**d*/**'), expected, 'should match directories only.');
-    test.done();
-  },
-  'no matches': function(test) {
-    test.expect(3);
-    test.deepEqual(grunt.file.expand('*.xyz'), [], 'should fail to match.');
-    test.deepEqual(grunt.file.expandDirs('**/*.js'), [], 'should fail to match.');
-    test.deepEqual(grunt.file.expandFiles('js', 'css'), [], 'should fail to match.');
+    ], 'should match directories only.');
+    test.deepEqual(grunt.file.expand({filter: 'isFile'}, 'js', 'css'), [], 'should fail to match.');
+    test.deepEqual(grunt.file.expand({filter: 'isDirectory'}, '**/*.js'), [], 'should fail to match.');
     test.done();
   },
   'unique': function(test) {
@@ -224,11 +214,11 @@ exports['file.expand*'] = {
   },
   'options.cwd': function(test) {
     test.expect(4);
-    var opts = {cwd: path.resolve(process.cwd(), '..')};
-    test.deepEqual(grunt.file.expand(opts, ['expand/js', 'expand/js/*']), ['expand/js', 'expand/js/bar.js', 'expand/js/foo.js'], 'should match.');
-    test.deepEqual(grunt.file.expandFiles(opts, ['expand/js', 'expand/js/*']), ['expand/js/bar.js', 'expand/js/foo.js'], 'should match.');
-    test.deepEqual(grunt.file.expandDirs(opts, ['expand/js', 'expand/js/*']), ['expand/js'], 'should match.');
-    test.deepEqual(grunt.file.expandFiles(opts, ['expand/js', 'expand/js/*', '!**/b*.js']), ['expand/js/foo.js'], 'should negate properly.');
+    var cwd = path.resolve(process.cwd(), '..');
+    test.deepEqual(grunt.file.expand({cwd: cwd}, ['expand/js', 'expand/js/*']), ['expand/js', 'expand/js/bar.js', 'expand/js/foo.js'], 'should match.');
+    test.deepEqual(grunt.file.expand({cwd: cwd, filter: 'isFile'}, ['expand/js', 'expand/js/*']), ['expand/js/bar.js', 'expand/js/foo.js'], 'should match.');
+    test.deepEqual(grunt.file.expand({cwd: cwd, filter: 'isDirectory'}, ['expand/js', 'expand/js/*']), ['expand/js'], 'should match.');
+    test.deepEqual(grunt.file.expand({cwd: cwd, filter: 'isFile'}, ['expand/js', 'expand/js/*', '!**/b*.js']), ['expand/js/foo.js'], 'should negate properly.');
     test.done();
   },
   'options.nonull': function(test) {

@@ -17,15 +17,9 @@ module.exports = function(grunt) {
       all: ['test/{grunt,tasks,util}/**/*.js']
     },
     jshint: {
-      all: [
-        'Gruntfile.js',
-        'lib/**/*.js',
-        'tasks/*.js',
-        'tasks/*/*.js',
-        'tasks/lib/**/*.js',
-        '<%= nodeunit.all %>',
-        'test/gruntfile/*.js',
-      ],
+      gruntfile: ['Gruntfile.js'],
+      libs_n_tests: ['lib/**/*.js', '<%= nodeunit.all %>'],
+      subgrunt: ['<%= subgrunt.all %>'],
       options: {
         curly: true,
         eqeqeq: true,
@@ -43,9 +37,17 @@ module.exports = function(grunt) {
       }
     },
     watch: {
-      scripts: {
-        files: ['<%= jshint.all %>'],
-        tasks: ['test']
+      gruntfile: {
+        files: ['<%= jshint.gruntfile %>'],
+        tasks: ['jshint:gruntfile']
+      },
+      libs_n_tests: {
+        files: ['<%= jshint.libs_n_tests %>'],
+        tasks: ['jshint:libs_n_tests', 'nodeunit']
+      },
+      subgrunt: {
+        files: ['<%= subgrunt.all %>'],
+        tasks: ['jshint:subgrunt', 'subgrunt']
       }
     },
     subgrunt: {

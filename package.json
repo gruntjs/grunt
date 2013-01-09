@@ -1,7 +1,7 @@
 {
   "name": "grunt",
   "description": "A task-based command line build tool for JavaScript projects.",
-  "version": "0.4.0rc4",
+  "version": "0.4.0rc5",
   "author": "\"Cowboy\" Ben Alman (http://benalman.com/)",
   "homepage": "http://gruntjs.com/",
   "repository": {
@@ -62,9 +62,9 @@
   },
   "devDependencies": {
     "temporary": "~0.0.4",
-    "grunt-contrib-jshint": "~0.1.0",
-    "grunt-contrib-nodeunit": "~0.1.0",
-    "grunt-contrib-watch": "~0.1.4",
+    "grunt-contrib-jshint": "~0.1.1rc5",
+    "grunt-contrib-nodeunit": "~0.1.2rc5",
+    "grunt-contrib-watch": "~0.2.0a",
     "difflet": "~0.2.3"
   }
 }

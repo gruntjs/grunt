@@ -18,6 +18,9 @@
     }
   ],
   "main": "lib/grunt",
+  "bin": {
+    "grunt": "bin/grunt"
+  },
   "scripts": {
     "test": "grunt test"
   },

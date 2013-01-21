@@ -272,12 +272,20 @@ exports['file.expandMapping'] = {
     test.done();
   },
   'ext': function(test) {
-    test.expect(1);
-    var actual = grunt.file.expandMapping(['expand/**/*.txt'], 'dest', {ext: '.foo'});
-    var expected = [
+    test.expect(2);
+    var actual, expected;
+    actual = grunt.file.expandMapping(['expand/**/*.txt'], 'dest', {ext: '.foo'});
+    expected = [
       {dest: 'dest/expand/deep/deep.foo', src: 'expand/deep/deep.txt'},
       {dest: 'dest/expand/deep/deeper/deeper.foo', src: 'expand/deep/deeper/deeper.txt'},
       {dest: 'dest/expand/deep/deeper/deepest/deepest.foo', src: 'expand/deep/deeper/deepest/deepest.txt'},
+    ];
+    test.deepEqual(actual, expected, 'specified extension should be added');
+    actual = grunt.file.expandMapping(['expand-mapping-ext/**/file*'], 'dest', {ext: '.foo'});
+    expected = [
+      {dest: 'dest/expand-mapping-ext/dir.ectory/file-no-extension.foo', src: 'expand-mapping-ext/dir.ectory/file-no-extension'},
+      {dest: 'dest/expand-mapping-ext/dir.ectory/sub.dir.ectory/file.foo', src: 'expand-mapping-ext/dir.ectory/sub.dir.ectory/file.ext.ension'},
+      {dest: 'dest/expand-mapping-ext/file.foo', src: 'expand-mapping-ext/file.ext.ension'},
     ];
     test.deepEqual(actual, expected, 'specified extension should be added');
     test.done();

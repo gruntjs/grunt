@@ -119,6 +119,8 @@ exports['file.expand*'] = {
     test.deepEqual(grunt.file.expand('**/*.js', '**/*.css'), ['js/bar.js', 'js/foo.js', 'css/baz.css', 'css/qux.css'], 'should match.');
     test.deepEqual(grunt.file.expand(['**/*.js', '**/*.css']), ['js/bar.js', 'js/foo.js', 'css/baz.css', 'css/qux.css'], 'should match.');
     test.deepEqual(grunt.file.expand('**d*/**'), [
+      'dee.p',
+      'dee.p/dee.p.txt',
       'deep',
       'deep/deep.txt',
       'deep/deeper',
@@ -126,6 +128,8 @@ exports['file.expand*'] = {
       'deep/deeper/deepest',
       'deep/deeper/deepest/deepest.txt'], 'should match files and directories.');
     test.deepEqual(grunt.file.expand({mark: true}, '**d*/**'), [
+      'dee.p/',
+      'dee.p/dee.p.txt',
       'deep/',
       'deep/deep.txt',
       'deep/deeper/',
@@ -133,10 +137,12 @@ exports['file.expand*'] = {
       'deep/deeper/deepest/',
       'deep/deeper/deepest/deepest.txt'], 'the minimatch "mark" option ensures directories end in /.');
     test.deepEqual(grunt.file.expand('**d*/**/'), [
+      'dee.p/',
       'deep/',
       'deep/deeper/',
       'deep/deeper/deepest/'], 'should match directories, arbitrary / at the end appears in matches.');
     test.deepEqual(grunt.file.expand({mark: true}, '**d*/**/'), [
+      'dee.p/',
       'deep/',
       'deep/deeper/',
       'deep/deeper/deepest/'], 'should match directories, arbitrary / at the end appears in matches.');
@@ -146,11 +152,13 @@ exports['file.expand*'] = {
   'filter': function(test) {
     test.expect(5);
     test.deepEqual(grunt.file.expand({filter: 'isFile'}, '**d*/**'), [
+      'dee.p/dee.p.txt',
       'deep/deep.txt',
       'deep/deeper/deeper.txt',
       'deep/deeper/deepest/deepest.txt'
     ], 'should match files only.');
     test.deepEqual(grunt.file.expand({filter: 'isDirectory'}, '**d*/**'), [
+      'dee.p',
       'deep',
       'deep/deeper',
       'deep/deeper/deepest'
@@ -249,6 +257,7 @@ exports['file.expandMapping'] = {
 
     var actual = grunt.file.expandMapping(['expand/**/*.txt'], 'dest');
     var expected = [
+      {dest: 'dest/expand/dee.p/dee.p.txt', src: 'expand/dee.p/dee.p.txt'},
       {dest: 'dest/expand/deep/deep.txt', src: 'expand/deep/deep.txt'},
       {dest: 'dest/expand/deep/deeper/deeper.txt', src: 'expand/deep/deeper/deeper.txt'},
       {dest: 'dest/expand/deep/deeper/deepest/deepest.txt', src: 'expand/deep/deeper/deepest/deepest.txt'},
@@ -264,6 +273,7 @@ exports['file.expandMapping'] = {
     test.expect(1);
     var actual = grunt.file.expandMapping(['expand/**/*.txt'], 'dest', {flatten: true});
     var expected = [
+      {dest: 'dest/dee.p.txt', src: 'expand/dee.p/dee.p.txt'},
       {dest: 'dest/deep.txt', src: 'expand/deep/deep.txt'},
       {dest: 'dest/deeper.txt', src: 'expand/deep/deeper/deeper.txt'},
       {dest: 'dest/deepest.txt', src: 'expand/deep/deeper/deepest/deepest.txt'},
@@ -275,6 +285,7 @@ exports['file.expandMapping'] = {
     test.expect(1);
     var actual = grunt.file.expandMapping(['expand/**/*.txt'], 'dest', {ext: '.foo'});
     var expected = [
+      {dest: 'dest/expand/dee.p/dee.p.foo', src: 'expand/dee.p/dee.p.txt'},
       {dest: 'dest/expand/deep/deep.foo', src: 'expand/deep/deep.txt'},
       {dest: 'dest/expand/deep/deeper/deeper.foo', src: 'expand/deep/deeper/deeper.txt'},
       {dest: 'dest/expand/deep/deeper/deepest/deepest.foo', src: 'expand/deep/deeper/deepest/deepest.txt'},
@@ -286,6 +297,7 @@ exports['file.expandMapping'] = {
     test.expect(1);
     var actual = grunt.file.expandMapping(['**/*.txt'], 'dest', {cwd: 'expand'});
     var expected = [
+      {dest: 'dest/dee.p/dee.p.txt', src: 'expand/dee.p/dee.p.txt'},
       {dest: 'dest/deep/deep.txt', src: 'expand/deep/deep.txt'},
       {dest: 'dest/deep/deeper/deeper.txt', src: 'expand/deep/deeper/deeper.txt'},
       {dest: 'dest/deep/deeper/deepest/deepest.txt', src: 'expand/deep/deeper/deepest/deepest.txt'},
@@ -303,6 +315,7 @@ exports['file.expandMapping'] = {
       }
     });
     var expected = [
+      {dest: 'dest/expand/o-m-g/dee.p.txt', src: 'expand/dee.p/dee.p.txt'},
       {dest: 'dest/expand/o-m-g/deep.txt', src: 'expand/deep/deep.txt'},
       {dest: 'dest/expand/o-m-g/deeper.txt', src: 'expand/deep/deeper/deeper.txt'},
       {dest: 'dest/expand/o-m-g/deepest.txt', src: 'expand/deep/deeper/deepest/deepest.txt'},
@@ -622,6 +635,7 @@ exports['file'] = {
     var expected = {};
     expected[rootdir + '/css/baz.css'] = [rootdir, 'css', 'baz.css'];
     expected[rootdir + '/css/qux.css'] = [rootdir, 'css', 'qux.css'];
+    expected[rootdir + '/dee.p/dee.p.txt'] = [rootdir, 'dee.p', 'dee.p.txt'];
     expected[rootdir + '/deep/deep.txt'] = [rootdir, 'deep', 'deep.txt'];
     expected[rootdir + '/deep/deeper/deeper.txt'] = [rootdir, 'deep/deeper', 'deeper.txt'];
     expected[rootdir + '/deep/deeper/deepest/deepest.txt'] = [rootdir, 'deep/deeper/deepest', 'deepest.txt'];

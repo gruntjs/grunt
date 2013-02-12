@@ -1,7 +1,5 @@
-# grunt [![Build Status](https://secure.travis-ci.org/gruntjs/grunt.png?branch=master)](http://travis-ci.org/gruntjs/grunt)
-Grunt is a task-based command line build tool for JavaScript projects.
+# Grunt: The JavaScript Task Runner [![Build Status](https://secure.travis-ci.org/gruntjs/grunt.png?branch=master)](http://travis-ci.org/gruntjs/grunt)
 
-## Introduction
 Check out our [getting started guide] for a primer on how to use grunt.
 
 ## Documentation

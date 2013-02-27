@@ -94,7 +94,7 @@ exports['util.spawn'] = {
     test.expect(6);
     grunt.util.spawn({
       cmd: process.execPath,
-      args: [ this.script, 0 ],
+      args: [ this.script, 0 ]
     }, function(err, result, code) {
       test.equals(err, null);
       test.equals(code, 0);
@@ -125,7 +125,7 @@ exports['util.spawn'] = {
     test.expect(7);
     grunt.util.spawn({
       cmd: process.execPath,
-      args: [ this.script, 123 ],
+      args: [ this.script, 123 ]
     }, function(err, result, code) {
       test.ok(err instanceof Error);
       test.equals(err.message, 'stderr');
@@ -156,7 +156,7 @@ exports['util.spawn'] = {
   'cmd not found': function(test) {
     test.expect(3);
     grunt.util.spawn({
-      cmd: 'nodewtfmisspelled',
+      cmd: 'nodewtfmisspelled'
     }, function(err, result, code) {
       test.ok(err instanceof Error);
       test.equals(code, 127);
@@ -181,7 +181,7 @@ exports['util.spawn'] = {
     test.expect(6);
     var win32 = process.platform === 'win32';
     grunt.util.spawn({
-      cmd: 'test\\fixtures\\exec' + (win32 ? '.cmd' : '.sh'),
+      cmd: 'test\\fixtures\\exec' + (win32 ? '.cmd' : '.sh')
     }, function(err, result, code) {
       test.equals(err, null);
       test.equals(code, 0);
@@ -197,7 +197,7 @@ exports['util.spawn'] = {
     var win32 = process.platform === 'win32';
     grunt.util.spawn({
       cmd: './exec' + (win32 ? '.cmd' : '.sh'),
-      opts: {cwd: 'test/fixtures'},
+      opts: {cwd: 'test/fixtures'}
     }, function(err, result, code) {
       test.equals(err, null);
       test.equals(code, 0);
@@ -212,7 +212,7 @@ exports['util.spawn'] = {
     test.expect(3);
     grunt.util.spawn({
       grunt: true,
-      args: [ '--gruntfile', 'test/fixtures/Gruntfile-print-text.js', 'print:foo' ],
+      args: [ '--gruntfile', 'test/fixtures/Gruntfile-print-text.js', 'print:foo' ]
     }, function(err, result, code) {
       test.equals(err, null);
       test.equals(code, 0);
@@ -225,7 +225,7 @@ exports['util.spawn'] = {
     grunt.util.spawn({
       grunt: true,
       args: [ '--gruntfile', 'Gruntfile-print-text.js', 'print:foo' ],
-      opts: {cwd: 'test/fixtures'},
+      opts: {cwd: 'test/fixtures'}
     }, function(err, result, code) {
       test.equals(err, null);
       test.equals(code, 0);
@@ -242,7 +242,7 @@ exports['util.spawn'] = {
     var child = grunt.util.spawn({
       cmd: process.execPath,
       args: [ this.script, 0 ],
-      opts: {stdio: [null, stdout, stderr]},
+      opts: {stdio: [null, stdout, stderr]}
     }, function(err, result, code) {
       test.equals(code, 0);
       test.equals(String(fs.readFileSync(stdoutFile.path)), 'stdout\n', 'Child process stdout should have been captured via custom stream.');
@@ -254,7 +254,7 @@ exports['util.spawn'] = {
     });
     test.ok(!child.stdout, 'child should not have a stdout property.');
     test.ok(!child.stderr, 'child should not have a stderr property.');
-  },
+  }
 };
 
 exports['util.underscore.string'] = function(test) {

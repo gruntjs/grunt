@@ -37,5 +37,5 @@ exports['option'] = {
     });
     test.deepEqual(grunt.option.flags(), ['--foo=bar', '--there', '--obj=[object Object]']);
     test.done();
-  },
+  }
 };

@@ -13,11 +13,11 @@ exports['config'] = {
         foo: '<%= meta.foo %>',
         foo2: '<%= obj.foo %>',
         Arr: ['foo', '<%= obj.foo2 %>'],
-        arr2: ['<%= arr %>', '<%= obj.Arr %>'],
+        arr2: ['<%= arr %>', '<%= obj.Arr %>']
       },
       bar: 'bar',
       arr: ['foo', '<%= obj.foo2 %>'],
-      arr2: ['<%= arr %>', '<%= obj.Arr %>'],
+      arr2: ['<%= arr %>', '<%= obj.Arr %>']
     });
     done();
   },
@@ -106,5 +106,5 @@ exports['config'] = {
     test.throws(function() { grunt.config.requires('foo', ['obj', 'foo'], ['obj', 'xyz']); }, 'One property does not exist.');
     grunt.log.muted = false;
     test.done();
-  },
+  }
 };

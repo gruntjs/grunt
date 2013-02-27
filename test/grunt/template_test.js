@@ -43,5 +43,5 @@ exports['template'] = {
     test.equal(grunt.template.process('{%= baz %}', {data: obj, delimiters: 'custom'}), 'ab{% oops %de', 'should not explode.');
 
     test.done();
-  },
+  }
 };

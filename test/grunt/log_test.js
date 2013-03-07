@@ -38,7 +38,7 @@ exports['log'] = {
     test.done();
   },
   'error': function(test) {
-    test.expect(4);
+    test.expect(5);
 
     stdoutEqual(test, function() { grunt.log.error(); }, 'ERROR\n');
     stdoutEqual(test, function() { grunt.log.error('foo'); }, '>> foo\n');
@@ -48,12 +48,13 @@ exports['log'] = {
     }, '>> ' + grunt.util._.repeat('foo', 19, ' ') + '\n' +
       '>> ' + grunt.util._.repeat('foo', 11, ' ') + '\n');
 
+    stdoutEqual(test, function() { grunt.log.errorlns(); }, 'ERROR\n');
     stdoutEqual(test, function() { grunt.log.fail('foo'); }, 'foo\n');
 
     test.done();
   },
   'ok': function(test) {
-    test.expect(4);
+    test.expect(5);
 
     stdoutEqual(test, function() { grunt.log.ok(); }, 'OK\n');
     stdoutEqual(test, function() { grunt.log.ok('foo'); }, '>> foo\n');
@@ -63,6 +64,7 @@ exports['log'] = {
     }, '>> ' + grunt.util._.repeat('foo', 19, ' ') + '\n' +
       '>> ' + grunt.util._.repeat('foo', 11, ' ') + '\n');
 
+    stdoutEqual(test, function() { grunt.log.oklns(); }, 'OK\n');
     stdoutEqual(test, function() { grunt.log.success('foo'); }, 'foo\n');
 
     test.done();

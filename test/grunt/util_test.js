@@ -257,6 +257,26 @@ exports['util.spawn'] = {
   },
 };
 
+exports['util.spawn.multibyte'] = {
+  setUp: function(done) {
+    this.script = path.resolve('test/fixtures/spawn-multibyte.js');
+    done();
+  },
+  'partial stdout': function(test) {
+    test.expect(4);
+    grunt.util.spawn({
+      cmd: process.execPath,
+      args: [ this.script ],
+    }, function(err, result, code) {
+      test.equals(err, null);
+      test.equals(code, 0);
+      test.equals(result.stdout, 'こんにちは');
+      test.equals(result.stderr, 'こんにちは');
+      test.done();
+    });
+  }
+};
+
 exports['util.underscore.string'] = function(test) {
   test.expect(4);
   test.equals(grunt.util._.trim('    foo     '), 'foo', 'Should have trimmed the string.');

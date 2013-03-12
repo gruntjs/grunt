@@ -25,6 +25,7 @@
     "node": ">= 0.8.0"
   },
   "keywords": [
+    "task",
     "async",
     "cli",
     "minify",

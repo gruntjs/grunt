@@ -233,6 +233,20 @@ exports['util.spawn'] = {
       test.done();
     });
   },
+  'grunt result.toString() with error': function(test) {
+    // grunt.log.error uses standard out, to be fixed in 0.5.
+    test.expect(4);
+    grunt.util.spawn({
+      grunt: true,
+      args: [ 'nonexistantTask' ]
+    }, function(err, result, code) {
+      test.ok(err instanceof Error, 'Should be an Error.');
+      test.equal(err.name, 'Error', 'Should be an Error.');
+      test.equals(code, 3);
+      test.ok(/Warning: Task "nonexistantTask" not found./m.test(result.toString()), 'stdout should contain output indicating the grunt task was run.');
+      test.done();
+    });
+  },
   'custom stdio stream(s)': function(test) {
     test.expect(6);
     var stdoutFile = new Tempfile();

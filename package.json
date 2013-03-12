@@ -50,7 +50,7 @@
     "dateformat": "1.0.2-1.2.3",
     "eventemitter2": "~0.4.9",
     "findup-sync": "~0.1.0",
-    "glob": "~3.1.17",
+    "glob": "~3.1.21",
     "hooker": "~0.2.3",
     "iconv-lite": "~0.2.5",
     "minimatch": "~0.2.6",

@@ -10,5 +10,4 @@ Before you make an issue, please read our [Contributing](http://gruntjs.com/cont
 You can find the grunt team in [#grunt on irc.freenode.net](irc://irc.freenode.net/#grunt).
 
 ### Release History
-
-* 2013-02-18 - v0.4.0 - Initial release of 0.4.0. See http://gruntjs.com/upgrading-from-0.3-to-0.4 for a list of changes / migration guide.
+See the [CHANGELOG](CHANGELOG).

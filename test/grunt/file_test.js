@@ -569,6 +569,11 @@ exports['file'] = {
     grunt.file.setBase(oldBase);
     test.done();
   },
+  'delete nonexistent file': function(test) {
+    test.expect(1);
+    test.ok(!grunt.file.delete('nonexistent'), 'should return false if file does not exist.');
+    test.done();
+  },
   'delete outside working directory': function(test) {
     test.expect(3);
     var oldBase = process.cwd();

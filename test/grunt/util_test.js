@@ -233,6 +233,20 @@ exports['util.spawn'] = {
       test.done();
     });
   },
+  'grunt result.toString() with error': function(test) {
+    // grunt.log.error uses standard out, to be fixed in 0.5.
+    test.expect(4);
+    grunt.util.spawn({
+      grunt: true,
+      args: [ 'nonexistentTask' ]
+    }, function(err, result, code) {
+      test.ok(err instanceof Error, 'Should be an Error.');
+      test.equal(err.name, 'Error', 'Should be an Error.');
+      test.equals(code, 3);
+      test.ok(/Warning: Task "nonexistentTask" not found./m.test(result.toString()), 'stdout should contain output indicating the grunt task was (attempted to be) run.');
+      test.done();
+    });
+  },
   'custom stdio stream(s)': function(test) {
     test.expect(6);
     var stdoutFile = new Tempfile();
@@ -255,6 +269,26 @@ exports['util.spawn'] = {
     test.ok(!child.stdout, 'child should not have a stdout property.');
     test.ok(!child.stderr, 'child should not have a stderr property.');
   },
+};
+
+exports['util.spawn.multibyte'] = {
+  setUp: function(done) {
+    this.script = path.resolve('test/fixtures/spawn-multibyte.js');
+    done();
+  },
+  'partial stdout': function(test) {
+    test.expect(4);
+    grunt.util.spawn({
+      cmd: process.execPath,
+      args: [ this.script ],
+    }, function(err, result, code) {
+      test.equals(err, null);
+      test.equals(code, 0);
+      test.equals(result.stdout, 'こんにちは');
+      test.equals(result.stderr, 'こんにちは');
+      test.done();
+    });
+  }
 };
 
 exports['util.underscore.string'] = function(test) {

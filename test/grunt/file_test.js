@@ -4,7 +4,6 @@ var grunt = require('../../lib/grunt');
 
 var fs = require('fs');
 var path = require('path');
-var os = require('os');
 
 var Tempfile = require('temporary/lib/file');
 var Tempdir = require('temporary/lib/dir');
@@ -360,7 +359,7 @@ exports['file'] = {
   setUp: function(done) {
     this.defaultEncoding = grunt.file.defaultEncoding;
     grunt.file.defaultEncoding = 'utf8';
-    this.string = 'Ação é isso aí' + os.EOL;
+    this.string = 'Ação é isso aí' + grunt.util.linefeed;
     this.object = {foo: 'Ação é isso aí', bar: ['ømg', 'pønies']};
     this.writeOption = grunt.option('write');
     done();

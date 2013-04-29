@@ -56,7 +56,7 @@
     "minimatch": "~0.2.6",
     "nopt": "~1.0.10",
     "rimraf": "~2.0.2",
-    "lodash": "~0.9.0",
+    "lodash": "~1.0.0",
     "underscore.string": "~2.2.0rc",
     "which": "~1.0.5",
     "js-yaml": "~2.0.2"

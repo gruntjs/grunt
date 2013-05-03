@@ -14,3 +14,6 @@ You can find the grunt team in [#grunt on irc.freenode.net](irc://irc.freenode.n
 
 ### Release History
 See the [CHANGELOG](CHANGELOG).
+
+### Roadmap
+See the [Roadmap](https://github.com/gruntjs/grunt/wiki/Roadmap).

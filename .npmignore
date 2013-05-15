@@ -1,0 +1,8 @@
+docs
+test
+.travis.yml
+AUTHORS
+CHANGELOG
+CONTRIBUTING.MD
+custom-gruntfile.js
+Gruntfile.js

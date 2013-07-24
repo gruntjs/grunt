@@ -232,6 +232,18 @@ exports['file.expand*'] = {
     test.deepEqual(grunt.file.expand(opts, ['js/foo.js', 'js/bar.js', 'js/baz.js']), ['js/foo.js', 'js/bar.js', 'js/baz.js'], 'non-matching filenames should be returned in result set.');
     test.done();
   },
+  'options.newer': function(test) {
+    test.expect(2);
+
+    var actual = grunt.file.expand({newer: new Date(0)}, '**/*.{js,css}');
+    var expected = ['css/baz.css', 'css/qux.css', 'js/bar.js', 'js/foo.js'];
+    test.deepEqual(actual, expected, 'all files returned for past date.');
+
+    actual = grunt.file.expand({newer: new Date(Date.now() + 1e6)}, '**/*.{js,css}');
+    expected = [];
+    test.deepEqual(actual, expected, 'no files returned for future date.');
+    test.done();
+  },
 };
 
 exports['file.expandMapping'] = {

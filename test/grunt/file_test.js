@@ -571,7 +571,10 @@ exports['file'] = {
   },
   'delete nonexistent file': function(test) {
     test.expect(1);
+    var oldWarn = grunt.log.warn;
+    grunt.log.warn = function() {};
     test.ok(!grunt.file.delete('nonexistent'), 'should return false if file does not exist.');
+    grunt.log.warn = oldWarn;
     test.done();
   },
   'delete outside working directory': function(test) {

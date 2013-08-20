@@ -271,6 +271,51 @@ exports['util.spawn'] = {
   },
 };
 
+exports['util.spawn.execArgv'] = {
+  setUp: function(done) {
+    // clear '--harmony' flag for testing
+    var harmonyIndex = process.execArgv.indexOf('--harmony');
+    if (harmonyIndex !== -1) {
+      process.execArgv.splice(harmonyIndex, 1);
+    }
+
+    this.script = path.resolve('test/fixtures/spawn-execArgv.js');
+    done();
+  },
+  'inherit execArgv': function(test) {
+    // mock that '--harmony' flag is set
+    process.execArgv.unshift('--harmony');
+    
+    test.expect(4);
+    grunt.util.spawn({
+      cmd: process.execPath,
+      args: [ this.script ],
+    }, function(err, result, code) {
+      test.equals(err, null);
+      test.equals(code, 0);
+      var outputs = result.stdout.split('\n');
+      test.equals(outputs[0], 'constant');
+      test.equals(outputs[1], '0');
+      test.done();
+    });
+  },
+  'custom execArgv': function(test) {
+    test.expect(4);
+    grunt.util.spawn({
+      cmd: process.execPath,
+      args: [ this.script ],
+      execArgv: ['--harmony']
+    }, function(err, result, code) {
+      test.equals(err, null);
+      test.equals(code, 0);
+      var outputs = result.stdout.split('\n');
+      test.equals(outputs[0], 'constant');
+      test.equals(outputs[1], '0');
+      test.done();
+    });
+  }
+};
+
 exports['util.spawn.multibyte'] = {
   setUp: function(done) {
     this.script = path.resolve('test/fixtures/spawn-multibyte.js');

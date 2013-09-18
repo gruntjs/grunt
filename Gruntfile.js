@@ -60,29 +60,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
+  // Some internal tasks. Maybe someday these will be released.
+  grunt.loadTasks('internal-tasks');
+
   // "npm test" runs these tasks
   grunt.registerTask('test', ['jshint', 'nodeunit', 'subgrunt']);
 
   // Default task.
   grunt.registerTask('default', ['test']);
-
-  // Run sub-grunt files, because right now, testing tasks is a pain.
-  grunt.registerMultiTask('subgrunt', 'Run a sub-gruntfile.', function() {
-    var path = require('path');
-    grunt.util.async.forEachSeries(this.filesSrc, function(gruntfile, next) {
-      grunt.util.spawn({
-        grunt: true,
-        args: ['--gruntfile', path.resolve(gruntfile)],
-      }, function(error, result) {
-        if (error) {
-          grunt.log.error(result.stdout).writeln();
-          next(new Error('Error running sub-gruntfile "' + gruntfile + '".'));
-        } else {
-          grunt.verbose.ok(result.stdout);
-          next();
-        }
-      });
-    }, this.async());
-  });
 
 };

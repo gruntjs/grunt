@@ -17,7 +17,7 @@ module.exports = function(grunt) {
       all: ['test/{grunt,tasks,util}/**/*.js']
     },
     jshint: {
-      gruntfile: ['Gruntfile.js'],
+      gruntfile_tasks: ['Gruntfile.js', 'internal-tasks/*.js'],
       libs_n_tests: ['lib/**/*.js', '<%= nodeunit.all %>'],
       subgrunt: ['<%= subgrunt.all %>'],
       options: {
@@ -37,9 +37,9 @@ module.exports = function(grunt) {
       }
     },
     watch: {
-      gruntfile: {
-        files: ['<%= jshint.gruntfile %>'],
-        tasks: ['jshint:gruntfile']
+      gruntfile_tasks: {
+        files: ['<%= jshint.gruntfile_tasks %>'],
+        tasks: ['jshint:gruntfile_tasks']
       },
       libs_n_tests: {
         files: ['<%= jshint.libs_n_tests %>'],

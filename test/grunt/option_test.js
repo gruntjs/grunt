@@ -1,6 +1,7 @@
 'use strict';
 
 var grunt = require('../../lib/grunt');
+var nopt = require('nopt');
 
 exports['option'] = {
   setUp: function(done) {
@@ -18,13 +19,22 @@ exports['option'] = {
     test.done();
   },
   'option': function(test) {
-    test.expect(4);
+    test.expect(7);
     test.equal(grunt.option('foo', 'bar'), grunt.option('foo'));
     grunt.option('foo', {foo:'bar'});
     test.deepEqual(grunt.option('foo'), {foo:'bar'});
     test.equal(grunt.option('no-there'), false);
     grunt.option('there', false);
     test.equal(grunt.option('no-there'), true);
+
+    // CLI argument consumption
+    var args = nopt({}, {}, ['--one', '--two=foo', '--no-three', '--four'], 0);
+    delete args.argv;
+    grunt.option.init(args);
+    test.equal(grunt.option('one'), true);
+    test.equal(grunt.option('two'), 'foo');
+    test.equal(grunt.option('three'), false);
+
     test.done();
   },
   'option.flags': function(test) {

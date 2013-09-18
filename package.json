@@ -67,7 +67,7 @@
     "grunt-contrib-nodeunit": "~0.1.2",
     "grunt-contrib-watch": "~0.2.0",
     "difflet": "~0.2.3",
-    "semver": "~2.1.0",
+    "semver": "2.1.0",
     "shelljs": "~0.2.5"
   }
 }

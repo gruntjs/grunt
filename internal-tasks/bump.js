@@ -63,9 +63,14 @@ module.exports = function(grunt) {
         o.version = firstVersion;
       }
       modes.forEach(function(mode) {
+        var orig = o.version;
         var s = semver.parse(o.version);
         s.inc(mode);
         o.version = String(s);
+        // Workaround for https://github.com/isaacs/node-semver/issues/50
+        if (/-/.test(orig) && mode === 'patch') {
+          o.version = o.version.replace(/\d+$/, function(n) { return n - 1; });
+        }
       });
       if (versions[origVersion]) {
         versions[origVersion].filepaths.push(filepath);

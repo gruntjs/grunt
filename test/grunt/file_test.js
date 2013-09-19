@@ -272,7 +272,7 @@ exports['file.expandMapping'] = {
     test.done();
   },
   'ext': function(test) {
-    test.expect(2);
+    test.expect(3);
     var actual, expected;
     actual = grunt.file.expandMapping(['expand/**/*.txt'], 'dest', {ext: '.foo'});
     expected = [
@@ -284,10 +284,13 @@ exports['file.expandMapping'] = {
     actual = grunt.file.expandMapping(['expand-mapping-ext/**/file*'], 'dest', {ext: '.foo'});
     expected = [
       {dest: 'dest/expand-mapping-ext/dir.ectory/file-no-extension.foo', src: ['expand-mapping-ext/dir.ectory/file-no-extension']},
-      {dest: 'dest/expand-mapping-ext/dir.ectory/sub.dir.ectory/file.foo', src: ['expand-mapping-ext/dir.ectory/sub.dir.ectory/file.ext.ension']},
-      {dest: 'dest/expand-mapping-ext/file.foo', src: ['expand-mapping-ext/file.ext.ension']},
+      {dest: 'dest/expand-mapping-ext/dir.ectory/sub.dir.ectory/file.ext.foo', src: ['expand-mapping-ext/dir.ectory/sub.dir.ectory/file.ext.ension']},
+      {dest: 'dest/expand-mapping-ext/file.ext.foo', src: ['expand-mapping-ext/file.ext.ension']},
     ];
     test.deepEqual(actual, expected, 'specified extension should be added');
+    actual = grunt.file.expandMapping(['expand/**/*.sass'], 'dest', {ext: '.scss'});
+    expected = [{dest: 'dest/expand/dot.name.scss', src: ['expand/dot.name.sass']}];
+    test.deepEqual(actual, expected, 'respects dots in the filename');
     test.done();
   },
   'cwd': function(test) {
@@ -332,6 +335,7 @@ exports['file.expandMapping'] = {
       {dest: 'dest/all.md', src: ['expand/README.md']},
       {dest: 'dest/all.css', src: ['expand/css/baz.css', 'expand/css/qux.css']},
       {dest: 'dest/all.txt', src: ['expand/deep/deep.txt', 'expand/deep/deeper/deeper.txt', 'expand/deep/deeper/deepest/deepest.txt']},
+      {dest: 'dest/all.sass', src: ['expand/dot.name.sass']},
       {dest: 'dest/all.js', src: ['expand/js/bar.js', 'expand/js/foo.js']},
     ];
     test.deepEqual(actual, expected, 'if dest is same for multiple src, create an array of src');
@@ -660,6 +664,7 @@ exports['file'] = {
     expected[rootdir + '/deep/deep.txt'] = [rootdir, 'deep', 'deep.txt'];
     expected[rootdir + '/deep/deeper/deeper.txt'] = [rootdir, 'deep/deeper', 'deeper.txt'];
     expected[rootdir + '/deep/deeper/deepest/deepest.txt'] = [rootdir, 'deep/deeper/deepest', 'deepest.txt'];
+    expected[rootdir + '/dot.name.sass'] = [rootdir, undefined, 'dot.name.sass'];
     expected[rootdir + '/js/bar.js'] = [rootdir, 'js', 'bar.js'];
     expected[rootdir + '/js/foo.js'] = [rootdir, 'js', 'foo.js'];
     expected[rootdir + '/README.md'] = [rootdir, undefined, 'README.md'];

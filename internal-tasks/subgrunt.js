@@ -15,15 +15,16 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('subgrunt', 'Run a sub-gruntfile.', function() {
     var path = require('path');
     grunt.util.async.forEachSeries(this.filesSrc, function(gruntfile, next) {
+      grunt.log.write('Loading ' + gruntfile + '...');
       grunt.util.spawn({
         grunt: true,
         args: ['--gruntfile', path.resolve(gruntfile)],
       }, function(error, result) {
         if (error) {
-          grunt.log.error(result.stdout).writeln();
+          grunt.log.error().error(result.stdout).writeln();
           next(new Error('Error running sub-gruntfile "' + gruntfile + '".'));
         } else {
-          grunt.verbose.ok(result.stdout);
+          grunt.log.ok().verbose.ok(result.stdout);
           next();
         }
       });

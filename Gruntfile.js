@@ -24,7 +24,7 @@ module.exports = function(grunt) {
         curly: true,
         eqeqeq: true,
         immed: true,
-        latedef: true,
+        latedef: 'nofunc',
         newcap: true,
         noarg: true,
         sub: true,
@@ -33,7 +33,6 @@ module.exports = function(grunt) {
         boss: true,
         eqnull: true,
         node: true,
-        es5: true
       }
     },
     watch: {

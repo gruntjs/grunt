@@ -64,8 +64,8 @@
   "devDependencies": {
     "temporary": "~0.0.4",
     "grunt-contrib-jshint": "~0.1.1",
-    "grunt-contrib-nodeunit": "~0.1.2",
-    "grunt-contrib-watch": "~0.2.0",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt-contrib-watch": "~0.5.3",
     "difflet": "~0.2.3",
     "semver": "2.1.0",
     "shelljs": "~0.2.5"

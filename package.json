@@ -1,7 +1,7 @@
 {
   "name": "grunt",
   "description": "The JavaScript Task Runner",
-  "version": "0.4.1",
+  "version": "0.4.2-0",
   "author": "\"Cowboy\" Ben Alman (http://benalman.com/)",
   "homepage": "http://gruntjs.com/",
   "repository": {
@@ -57,15 +57,18 @@
     "nopt": "~1.0.10",
     "rimraf": "~2.0.2",
     "lodash": "~0.9.0",
-    "underscore.string": "~2.2.0rc",
+    "underscore.string": "~2.2.0-rc",
     "which": "~1.0.5",
     "js-yaml": "~2.0.2"
   },
   "devDependencies": {
     "temporary": "~0.0.4",
-    "grunt-contrib-jshint": "~0.1.1",
-    "grunt-contrib-nodeunit": "~0.1.2",
-    "grunt-contrib-watch": "~0.2.0",
-    "difflet": "~0.2.3"
+    "grunt-contrib-jshint": "~0.6.4",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-contrib-bump": "git://github.com/gruntjs/grunt-contrib-bump#b9bfc07",
+    "difflet": "~0.2.3",
+    "semver": "2.1.0",
+    "shelljs": "~0.2.5"
   }
 }

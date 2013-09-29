@@ -57,7 +57,7 @@
     "nopt": "~1.0.10",
     "rimraf": "~2.0.2",
     "lodash": "~0.9.0",
-    "underscore.string": "~2.2.0-rc",
+    "underscore.string": "~2.3.3",
     "which": "~1.0.5",
     "js-yaml": "~2.0.2"
   },

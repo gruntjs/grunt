@@ -362,11 +362,23 @@ exports['file'] = {
     this.string = 'Ação é isso aí\n';
     this.object = {foo: 'Ação é isso aí', bar: ['ømg', 'pønies']};
     this.writeOption = grunt.option('write');
+
+    this.oldFailWarnFn = grunt.fail.warn;
+    this.oldLogWarnFn = grunt.log.warn;
+    var warnings = this.warnings = [];
+    grunt.fail.warn = grunt.log.warn = function(warning) {
+      warnings.push(warning);
+    };
+
     done();
   },
   tearDown: function(done) {
     grunt.file.defaultEncoding = this.defaultEncoding;
     grunt.option('write', this.writeOption);
+
+    grunt.fail.warn = this.oldFailWarnFn;
+    grunt.log.warn = this.oldLogWarnFn;
+
     done();
   },
   'read': function(test) {
@@ -570,19 +582,14 @@ exports['file'] = {
     test.done();
   },
   'delete nonexistent file': function(test) {
-    test.expect(1);
-    var oldWarn = grunt.log.warn;
-    grunt.log.warn = function() {};
+    test.expect(2);
     test.ok(!grunt.file.delete('nonexistent'), 'should return false if file does not exist.');
-    grunt.log.warn = oldWarn;
+    test.equal(this.warnings.length, 2, 'should issue a warning when deleting non-existent file');
     test.done();
   },
   'delete outside working directory': function(test) {
-    test.expect(3);
+    test.expect(4);
     var oldBase = process.cwd();
-    var oldWarn = grunt.fail.warn;
-    grunt.fail.warn = function() {};
-
     var cwd = path.resolve(tmpdir.path, 'delete', 'folder');
     var outsidecwd = path.resolve(tmpdir.path, 'delete', 'outsidecwd');
     grunt.file.mkdir(cwd);
@@ -594,26 +601,23 @@ exports['file'] = {
 
     test.ok(grunt.file.delete(path.join(outsidecwd), {force:true}), 'should delete outside cwd when using the --force.');
     test.equal(grunt.file.exists(outsidecwd), false, 'file outside cwd should have been deleted when using the --force.');
+    test.equal(this.warnings.length, 2, 'should issue a warning when deleting outside working directory');
 
     grunt.file.setBase(oldBase);
-    grunt.fail.warn = oldWarn;
     test.done();
   },
   'dont delete current working directory': function(test) {
-    test.expect(2);
+    test.expect(3);
     var oldBase = process.cwd();
-    var oldWarn = grunt.fail.warn;
-    grunt.fail.warn = function() {};
-
     var cwd = path.resolve(tmpdir.path, 'dontdelete', 'folder');
     grunt.file.mkdir(cwd);
     grunt.file.setBase(cwd);
 
     test.equal(grunt.file.delete(cwd), false, 'should not delete the cwd.');
     test.ok(grunt.file.exists(cwd), 'the cwd should exist.');
+    test.equal(this.warnings.length, 2, 'should issue a warning when trying to delete cwd');
 
     grunt.file.setBase(oldBase);
-    grunt.fail.warn = oldWarn;
     test.done();
   },
   'dont actually delete with no-write option on': function(test) {

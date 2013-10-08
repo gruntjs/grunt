@@ -481,6 +481,52 @@ exports['file'] = {
     test.equal(grunt.file.exists(filepath), false, 'file should NOT be created if --no-write was specified.');
     test.done();
   },
+  'set permissions via options (on platforms that support it)': function(test) {
+    var srcpath = 'test/fixtures/exec.sh';
+    var srcstat = fs.statSync(srcpath);
+    // JSHint doesn't like octal literals.
+    var fixtureMode = (srcstat.mode & 0x1ff).toString(8);
+    var tmpfile, deststat;
+    if (fixtureMode === '755') {
+      test.expect(3);
+      tmpfile = new Tempfile();
+      grunt.file.setPermissions(tmpfile.path, {
+        uid: srcstat.uid,
+        gid: srcstat.gid,
+        mode: srcstat.mode,
+      });
+      deststat = fs.statSync(tmpfile.path);
+      test.equal(fixtureMode, (deststat.mode & 0x1ff).toString(8), 'file mode should be set');
+      test.equal(srcstat.uid, deststat.uid, 'file owner should be set');
+      test.equal(srcstat.gid, deststat.gid, 'file group should be set');
+      tmpfile.unlinkSync();
+    } else {
+      test.expect(0);
+      console.error('platform does not appear to support file permissions');
+    }
+    test.done();
+  },
+  'set permissions via srcfile (on platforms that support it)': function(test) {
+    var srcpath = 'test/fixtures/exec.sh';
+    var srcstat = fs.statSync(srcpath);
+    // JSHint doesn't like octal literals.
+    var fixtureMode = (srcstat.mode & 0x1ff).toString(8);
+    var tmpfile, deststat;
+    if (fixtureMode === '755') {
+      test.expect(3);
+      tmpfile = new Tempfile();
+      grunt.file.setPermissions(tmpfile.path, srcpath);
+      deststat = fs.statSync(tmpfile.path);
+      test.equal(fixtureMode, (deststat.mode & 0x1ff).toString(8), 'file mode should be duplicated');
+      test.equal(srcstat.uid, deststat.uid, 'file owner should be duplicated');
+      test.equal(srcstat.gid, deststat.gid, 'file group should be duplicated');
+      tmpfile.unlinkSync();
+    } else {
+      test.expect(0);
+      console.error('platform does not appear to support file permissions');
+    }
+    test.done();
+  },
   'copy': function(test) {
     test.expect(4);
     var tmpfile;
@@ -505,25 +551,27 @@ exports['file'] = {
     test.equal(grunt.file.exists(filepath), false, 'file should NOT be created if --no-write was specified.');
     test.done();
   },
-  'copy permissions (on a platform that supports it)': function(test) {
-    var srcstat = fs.statSync('test/fixtures/chmod676.txt');
-    if ((srcstat.mode & 0x1ff).toString(8) === '676') { // lint doesn't like octal literals
+  'copy permissions (on platforms that support it)': function(test) {
+    var srcpath = 'test/fixtures/exec.sh';
+    var srcstat = fs.statSync(srcpath);
+    // JSHint doesn't like octal literals.
+    var fixtureMode = (srcstat.mode & 0x1ff).toString(8);
+    var tmpfile, deststat;
+    if (fixtureMode === '755') {
       test.expect(3);
-      var tmpfile;
       tmpfile = new Tempfile();
-      grunt.file.copy('test/fixtures/chmod676.txt', tmpfile.path);
-      var deststat = fs.statSync(tmpfile.path);
-      test.equal((srcstat.mode & 0x1ff).toString(8), (deststat.mode & 0x1ff).toString(8), 'file mode should be preserved by default');
+      grunt.file.copy(srcpath, tmpfile.path);
+      deststat = fs.statSync(tmpfile.path);
+      test.equal(fixtureMode, (deststat.mode & 0x1ff).toString(8), 'file mode should be preserved by default');
       test.equal(srcstat.uid, deststat.uid, 'file owner should be preserved by default');
       test.equal(srcstat.gid, deststat.gid, 'file group should be preserved by default');
       tmpfile.unlinkSync();
     } else {
       test.expect(0);
-      process.stderr.write("(platform does not support file permissions. mode of chmod676.txt is " + (srcstat.mode & 0x1ff).toString(8) + ")");
+      console.error('platform does not appear to support file permissions');
     }
     test.done();
   },
-
   'copy and process': function(test) {
     test.expect(13);
     var tmpfile;

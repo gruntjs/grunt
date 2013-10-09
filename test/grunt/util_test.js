@@ -82,6 +82,11 @@ exports['util'] = {
       test.equal(grunt.util.normalizelf('foo\nbar\r\nbaz\r\n\r\nqux\n\nquux'), 'foo\nbar\nbaz\n\nqux\n\nquux', 'linefeeds should be normalized');
     }
     test.done();
+  },
+  'extend': function(test) {
+    test.expect(1);
+    test.equal(JSON.stringify(grunt.util.extend({"one": 1}, {"two": 2})), JSON.stringify({"one":1, "two": 2}));
+    test.done();
   }
 };
 

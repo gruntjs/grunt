@@ -395,6 +395,10 @@ exports['file'] = {
     test.strictEqual(grunt.file.read('test/fixtures/BOM.txt'), '\ufeff' + 'foo', 'file should have BOM preserved.');
     grunt.file.preserveBOM = false;
 
+    grunt.file.preserveBOM = true;
+    test.strictEqual(grunt.file.read('test/fixtures/BOM.txt'), '\ufeff' + 'foo', 'file should have BOM preserved.');
+    grunt.file.preserveBOM = false;
+
     grunt.file.defaultEncoding = 'iso-8859-1';
     test.strictEqual(grunt.file.read('test/fixtures/iso-8859-1.txt'), this.string, 'changing the default encoding should work.');
     test.done();

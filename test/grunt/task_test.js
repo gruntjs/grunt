@@ -257,3 +257,89 @@ exports['task.normalizeMultiTaskFiles'] = {
     test.done();
   },
 };
+
+// needed ?
+var requireTask = require.bind(exports, '../../lib/grunt/task.js');
+
+var result = (function() {
+  var arr;
+  var push = function() { [].push.apply(arr, arguments); };
+  return {
+    reset: function() { arr = []; },
+    push: push,
+    pushTaskname: function() { push(this.name); },
+    get: function() { return arr; },
+    getJoined: function() { return arr.join(''); }
+  };
+}());
+
+exports['task.deactivateOnOption'] = {
+  setUp: function(done) {
+    result.reset();
+    this.task = requireTask();
+    done();
+  },
+  'Task#testDeactivateOnOption': function(test) {
+    test.expect(1);
+    var task = this.task;
+    task.registerTask('a', 'Should never run.', function () {
+      throw new Error('should never run.');
+    });
+    task.registerTask('b', 'Should run.', result.pushTaskname);
+    task.options({
+      error: function() {
+        result.push('!' + this.name);
+      },
+      done: function() {
+        test.strictEqual(result.getJoined(), 'b', 'The specified tasks should not have run.');
+        test.done();
+      }
+    });
+    grunt.option.init({
+      a: false,
+    });
+    task.run('a', 'b').start();
+  },
+  'Task#testMultitaskDeactivateOnOption': function(test) {
+    test.expect(1);
+    var task = this.task;
+    task.registerTask('a', 'Push task name onto result.', result.pushTaskname);
+    task.registerTask('b', 'Push task name onto result.', result.pushTaskname);
+    task.registerTask('c d', 'Push task name onto result.', result.pushTaskname);
+    task.registerTask('y', ['a', 'b', 'c d']);
+    task.options({
+      error: function() {
+        result.push('!' + this.name);
+      },
+      done: function() {
+        test.strictEqual(result.getJoined(), 'a', 'The specified tasks should not have run.');
+        test.done();
+      }
+    });
+    grunt.option.init({
+      y: false,
+    });
+    task.run('y', 'a').start();
+  },
+  'Task#testMultitaskChildrenDeactivateOnOption': function(test) {
+    test.expect(1);
+    var task = this.task;
+    task.registerTask('a', 'Push task name onto result.', result.pushTaskname);
+    task.registerTask('b', 'Push task name onto result.', result.pushTaskname);
+    task.registerTask('c d', 'Push task name onto result.', result.pushTaskname);
+    task.registerTask('y', ['a', 'b', 'c d']);
+    task.options({
+      error: function() {
+        result.push('!' + this.name);
+      },
+      done: function() {
+        test.strictEqual(result.getJoined(), 'ac d', 'The specified tasks should not have run.');
+        test.done();
+      }
+    });
+    grunt.option.init({
+      b: false,
+    });
+    task.run('y').start();
+  },
+};

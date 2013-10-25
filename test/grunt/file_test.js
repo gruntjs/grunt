@@ -428,7 +428,7 @@ exports['file'] = {
     test.done();
   },
   'write': function(test) {
-    test.expect(5);
+    test.expect(6);
     var tmpfile;
     tmpfile = new Tempfile();
     grunt.file.write(tmpfile.path, this.string);
@@ -438,6 +438,12 @@ exports['file'] = {
     tmpfile = new Tempfile();
     grunt.file.write(tmpfile.path, this.string, {encoding: 'iso-8859-1'});
     test.strictEqual(grunt.file.read(tmpfile.path, {encoding: 'iso-8859-1'}), this.string, 'file should be written using the specified encoding.');
+    tmpfile.unlinkSync();
+
+    tmpfile = new Tempfile();
+    tmpfile.unlinkSync();
+    grunt.file.write(tmpfile.path, this.string, {mode: parseInt("0444",8) });
+    test.strictEqual(fs.statSync(tmpfile.path).mode & parseInt("0222", 8) , 0, 'file should be read only.');
     tmpfile.unlinkSync();
 
     grunt.file.defaultEncoding = 'iso-8859-1';

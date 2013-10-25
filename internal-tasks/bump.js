@@ -30,7 +30,7 @@ module.exports = function(grunt) {
         modes.push(matches[0]);
       }
     });
-    if (this.errorCount === 0 && modes === 0) {
+    if (this.errorCount === 0 && modes.length === 0) {
       grunt.log.error('Error: no modes specified.');
     }
     if (this.errorCount > 0) {

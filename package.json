@@ -67,7 +67,6 @@
     "grunt-contrib-jshint": "~0.6.4",
     "grunt-contrib-nodeunit": "~0.2.0",
     "grunt-contrib-watch": "~0.5.3",
-    "grunt-contrib-bump": "git://github.com/gruntjs/grunt-contrib-bump#b9bfc07",
     "difflet": "~0.2.3",
     "semver": "2.1.0",
     "shelljs": "~0.2.5"

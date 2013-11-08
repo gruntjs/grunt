@@ -60,7 +60,8 @@
     "underscore.string": "~2.2.0-rc",
     "which": "~1.0.5",
     "js-yaml": "~2.0.2",
-    "exit": "~0.1.0"
+    "exit": "~0.1.0",
+    "grunt-core-config": "~0.1.0"
   },
   "devDependencies": {
     "temporary": "~0.0.4",

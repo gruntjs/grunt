@@ -271,15 +271,22 @@ exports['util.spawn'] = {
   },
 };
 
+var harmonyWasSetAtIndex = -1;
 exports['util.spawn.execArgv'] = {
   setUp: function(done) {
     // clear '--harmony' flag for testing
-    var harmonyIndex = process.execArgv.indexOf('--harmony');
-    if (harmonyIndex !== -1) {
-      process.execArgv.splice(harmonyIndex, 1);
+    harmonyWasSetAtIndex = process.execArgv.indexOf('--harmony');
+    if (harmonyWasSetAtIndex !== -1) {
+      process.execArgv.splice(harmonyWasSetAtIndex, 1);
     }
 
     this.script = path.resolve('test/fixtures/spawn-execArgv.js');
+    done();
+  },
+  tearDown: function(done) {
+    if (harmonyWasSetAtIndex !== -1) {
+      process.execArgv.splice(harmonyWasSetAtIndex, 0, '--harmony');
+    }
     done();
   },
   'inherit execArgv': function(test) {
@@ -296,6 +303,8 @@ exports['util.spawn.execArgv'] = {
       var outputs = result.stdout.split('\n');
       test.equals(outputs[0], 'constant');
       test.equals(outputs[1], '0');
+      // clear mock '--harmony'
+      process.execArgv.shift('--harmony');
       test.done();
     });
   },

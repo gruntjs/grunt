@@ -1,3 +1,17 @@
+v0.4.2:
+  date: 2013-11-21
+  changes:
+    - Extract internal "namespace" lib to external "getobject" lib.
+    - "Grunt collections" are now deprecated, use peerDependencies. See "grunt-contrib" 0.8.0 for details.
+    - Fix stdout / stderr issues on Windows. Closes gh-940, gh-921, gh-744, gh-792, gh-644, gh-708.
+    - Fix pipe-redirecting on Windows. Closes gh-510.
+    - Fixed this.options() in renamed basic tasks. Closes gh-855.
+    - Update underscore.string dependency to follow semver. Closes gh-886.
+    - Output task options in verbose mode. Closes gh-749.
+    - Add file.preserveBOM property. Closes gh-806, gh-937.
+    - Test that file methods warn. Closes gh-909.
+    - Fixed a few spelling errors in code comments. Closes gh-849.
+    - Updated watch, jshint and nodeunit deps. Closes gh-914.
 v0.4.1:
   date: 2013-03-13
   changes:

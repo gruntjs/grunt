@@ -362,19 +362,38 @@ exports['file'] = {
     this.string = 'Ação é isso aí\n';
     this.object = {foo: 'Ação é isso aí', bar: ['ømg', 'pønies']};
     this.writeOption = grunt.option('write');
+
+    // Testing that warnings were displayed.
+    this.oldFailWarnFn = grunt.fail.warn;
+    this.oldLogWarnFn = grunt.log.warn;
+    this.resetWarnCount = function() {
+      this.warnCount = 0;
+    }.bind(this);
+    grunt.fail.warn = grunt.log.warn = function() {
+      this.warnCount += 1;
+    }.bind(this);
+
     done();
   },
   tearDown: function(done) {
     grunt.file.defaultEncoding = this.defaultEncoding;
     grunt.option('write', this.writeOption);
+
+    grunt.fail.warn = this.oldFailWarnFn;
+    grunt.log.warn = this.oldLogWarnFn;
+
     done();
   },
   'read': function(test) {
-    test.expect(5);
+    test.expect(6);
     test.strictEqual(grunt.file.read('test/fixtures/utf8.txt'), this.string, 'file should be read as utf8 by default.');
     test.strictEqual(grunt.file.read('test/fixtures/iso-8859-1.txt', {encoding: 'iso-8859-1'}), this.string, 'file should be read using the specified encoding.');
     test.ok(compareBuffers(grunt.file.read('test/fixtures/octocat.png', {encoding: null}), fs.readFileSync('test/fixtures/octocat.png')), 'file should be read as a buffer if encoding is specified as null.');
+
     test.strictEqual(grunt.file.read('test/fixtures/BOM.txt'), 'foo', 'file should have BOM stripped.');
+    grunt.file.preserveBOM = true;
+    test.strictEqual(grunt.file.read('test/fixtures/BOM.txt'), '\ufeff' + 'foo', 'file should have BOM preserved.');
+    grunt.file.preserveBOM = false;
 
     grunt.file.defaultEncoding = 'iso-8859-1';
     test.strictEqual(grunt.file.read('test/fixtures/iso-8859-1.txt'), this.string, 'changing the default encoding should work.');
@@ -570,16 +589,15 @@ exports['file'] = {
     test.done();
   },
   'delete nonexistent file': function(test) {
-    test.expect(1);
+    test.expect(2);
+    this.resetWarnCount();
     test.ok(!grunt.file.delete('nonexistent'), 'should return false if file does not exist.');
+    test.ok(this.warnCount, 'should issue a warning when deleting non-existent file');
     test.done();
   },
   'delete outside working directory': function(test) {
-    test.expect(3);
+    test.expect(4);
     var oldBase = process.cwd();
-    var oldWarn = grunt.fail.warn;
-    grunt.fail.warn = function() {};
-
     var cwd = path.resolve(tmpdir.path, 'delete', 'folder');
     var outsidecwd = path.resolve(tmpdir.path, 'delete', 'outsidecwd');
     grunt.file.mkdir(cwd);
@@ -587,30 +605,31 @@ exports['file'] = {
     grunt.file.setBase(cwd);
 
     grunt.file.write(path.join(outsidecwd, 'test.js'), 'var test;');
+
+    this.resetWarnCount();
     test.equal(grunt.file.delete(path.join(outsidecwd, 'test.js')), false, 'should not delete anything outside the cwd.');
+    test.ok(this.warnCount, 'should issue a warning when deleting outside working directory');
 
     test.ok(grunt.file.delete(path.join(outsidecwd), {force:true}), 'should delete outside cwd when using the --force.');
     test.equal(grunt.file.exists(outsidecwd), false, 'file outside cwd should have been deleted when using the --force.');
 
     grunt.file.setBase(oldBase);
-    grunt.fail.warn = oldWarn;
     test.done();
   },
   'dont delete current working directory': function(test) {
-    test.expect(2);
+    test.expect(3);
     var oldBase = process.cwd();
-    var oldWarn = grunt.fail.warn;
-    grunt.fail.warn = function() {};
-
     var cwd = path.resolve(tmpdir.path, 'dontdelete', 'folder');
     grunt.file.mkdir(cwd);
     grunt.file.setBase(cwd);
 
+    this.resetWarnCount();
     test.equal(grunt.file.delete(cwd), false, 'should not delete the cwd.');
+    test.ok(this.warnCount, 'should issue a warning when trying to delete cwd');
+
     test.ok(grunt.file.exists(cwd), 'the cwd should exist.');
 
     grunt.file.setBase(oldBase);
-    grunt.fail.warn = oldWarn;
     test.done();
   },
   'dont actually delete with no-write option on': function(test) {

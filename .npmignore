@@ -3,6 +3,6 @@ test
 .travis.yml
 AUTHORS
 CHANGELOG
-CONTRIBUTING.MD
+CONTRIBUTING.md
 custom-gruntfile.js
 Gruntfile.js

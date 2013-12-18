@@ -19,7 +19,8 @@
   ],
   "main": "lib/grunt",
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "install": "npm-issue-3958-workaround"
   },
   "engines": {
     "node": ">= 0.8.0"
@@ -70,6 +71,7 @@
     "grunt-contrib-watch": "~0.5.3",
     "difflet": "~0.2.3",
     "semver": "2.1.0",
-    "shelljs": "~0.2.5"
+    "shelljs": "~0.2.5",
+    "npm-issue-3958-workaround": "~0.1.0"
   }
 }

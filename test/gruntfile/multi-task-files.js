@@ -90,6 +90,19 @@ module.exports = function(grunt) {
           }
         ]
       },
+      long4_mapping: {
+        options: {a: 8, c: 88},
+        files: [
+          '<%= run.long3_mapping.files %>'
+        ]
+      },
+      long5_mapping: {
+        options: {a: 9, c: 99},
+        files: [
+          '<%= run.long3_mapping.files %>',
+          '<%= run.long4_mapping.files %>'
+        ]
+      },
       // Need to ensure the task function is run if no files or options were
       // specified!
       no_files_or_options: {},
@@ -294,6 +307,94 @@ module.exports = function(grunt) {
         },
       ],
     },
+    'run:long4_mapping': {
+      options: {a: 8, b: 11, c: 88, d: 9},
+      files: [
+        {
+          dest: 'foo/baz/file1.bar',
+          src: ['src/file1.js'],
+          extra: 123,
+          orig: {
+            expand: true,
+            cwd: grunt.config.get('mappings.cwd'),
+            src: ['*1.js', '*2.js'],
+            dest: grunt.config.get('mappings.dest'),
+            rename: grunt.config.get('mappings.rename'),
+            extra: 123,
+          },
+        },
+        {
+          dest: 'foo/baz/file2.bar',
+          src: ['src/file2.js'],
+          extra: 123,
+          orig: {
+            expand: true,
+            cwd: grunt.config.get('mappings.cwd'),
+            src: ['*1.js', '*2.js'],
+            dest: grunt.config.get('mappings.dest'),
+            rename: grunt.config.get('run.built_mapping.rename'),
+            extra: 123,
+          },
+        },
+      ],
+    },
+    'run:long5_mapping': {
+      options: {a: 9, b: 11, c: 99, d: 9},
+      files: [
+        {
+          dest: 'foo/baz/file1.bar',
+          src: ['src/file1.js'],
+          extra: 123,
+          orig: {
+            expand: true,
+            cwd: grunt.config.get('mappings.cwd'),
+            src: ['*1.js', '*2.js'],
+            dest: grunt.config.get('mappings.dest'),
+            rename: grunt.config.get('mappings.rename'),
+            extra: 123,
+          },
+        },
+        {
+          dest: 'foo/baz/file2.bar',
+          src: ['src/file2.js'],
+          extra: 123,
+          orig: {
+            expand: true,
+            cwd: grunt.config.get('mappings.cwd'),
+            src: ['*1.js', '*2.js'],
+            dest: grunt.config.get('mappings.dest'),
+            rename: grunt.config.get('run.built_mapping.rename'),
+            extra: 123,
+          },
+        },
+        {
+          dest: 'foo/baz/file1.bar',
+          src: ['src/file1.js'],
+          extra: 123,
+          orig: {
+            expand: true,
+            cwd: grunt.config.get('mappings.cwd'),
+            src: ['*1.js', '*2.js'],
+            dest: grunt.config.get('mappings.dest'),
+            rename: grunt.config.get('mappings.rename'),
+            extra: 123,
+          },
+        },
+        {
+          dest: 'foo/baz/file2.bar',
+          src: ['src/file2.js'],
+          extra: 123,
+          orig: {
+            expand: true,
+            cwd: grunt.config.get('mappings.cwd'),
+            src: ['*1.js', '*2.js'],
+            dest: grunt.config.get('mappings.dest'),
+            rename: grunt.config.get('run.built_mapping.rename'),
+            extra: 123,
+          },
+        },
+      ],
+    },
   };
 
   var assert = require('assert');
@@ -353,6 +454,10 @@ module.exports = function(grunt) {
     'test:built_mapping',
     'run:long3_mapping',
     'test:long3_mapping',
+    'run:long4_mapping',
+    'test:long4_mapping',
+    'run:long5_mapping',
+    'test:long5_mapping',
     'run',
     'test:all',
     'test:counters',

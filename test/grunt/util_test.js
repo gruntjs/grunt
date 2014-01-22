@@ -233,6 +233,18 @@ exports['util.spawn'] = {
       test.done();
     });
   },
+  'grunt passes execArgv': function(test) {
+    test.expect(3);
+    grunt.util.spawn({
+      cmd: process.execPath,
+      args: [ '--harmony', process.argv[1], '--gruntfile', 'test/fixtures/Gruntfile-execArgv.js'],
+    }, function(err, result, code) {
+      test.equals(err, null);
+      test.equals(code, 0);
+      test.ok(/^OUTPUT: --harmony/m.test(result.stdout), 'stdout should contain passed-through process.execArgv.');
+      test.done();
+    });
+  },
   'grunt result.toString() with error': function(test) {
     // grunt.log.error uses standard out, to be fixed in 0.5.
     test.expect(4);

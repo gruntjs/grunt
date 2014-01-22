@@ -107,4 +107,24 @@ exports['config'] = {
     grunt.log.muted = false;
     test.done();
   },
+  'config.merge': function(test) {
+
+    grunt.config.merge({
+      foo2: '<%= foo %> merged',
+      fooNew: '<%= foo2 %> new',
+      obj: {
+        foo2: '<%= obj.foo %> merged',
+        fooNew: '<%= obj.foo2 %> new',
+      },
+    });
+
+    test.expect(6);
+    test.equal(grunt.config.get('foo'), 'bar', 'Should leave original data.');
+    test.equal(grunt.config.get('foo2'), 'bar merged', 'Should override existing data.');
+    test.equal(grunt.config.get('fooNew'), 'bar merged new', 'Should add new data.');
+    test.equal(grunt.config.get('obj.foo'), 'bar', 'Should leave original data.');
+    test.equal(grunt.config.get('obj.foo2'), 'bar merged', 'Should override existing data.');
+    test.equal(grunt.config.get('obj.fooNew'), 'bar merged new', 'Should add new data data.');
+    test.done();
+  },
 };

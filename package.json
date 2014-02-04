@@ -72,6 +72,7 @@
     "difflet": "~0.2.3",
     "semver": "2.1.0",
     "shelljs": "~0.2.5",
-    "npm-issue-3958-workaround": "~0.1.0"
+    "npm-issue-3958-workaround": "~0.1.0",
+    "load-grunt-tasks": "~0.3.0"
   }
 }

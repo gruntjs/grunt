@@ -10,7 +10,8 @@
 'use strict';
 
 module.exports = function(grunt) {
-
+  // These plugins provide necessary tasks.
+  require('load-grunt-tasks')(grunt);
   // Project configuration.
   grunt.initConfig({
     nodeunit: {
@@ -53,11 +54,6 @@ module.exports = function(grunt) {
       all: ['test/gruntfile/*.js']
     },
   });
-
-  // These plugins provide necessary tasks.
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-nodeunit');
-  grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Some internal tasks. Maybe someday these will be released.
   grunt.loadTasks('internal-tasks');

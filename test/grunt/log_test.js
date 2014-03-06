@@ -220,5 +220,28 @@ exports['log'] = {
 
     hooker.unhook(process.stdout, 'write');
     test.done();
+  },
+  'markup': function(test) {
+    test.expect(16);
+
+    stdoutEqual(test, function() { log.write('*a*'); }, 'a');
+    stdoutEqual(test, function() { log.write('*a*b'); }, '*a*b');
+    stdoutEqual(test, function() { log.write('*a b*'); }, 'a b');
+    stdoutEqual(test, function() { log.write('*a* *b*'); }, 'a b');
+    stdoutEqual(test, function() { log.write('* a b *'); }, '* a b *');
+    stdoutEqual(test, function() { log.write('*a**b*'); }, '*a**b*');
+    stdoutEqual(test, function() { log.write('*** a'); }, '*** a');
+    stdoutEqual(test, function() { log.write('*a\\*b*'); }, 'a*b');
+
+    stdoutEqual(test, function() { log.write('_a_'); }, 'a');
+    stdoutEqual(test, function() { log.write('_a_b'); }, '_a_b');
+    stdoutEqual(test, function() { log.write('_a b_'); }, 'a b');
+    stdoutEqual(test, function() { log.write('_a_ _b_'); }, 'a b');
+    stdoutEqual(test, function() { log.write('_ a b _'); }, '_ a b _');
+    stdoutEqual(test, function() { log.write('_a__b_'); }, '_a__b_');
+    stdoutEqual(test, function() { log.write('___ a'); }, '___ a');
+    stdoutEqual(test, function() { log.write('_a\\_b_'); }, 'a_b');
+
+    test.done();
   }
 };

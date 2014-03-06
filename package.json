@@ -61,7 +61,8 @@
     "which": "~1.0.5",
     "js-yaml": "~2.0.5",
     "exit": "~0.1.1",
-    "getobject": "~0.1.0"
+    "getobject": "~0.1.0",
+    "grunt-legacy-util": "~0.1.2"
   },
   "devDependencies": {
     "temporary": "~0.0.4",

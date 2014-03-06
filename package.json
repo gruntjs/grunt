@@ -19,8 +19,7 @@
   ],
   "main": "lib/grunt",
   "scripts": {
-    "test": "grunt test",
-    "install": "npm-issue-3958-workaround"
+    "test": "grunt test"
   },
   "engines": {
     "node": ">= 0.8.0"

@@ -1,3 +1,20 @@
+v0.4.3:
+  date: 2014-03-07
+  changes:
+    - When devving Grunt, do "npm install && npm uninstall grunt" (isaacs/npm#3958)
+    - Grunt is now tested on Node.js 0.11
+    - Extracted internal "util" lib to "grunt-legacy-util" lib
+    - task.normalizeMultiTaskFiles now flattens nested "files" arrays. Closes gh-1034.
+    - Better error in renameTask if task doesn't exist. Closes gh-1058.
+    - Update rimraf to latest version. Closes gh-1043.
+    - Empty string "ext" should strip extension. Closes gh-1087.
+    - Add expandMapping .extDot option. Can be 'first' or 'last' but defaults to 'first'. Closes gh-979.
+    - Add default array for util.spawn optional args. Closes gh-1064.
+    - util.spawn "grunt" option now uses proper Node, passes Node exec options. Closes gh-980, gh-981, gh-877.
+    - Make all tasks asynchronous to reduce call stack. Closes gh-1026.
+    - Fix <%= grunt.task.current.target %> in Multitask files. Closes gh-994.
+    - Generalize cli tests, see gh-983, gh-991.
+    - --debug option can optionally be Boolean. Closes Gh-983, gh-991.
 v0.4.2:
   date: 2013-11-21
   changes:

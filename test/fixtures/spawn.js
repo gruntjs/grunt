@@ -5,4 +5,4 @@ process.stdout.write('stdout\n');
 process.stderr.write('stderr\n');
 
 // Instead of process.exit. See https://github.com/cowboy/node-exit
-require('exit')(code);
+require('grunt-legacy-util').exit(code);

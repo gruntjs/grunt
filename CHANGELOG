@@ -1,3 +1,7 @@
+v0.4.4:
+  date: 2014-04-12
+  changes:
+    - Only signal completion of tasks async if grunt.task.start is invoked with `{asyncDone:true}`.
 v0.4.3:
   date: 2014-03-07
   changes:

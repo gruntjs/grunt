@@ -1,0 +1,11 @@
+init:
+  - git config --global core.autocrlf input
+
+install:
+  - npm install
+  - npm install -g grunt-cli
+  - npm uninstall grunt
+  
+build_script:
+  - npm test
+  

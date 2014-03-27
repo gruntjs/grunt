@@ -1,0 +1,9 @@
+# appveyor file
+# http://www.appveyor.com/docs/appveyor-yml
+
+install:
+  npm install -g grunt-cli
+  npm install
+
+build:
+  grunt test

@@ -5,7 +5,9 @@ install:
   - npm install
   - npm install -g grunt-cli
   - npm uninstall grunt
-  
-build_script:
+
+build: off
+
+test_script:
   - npm test
   

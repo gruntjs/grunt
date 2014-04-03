@@ -27,5 +27,5 @@ build: off
 test_script:
   - node --version
   - npm --version
-  - ps: grunt test --no-color
+  - ps: grunt test --no-color # PowerShell
   - cmd: grunt test --no-color

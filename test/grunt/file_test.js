@@ -809,4 +809,27 @@ exports['file'] = {
     test.equal(grunt.file.isPathInCwd('nonexistent'), false, 'nonexistent path is not in cwd');
     test.done();
   },
+  'cwdUnderSymlink': {
+    setUp: function(done) {
+      this.cwd = process.cwd();
+      process.chdir(path.join(tmpdir.path, 'expand'));
+      done();
+    },
+    tearDown: function(done) {
+      process.chdir(this.cwd);
+      done();
+    },
+    'isPathCwd': function(test) {
+      test.expect(2);
+      test.ok(grunt.file.isPathCwd(process.cwd()), 'cwd is cwd');
+      test.ok(grunt.file.isPathCwd('.'), 'cwd is cwd');
+      test.done();
+    },
+    'isPathInCwd': function(test) {
+      test.expect(2);
+      test.ok(grunt.file.isPathInCwd('deep'), 'subdirectory is in cwd');
+      test.ok(grunt.file.isPathInCwd(path.resolve('deep')), 'subdirectory is in cwd');
+      test.done();
+    },
+  }
 };

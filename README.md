@@ -1,6 +1,6 @@
 # Grunt: The JavaScript Task Runner
 
-[![Build Status: Linux](https://secure.travis-ci.org/gruntjs/grunt.png?branch=master)](http://travis-ci.org/gruntjs/grunt)
+[![Build Status: Linux](https://secure.travis-ci.org/gruntjs/grunt.svg?branch=master)](http://travis-ci.org/gruntjs/grunt)
 <a href="https://ci.appveyor.com/project/gruntjs/grunt"><img src="https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva/branch/master" alt="Build Status: Windows" height="18" /></a>
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 

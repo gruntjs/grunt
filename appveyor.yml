@@ -25,10 +25,10 @@ install:
   - ps: Update-NodeJsInstallation (Get-NodeJsLatestBuild $env:nodejs_version)
   - npm install -g grunt-cli
   - npm install
-  - npm uninstall grunt
+  - npm uninstall grunt # https://github.com/npm/npm/issues/3958
 
 build: off
-  
+
 test_script:
   - node --version
   - npm --version

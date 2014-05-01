@@ -1,3 +1,5 @@
+// TODO: REMOVE ALL NON-OPTION RELATED TESTS
+
 'use strict';
 
 var grunt = require('../../lib/grunt');

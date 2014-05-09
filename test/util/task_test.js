@@ -169,6 +169,12 @@ exports['Tasks'] = {
     });
     task.run('syncs', 'asyncs').start();
   },
+  'Task#exists': function(test) {
+    test.expect(1);
+    var task = this.task;
+    test.strictEqual(task.exists('notexistent'), false, 'A task should not be exists (registered).');
+    test.done();
+  },
   'Task#run (nested, exception handling)': function(test) {
     test.expect(2);
     var task = this.task;

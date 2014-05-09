@@ -18,6 +18,7 @@ exports['config'] = {
       bar: 'bar',
       arr: ['foo', '<%= obj.foo2 %>'],
       arr2: ['<%= arr %>', '<%= obj.Arr %>'],
+      buffer: new Buffer('test'),
     });
     done();
   },
@@ -48,16 +49,19 @@ exports['config'] = {
     test.done();
   },
   'config.process': function(test) {
-    test.expect(5);
+    test.expect(7);
     test.equal(grunt.config.process('<%= meta.foo %>'), 'bar', 'Should process templates.');
     test.equal(grunt.config.process('<%= foo %>'), 'bar', 'Should process templates recursively.');
     test.equal(grunt.config.process('<%= obj.foo %>'), 'bar', 'Should process deeply nested templates recursively.');
     test.deepEqual(grunt.config.process(['foo', '<%= obj.foo2 %>']), ['foo', 'bar'], 'Should process templates in arrays.');
     test.deepEqual(grunt.config.process(['<%= arr %>', '<%= obj.Arr %>']), [['foo', 'bar'], ['foo', 'bar']], 'Should expand <%= arr %> and <%= obj.Arr %> values as objects if possible.');
+    var buf = grunt.config.process('<%= buffer %>');
+    test.ok(Buffer.isBuffer(buf), 'Should retrieve Buffer instances as Buffer.');
+    test.deepEqual(buf, new Buffer('test'), 'Should return buffers as-is.');
     test.done();
   },
   'config.get': function(test) {
-    test.expect(8);
+    test.expect(10);
     test.equal(grunt.config.get('foo'), 'bar', 'Should process templates.');
     test.equal(grunt.config.get('foo2'), 'bar', 'Should process templates recursively.');
     test.equal(grunt.config.get('obj.foo2'), 'bar', 'Should process deeply nested templates recursively.');
@@ -66,6 +70,9 @@ exports['config'] = {
     test.deepEqual(grunt.config.get('obj.Arr'), ['foo', 'bar'], 'Should process templates in arrays.');
     test.deepEqual(grunt.config.get('arr2'), [['foo', 'bar'], ['foo', 'bar']], 'Should expand <%= arr %> and <%= obj.Arr %> values as objects if possible.');
     test.deepEqual(grunt.config.get(['obj', 'arr2']), [['foo', 'bar'], ['foo', 'bar']], 'Should expand <%= arr %> and <%= obj.Arr %> values as objects if possible.');
+    var buf = grunt.config.get('buffer');
+    test.ok(Buffer.isBuffer(buf), 'Should retrieve Buffer instances as Buffer.');
+    test.deepEqual(buf, new Buffer('test'), 'Should return buffers as-is.');
     test.done();
   },
   'config.set': function(test) {

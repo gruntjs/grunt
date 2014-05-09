@@ -1,3 +1,17 @@
+v0.4.5:
+  date: 2014-05-12
+  changes:
+    - Adds Windows CI testing. Closes gh-1110.
+    - Moved grunt.log into separate grunt-legacy-log module.
+    - Added a warning when no new tasks found via '.loadTasks' method. Closes gh-1059.
+    - Remove "CONTRIBUTING.md" from .npmignore. Closes gh-1093.
+    - Update rimraf to 2.2.8. Closes gh-1134.
+    - Update grunt-legacy-util to 0.2.0. Closes gh-971, gh-1129.
+    - Fixes real path cwd in 'file.isPathCwd' and 'file.doesPathContain'. Closes gh-1112.
+    - Original type (e.g. Buffer) of config value is now kept. Closes gh-971.
+    - 'grunt.config.process' now keeps inherited properties out of objects. Closes gh-1129.
+    - Added grunt.task.exists method to check if a task exists. Closes gh-1131.
+    - Add grunt.config.merge method to deep merge config data. See gh-1039.
 v0.4.4:
   date: 2014-03-12
   changes:

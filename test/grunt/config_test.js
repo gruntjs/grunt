@@ -85,6 +85,20 @@ exports['config'] = {
     test.equal(grunt.config.data.a.b.c, '<%= foo2 %>', 'Should have set the value.');
     test.done();
   },
+  'config.merge': function(test) {
+    test.expect(4);
+    test.deepEqual(grunt.config.merge({}), grunt.config.getRaw(), 'Should return internal data object.');
+    grunt.config.set('obj', {a: 12});
+    grunt.config.merge({
+      foo: 'test',
+      baz: '123',
+      obj: {a: 34, b: 56},
+    });
+    test.deepEqual(grunt.config.getRaw('foo'), 'test', 'Should overwrite existing properties.');
+    test.deepEqual(grunt.config.getRaw('baz'), '123', 'Should add new properties.');
+    test.deepEqual(grunt.config.getRaw('obj'), {a: 34, b: 56}, 'Should deep merge.');
+    test.done();
+  },
   'config': function(test) {
     test.expect(10);
     test.equal(grunt.config('foo'), 'bar', 'Should retrieve processed data.');

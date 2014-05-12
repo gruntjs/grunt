@@ -1,3 +1,18 @@
+v0.4.5:
+  date: 2014-05-12
+  changes:
+    - Updated rimraf to 2.2.8. Closes gh-1134.
+    - Moved grunt.log into separate grunt-legacy-log module.
+    - Updated grunt-legacy-util to 0.2.0. Closes gh-971, gh-1129, gh-1118.
+    - Added grunt.task.exists method to check if a task exists. Closes gh-1131.
+    - Added grunt.config.merge method to deep merge config data. See gh-1039.
+    - Fixed symlink issues with 'file.isPathCwd' and 'file.doesPathContain'. Closes gh-1112.
+    - Config and util.recurse no longer mangle Buffer instances. See gh-971.
+    - Config and util.recurse now enumerate inherited object properties. See gh-1129.
+    - Config and util.recurse now throw useful circular reference error. See gh-1118.
+    - Warn instead of error when no new tasks found via '.loadTasks' method. Closes gh-1059.
+    - Added Windows CI testing. Closes gh-1110.
+    - Removed "CONTRIBUTING.md" from .npmignore. Closes gh-1093.
 v0.4.4:
   date: 2014-03-12
   changes:

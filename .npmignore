@@ -1,6 +1,7 @@
 docs
 test
 .travis.yml
+appveyor.yml
 AUTHORS
 CHANGELOG
 custom-gruntfile.js

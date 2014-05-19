@@ -1,7 +1,7 @@
 {
   "name": "grunt",
   "description": "The JavaScript Task Runner",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "author": "\"Cowboy\" Ben Alman (http://benalman.com/)",
   "homepage": "http://gruntjs.com/",
   "repository": {
@@ -55,14 +55,15 @@
     "iconv-lite": "~0.2.11",
     "minimatch": "~0.2.12",
     "nopt": "~1.0.10",
-    "rimraf": "~2.2.6",
+    "rimraf": "~2.2.8",
     "lodash": "~0.9.2",
     "underscore.string": "~2.2.1",
     "which": "~1.0.5",
     "js-yaml": "~2.0.5",
     "exit": "~0.1.1",
     "getobject": "~0.1.0",
-    "grunt-legacy-util": "~0.1.2"
+    "grunt-legacy-util": "~0.2.0",
+    "grunt-legacy-log": "~0.1.0"
   },
   "devDependencies": {
     "temporary": "~0.0.4",

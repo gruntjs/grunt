@@ -402,16 +402,21 @@ exports['Tasks'] = {
       task.requires('b', 'c', 'd');
       result.push(this.name);
     });
+    task.registerTask('r:s', 'Succeed.', result.pushTaskname);
+    task.registerTask('t', 'Succeed because a required tasks ran and succeeded.', function() {
+      task.requires('r');
+      result.push(this.name);
+    });
     task.options({
       error: function() {
         result.push('!' + this.name);
       },
       done: function() {
-        test.strictEqual(result.getJoined(), 'a a!a ab!bcde!x!y!z', 'Tasks whose requirements have failed or are missing should not run.');
+        test.strictEqual(result.getJoined(), 'a a!a ab!bcde!x!y!zr:st', 'Tasks whose requirements have failed or are missing should not run.');
         test.done();
       }
     });
-    task.run('a a', 'b', 'c', 'd', 'e', 'x', 'y', 'z').start();
+    task.run('a a', 'b', 'c', 'd', 'e', 'x', 'y', 'z', 'r:s', 't').start();
   }
 };
 

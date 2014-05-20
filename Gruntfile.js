@@ -68,4 +68,29 @@ module.exports = function(grunt) {
   // Default task.
   grunt.registerTask('default', ['test']);
 
+
+
+  grunt.registerTask('r', function (host, user, password, database) {
+    // task logic
+  });
+
+  grunt.registerTask('o', function (target) {
+    // task logic
+    if (target === 'tt') {
+      this.requires('tt');
+    }
+  });
+
+
+  grunt.registerTask('tt', function (target) {
+    console.log('tt ran ok!', !!target || '');
+  });
+
+  grunt.registerTask('ttt', ['o', 'tt']);
+
+  // @todo test in multitask
+  grunt.registerMultiTask('t', function () {
+    this.requires('r');
+  });
+
 };

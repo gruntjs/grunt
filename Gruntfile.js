@@ -68,8 +68,6 @@ module.exports = function(grunt) {
   // Default task.
   grunt.registerTask('default', ['test']);
 
-
-
   grunt.registerTask('r', function (host, user, password, database) {
     // task logic
   });

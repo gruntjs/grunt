@@ -62,18 +62,14 @@ module.exports = function(grunt) {
   // Some internal tasks. Maybe someday these will be released.
   grunt.loadTasks('internal-tasks');
 
-  // "npm test" runs these tasks
+  // "npm test" runs these tasks.
   grunt.registerTask('test', ['jshint', 'nodeunit', 'subgrunt']);
 
   // Default task.
   grunt.registerTask('default', ['test']);
 
-  grunt.registerTask('r', function (host, user, password, database) {
-    // task logic
-  });
-
   grunt.registerTask('o', function (target) {
-    // task logic
+    // task logic.
     if (target === 'tt') {
       this.requires('tt');
     }

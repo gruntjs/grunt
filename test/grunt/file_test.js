@@ -604,6 +604,32 @@ exports['file'] = {
 
     test.done();
   },
+  'copy directory recursively': function(test) {
+    test.expect(34);
+    var copyroot1 = path.join(tmpdir.path, 'copy-dir-1');
+    var copyroot2 = path.join(tmpdir.path, 'copy-dir-2');
+    grunt.file.copy('test/fixtures/expand/', copyroot1);
+    grunt.file.recurse('test/fixtures/expand/', function(srcpath, rootdir, subdir, filename) {
+      var destpath = path.join(copyroot1, subdir || '', filename);
+      test.ok(grunt.file.isFile(srcpath), 'file should have been copied.');
+      test.equal(grunt.file.read(srcpath), grunt.file.read(destpath), 'file contents should be the same.');
+    });
+    grunt.file.mkdir(path.join(copyroot1, 'empty'));
+    grunt.file.mkdir(path.join(copyroot1, 'deep/deeper/empty'));
+    grunt.file.copy(copyroot1, copyroot2, {
+      process: function(contents) {
+        return '<' + contents + '>';
+      },
+    });
+    test.ok(grunt.file.isDir(path.join(copyroot2, 'empty')), 'empty directory should have been created.');
+    test.ok(grunt.file.isDir(path.join(copyroot2, 'deep/deeper/empty')), 'empty directory should have been created.');
+    grunt.file.recurse('test/fixtures/expand/', function(srcpath, rootdir, subdir, filename) {
+      var destpath = path.join(copyroot2, subdir || '', filename);
+      test.ok(grunt.file.isFile(srcpath), 'file should have been copied.');
+      test.equal('<' + grunt.file.read(srcpath) + '>', grunt.file.read(destpath), 'file contents should be processed correctly.');
+    });
+    test.done();
+  },
   'delete': function(test) {
     test.expect(2);
     var oldBase = process.cwd();

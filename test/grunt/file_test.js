@@ -513,12 +513,13 @@ exports['file'] = {
     test.done();
   },
   'copy and process': function(test) {
-    test.expect(13);
+    test.expect(14);
     var tmpfile;
     tmpfile = new Tempfile();
     grunt.file.copy('test/fixtures/utf8.txt', tmpfile.path, {
-      process: function(src, filepath) {
-        test.equal(filepath, 'test/fixtures/utf8.txt', 'filepath should be passed in, as-specified.');
+      process: function(src, srcpath, destpath) {
+        test.equal(srcpath, 'test/fixtures/utf8.txt', 'srcpath should be passed in, as-specified.');
+        test.equal(destpath, tmpfile.path, 'destpath should be passed in, as-specified.');
         test.equal(Buffer.isBuffer(src), false, 'when no encoding is specified, use default encoding and process src as a string');
         test.equal(typeof src, 'string', 'when no encoding is specified, use default encoding and process src as a string');
         return 'føø' + src + 'bår';

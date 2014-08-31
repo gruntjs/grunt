@@ -16,6 +16,10 @@ matrix:
   allow_failures:
     - nodejs_version: "0.11"
 
+platform:
+  - x86
+  - x64
+
 # Install scripts. (runs after repo cloning)
 install:
   # Get the latest stable version of Node 0.STABLE.latest

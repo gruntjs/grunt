@@ -169,6 +169,43 @@ exports['Tasks'] = {
     });
     task.run('syncs', 'asyncs').start();
   },
+  'Task#run (async with fake setTimeout)': function(test) {
+    test.expect(1);
+    var task = this.task;
+    var results = [];
+
+    task.registerTask('fake_timer', 'async, with fake setTimeout', function() {
+      var done;
+      var origSetTimeout = setTimeout;
+      /* global setTimeout:true */
+      setTimeout = false;
+      /* global setTimeout:false */
+
+      done = this.async();
+
+      origSetTimeout(function() {
+        results.push( 'async' );
+        done();
+      }, 1);
+
+      /* global setTimeout:true */
+      setTimeout = origSetTimeout;
+      /* global setTimeout:false */
+    });
+
+    task.options({
+      error: function(e) {
+        results.push({name: e.name, message: e.message});
+      },
+      done: function() {
+        test.deepEqual(results, [
+          'async'
+        ], 'The specified task should have run, even with a fake setTimeout.');
+        test.done();
+      }
+    });
+    task.run('fake_timer').start();
+  },
   'Task#exists': function(test) {
     test.expect(2);
     var task = this.task;

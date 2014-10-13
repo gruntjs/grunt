@@ -19,7 +19,7 @@ matrix:
 # Install scripts. (runs after repo cloning)
 install:
   # Get the latest stable version of Node 0.STABLE.latest
-  - ps: Update-NodeJsInstallation (Get-NodeJsLatestBuild $env:nodejs_version)
+  - ps: Install-Product node $env:nodejs_version
   # Typical npm stuff.
   - npm install
   # Grunt-specific stuff.

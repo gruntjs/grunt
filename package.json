@@ -45,7 +45,7 @@
   ],
   "dependencies": {
     "async": "~0.1.22",
-    "coffee-script": "^1.8.0",
+    "coffee-script": "~1.8.0",
     "colors": "~0.6.2",
     "dateformat": "1.0.2-1.2.3",
     "eventemitter2": "~0.4.13",

@@ -13,7 +13,7 @@ exports['option'] = {
   },
   'option.init': function(test) {
     test.expect(1);
-    var expected = {foo:'bar',bool:true,'bar':{foo:'bar'}};
+    var expected = {foo:'bar', bool:true, 'bar':{foo:'bar'}};
     test.deepEqual(grunt.option.init(expected), expected);
     test.done();
   },

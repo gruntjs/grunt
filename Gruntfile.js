@@ -42,6 +42,14 @@ module.exports = function(grunt) {
         node: true,
       }
     },
+    jscs: {
+      src: [
+        'lib/**/*.js',
+        'internal-tasks/**/*.js',
+        'test/**/*.js',
+        '!test/fixtures/**/*.js'
+      ]
+    },
     watch: {
       gruntfile_tasks: {
         files: ['<%= jshint.gruntfile_tasks %>'],
@@ -63,6 +71,7 @@ module.exports = function(grunt) {
 
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-jscs');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
@@ -71,7 +80,7 @@ module.exports = function(grunt) {
 
   // "npm test" runs these tasks
   grunt.registerTask('test', '', function(reporter) {
-    grunt.task.run(['jshint', 'nodeunit:' + (reporter || 'all'), 'subgrunt']);
+    grunt.task.run(['jshint', 'jscs', 'nodeunit:' + (reporter || 'all'), 'subgrunt']);
   });
 
   // Default task.

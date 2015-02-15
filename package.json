@@ -6,7 +6,7 @@
   "homepage": "http://gruntjs.com/",
   "repository": {
     "type": "git",
-    "url": "git://github.com/gruntjs/grunt.git"
+    "url": "https://github.com/gruntjs/grunt.git"
   },
   "bugs": {
     "url": "http://github.com/gruntjs/grunt/issues"

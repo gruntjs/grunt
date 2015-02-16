@@ -4,13 +4,7 @@
   "version": "0.4.6-0",
   "author": "\"Cowboy\" Ben Alman (http://benalman.com/)",
   "homepage": "http://gruntjs.com/",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/gruntjs/grunt.git"
-  },
-  "bugs": {
-    "url": "http://github.com/gruntjs/grunt/issues"
-  },
+  "repository": "gruntjs/grunt",
   "licenses": [
     {
       "type": "MIT",
@@ -22,7 +16,7 @@
     "test": "grunt test"
   },
   "engines": {
-    "node": ">= 0.8.0"
+    "node": ">=0.8.0"
   },
   "keywords": [
     "task",

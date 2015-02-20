@@ -68,5 +68,8 @@
     "difflet": "~0.2.3",
     "semver": "2.1.0",
     "shelljs": "~0.2.5"
-  }
+  },
+  "files": [
+    "lib"
+  ]
 }

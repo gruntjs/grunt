@@ -1,43 +1,42 @@
+# AppVeyor file
 # http://www.appveyor.com/docs/appveyor-yml
 
-# Fix line endings in Windows. (runs before repo cloning)
-init:
-  - git config --global core.autocrlf input
+# Build version format
+version: "{build}"
 
-# Test against these versions of Node.js.
+clone_depth: 10
+
+# Fix line endings on Windows
+init:
+  - git config --global core.autocrlf true
+
+# What combinations to test
 environment:
   matrix:
-    - nodejs_version: "0.10"
-    - nodejs_version: "0.8"
-    - nodejs_version: "0.11"
+    - nodejs_version: 1.0
+    - nodejs_version: 0.12
+    - nodejs_version: 0.10
+    - nodejs_version: 0.8
 
-# Allow failing jobs for bleeding-edge Node.js versions.
-matrix:
-  allow_failures:
-    - nodejs_version: "0.11"
-
-# Install scripts. (runs after repo cloning)
 install:
-  # Get the latest stable version of Node 0.STABLE.latest
   - ps: Install-Product node $env:nodejs_version
-  # Typical npm stuff.
-  - npm install
-  # Grunt-specific stuff.
   - npm install -g grunt-cli
-  - npm uninstall grunt # https://github.com/npm/npm/issues/3958
+  - npm install
 
-# Post-install test scripts.
+build: off
+
 test_script:
   # Output useful info for debugging.
-  - node --version
-  - npm --version
+  - node --version && npm --version
   # We test multiple Windows shells because of prior stdout buffering issues
   # filed against Grunt. https://github.com/joyent/node/issues/3584
   - ps: "npm test # PowerShell" # Pass comment to PS for easier debugging
   - cmd: npm test
 
-# Don't actually build.
-build: off
+matrix:
+  fast_finish: true
 
-# Set build version format here instead of in the admin panel.
-version: "{build}"
+cache:
+  - C:\Users\appveyor\AppData\Roaming\npm\node_modules  # global npm modules
+  - C:\Users\appveyor\AppData\Roaming\npm-cache         # npm cache
+  - node_modules                                        # local npm modules

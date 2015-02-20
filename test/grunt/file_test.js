@@ -723,6 +723,23 @@ exports['file'] = {
 
     test.done();
   },
+  'recurse bad symlink': function(test) {
+    var rootdir = 'test/fixtures/symlinks';
+
+    var expected = {};
+    expected[rootdir+'/bad-symlink'] = [rootdir, 'bad-symlink'];
+
+    var actual = {};
+    try{
+      grunt.file.recurse(rootdir, function(abspath, rootdir, subdir, filename) {
+        actual[abspath] = [rootdir, filename];
+      });
+    } catch (e) {
+      // We log an error if the file doesn't exist, expected behavior
+    }
+    test.deepEqual(actual, expected, 'file recurse will process broken symlinks');
+    test.done();
+  },
   'recurse': function(test) {
     test.expect(1);
     var rootdir = 'test/fixtures/expand';

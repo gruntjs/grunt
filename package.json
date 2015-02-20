@@ -13,7 +13,8 @@
   ],
   "main": "lib/grunt",
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "test-tap": "grunt test:tap"
   },
   "engines": {
     "node": ">=0.8.0"
@@ -62,7 +63,7 @@
   "devDependencies": {
     "temporary": "~0.0.4",
     "grunt-contrib-jshint": "~0.6.4",
-    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt-contrib-nodeunit": "~0.4.1",
     "grunt-contrib-watch": "~0.5.3",
     "difflet": "~0.2.3",
     "semver": "2.1.0",

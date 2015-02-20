@@ -14,7 +14,14 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     nodeunit: {
-      all: ['test/{grunt,tasks,util}/**/*.js']
+      all: ['test/{grunt,tasks,util}/**/*.js'],
+      tap: {
+        src: '<%= nodeunit.all %>',
+        options: {
+          reporter: 'tap',
+          reporterOutput: 'tests.tap'
+        }
+      }
     },
     jshint: {
       gruntfile_tasks: ['Gruntfile.js', 'internal-tasks/*.js'],
@@ -63,7 +70,9 @@ module.exports = function(grunt) {
   grunt.loadTasks('internal-tasks');
 
   // "npm test" runs these tasks
-  grunt.registerTask('test', ['jshint', 'nodeunit', 'subgrunt']);
+  grunt.registerTask('test', '', function(reporter) {
+    grunt.task.run(['jshint', 'nodeunit:' + (reporter || 'all'), 'subgrunt']);
+  });
 
   // Default task.
   grunt.registerTask('default', ['test']);

@@ -429,7 +429,7 @@ exports['file'] = {
     test.done();
   },
   'readJSON': function(test) {
-    test.expect(3);
+    test.expect(8);
     var obj;
     obj = grunt.file.readJSON('test/fixtures/utf8.json');
     test.deepEqual(obj, this.object, 'file should be read as utf8 by default and parsed correctly.');
@@ -440,6 +440,23 @@ exports['file'] = {
     grunt.file.defaultEncoding = 'iso-8859-1';
     obj = grunt.file.readJSON('test/fixtures/iso-8859-1.json');
     test.deepEqual(obj, this.object, 'changing the default encoding should work.');
+
+    test.throws(function() {
+      obj = grunt.file.readJSON('test/fixtures/nonexistent.json');
+    }, 'Attempting to get nonexistent file should throw an exception.');
+
+    var default_obj = {'string': 'test', 'arr': ['item1', 'item2'], 'int': 1};
+    test.doesNotThrow(function() {
+      obj = grunt.file.readJSON('test/fixtures/nonexistent.json', {'default': default_obj});
+    }, 'Attempting to get nonexistent file with "default" option should not throw an exception.');
+
+    test.deepEqual(obj, default_obj, 'default value should be returned if file not exists.');
+
+    test.doesNotThrow(function() {
+      obj = grunt.file.readJSON('test/fixtures/empty.json', {'default': default_obj});
+    }, 'Attempting to get empty file with "default" option should not throw an exception.');
+    test.deepEqual(obj, default_obj, 'default value should be returned if file is empty.');
+
     test.done();
   },
   'readYAML': function(test) {

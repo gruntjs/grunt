@@ -28,18 +28,7 @@ module.exports = function(grunt) {
       libs_n_tests: ['lib/**/*.js', '<%= nodeunit.all %>'],
       subgrunt: ['<%= subgrunt.all %>'],
       options: {
-        curly: true,
-        eqeqeq: true,
-        immed: true,
-        latedef: 'nofunc',
-        newcap: true,
-        noarg: true,
-        sub: true,
-        undef: true,
-        unused: true,
-        boss: true,
-        eqnull: true,
-        node: true,
+        jshintrc: '.jshintrc'
       }
     },
     jscs: {

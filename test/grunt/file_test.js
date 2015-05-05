@@ -428,13 +428,16 @@ exports['file'] = {
     test.done();
   },
   'readJSON': function(test) {
-    test.expect(3);
+    test.expect(4);
     var obj;
     obj = grunt.file.readJSON('test/fixtures/utf8.json');
     test.deepEqual(obj, this.object, 'file should be read as utf8 by default and parsed correctly.');
 
     obj = grunt.file.readJSON('test/fixtures/iso-8859-1.json', {encoding: 'iso-8859-1'});
     test.deepEqual(obj, this.object, 'file should be read using the specified encoding.');
+
+    obj = grunt.file.readJSON('missing-file.json', {fallback: {}});
+    test.deepEqual(obj, {}, 'providing a fallback object should be returned if the JSON file is not found.');
 
     grunt.file.defaultEncoding = 'iso-8859-1';
     obj = grunt.file.readJSON('test/fixtures/iso-8859-1.json');

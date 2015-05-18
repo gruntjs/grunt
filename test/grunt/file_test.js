@@ -234,6 +234,39 @@ exports['file.expand*'] = {
   },
 };
 
+exports['file.contract*'] = {
+  setUp: function(done) {
+    this.cwd = process.cwd();
+    process.chdir('test/fixtures/expand');
+    done();
+  },
+  tearDown: function(done) {
+    process.chdir(this.cwd);
+    done();
+  },
+  'basic matching': function(test) {
+    test.expect(1);
+    test.deepEqual(grunt.file.contract(['css/baz.css', 'deep/deeper/deeper.txt', 'deep/deeper/deepest/deepest.txt', 'js/bar.js', 'js/foo.js']), ['css/baz.css', 'deep/deeper/**/*', 'js/**/*'], 'should match.');
+    test.done();
+  },
+  'options.cwd': function(test) {
+    test.expect(1);
+    var cwd = path.resolve(process.cwd(), '..');
+    test.deepEqual(grunt.file.contract({cwd: cwd}, ['expand/css/baz.css', 'expand/deep/deeper/deeper.txt', 'expand/deep/deeper/deepest/deepest.txt', 'expand/js/bar.js', 'expand/js/foo.js']), ['expand/css/baz.css', 'expand/deep/deeper/**/*', 'expand/js/**/*'], 'should match.');
+    test.done();
+  },
+  'options.hideglobstar': function(test) {
+    test.expect(1);
+    test.deepEqual(grunt.file.contract({hideglobstar: true}, ['css/baz.css', 'deep/deeper/deeper.txt', 'deep/deeper/deepest/deepest.txt', 'js/bar.js', 'js/foo.js']), ['css/baz.css', 'deep/deeper', 'js'], 'should match.');
+    test.done();
+  },
+  'options.mark': function(test) {
+    test.expect(1);
+    test.deepEqual(grunt.file.contract({mark: true, hideglobstar: true}, ['css/baz.css', 'deep/deeper/deeper.txt', 'deep/deeper/deepest/deepest.txt', 'js/bar.js', 'js/foo.js']), ['css/baz.css', 'deep/deeper/', 'js/'], 'should match.');
+    test.done();
+  }
+};
+
 exports['file.expandMapping'] = {
   setUp: function(done) {
     this.cwd = process.cwd();

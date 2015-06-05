@@ -35,12 +35,18 @@
   ],
   "dependencies": {
     "coffee-script": "~1.3.3",
-    "dateformat": "1.0.2-1.2.3",
     "eventemitter2": "~0.4.13",
-    "grunt-legacy-file": "https://github.com/gruntjs/grunt-legacy-file#event-logger",
+    "grunt-legacy-cli": "gruntjs/grunt-legacy-cli#create",
+    "grunt-legacy-config": "gruntjs/grunt-legacy-config#create",
+    "grunt-legacy-event-logger": "gruntjs/grunt-legacy-event-logger",
+    "grunt-legacy-fail": "gruntjs/grunt-legacy-fail#constructor",
+    "grunt-legacy-file": "gruntjs/grunt-legacy-file#event-logger",
     "grunt-legacy-log": "~0.1.0",
-    "grunt-legacy-util": "~0.2.0",
-    "nopt": "~1.0.10"
+    "grunt-legacy-log-facade": "gruntjs/grunt-legacy-log-facade",
+    "grunt-legacy-option": "gruntjs/grunt-legacy-option",
+    "grunt-legacy-task": "gruntjs/grunt-legacy-task#create",
+    "grunt-legacy-template": "gruntjs/grunt-legacy-template#constructor",
+    "grunt-legacy-util": "~0.2.0"
   },
   "devDependencies": {
     "difflet": "~0.2.3",

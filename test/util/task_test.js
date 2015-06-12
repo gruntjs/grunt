@@ -59,6 +59,13 @@ exports['Tasks'] = {
     });
     task.run('y', 'z').start();
   },
+  'Task#registerTask (redefinition)': function(test) {
+    test.expect(1);
+    var task = this.task;
+    task.registerTask('nodupe', 'Push task name onto result.', result.pushTaskname);
+    test.throws(function() { task.registerTask('nodupe', result.pushTaskname); }, 'Redefining an existing task should throw an exception');
+    test.done();
+  },
   'Task#isTaskAlias': function(test) {
     test.expect(2);
     var task = this.task;

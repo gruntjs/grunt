@@ -66,6 +66,12 @@ exports['Tasks'] = {
     test.throws(function() { task.registerTask('nodupe', result.pushTaskname); }, 'Redefining an existing task should throw an exception');
     test.done();
   },
+  'Task#registerTask (loop)': function(test) {
+    test.expect(1);
+    var task = this.task;
+    test.throws(function() { task.registerTask('loop', ['a', 'loop']); }, 'Defining a looping task should throw an exception');
+    test.done();
+  },
   'Task#isTaskAlias': function(test) {
     test.expect(2);
     var task = this.task;

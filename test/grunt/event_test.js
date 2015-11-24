@@ -2,7 +2,7 @@
 
 var grunt = require('../../lib/grunt');
 
-exports['event'] = function(test) {
+exports.event = function(test) {
   test.expect(3);
   grunt.event.on('test.foo', function(a, b, c) {
     // This should get executed once (emit test.foo).

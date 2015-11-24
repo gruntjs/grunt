@@ -383,7 +383,7 @@ var compareFiles = function(filepath1, filepath2) {
   return compareBuffers(fs.readFileSync(filepath1), fs.readFileSync(filepath2));
 };
 
-exports['file'] = {
+exports.file = {
   setUp: function(done) {
     this.defaultEncoding = grunt.file.defaultEncoding;
     grunt.file.defaultEncoding = 'utf8';
@@ -665,7 +665,7 @@ exports['file'] = {
     test.equal(grunt.file.delete(path.join(outsidecwd, 'test.js')), false, 'should not delete anything outside the cwd.');
     test.ok(this.warnCount, 'should issue a warning when deleting outside working directory');
 
-    test.ok(grunt.file.delete(path.join(outsidecwd), {force:true}), 'should delete outside cwd when using the --force.');
+    test.ok(grunt.file.delete(path.join(outsidecwd), {force: true}), 'should delete outside cwd when using the --force.');
     test.equal(grunt.file.exists(outsidecwd), false, 'file outside cwd should have been deleted when using the --force.');
 
     grunt.file.setBase(oldBase);

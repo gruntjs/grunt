@@ -26,7 +26,7 @@ exports['new Task'] = {
   }
 };
 
-exports['Tasks'] = {
+exports.Tasks = {
   setUp: function(done) {
     result.reset();
     this.task = requireTask().create();

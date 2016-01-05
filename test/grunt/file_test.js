@@ -232,6 +232,11 @@ exports['file.expand*'] = {
     test.deepEqual(grunt.file.expand(opts, ['js/foo.js', 'js/bar.js', 'js/baz.js']), ['js/foo.js', 'js/bar.js', 'js/baz.js'], 'non-matching filenames should be returned in result set.');
     test.done();
   },
+  'ignore functions within patterns': function(test) {
+    test.expect(1);
+    test.deepEqual(grunt.file.expand(['**/*.js', function() {}]), ['js/bar.js', 'js/foo.js'], 'functions passed in with patterns should be ignored.');
+    test.done();
+  },
 };
 
 exports['file.expandMapping'] = {

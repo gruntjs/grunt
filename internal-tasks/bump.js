@@ -2,7 +2,7 @@
  * grunt-contrib-bump
  * http://gruntjs.com/
  *
- * Copyright (c) 2015 "Cowboy" Ben Alman, contributors
+ * Copyright (c) 2016 "Cowboy" Ben Alman, contributors
  * Licensed under the MIT license.
  */
 

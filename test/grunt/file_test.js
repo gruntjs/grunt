@@ -358,10 +358,10 @@ exports['file.expandMapping'] = {
       }
     });
     var expected = [
-      {dest: 'dest/all.md', src: ['expand/README.md']},
       {dest: 'dest/all.css', src: ['expand/css/baz.css', 'expand/css/qux.css']},
       {dest: 'dest/all.txt', src: ['expand/deep/deep.txt', 'expand/deep/deeper/deeper.txt', 'expand/deep/deeper/deepest/deepest.txt']},
       {dest: 'dest/all.js', src: ['expand/js/bar.js', 'expand/js/foo.js']},
+      {dest: 'dest/all.md', src: ['expand/README.md']},
     ];
     test.deepEqual(actual, expected, 'if dest is same for multiple src, create an array of src');
     test.done();

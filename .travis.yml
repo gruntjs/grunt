@@ -5,6 +5,7 @@ node_js:
   - "0.12"
   - "0.13"
   - "4"
+  - "5"
   - "iojs"
 before_install:
   - npm install -g npm

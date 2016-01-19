@@ -44,6 +44,7 @@
     "getobject": "~0.1.0",
     "glob": "~3.1.21",
     "grunt-legacy-log": "~0.1.0",
+    "grunt-legacy-log-utils": "^0.1.1",
     "grunt-legacy-util": "~0.2.0",
     "hooker": "~0.2.3",
     "iconv-lite": "~0.2.11",

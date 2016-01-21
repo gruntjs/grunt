@@ -6,7 +6,7 @@ node_js:
   - "4.0"
   - "4.1"
   - "4.2"
-  - "5.5"
+  - "5"
   - "iojs"
 before_install:
   - npm install -g npm

@@ -3,8 +3,10 @@ language: node_js
 node_js:
   - "0.10"
   - "0.12"
-  - "4"
-  - "5"
+  - "4.0"
+  - "4.1"
+  - "4.2"
+  - "5.5"
   - "iojs"
 before_install:
   - npm install -g npm

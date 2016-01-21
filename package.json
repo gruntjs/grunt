@@ -34,26 +34,19 @@
     "tool"
   ],
   "dependencies": {
-    "async": "~0.1.22",
     "coffee-script": "~1.10.0",
-    "colors": "~0.6.2",
     "dateformat": "1.0.2-1.2.3",
     "eventemitter2": "~0.4.13",
     "exit": "~0.1.1",
     "findup-sync": "~0.3.0",
-    "getobject": "~0.1.0",
     "glob": "~3.1.21",
     "grunt-legacy-log": "~0.1.0",
     "grunt-legacy-util": "~0.2.0",
-    "hooker": "~0.2.3",
     "iconv-lite": "~0.2.11",
     "js-yaml": "~2.0.5",
-    "lodash": "~3.10.1",
     "minimatch": "~0.2.12",
     "nopt": "~1.0.10",
-    "rimraf": "~2.2.8",
-    "underscore.string": "~2.2.1",
-    "which": "~1.0.5"
+    "rimraf": "~2.2.8"
   },
   "devDependencies": {
     "difflet": "~0.2.3",

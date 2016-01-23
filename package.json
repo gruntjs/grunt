@@ -46,6 +46,7 @@
     "js-yaml": "~2.0.5",
     "minimatch": "~0.2.12",
     "nopt": "~3.0.6",
+    "path-is-absolute": "~1.0.0",
     "rimraf": "~2.2.8"
   },
   "devDependencies": {

@@ -784,12 +784,17 @@ exports.file = {
     test.done();
   },
   'isPathAbsolute': function(test) {
-    test.expect(5);
+    test.expect(6);
     test.ok(grunt.file.isPathAbsolute(path.resolve('/foo')), 'should return true');
     test.ok(grunt.file.isPathAbsolute(path.resolve('/foo') + path.sep), 'should return true');
     test.equal(grunt.file.isPathAbsolute('foo'), false, 'should return false');
     test.ok(grunt.file.isPathAbsolute(path.resolve('test/fixtures/a.js')), 'should return true');
     test.equal(grunt.file.isPathAbsolute('test/fixtures/a.js'), false, 'should return false');
+    if (process.platform === 'win32') {
+      test.equal(grunt.file.isPathAbsolute('C:/Users/'), true, 'should return true');
+    } else {
+      test.equal(grunt.file.isPathAbsolute('/'), true, 'should return true');
+    }
     test.done();
   },
   'arePathsEquivalent': function(test) {

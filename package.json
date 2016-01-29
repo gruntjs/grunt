@@ -44,7 +44,7 @@
     "grunt-legacy-util": "git://github.com/gruntjs/grunt-legacy-util",
     "iconv-lite": "~0.4.13",
     "js-yaml": "~2.0.5",
-    "minimatch": "~0.2.12",
+    "minimatch": "~3.0.0",
     "nopt": "~3.0.6",
     "path-is-absolute": "~1.0.0",
     "rimraf": "~2.2.8"

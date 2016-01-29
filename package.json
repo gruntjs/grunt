@@ -39,7 +39,7 @@
     "eventemitter2": "~0.4.13",
     "exit": "~0.1.1",
     "findup-sync": "~0.3.0",
-    "glob": "~3.1.21",
+    "glob": "~6.0.4",
     "grunt-legacy-log": "~0.1.0",
     "grunt-legacy-util": "git://github.com/gruntjs/grunt-legacy-util",
     "iconv-lite": "~0.4.13",

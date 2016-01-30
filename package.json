@@ -58,7 +58,8 @@
     "grunt-jscs": "~2.3.0",
     "semver": "2.1.0",
     "shelljs": "~0.5.3",
-    "temporary": "~0.0.4"
+    "temporary": "~0.0.4",
+    "through2": "~2.0.0"
   },
   "files": [
     "lib"

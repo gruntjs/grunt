@@ -471,8 +471,8 @@ exports.file = {
 
     tmpfile = new Tempfile();
     tmpfile.unlinkSync();
-    grunt.file.write(tmpfile.path, this.string, {mode: parseInt("0444",8) });
-    test.strictEqual(fs.statSync(tmpfile.path).mode & parseInt("0222", 8) , 0, 'file should be read only.');
+    grunt.file.write(tmpfile.path, this.string, {mode: parseInt('0444', 8)});
+    test.strictEqual(fs.statSync(tmpfile.path).mode & parseInt('0222', 8), 0, 'file should be read only.');
     tmpfile.unlinkSync();
 
     grunt.file.defaultEncoding = 'iso-8859-1';

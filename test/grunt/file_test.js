@@ -8,6 +8,8 @@ var path = require('path');
 var Tempfile = require('temporary/lib/file');
 var Tempdir = require('temporary/lib/dir');
 
+var win32 = process.platform === 'win32';
+
 var tmpdir = new Tempdir();
 fs.symlinkSync(path.resolve('test/fixtures/octocat.png'), path.join(tmpdir.path, 'octocat.png'), 'file');
 fs.symlinkSync(path.resolve('test/fixtures/expand'), path.join(tmpdir.path, 'expand'), 'dir');
@@ -473,6 +475,7 @@ exports.file = {
     tmpfile.unlinkSync();
     grunt.file.write(tmpfile.path, this.string, {mode: parseInt('0444', 8)});
     test.strictEqual(fs.statSync(tmpfile.path).mode & parseInt('0222', 8), 0, 'file should be read only.');
+    fs.chmodSync(tmpfile.path, parseInt('0666', 8));
     tmpfile.unlinkSync();
 
     grunt.file.defaultEncoding = 'iso-8859-1';
@@ -797,7 +800,7 @@ exports.file = {
     test.equal(grunt.file.isPathAbsolute('foo'), false, 'should return false');
     test.ok(grunt.file.isPathAbsolute(path.resolve('test/fixtures/a.js')), 'should return true');
     test.equal(grunt.file.isPathAbsolute('test/fixtures/a.js'), false, 'should return false');
-    if (process.platform === 'win32') {
+    if (win32) {
       test.equal(grunt.file.isPathAbsolute('C:/Users/'), true, 'should return true');
     } else {
       test.equal(grunt.file.isPathAbsolute('/'), true, 'should return true');

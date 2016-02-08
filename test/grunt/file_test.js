@@ -11,8 +11,15 @@ var Tempdir = require('temporary/lib/dir');
 var win32 = process.platform === 'win32';
 
 var tmpdir = new Tempdir();
-fs.symlinkSync(path.resolve('test/fixtures/octocat.png'), path.join(tmpdir.path, 'octocat.png'), 'file');
-fs.symlinkSync(path.resolve('test/fixtures/expand'), path.join(tmpdir.path, 'expand'), 'dir');
+try {
+  fs.symlinkSync(path.resolve('test/fixtures/octocat.png'), path.join(tmpdir.path, 'octocat.png'), 'file');
+  fs.symlinkSync(path.resolve('test/fixtures/expand'), path.join(tmpdir.path, 'expand'), 'dir');
+} catch (err) {
+  console.error('** ERROR: Cannot create symbolic links; link-related tests will fail.');
+  if (win32) {
+    console.error('** Tests must be run with Administrator privileges on Windows.');
+  }
+}
 
 exports['file.match'] = {
   'empty set': function(test) {

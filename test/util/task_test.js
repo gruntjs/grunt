@@ -278,6 +278,17 @@ exports.Tasks = {
     });
     task.run('a', 'h').start();
   },
+  'Task#run (callback)': function(test) {
+    test.expect(2);
+    var task  = this.task;
+    task.registerTask('a', 'Push task name onto result and run other tasks', function() { result.push(this.name); task.run('b'); delay(this.async()); });
+    task.registerTask('b', 'Push task onto result', result.pushTaskname);
+    task.run('a', function() {
+      test.strictEqual(result.getJoined(), 'ab', 'Tasks should run in order');
+      test.strictEqual(true, true, 'this call back should be run when the task is finished');
+      test.done();
+    }).start();
+  },
   'Task#current': function(test) {
     test.expect(8);
     var task = this.task;

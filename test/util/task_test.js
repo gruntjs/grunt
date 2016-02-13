@@ -278,6 +278,17 @@ exports.Tasks = {
     });
     task.run('a', 'h').start();
   },
+  'Task#run (async task with multiple callbacks)': function(test) {
+    test.expect(1);
+    var task = this.task;
+    task.registerTask('a', 'Call async callback twice.', function() { var done = this.async(); done(); done(); });
+    task.registerTask('b', 'Never call async callback.', function() { this.async(); });
+    task.run('a', 'b').start();
+    delay(function() {
+      test.deepEqual(task.current.name, 'b', 'Should be stuck on task with no async callback');
+      test.done();
+    });
+  },
   'Task#current': function(test) {
     test.expect(8);
     var task = this.task;

@@ -8,9 +8,18 @@ var path = require('path');
 var Tempfile = require('temporary/lib/file');
 var Tempdir = require('temporary/lib/dir');
 
+var win32 = process.platform === 'win32';
+
 var tmpdir = new Tempdir();
-fs.symlinkSync(path.resolve('test/fixtures/octocat.png'), path.join(tmpdir.path, 'octocat.png'), 'file');
-fs.symlinkSync(path.resolve('test/fixtures/expand'), path.join(tmpdir.path, 'expand'), 'dir');
+try {
+  fs.symlinkSync(path.resolve('test/fixtures/octocat.png'), path.join(tmpdir.path, 'octocat.png'), 'file');
+  fs.symlinkSync(path.resolve('test/fixtures/expand'), path.join(tmpdir.path, 'expand'), 'dir');
+} catch (err) {
+  console.error('** ERROR: Cannot create symbolic links; link-related tests will fail.');
+  if (win32) {
+    console.error('** Tests must be run with Administrator privileges on Windows.');
+  }
+}
 
 exports['file.match'] = {
   'empty set': function(test) {
@@ -353,6 +362,7 @@ exports['file.expandMapping'] = {
       filter: 'isFile',
       cwd: 'expand',
       flatten: true,
+      nosort: true,
       rename: function(destBase, destPath) {
         return path.join(destBase, 'all' + path.extname(destPath));
       }
@@ -456,7 +466,7 @@ exports.file = {
     test.done();
   },
   'write': function(test) {
-    test.expect(5);
+    test.expect(6);
     var tmpfile;
     tmpfile = new Tempfile();
     grunt.file.write(tmpfile.path, this.string);
@@ -466,6 +476,13 @@ exports.file = {
     tmpfile = new Tempfile();
     grunt.file.write(tmpfile.path, this.string, {encoding: 'iso-8859-1'});
     test.strictEqual(grunt.file.read(tmpfile.path, {encoding: 'iso-8859-1'}), this.string, 'file should be written using the specified encoding.');
+    tmpfile.unlinkSync();
+
+    tmpfile = new Tempfile();
+    tmpfile.unlinkSync();
+    grunt.file.write(tmpfile.path, this.string, {mode: parseInt('0444', 8)});
+    test.strictEqual(fs.statSync(tmpfile.path).mode & parseInt('0222', 8), 0, 'file should be read only.');
+    fs.chmodSync(tmpfile.path, parseInt('0666', 8));
     tmpfile.unlinkSync();
 
     grunt.file.defaultEncoding = 'iso-8859-1';
@@ -784,12 +801,17 @@ exports.file = {
     test.done();
   },
   'isPathAbsolute': function(test) {
-    test.expect(5);
+    test.expect(6);
     test.ok(grunt.file.isPathAbsolute(path.resolve('/foo')), 'should return true');
     test.ok(grunt.file.isPathAbsolute(path.resolve('/foo') + path.sep), 'should return true');
     test.equal(grunt.file.isPathAbsolute('foo'), false, 'should return false');
     test.ok(grunt.file.isPathAbsolute(path.resolve('test/fixtures/a.js')), 'should return true');
     test.equal(grunt.file.isPathAbsolute('test/fixtures/a.js'), false, 'should return false');
+    if (win32) {
+      test.equal(grunt.file.isPathAbsolute('C:/Users/'), true, 'should return true');
+    } else {
+      test.equal(grunt.file.isPathAbsolute('/'), true, 'should return true');
+    }
     test.done();
   },
   'arePathsEquivalent': function(test) {

@@ -1,29 +1,20 @@
-# AppVeyor file
-# http://www.appveyor.com/docs/appveyor-yml
-
-# Build version format
-version: "{build}"
-
-clone_depth: 10
-
 # Fix line endings on Windows
 init:
   - git config --global core.autocrlf true
-
 # What combinations to test
 environment:
   matrix:
-    - nodejs_version: 0.10
-    - nodejs_version: 0.12
-    - nodejs_version: 1
-
+    - nodejs_version: "0.10"
+    - nodejs_version: "0.12"
+    - nodejs_version: "4"
+    - nodejs_version: "5"
+platform:
+  - x86
+  - x64
 install:
   - ps: Install-Product node $env:nodejs_version
-  - npm install -g grunt-cli
+  - npm install -g npm
   - npm install
-
-build: off
-
 test_script:
   # Output useful info for debugging.
   - node --version && npm --version
@@ -31,11 +22,8 @@ test_script:
   # filed against Grunt. https://github.com/joyent/node/issues/3584
   - ps: "npm test # PowerShell" # Pass comment to PS for easier debugging
   - cmd: npm test
-
+build: off
 matrix:
   fast_finish: true
-
 cache:
-  - C:\Users\appveyor\AppData\Roaming\npm\node_modules -> package.json  # global npm modules
-  - C:\Users\appveyor\AppData\Roaming\npm-cache -> package.json         # npm cache
   - node_modules -> package.json                                        # local npm modules

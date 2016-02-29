@@ -2,7 +2,7 @@
 
 [![Build Status: Linux](https://travis-ci.org/gruntjs/grunt.svg?branch=master)](https://travis-ci.org/gruntjs/grunt)
 [![Build Status: Windows](https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva/branch/master?svg=true)](https://ci.appveyor.com/project/gruntjs/grunt/branch/master)
-[![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+[![Built with Grunt](https://cdn.gruntjs.com/builtwith.svg)](http://gruntjs.com/)
 
 <img align="right" height="260" src="http://gruntjs.com/img/grunt-logo-no-wordmark.svg">
 

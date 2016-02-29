@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "name": "load-npm-tasks",
+  "devDependencies": {
+    "grunt-foo-plugin": "1.0.0"
+  }
+}

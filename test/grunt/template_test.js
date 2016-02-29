@@ -2,7 +2,7 @@
 
 var grunt = require('../../lib/grunt');
 
-exports['template'] = {
+exports.template = {
   'process': function(test) {
     test.expect(4);
     var obj = {

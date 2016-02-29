@@ -1,11 +1,3 @@
-/*
- * grunt-contrib-bump
- * http://gruntjs.com/
- *
- * Copyright (c) 2014 "Cowboy" Ben Alman, contributors
- * Licensed under the MIT license.
- */
-
 'use strict';
 
 var semver = require('semver');
@@ -141,7 +133,7 @@ module.exports = function(grunt) {
       grunt.verbose.writeln('Not actually running: ' + cmd);
     } else {
       grunt.verbose.writeln('Running: ' + cmd);
-      var result = shell.exec(cmd, {silent:true});
+      var result = shell.exec(cmd, {silent: true});
       if (result.code !== 0) {
         grunt.log.error('Error (' + result.code + ') ' + result.output);
       }

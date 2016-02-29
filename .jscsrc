@@ -1,0 +1,5 @@
+{
+  "preset": "grunt",
+  // Nullified until the files in test/ can be cleaned
+  "maximumLineLength": null
+}

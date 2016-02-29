@@ -8,9 +8,18 @@ var path = require('path');
 var Tempfile = require('temporary/lib/file');
 var Tempdir = require('temporary/lib/dir');
 
+var win32 = process.platform === 'win32';
+
 var tmpdir = new Tempdir();
-fs.symlinkSync(path.resolve('test/fixtures/octocat.png'), path.join(tmpdir.path, 'octocat.png'), 'file');
-fs.symlinkSync(path.resolve('test/fixtures/expand'), path.join(tmpdir.path, 'expand'), 'dir');
+try {
+  fs.symlinkSync(path.resolve('test/fixtures/octocat.png'), path.join(tmpdir.path, 'octocat.png'), 'file');
+  fs.symlinkSync(path.resolve('test/fixtures/expand'), path.join(tmpdir.path, 'expand'), 'dir');
+} catch (err) {
+  console.error('** ERROR: Cannot create symbolic links; link-related tests will fail.');
+  if (win32) {
+    console.error('** Tests must be run with Administrator privileges on Windows.');
+  }
+}
 
 exports['file.match'] = {
   'empty set': function(test) {
@@ -198,10 +207,10 @@ exports['file.expand*'] = {
   'exclusion': function(test) {
     test.expect(8);
     test.deepEqual(grunt.file.expand(['!js/*.js']), [], 'solitary exclusion should match nothing');
-    test.deepEqual(grunt.file.expand(['js/bar.js','!js/bar.js']), [], 'exclusion should cancel match');
+    test.deepEqual(grunt.file.expand(['js/bar.js', '!js/bar.js']), [], 'exclusion should cancel match');
     test.deepEqual(grunt.file.expand(['**/*.js', '!js/foo.js']), ['js/bar.js'], 'should omit single file from matched set');
     test.deepEqual(grunt.file.expand(['!js/foo.js', '**/*.js']), ['js/bar.js', 'js/foo.js'], 'inclusion / exclusion order matters');
-    test.deepEqual(grunt.file.expand(['**/*.js', '**/*.css', '!js/bar.js', '!css/baz.css']), ['js/foo.js','css/qux.css'], 'multiple exclusions should be removed from the set');
+    test.deepEqual(grunt.file.expand(['**/*.js', '**/*.css', '!js/bar.js', '!css/baz.css']), ['js/foo.js', 'css/qux.css'], 'multiple exclusions should be removed from the set');
     test.deepEqual(grunt.file.expand(['**/*.js', '**/*.css', '!**/*.css']), ['js/bar.js', 'js/foo.js'], 'excluded wildcards should be removed from the matched set');
     test.deepEqual(grunt.file.expand(['js/bar.js', 'js/foo.js', 'css/baz.css', 'css/qux.css', '!**/b*.*']), ['js/foo.js', 'css/qux.css'], 'different pattern for exclusion should still work');
     test.deepEqual(grunt.file.expand(['js/bar.js', '!**/b*.*', 'js/foo.js', 'css/baz.css', 'css/qux.css']), ['js/foo.js', 'css/baz.css', 'css/qux.css'], 'inclusion / exclusion order matters');
@@ -353,6 +362,7 @@ exports['file.expandMapping'] = {
       filter: 'isFile',
       cwd: 'expand',
       flatten: true,
+      nosort: true,
       rename: function(destBase, destPath) {
         return path.join(destBase, 'all' + path.extname(destPath));
       }
@@ -367,7 +377,6 @@ exports['file.expandMapping'] = {
     test.done();
   },
 };
-
 
 // Compare two buffers. Returns true if they are equivalent.
 var compareBuffers = function(buf1, buf2) {
@@ -384,7 +393,7 @@ var compareFiles = function(filepath1, filepath2) {
   return compareBuffers(fs.readFileSync(filepath1), fs.readFileSync(filepath2));
 };
 
-exports['file'] = {
+exports.file = {
   setUp: function(done) {
     this.defaultEncoding = grunt.file.defaultEncoding;
     grunt.file.defaultEncoding = 'utf8';
@@ -457,7 +466,7 @@ exports['file'] = {
     test.done();
   },
   'write': function(test) {
-    test.expect(5);
+    test.expect(6);
     var tmpfile;
     tmpfile = new Tempfile();
     grunt.file.write(tmpfile.path, this.string);
@@ -467,6 +476,13 @@ exports['file'] = {
     tmpfile = new Tempfile();
     grunt.file.write(tmpfile.path, this.string, {encoding: 'iso-8859-1'});
     test.strictEqual(grunt.file.read(tmpfile.path, {encoding: 'iso-8859-1'}), this.string, 'file should be written using the specified encoding.');
+    tmpfile.unlinkSync();
+
+    tmpfile = new Tempfile();
+    tmpfile.unlinkSync();
+    grunt.file.write(tmpfile.path, this.string, {mode: parseInt('0444', 8)});
+    test.strictEqual(fs.statSync(tmpfile.path).mode & parseInt('0222', 8), 0, 'file should be read only.');
+    fs.chmodSync(tmpfile.path, parseInt('0666', 8));
     tmpfile.unlinkSync();
 
     grunt.file.defaultEncoding = 'iso-8859-1';
@@ -666,7 +682,7 @@ exports['file'] = {
     test.equal(grunt.file.delete(path.join(outsidecwd, 'test.js')), false, 'should not delete anything outside the cwd.');
     test.ok(this.warnCount, 'should issue a warning when deleting outside working directory');
 
-    test.ok(grunt.file.delete(path.join(outsidecwd), {force:true}), 'should delete outside cwd when using the --force.');
+    test.ok(grunt.file.delete(path.join(outsidecwd), {force: true}), 'should delete outside cwd when using the --force.');
     test.equal(grunt.file.exists(outsidecwd), false, 'file outside cwd should have been deleted when using the --force.');
 
     grunt.file.setBase(oldBase);
@@ -785,12 +801,17 @@ exports['file'] = {
     test.done();
   },
   'isPathAbsolute': function(test) {
-    test.expect(5);
+    test.expect(6);
     test.ok(grunt.file.isPathAbsolute(path.resolve('/foo')), 'should return true');
     test.ok(grunt.file.isPathAbsolute(path.resolve('/foo') + path.sep), 'should return true');
     test.equal(grunt.file.isPathAbsolute('foo'), false, 'should return false');
     test.ok(grunt.file.isPathAbsolute(path.resolve('test/fixtures/a.js')), 'should return true');
     test.equal(grunt.file.isPathAbsolute('test/fixtures/a.js'), false, 'should return false');
+    if (win32) {
+      test.equal(grunt.file.isPathAbsolute('C:/Users/'), true, 'should return true');
+    } else {
+      test.equal(grunt.file.isPathAbsolute('/'), true, 'should return true');
+    }
     test.done();
   },
   'arePathsEquivalent': function(test) {

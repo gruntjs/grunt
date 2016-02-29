@@ -1,0 +1,2 @@
+* text=auto
+/test/fixtures/*.txt text eol=lf

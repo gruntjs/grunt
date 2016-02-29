@@ -2,7 +2,7 @@
 
 var grunt = require('../../lib/grunt');
 
-exports['config'] = {
+exports.config = {
   setUp: function(done) {
     this.origData = grunt.config.data;
     grunt.config.init({

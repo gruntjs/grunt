@@ -2,7 +2,7 @@
 
 var grunt = require('../../lib/grunt');
 
-exports['option'] = {
+exports.option = {
   setUp: function(done) {
     grunt.option.init();
     done();
@@ -13,15 +13,15 @@ exports['option'] = {
   },
   'option.init': function(test) {
     test.expect(1);
-    var expected = {foo:'bar',bool:true,'bar':{foo:'bar'}};
+    var expected = {foo: 'bar', bool: true, 'bar': {foo: 'bar'}};
     test.deepEqual(grunt.option.init(expected), expected);
     test.done();
   },
   'option': function(test) {
     test.expect(4);
     test.equal(grunt.option('foo', 'bar'), grunt.option('foo'));
-    grunt.option('foo', {foo:'bar'});
-    test.deepEqual(grunt.option('foo'), {foo:'bar'});
+    grunt.option('foo', {foo: 'bar'});
+    test.deepEqual(grunt.option('foo'), {foo: 'bar'});
     test.equal(grunt.option('no-there'), false);
     grunt.option('there', false);
     test.equal(grunt.option('no-there'), true);

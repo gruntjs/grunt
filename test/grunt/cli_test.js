@@ -9,7 +9,7 @@ function getOptionValues(str) {
   return matches ? JSON.parse(matches[1]) : {};
 }
 
-exports['cli'] = {
+exports.cli = {
   '--debug taskname': function(test) {
     test.expect(1);
     grunt.util.spawn({

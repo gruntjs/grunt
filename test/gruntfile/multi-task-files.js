@@ -1,12 +1,3 @@
-/*
- * grunt
- * http://gruntjs.com/
- *
- * Copyright (c) 2014 "Cowboy" Ben Alman
- * Licensed under the MIT license.
- * https://github.com/gruntjs/grunt/blob/master/LICENSE-MIT
- */
-
 // For now, run this "test suite" with:
 // grunt --gruntfile ./test/gruntfile/multi-task-files.js
 
@@ -34,7 +25,7 @@ module.exports = function(grunt) {
       'dist/built1.js': ['src/*1.js', 'src/*2.js'],
       // This is the "medium" format. The target name is arbitrary and can be
       // used like "grunt run:built". Supports per-target options, templated
-      // dest, and arbitrary "extra" paramters. Doesn't support >1 srcs-dest
+      // dest, and arbitrary "extra" parameters. Doesn't support >1 srcs-dest
       // grouping.
       built: {
         options: {a: 2, c: 22},
@@ -59,7 +50,7 @@ module.exports = function(grunt) {
           {'dist/built-<%= build %>-b.js': ['src/*1.js', 'src/*2.js']},
         ]
       },
-      // This "full" variant supports per srcs-dest arbitrary "extra" paramters.
+      // This "full" variant supports per srcs-dest arbitrary "extra" parameters.
       long3: {
         options: {a: 5, c: 55},
         files: [

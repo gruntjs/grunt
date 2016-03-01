@@ -39,7 +39,7 @@
     "eventemitter2": "~0.4.13",
     "exit": "~0.1.1",
     "findup-sync": "~0.3.0",
-    "glob": "~6.0.4",
+    "glob": "~7.0.0",
     "grunt-cli": "1.0.0-rc1",
     "grunt-legacy-log": "1.0.0-rc1",
     "grunt-legacy-util": "1.0.0-rc1",

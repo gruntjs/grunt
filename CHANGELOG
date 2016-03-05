@@ -1,3 +1,13 @@
+v1.0.0
+  date: 2016-03-22
+  changes:
+    - full list of changes is on http://gruntjs.com, please also see changes from 1.0.0-rc1.
+    - if you have a Grunt plugin that includes `grunt` in the `peerDependencies`,
+      we recommend tagging with `"grunt": "">= 0.4.0"` and publishing a new version on npm.
+    - Prevent async callback from being called multiple times. Pull #1464.
+    - Update copyright to jQuery Foundation and remove redundant headers. Fixes #1478.
+    - Update glob to 7.0.x. Fixes #1467.
+    - Removing duplicate BOM strip code. Pull #1482.
 v1.0.0-rc1
   date: 2016-02-11
   changes:

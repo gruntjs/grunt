@@ -1,5 +1,5 @@
 v1.0.0
-  date: 2016-03-22
+  date: 2016-04-04
   changes:
     - full list of changes is on http://gruntjs.com, please also see changes from 1.0.0-rc1.
     - if you have a Grunt plugin that includes `grunt` in the `peerDependencies`,
@@ -8,6 +8,9 @@ v1.0.0
     - Update copyright to jQuery Foundation and remove redundant headers. Fixes #1478.
     - Update glob to 7.0.x. Fixes #1467.
     - Removing duplicate BOM strip code. Pull #1482.
+    - Update legacy log and util to 1.0.0.
+    - Update to latest cli ~1.2.0.
+    - Use grunt-known-options for shared options between Grunt and grunt-cli.
 v1.0.0-rc1
   date: 2016-02-11
   changes:

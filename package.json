@@ -15,7 +15,7 @@
   },
   "main": "lib/grunt",
   "bin": {
-    "grunt": "node_modules/grunt-cli/bin/grunt"
+    "grunt": "bin/grunt"
   },
   "keywords": [
     "task",
@@ -43,7 +43,7 @@
     "exit": "~0.1.1",
     "findup-sync": "~0.3.0",
     "glob": "~7.0.0",
-    "grunt-cli": "1.2.0",
+    "grunt-cli": "~1.2.0",
     "grunt-known-options": "~1.1.0",
     "grunt-legacy-log": "~1.0.0",
     "grunt-legacy-util": "~1.0.0",

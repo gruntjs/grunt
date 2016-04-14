@@ -452,13 +452,19 @@ exports.file = {
     test.done();
   },
   'readYAML': function(test) {
-    test.expect(3);
+    test.expect(4);
     var obj;
     obj = grunt.file.readYAML('test/fixtures/utf8.yaml');
     test.deepEqual(obj, this.object, 'file should be read as utf8 by default and parsed correctly.');
 
     obj = grunt.file.readYAML('test/fixtures/iso-8859-1.yaml', {encoding: 'iso-8859-1'});
     test.deepEqual(obj, this.object, 'file should be read using the specified encoding.');
+
+    test.throws(function() {
+      obj = grunt.file.readYAML('test/fixtures/error.yaml');
+    }, function(err) {
+      return err.message.indexOf('undefined') === -1;
+    }, 'error thrown should not contain undefined.');
 
     grunt.file.defaultEncoding = 'iso-8859-1';
     obj = grunt.file.readYAML('test/fixtures/iso-8859-1.yaml');

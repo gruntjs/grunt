@@ -56,9 +56,10 @@
   },
   "devDependencies": {
     "difflet": "~0.2.3",
-    "grunt-contrib-jshint": "~1.0.0",
-    "grunt-contrib-nodeunit": "~0.4.1",
-    "grunt-contrib-watch": "~1.0.0",
+    "grunt": "./",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-nodeunit": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
     "grunt-jscs": "~2.8.0",
     "semver": "2.1.0",
     "shelljs": "~0.5.3",

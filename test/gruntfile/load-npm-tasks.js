@@ -24,8 +24,11 @@ module.exports = function(grunt) {
   // Load a npm task
   grunt.loadNpmTasks('grunt-foo-plugin');
 
+  // Load a npm task from folder
+  grunt.loadNpmTasks('grunt-bar-plugin', 'node_modules/grunt-foo-plugin');
+
   // Run them
-  grunt.registerTask('default', ['foo', 'done']);
+  grunt.registerTask('default', ['foo', 'bar', 'done']);
 
   // Assert they loaded and ran correctly
   grunt.registerTask('done', function() {
@@ -33,6 +36,7 @@ module.exports = function(grunt) {
     stdout = stdout.join('\n');
     try {
       assert.ok(stdout.indexOf('foo has ran.') !== -1, 'oh-four task should have ran.');
+      assert.ok(stdout.indexOf('bar has ran.') !== -1, 'oh-four task should have ran.');
     } catch (err) {
       grunt.log.subhead(err.message);
       grunt.log.error('Expected ' + err.expected + ' but actually: ' + err.actual);

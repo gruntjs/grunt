@@ -1,0 +1,6 @@
+{
+    "rules": {
+        // Nullified until the files in test/ can be cleaned
+        "max-len": "off"
+    }
+}

@@ -56,10 +56,10 @@
   },
   "devDependencies": {
     "difflet": "~0.2.3",
-    "eslint-config-grunt": "^1.0.1",
+    "eslint-config-grunt": "~1.0.1",
     "grunt-contrib-nodeunit": "~0.4.1",
     "grunt-contrib-watch": "~1.0.0",
-    "grunt-eslint": "^18.0.0",
+    "grunt-eslint": "~18.1.0",
     "semver": "2.1.0",
     "shelljs": "~0.5.3",
     "temporary": "~0.0.4",

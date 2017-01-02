@@ -38,4 +38,15 @@ exports.option = {
     test.deepEqual(grunt.option.flags(), ['--foo=bar', '--there', '--obj=[object Object]']);
     test.done();
   },
+  'option.keys': function(test) {
+    test.expect(1);
+    grunt.option.init({
+      foo: 'bar',
+      there: true,
+      obj: {foo: 'bar'},
+      arr: []
+    });
+    test.deepEqual(grunt.option.keys(), ['foo', 'there', 'obj', 'arr']);
+    test.done();
+  }
 };

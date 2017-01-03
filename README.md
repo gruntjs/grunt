@@ -1,20 +1,23 @@
-# Grunt: The JavaScript Task Runner
+# Vanilla Grunt with all modules that I tend to use
+## all configured to my defaults
 
-[![Build Status: Linux](https://travis-ci.org/gruntjs/grunt.svg?branch=master)](https://travis-ci.org/gruntjs/grunt)
-[![Build Status: Windows](https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva/branch/master?svg=true)](https://ci.appveyor.com/project/gruntjs/grunt/branch/master)
-[![Built with Grunt](https://cdn.gruntjs.com/builtwith.svg)](http://gruntjs.com/)
+## Draft
+### Included modules
 
-<img align="right" height="260" src="http://gruntjs.com/img/grunt-logo-no-wordmark.svg">
-
-
-### Documentation
-
-Visit the [gruntjs.com](http://gruntjs.com/) website for all the things.
-
-### Support / Contributing
-Before you make an issue, please read our [Contributing](http://gruntjs.com/contributing) guide.
-
-You can find the grunt team in [#grunt on irc.freenode.net](http://webchat.freenode.net/?channels=grunt).
+1. grunt-contrib-clean
+1. grunt-contrib-copy
+1. grunt-newer
+1. grunt-contrib-watch
+1. grunt-text-replace
+1. grunt-contrib-concat
+1. grunt-contrib-compass
+1. grunt-autoprefixer
+1. grunt-contrib-cssmin
+1. grunt-contrib-imagemin
+1. grunt-contrib-uglify
+1. grunt-contrib-htmlmin
+1. grunt-contrib-compress
+1. grunt-svgmin
 
 ### Release History
 See the [CHANGELOG](CHANGELOG).

@@ -4,7 +4,7 @@
   "version": "1.0.1",
   "author": "Grunt Development Team (http://gruntjs.com/development-team)",
   "homepage": "http://gruntjs.com/",
-  "repository": "gruntjs/grunt",
+  "repository": "https://github.com/gruntjs/grunt.git",
   "license": "MIT",
   "engines": {
     "node": ">=0.10.0"

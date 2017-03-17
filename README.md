@@ -18,3 +18,6 @@ You can find the grunt team in [#grunt on irc.freenode.net](http://webchat.freen
 
 ### Release History
 See the [CHANGELOG](CHANGELOG).
+
+### Roadmap
+See the [Roadmap](https://github.com/gruntjs/grunt/wiki/Roadmap).

@@ -397,7 +397,7 @@ exports.file = {
   setUp: function(done) {
     this.defaultEncoding = grunt.file.defaultEncoding;
     grunt.file.defaultEncoding = 'utf8';
-    this.string = 'Ação é isso aí\n';
+    this.string = 'Ação é isso aí' + grunt.util.linefeed;
     this.object = {foo: 'Ação é isso aí', bar: ['ømg', 'pønies']};
     this.writeOption = grunt.option('write');
 

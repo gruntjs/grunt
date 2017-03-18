@@ -257,3 +257,29 @@ exports['task.normalizeMultiTaskFiles'] = {
     test.done();
   },
 };
+
+exports['task.autoLoadNpmTasks'] = {
+  setUp: function(done) {
+    this.cwd = process.cwd();
+    done();
+  },
+  tearDown: function(done) {
+    done();
+  },
+  'detect': function(test) {
+    test.expect(1);
+    var actual, expected;
+
+    // These are the plugins that the Grunt project use; maintain as necessary.
+    expected = [
+      'grunt-contrib-jshint',
+      'grunt-contrib-nodeunit',
+      'grunt-contrib-watch'
+    ].sort();
+
+    actual = grunt.task.detectNpmTasks().sort();
+    test.deepEqual(actual, expected, 'should detect all  grunt tasks in node_modules');
+
+    test.done();
+  }
+};

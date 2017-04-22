@@ -28,14 +28,16 @@ exports.option = {
     test.done();
   },
   'option.flags': function(test) {
+    var und;
     test.expect(1);
     grunt.option.init({
       foo: 'bar',
       there: true,
       obj: {foo: 'bar'},
-      arr: []
+      arr: [],
+      und: und
     });
-    test.deepEqual(grunt.option.flags(), ['--foo=bar', '--there', '--obj=[object Object]']);
+    test.deepEqual(grunt.option.flags(), ['--foo=bar', '--there', '--obj=[object Object]', '--und']);
     test.done();
   },
 };

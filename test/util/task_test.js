@@ -40,6 +40,23 @@ exports.Tasks = {
     test.ok('nothing' in task._tasks, 'It should register the passed task.');
     test.done();
   },
+  'Task#internal': function(test) {
+    test.expect(5);
+    var task = this.task;
+    task.registerTask('internal', 'This is a internal task.', result.pushTaskname, true);
+    task.registerTask('a_not_internal', 'This is not a internal task.', result.pushTaskname, false);
+    task.registerTask('b_not_internal', 'This is not a internal task.', result.pushTaskname);
+    task.registerTask('c_not_internal', result.pushTaskname);
+    // This is the wrong way to specify internal: the help text is missing. internal will not be set,
+    //     and the task info/fn will be badly set
+    task.registerTask('d_wrong', result.pushTaskname, true);
+    test.strictEqual(task._tasks['internal'].internal, true);
+    test.strictEqual(task._tasks['a_not_internal'].internal, false);
+    test.strictEqual(task._tasks['b_not_internal'].internal, false);
+    test.strictEqual(task._tasks['c_not_internal'].internal, false);
+    test.strictEqual(task._tasks['d_wrong'].internal, false);
+    test.done();
+  },
   'Task#registerTask (alias)': function(test) {
     test.expect(1);
     var task = this.task;

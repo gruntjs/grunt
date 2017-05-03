@@ -13,7 +13,7 @@ exports['task.normalizeMultiTaskFiles'] = {
     done();
   },
   'normalize': function(test) {
-    test.expect(7);
+    test.expect(8);
     var actual, expected, key, value;
     var flatten = grunt.util._.flatten;
 
@@ -117,6 +117,18 @@ exports['task.normalizeMultiTaskFiles'] = {
       },
     ];
     test.deepEqual(actual, expected, 'should normalize target: {files: [{src: srcStuff, dest: destStuff}, ...]}.');
+
+    value = {
+      files: ['src/*2.js', 'src/*1.js']
+    };
+    actual = grunt.task.normalizeMultiTaskFiles(value, 'ignored');
+    expected = [
+      {
+        src: ['src/file2.js', 'src/file1.js'],
+        orig: { src: value.files }
+      }
+    ];
+    test.deepEqual(actual, expected, 'should normalize target: {files: srcArray}.');
 
     value = {
       files: [

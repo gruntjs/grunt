@@ -59,6 +59,48 @@ exports.Tasks = {
     });
     task.run('y', 'z').start();
   },
+  'Task#isTaskHidden': function(test) {
+    test.expect(2);
+    var task = this.task;
+    task.registerTask('a', 'This task should not be visible', result.pushTaskname);
+    task.registerTask('b', 'This task should be visible', result.pushTaskname);
+    task.hideTask('a');
+    test.equal(task.isTaskHidden('a'), true, 'It should be a hidden task');
+    test.equal(task.isTaskHidden('b'), false, 'It should not be a hidden task');
+    test.done();
+  },
+  'Task#hideTask': function(test) {
+    test.expect(3);
+    var task = this.task;
+    task.hideTask('a');
+    test.equal('a' in task._hiddenTasks, false, "It should not hide a task that's not registered");
+    task.registerTask('b', 'This task should be visible', result.pushTaskname);
+    test.equal('b' in task._hiddenTasks, false, "It should not hide a task that wasn't hidden");
+    task.registerTask('c', 'This task should not be visible', result.pushTaskname);
+    task.hideTask('c');
+    test.equal('c' in task._hiddenTasks, true, "It should hide a task that's registered & hidden");
+    test.done();
+  },
+  "Task#availableTasks": function(test) {
+    test.expect(3);
+    var task = this.task;
+    var availableTasksCount = Object.keys(task.availableTasks()).length;
+    var allTasksCount = Object.keys(task._tasks).length;
+    test.equal(availableTasksCount, allTasksCount, 'It should start with matching tasks count');
+
+    task.registerTask('a', 'This task should be visible', result.pushTaskname);
+    availableTasksCount = Object.keys(task.availableTasks()).length;
+    allTasksCount = Object.keys(task._tasks).length;
+    test.equal(availableTasksCount, allTasksCount, 'It should have matching tasks count after registering a task');
+
+    task.registerTask('b', 'This task should be visible', result.pushTaskname);
+    task.hideTask('b');
+    availableTasksCount = Object.keys(task.availableTasks()).length;
+    allTasksCount = Object.keys(task._tasks).length;
+    test.equal(availableTasksCount, allTasksCount - 1, 'It should not match tasks count but it should be off by 1');
+
+    test.done();
+  },
   'Task#isTaskAlias': function(test) {
     test.expect(2);
     var task = this.task;

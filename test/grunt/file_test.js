@@ -241,6 +241,47 @@ exports['file.expand*'] = {
     test.deepEqual(grunt.file.expand(opts, ['js/foo.js', 'js/bar.js', 'js/baz.js']), ['js/foo.js', 'js/bar.js', 'js/baz.js'], 'non-matching filenames should be returned in result set.');
     test.done();
   },
+  'options.newer': function(test) {
+    test.expect(2);
+
+    var actual = grunt.file.expand({newer: new Date(0)}, '**/*.{js,css}');
+    var expected = ['css/baz.css', 'css/qux.css', 'js/bar.js', 'js/foo.js'];
+    test.deepEqual(actual, expected, 'all files returned for past date.');
+
+    actual = grunt.file.expand({newer: new Date(Date.now() + 1e6)}, '**/*.{js,css}');
+    expected = [];
+    test.deepEqual(actual, expected, 'no files returned for future date.');
+
+    test.done();
+  },
+  'options.anyNewer': function(test) {
+    test.expect(4);
+
+    // set up three temp files with different mtime
+    var scratch = new Tempdir();
+    var one = fs.openSync(path.join(scratch.path, 'one.js'), 'w');
+    var two = fs.openSync(path.join(scratch.path, 'two.js'), 'w');
+
+    var t1 = new Date(1e10);
+    var t2 = new Date(2e10);
+
+    fs.futimesSync(one, t1, t1);
+    fs.futimesSync(two, t2, t2);
+
+    var opts = {newer: t1, anyNewer: false, cwd: scratch.path};
+    test.deepEqual(grunt.file.expand(opts, ['*.js']), ['two.js'], 'matches only newer files when anyNewer is false.');
+
+    opts = {newer: t1, anyNewer: true, cwd: scratch.path};
+    test.deepEqual(grunt.file.expand(opts, ['*.js']), ['one.js', 'two.js'], 'matches all files if any is newer when anyNewer is true.');
+
+    opts = {newer: t2, anyNewer: false, cwd: scratch.path};
+    test.deepEqual(grunt.file.expand(opts, ['*.js']), [], 'matches no files if none is newer when anyNewer is false.');
+
+    opts = {newer: t2, anyNewer: true, cwd: scratch.path};
+    test.deepEqual(grunt.file.expand(opts, ['*.js']), [], 'matches no files if none is newer when anyNewer is true.');
+
+    test.done();
+  },
 };
 
 exports['file.expandMapping'] = {

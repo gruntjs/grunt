@@ -221,24 +221,17 @@ exports.Tasks = {
           ['a:x:c',             1,  'a',      'x',        'c'],
           ['a:b ',              1,  'a',      'b ',       undefined],
           ['a: b:c',            1,  'a',      ' b',       'c'],
-          ['a:x\\:y:\\:z\\:',   1,  'a',      'x:y',      ':z:'],
+          
 
-          ['a:b',               2,  'a:b',    undefined,  undefined],
-          ['a:b:x',             2,  'a:b',    'x',        undefined],
-          ['a:b:x:y',           2,  'a:b',    'x',        'y'],
-          ['a:b:c ',            2,  'a:b',    'c ',       undefined],
-          ['a:b:x\\:y:\\:z\\:', 2,  'a:b',    'x:y',      ':z:'],
-
-          ['a:b:c',             3,  'a:b:c',  undefined,  undefined],
-          ['a:b:c: d',          3,  'a:b:c',  ' d',       undefined],
-        ], 'Named tasks should be called as-specified if possible, and arguments should be passed properly.');
+          ['a:b',               1,  'a',      'b',        undefined],
+          ['a:b:x',             1,  'a',      'b',        'x'],          
+        ], 'Task is must be delimited by colon from args');
         test.done();
       }
     });
     task.run(
-      'a',  'a:x', 'a:x:c', 'a:b ', 'a: b:c', 'a:x\\:y:\\:z\\:',
-      'a:b', 'a:b:x', 'a:b:x:y', 'a:b:c ', 'a:b:x\\:y:\\:z\\:',
-      'a:b:c', 'a:b:c: d'
+      'a',  'a:x', 'a:x:c', 'a:b ', 'a: b:c',
+      'a:b', 'a:b:x'   
     ).start();
   },
   'Task#run (nested tasks, queue order)': function(test) {
@@ -456,27 +449,6 @@ exports['Task#parseArgs'] = {
   'nothing': function(test) {
     test.expect(1);
     test.deepEqual(this.parseTest(), [], 'should return an empty array if nothing passed.');
-    test.done();
-  }
-};
-
-exports['Task#splitArgs'] = {
-  setUp: function(done) {
-    this.task = requireTask().create();
-    done();
-  },
-  'arguments': function(test) {
-    test.expect(9);
-    var task = this.task;
-    test.deepEqual(task.splitArgs(), [], 'missing items = empty array.');
-    test.deepEqual(task.splitArgs(''), [], 'missing items = empty array.');
-    test.deepEqual(task.splitArgs('a'), ['a'], 'single item should be parsed.');
-    test.deepEqual(task.splitArgs('a:b:c'), ['a', 'b', 'c'], 'mutliple items should be parsed.');
-    test.deepEqual(task.splitArgs('a::c'), ['a', '', 'c'], 'missing items should be parsed.');
-    test.deepEqual(task.splitArgs('::'), ['', '', ''], 'missing items should be parsed.');
-    test.deepEqual(task.splitArgs('\\:a:\\:b\\::c\\:'), [':a', ':b:', 'c:'], 'escaped colons should be unescaped.');
-    test.deepEqual(task.splitArgs('a\\\\:b\\\\:c'), ['a\\', 'b\\', 'c'], 'escaped backslashes should not be parsed.');
-    test.deepEqual(task.splitArgs('\\:a\\\\:\\\\\\:b\\:\\\\:c\\\\\\:\\\\'), [':a\\', '\\:b:\\', 'c\\:\\'], 'please avoid doing this, ok?');
     test.done();
   }
 };

@@ -11,8 +11,6 @@ node_js:
   - "7"
   - "8"
   - "iojs"
-before_install:
-  - npm install -g npm
 before_script:
   - npm uninstall grunt # https://github.com/npm/npm/issues/3958
 matrix:

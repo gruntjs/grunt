@@ -10,8 +10,8 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "grunt test",
-    "test-tap": "grunt test:tap"
+    "test": "./bin/grunt test",
+    "test-tap": "./bin/grunt test:tap"
   },
   "main": "lib/grunt",
   "bin": {

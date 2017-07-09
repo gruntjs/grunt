@@ -55,13 +55,13 @@
     "rimraf": "~2.2.8"
   },
   "devDependencies": {
-    "difflet": "~0.2.3",
+    "difflet": "~1.0.1",
     "eslint-config-grunt": "~1.0.1",
-    "grunt-contrib-nodeunit": "~0.4.1",
+    "grunt-contrib-nodeunit": "~1.0.0",
     "grunt-contrib-watch": "~1.0.0",
-    "grunt-eslint": "~18.1.0",
-    "semver": "2.1.0",
-    "shelljs": "~0.5.3",
+    "grunt-eslint": "~20.0.0",
+    "semver": "5.3.0",
+    "shelljs": "~0.7.8",
     "temporary": "~0.0.4",
     "through2": "~2.0.0"
   },

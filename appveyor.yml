@@ -16,7 +16,7 @@ platform:
   - x64
 install:
   - ps: Install-Product node $env:nodejs_version
-  - if [[ `npm -v` =~ ^[1-2] ]]; then npm i -g npm@3; fi
+  - if [[ `node -v` =~ ^[0-4] ]]; then npm i -g npm@3; fi
   - npm install
 test_script:
   # Output useful info for debugging.

@@ -16,9 +16,10 @@ platform:
   - x64
 install:
   - ps: Install-Product node $env:nodejs_version
-  - cmd: if [[ `npm -v` =~ ^[1-2] ]]; then npm i -g npm@3; fi
   - npm install
 test_script:
+  # Install npm@3 if the npm version is 1 or 2
+  - if [[ `npm -v` =~ ^[1-2] ]]; then npm i -g npm@3; fi
   # Output useful info for debugging.
   - node --version && npm --version
   # We test multiple Windows shells because of prior stdout buffering issues

@@ -37,7 +37,7 @@
     "tool"
   ],
   "dependencies": {
-    "coffee-script": "~1.10.0",
+    "coffee-script": "1.12.6",
     "dateformat": "~1.0.12",
     "eventemitter2": "~0.4.13",
     "exit": "~0.1.1",
@@ -56,7 +56,7 @@
   },
   "devDependencies": {
     "difflet": "~1.0.1",
-    "eslint-config-grunt": "~1.0.1",
+    "eslint-config-grunt": "~1.0.1",or 
     "grunt-contrib-nodeunit": "~1.0.0",
     "grunt-contrib-watch": "~1.0.0",
     "grunt-eslint": "~18.1.0",

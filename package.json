@@ -56,7 +56,7 @@
   },
   "devDependencies": {
     "difflet": "~1.0.1",
-    "eslint-config-grunt": "~1.0.1",or 
+    "eslint-config-grunt": "~1.0.1",
     "grunt-contrib-nodeunit": "~1.0.0",
     "grunt-contrib-watch": "~1.0.0",
     "grunt-eslint": "~18.1.0",

@@ -10,12 +10,12 @@
 
 ### Documentation
 
-Visit the [gruntjs.com](http://gruntjs.com/) website for all the things.
+Visit the [gruntjs.com](https://gruntjs.com/) website for all the things.
 
 ### Support / Contributing
-Before you make an issue, please read our [Contributing](http://gruntjs.com/contributing) guide.
+Before you make an issue, please read our [Contributing](https://gruntjs.com/contributing) guide.
 
-You can find the grunt team in [#grunt on irc.freenode.net](http://webchat.freenode.net/?channels=grunt).
+You can find the grunt team in [#grunt on irc.freenode.net](https://webchat.freenode.net/?channels=grunt).
 
 ### Release History
 See the [CHANGELOG](CHANGELOG).

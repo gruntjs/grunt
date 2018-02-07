@@ -37,7 +37,7 @@
     "tool"
   ],
   "dependencies": {
-    "coffeescript": "^2.2.1",
+    "coffeescript": "~1.10.0",
     "dateformat": "~1.0.12",
     "eventemitter2": "~0.4.13",
     "exit": "~0.1.1",

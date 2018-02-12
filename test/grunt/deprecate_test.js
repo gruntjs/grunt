@@ -55,7 +55,7 @@ exports.deprecate = {
     test.expect(2);
     grunt.option('stack', true);
     grunt.log.warn = function(message) {
-      message = message.split(grunt.util.linefeed);
+      message = message.split('\n');
       test.equal(message[0], 'Error: this api is deprecated', 'grunt.log.warn should not have displayed a deprecation message with stack trace.');
       test.ok(message.length > 1);
       test.done();

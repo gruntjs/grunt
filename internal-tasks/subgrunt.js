@@ -1,11 +1,13 @@
 'use strict';
 
+var asyncLib = require('async');
+
 module.exports = function(grunt) {
 
   // Run sub-grunt files, because right now, testing tasks is a pain.
   grunt.registerMultiTask('subgrunt', 'Run a sub-gruntfile.', function() {
     var path = require('path');
-    grunt.util.async.forEachSeries(this.filesSrc, function(gruntfile, next) {
+    asyncLib.forEachSeries(this.filesSrc, function(gruntfile, next) {
       grunt.log.write('Loading ' + gruntfile + '...');
       grunt.util.spawn({
         grunt: true,

@@ -37,11 +37,13 @@
     "tool"
   ],
   "dependencies": {
+    "async": "~2.6.0",
     "coffeescript": "~1.10.0",
     "dateformat": "~1.0.12",
     "eventemitter2": "~0.4.13",
     "exit": "~0.1.1",
     "findup-sync": "~0.3.0",
+    "getobject": "~0.1.0",
     "glob": "~7.0.0",
     "grunt-cli": "~1.2.0",
     "grunt-known-options": "~1.1.0",
@@ -49,6 +51,7 @@
     "grunt-legacy-util": "~1.0.0",
     "iconv-lite": "~0.4.13",
     "js-yaml": "~3.5.2",
+    "lodash": "~4.17.5",
     "minimatch": "~3.0.2",
     "nopt": "~3.0.6",
     "path-is-absolute": "~1.0.0",

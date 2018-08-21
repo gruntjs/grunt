@@ -49,7 +49,7 @@
     "grunt-legacy-util": "~1.1.1",
     "iconv-lite": "~0.4.13",
     "js-yaml": "~3.5.2",
-    "minimatch": "~3.0.2",
+    "minimatch": "^3.0.4",
     "mkdirp": "~0.5.1",
     "nopt": "~3.0.6",
     "path-is-absolute": "~1.0.0",

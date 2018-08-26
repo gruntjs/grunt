@@ -534,6 +534,25 @@ exports.file = {
     test.equal(grunt.file.exists(filepath), false, 'file should NOT be created if --no-write was specified.');
     test.done();
   },
+  'copy permissions (on a platform that supports it)': function(test) {
+    var srcstat = fs.statSync('test/fixtures/chmod676.txt');
+    if ((srcstat.mode & 0x1ff).toString(8) === '676') { // lint doesn't like octal literals
+      test.expect(3);
+      var tmpfile;
+      tmpfile = new Tempfile();
+      grunt.file.copy('test/fixtures/chmod676.txt', tmpfile.path);
+      var deststat = fs.statSync(tmpfile.path);
+      test.equal((srcstat.mode & 0x1ff).toString(8), (deststat.mode & 0x1ff).toString(8), 'file mode should be preserved by default');
+      test.equal(srcstat.uid, deststat.uid, 'file owner should be preserved by default');
+      test.equal(srcstat.gid, deststat.gid, 'file group should be preserved by default');
+      tmpfile.unlinkSync();
+    } else {
+      test.expect(0);
+      process.stderr.write("(platform does not support file permissions. mode of chmod676.txt is " + (srcstat.mode & 0x1ff).toString(8) + ")");
+    }
+    test.done();
+  },
+
   'copy and process': function(test) {
     test.expect(14);
     var tmpfile;

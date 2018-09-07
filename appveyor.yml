@@ -4,11 +4,9 @@ init:
 # What combinations to test
 environment:
   matrix:
-    - nodejs_version: "4"
-    - nodejs_version: "5"
     - nodejs_version: "6"
-    - nodejs_version: "7"
     - nodejs_version: "8"
+    - nodejs_version: "10"
 platform:
   - x86
   - x64

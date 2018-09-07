@@ -5,7 +5,7 @@ node_js:
   - "8"
   - "10"
 before_install:
-  - if [[ `npm -v` =~ ^[1-2] ]]; then npm i -g npm@3; fi
+  - npm i -g npm@latest
 before_script:
   - npm uninstall grunt # https://github.com/npm/npm/issues/3958
 matrix:

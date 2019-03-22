@@ -1,3 +1,8 @@
+v1.0.4
+  date: 2019-04-22
+  changes:
+    - Update js-yaml to address https://npmjs.com/advisories/788
+    - Use SOURCE_DATE_EPOCH to render dates in template.
 v1.0.3
   date: 2018-06-03
   changes:

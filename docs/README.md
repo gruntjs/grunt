@@ -1,1 +1,1 @@
-Visit the [gruntjs.com](http://gruntjs.com/) website for all the things.
+Visit the [gruntjs.com](https://gruntjs.com/) website for all the things.

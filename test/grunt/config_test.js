@@ -18,6 +18,7 @@ exports.config = {
       bar: 'bar',
       arr: ['foo', '<%= obj.foo2 %>'],
       arr2: ['<%= arr %>', '<%= obj.Arr %>'],
+      arr3: ['<%= meta %>'],
       buffer: new Buffer('test'),
     });
     done();
@@ -61,7 +62,7 @@ exports.config = {
     test.done();
   },
   'config.get': function(test) {
-    test.expect(10);
+    test.expect(13);
     test.equal(grunt.config.get('foo'), 'bar', 'Should process templates.');
     test.equal(grunt.config.get('foo2'), 'bar', 'Should process templates recursively.');
     test.equal(grunt.config.get('obj.foo2'), 'bar', 'Should process deeply nested templates recursively.');
@@ -73,6 +74,9 @@ exports.config = {
     var buf = grunt.config.get('buffer');
     test.ok(Buffer.isBuffer(buf), 'Should retrieve Buffer instances as Buffer.');
     test.deepEqual(buf, new Buffer('test'), 'Should return buffers as-is.');
+    test.deepEqual(grunt.config.get('arr3.0'), {foo: 'bar', baz: [1, 2, 3]});
+    test.deepEqual(grunt.config.get('arr3.0').foo,   'bar');
+    test.deepEqual(grunt.config.get('arr3.0.foo'),   'bar');
     test.done();
   },
   'config.set': function(test) {

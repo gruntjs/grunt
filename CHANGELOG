@@ -1,3 +1,8 @@
+v1.1.0
+  date: 2020-03-16
+  changes:
+    - Update to mkdirp ~1.0.3
+    - Only support versions of Node >= 8
 v1.0.4
   date: 2019-04-22
   changes:

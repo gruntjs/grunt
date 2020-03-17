@@ -18,7 +18,7 @@ exports.config = {
       bar: 'bar',
       arr: ['foo', '<%= obj.foo2 %>'],
       arr2: ['<%= arr %>', '<%= obj.Arr %>'],
-      buffer: new Buffer('test'),
+      buffer: Buffer.from('test'),
     });
     done();
   },
@@ -57,7 +57,7 @@ exports.config = {
     test.deepEqual(grunt.config.process(['<%= arr %>', '<%= obj.Arr %>']), [['foo', 'bar'], ['foo', 'bar']], 'Should expand <%= arr %> and <%= obj.Arr %> values as objects if possible.');
     var buf = grunt.config.process('<%= buffer %>');
     test.ok(Buffer.isBuffer(buf), 'Should retrieve Buffer instances as Buffer.');
-    test.deepEqual(buf, new Buffer('test'), 'Should return buffers as-is.');
+    test.deepEqual(buf, Buffer.from('test'), 'Should return buffers as-is.');
     test.done();
   },
   'config.get': function(test) {
@@ -72,7 +72,7 @@ exports.config = {
     test.deepEqual(grunt.config.get(['obj', 'arr2']), [['foo', 'bar'], ['foo', 'bar']], 'Should expand <%= arr %> and <%= obj.Arr %> values as objects if possible.');
     var buf = grunt.config.get('buffer');
     test.ok(Buffer.isBuffer(buf), 'Should retrieve Buffer instances as Buffer.');
-    test.deepEqual(buf, new Buffer('test'), 'Should return buffers as-is.');
+    test.deepEqual(buf, Buffer.from('test'), 'Should return buffers as-is.');
     test.done();
   },
   'config.set': function(test) {

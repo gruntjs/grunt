@@ -1,11 +1,9 @@
 sudo: false
 language: node_js
 node_js:
-  - "4"
-  - "5"
-  - "6"
-  - "7"
   - "8"
+  - "10"
+  - "12"
 before_install:
   - if [[ `npm -v` =~ ^[1-2] ]]; then npm i -g npm@3; fi
 before_script:

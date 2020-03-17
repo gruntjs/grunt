@@ -567,7 +567,7 @@ exports.file = {
       encoding: null,
       process: function(src) {
         test.ok(Buffer.isBuffer(src), 'when encoding is specified as null, process src as a buffer');
-        return new Buffer('føø' + src.toString() + 'bår');
+        return Buffer.from('føø' + src.toString() + 'bår');
       }
     });
     test.equal(grunt.file.read(tmpfile.path), 'føø' + this.string + 'bår', 'file should be saved as the buffer returned by process.');

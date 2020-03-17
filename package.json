@@ -7,7 +7,7 @@
   "repository": "https://github.com/gruntjs/grunt.git",
   "license": "MIT",
   "engines": {
-    "node": ">=10"
+    "node": ">=8"
   },
   "scripts": {
     "test": "node bin/grunt test",

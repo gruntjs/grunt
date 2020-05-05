@@ -22,4 +22,4 @@ See the [CHANGELOG](CHANGELOG).
 
 ### License
 
-MIT
+[MIT](https://choosealicense.com/licenses/mit/)

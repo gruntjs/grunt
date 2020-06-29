@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "name": "test-package",
+  "devDependencies": {
+    "grunt-foo-plugin": "1.0.0"
+  }
+}

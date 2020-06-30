@@ -777,11 +777,16 @@ exports.file = {
     test.done();
   },
   'isLink': function(test) {
-    test.expect(6);
+    test.expect(8);
     test.equals(grunt.file.isLink('test/fixtures/octocat.png'), false, 'files are not links.');
     test.equals(grunt.file.isLink('test/fixtures'), false, 'directories are not links.');
     test.ok(grunt.file.isLink(path.join(tmpdir.path, 'octocat.png')), 'file links are links.');
     test.ok(grunt.file.isLink(path.join(tmpdir.path, 'expand')), 'directory links are links.');
+    grunt.file.mkdir(path.join(tmpdir.path, 'relative-links'));
+    fs.symlinkSync('test/fixtures/octocat.png', path.join(tmpdir.path, 'relative-links/octocat.png'), 'file');
+    fs.symlinkSync('test/fixtures/expand', path.join(tmpdir.path, 'relative-links/expand'), 'file');
+    test.ok(grunt.file.isLink(path.join(tmpdir.path, 'relative-links/octocat.png')), 'relative file links are links.');
+    test.ok(grunt.file.isLink(path.join(tmpdir.path, 'relative-links/expand')), 'relative directory links are links.');
     test.ok(grunt.file.isLink(tmpdir.path, 'octocat.png'), 'should work for paths in parts.');
     test.equals(grunt.file.isLink('test/fixtures/does/not/exist'), false, 'nonexistent files are not links.');
     test.done();

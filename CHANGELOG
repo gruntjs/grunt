@@ -1,3 +1,23 @@
+v1.2.0
+  date: 2020-07-03
+  changes:
+    - Allow usage of grunt plugins that are located in any location that
+      is visible to Node.js and NPM, instead of node_modules directly
+      inside package that have a dev dependency to these plugins.
+      (PR: https://github.com/gruntjs/grunt/pull/1677)
+    - Removed coffeescript from dependencies. To ease transition, if
+      coffeescript is still around, Grunt will attempt to load it.
+      If it is not, and the user loads a CoffeeScript file,
+      Grunt will print a useful error indicating that the
+      coffeescript package should be installed as a dev dependency.
+      This is considerably more user-friendly than dropping the require entirely,
+      but doing so is feasible with the latest grunt-cli as users
+      may simply use grunt --require coffeescript/register.
+      (PR: https://github.com/gruntjs/grunt/pull/1675)
+    - Exposes Grunt Option keys for ease of use.
+      (PR: https://github.com/gruntjs/grunt/pull/1570)
+    - Avoiding infinite loop on very long command names.
+      (PR: https://github.com/gruntjs/grunt/pull/1697)
 v1.1.0
   date: 2020-03-16
   changes:

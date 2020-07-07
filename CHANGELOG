@@ -1,3 +1,8 @@
+v1.2.1
+  date: 2020-07-07
+  changes:
+    - Remove path-is-absolute dependency.
+      (PR: https://github.com/gruntjs/grunt/pull/1715)
 v1.2.0
   date: 2020-07-03
   changes:

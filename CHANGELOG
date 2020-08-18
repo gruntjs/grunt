@@ -1,3 +1,9 @@
+v1.3.0
+  date: 2020-08-18
+  changes:
+    - Switch to use `safeLoad` for loading YML files via `file.readYAML`.
+    - Upgrade legacy-log to ~3.0.0.
+    - Upgrade legacy-util to ~2.0.0.
 v1.2.1
   date: 2020-07-07
   changes:

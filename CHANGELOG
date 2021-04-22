@@ -1,3 +1,7 @@
+v1.4.0
+  date: 2021-04-21
+  changes:
+    - Security fixes in production and dev dependencies
 v1.3.0
   date: 2020-08-18
   changes:

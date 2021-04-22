@@ -45,7 +45,7 @@
     "grunt-cli": "~1.4.2",
     "grunt-known-options": "~1.1.1",
     "grunt-legacy-log": "~3.0.0",
-    "grunt-legacy-util": "~2.0.0",
+    "grunt-legacy-util": "~2.0.1",
     "iconv-lite": "~0.4.13",
     "js-yaml": "~3.14.0",
     "minimatch": "~3.0.4",

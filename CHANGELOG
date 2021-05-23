@@ -2,6 +2,7 @@ v1.4.0
   date: 2021-04-21
   changes:
     - Security fixes in production and dev dependencies
+    - Liftup/Liftoff upgrade breaking change. Update your scripts to use --preload instead of --require. Ref: https://github.com/js-cli/js-liftoff/commit/e7a969d6706e730d90abb4e24d3cb4d3bce06ddb.
 v1.3.0
   date: 2020-08-18
   changes:

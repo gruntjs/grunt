@@ -1,3 +1,8 @@
+v1.4.1
+  date: 2021-05-24
+  changes:
+    - Fix --preload option to be a known option
+    - Switch to GitHub Actions
 v1.4.0
   date: 2021-04-21
   changes:

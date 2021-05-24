@@ -43,7 +43,7 @@
     "findup-sync": "~0.3.0",
     "glob": "~7.1.6",
     "grunt-cli": "~1.4.2",
-    "grunt-known-options": "~1.1.1",
+    "grunt-known-options": "~2.0.0",
     "grunt-legacy-log": "~3.0.0",
     "grunt-legacy-util": "~2.0.1",
     "iconv-lite": "~0.4.13",

@@ -899,7 +899,7 @@ exports.file = {
       fs.symlinkSync(path.resolve('test/fixtures/octocat.png'), path.join(srcfile.path, 'octocat.png'), 'file');
       // test symlink copy for files
       var destdir = new Tempdir();
-      grunt.file.copy(path.join(srcfile.path, 'octocat.png'), destdir.path);
+      grunt.file.copy(path.join(srcfile.path, 'octocat.png'), path.join(destdir.path, 'octocat.png'));
       test.ok(fs.lstatSync(path.join(srcfile.path, 'octocat.png')).isSymbolicLink());
       test.ok(fs.lstatSync(path.join(destdir.path, 'octocat.png')).isSymbolicLink());
 
@@ -908,9 +908,10 @@ exports.file = {
       var destdir = new Tempdir();
       var fixtures = path.resolve('test/fixtures');
       var symlinkSource = path.join(srcdir.path, path.basename(fixtures));
+      var destSource = path.join(destdir.path, path.basename(fixtures));
       fs.symlinkSync(fixtures, symlinkSource, 'dir');
 
-      grunt.file.copy(symlinkSource, destdir.path);
+      grunt.file.copy(symlinkSource, destSource);
       test.ok(fs.lstatSync(symlinkSource).isSymbolicLink());
       test.ok(fs.lstatSync(path.join(destdir.path, path.basename(fixtures))).isSymbolicLink());
       test.done();

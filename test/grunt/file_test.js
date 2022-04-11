@@ -893,5 +893,28 @@ exports.file = {
       test.ok(grunt.file.isPathInCwd(path.resolve('deep')), 'subdirectory is in cwd');
       test.done();
     },
+    'symbolicLinkCopy': function(test) {
+      test.expect(4);
+      var srcfile = new Tempdir();
+      fs.symlinkSync(path.resolve('test/fixtures/octocat.png'), path.join(srcfile.path, 'octocat.png'), 'file');
+      // test symlink copy for files
+      var destdir = new Tempdir();
+      grunt.file.copy(path.join(srcfile.path, 'octocat.png'), destdir.path);
+      test.ok(fs.lstatSync(path.join(srcfile.path, 'octocat.png')).isSymbolicLink());
+      test.ok(fs.lstatSync(path.join(destdir.path, 'octocat.png')).isSymbolicLink());
+
+      // test symlink copy for directories
+      var srcdir = new Tempdir();
+      var destdir = new Tempdir();
+      var fixtures = path.resolve('test/fixtures');
+      var symlinkSource = path.join(srcdir.path, path.basename(fixtures));
+      console.log('symlinkSource', symlinkSource);
+      fs.symlinkSync(fixtures, symlinkSource, 'dir');
+
+      grunt.file.copy(symlinkSource, destdir.path);
+      test.ok(fs.lstatSync(symlinkSource).isSymbolicLink());
+      test.ok(fs.lstatSync(path.join(destdir.path, path.basename(fixtures))).isSymbolicLink());
+      test.done();
+    },
   }
 };

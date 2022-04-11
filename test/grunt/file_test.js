@@ -908,7 +908,6 @@ exports.file = {
       var destdir = new Tempdir();
       var fixtures = path.resolve('test/fixtures');
       var symlinkSource = path.join(srcdir.path, path.basename(fixtures));
-      console.log('symlinkSource', symlinkSource);
       fs.symlinkSync(fixtures, symlinkSource, 'dir');
 
       grunt.file.copy(symlinkSource, destdir.path);

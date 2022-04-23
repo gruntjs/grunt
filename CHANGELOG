@@ -1,3 +1,7 @@
+v1.5.3
+  date: 2022-04-23
+  changes:
+    - Patch up race condition in symlink copying.
 v1.5.2
   date: 2022-04-12
   changes:

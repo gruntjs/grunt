@@ -916,5 +916,13 @@ exports.file = {
       test.ok(fs.lstatSync(path.join(destdir.path, path.basename(fixtures))).isSymbolicLink());
       test.done();
     },
-  }
+  },
+  'symbolicLinkDestError': function(test) {
+    test.expect(1);
+    var tmpfile = new Tempdir();
+    fs.symlinkSync(path.resolve('test/fixtures/octocat.png'), path.join(tmpfile.path, 'octocat.png'), 'file');
+    grunt.file.copy(path.resolve('test/fixtures/octocat.png'), path.join(tmpfile.path, 'octocat.png'));
+    test.ok(fs.lstatSync(path.join(tmpfile.path, 'octocat.png')).isSymbolicLink());
+    test.done();
+  },
 };

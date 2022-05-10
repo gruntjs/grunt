@@ -1,7 +1,7 @@
 {
   "name": "grunt",
   "description": "The JavaScript Task Runner",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "author": "Grunt Development Team (https://gruntjs.com/development-team)",
   "homepage": "https://gruntjs.com/",
   "repository": "https://github.com/gruntjs/grunt.git",

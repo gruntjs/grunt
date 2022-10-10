@@ -59,7 +59,7 @@ module.exports = function(grunt) {
         ]
       },
       // File mapping options can be specified in these 2 formats.
-      built_mapping: {
+      builtMapping: {
         options: {a: 6, c: 66},
         expand: true,
         cwd: '<%= mappings.cwd %>',
@@ -68,7 +68,7 @@ module.exports = function(grunt) {
         rename: '<%= mappings.rename %>',
         extra: 123
       },
-      long3_mapping: {
+      long3Mapping: {
         options: {a: 7, c: 77},
         files: [
           {
@@ -81,22 +81,22 @@ module.exports = function(grunt) {
           }
         ]
       },
-      long4_mapping: {
+      long4Mapping: {
         options: {a: 8, c: 88},
         files: [
-          '<%= run.long3_mapping.files %>'
+          '<%= run.long3Mapping.files %>'
         ]
       },
-      long5_mapping: {
+      long5Mapping: {
         options: {a: 9, c: 99},
         files: [
-          '<%= run.long3_mapping.files %>',
-          '<%= run.long4_mapping.files %>'
+          '<%= run.long3Mapping.files %>',
+          '<%= run.long4Mapping.files %>'
         ]
       },
       // Need to ensure the task function is run if no files or options were
       // specified!
-      no_files_or_options: {},
+      noFilesOrOptions: {},
     },
   });
 
@@ -124,7 +124,7 @@ module.exports = function(grunt) {
   });
 
   var expecteds = {
-    'run:no_files_or_options': {
+    'run:noFilesOrOptions': {
       options: {a: 1, b: 11, d: 9},
       files: [],
     },
@@ -236,7 +236,7 @@ module.exports = function(grunt) {
         },
       ],
     },
-    'run:built_mapping': {
+    'run:builtMapping': {
       options: {a: 6, b: 11, c: 66, d: 9},
       files: [
         {
@@ -248,7 +248,7 @@ module.exports = function(grunt) {
             cwd: grunt.config.get('mappings.cwd'),
             src: ['*1.js', '*2.js'],
             dest: grunt.config.get('mappings.dest'),
-            rename: grunt.config.get('run.built_mapping.rename'),
+            rename: grunt.config.get('run.builtMapping.rename'),
             extra: 123,
           },
         },
@@ -258,16 +258,16 @@ module.exports = function(grunt) {
           extra: 123,
           orig: {
             expand: true,
-            cwd: grunt.config.get('run.built_mapping.cwd'),
+            cwd: grunt.config.get('run.builtMapping.cwd'),
             src: ['*1.js', '*2.js'],
-            dest: grunt.config.get('run.built_mapping.dest'),
-            rename: grunt.config.get('run.built_mapping.rename'),
+            dest: grunt.config.get('run.builtMapping.dest'),
+            rename: grunt.config.get('run.builtMapping.rename'),
             extra: 123,
           },
         },
       ],
     },
-    'run:long3_mapping': {
+    'run:long3Mapping': {
       options: {a: 7, b: 11, c: 77, d: 9},
       files: [
         {
@@ -292,13 +292,13 @@ module.exports = function(grunt) {
             cwd: grunt.config.get('mappings.cwd'),
             src: ['*1.js', '*2.js'],
             dest: grunt.config.get('mappings.dest'),
-            rename: grunt.config.get('run.built_mapping.rename'),
+            rename: grunt.config.get('run.builtMapping.rename'),
             extra: 123,
           },
         },
       ],
     },
-    'run:long4_mapping': {
+    'run:long4Mapping': {
       options: {a: 8, b: 11, c: 88, d: 9},
       files: [
         {
@@ -323,13 +323,13 @@ module.exports = function(grunt) {
             cwd: grunt.config.get('mappings.cwd'),
             src: ['*1.js', '*2.js'],
             dest: grunt.config.get('mappings.dest'),
-            rename: grunt.config.get('run.built_mapping.rename'),
+            rename: grunt.config.get('run.builtMapping.rename'),
             extra: 123,
           },
         },
       ],
     },
-    'run:long5_mapping': {
+    'run:long5Mapping': {
       options: {a: 9, b: 11, c: 99, d: 9},
       files: [
         {
@@ -354,7 +354,7 @@ module.exports = function(grunt) {
             cwd: grunt.config.get('mappings.cwd'),
             src: ['*1.js', '*2.js'],
             dest: grunt.config.get('mappings.dest'),
-            rename: grunt.config.get('run.built_mapping.rename'),
+            rename: grunt.config.get('run.builtMapping.rename'),
             extra: 123,
           },
         },
@@ -380,7 +380,7 @@ module.exports = function(grunt) {
             cwd: grunt.config.get('mappings.cwd'),
             src: ['*1.js', '*2.js'],
             dest: grunt.config.get('mappings.dest'),
-            rename: grunt.config.get('run.built_mapping.rename'),
+            rename: grunt.config.get('run.builtMapping.rename'),
             extra: 123,
           },
         },
@@ -427,8 +427,8 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('default', [
-    'run:no_files_or_options',
-    'test:no_files_or_options',
+    'run:noFilesOrOptions',
+    'test:noFilesOrOptions',
     'run:dist/built.js',
     'test:dist/built.js',
     'run:dist/built1.js',
@@ -441,14 +441,14 @@ module.exports = function(grunt) {
     'test:long2',
     'run:long3',
     'test:long3',
-    'run:built_mapping',
-    'test:built_mapping',
-    'run:long3_mapping',
-    'test:long3_mapping',
-    'run:long4_mapping',
-    'test:long4_mapping',
-    'run:long5_mapping',
-    'test:long5_mapping',
+    'run:builtMapping',
+    'test:builtMapping',
+    'run:long3Mapping',
+    'test:long3Mapping',
+    'run:long4Mapping',
+    'test:long4Mapping',
+    'run:long5Mapping',
+    'test:long5Mapping',
     'run',
     'test:all',
     'test:counters',

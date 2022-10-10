@@ -1,3 +1,7 @@
+v1.6.0
+  date: 2022-10-10
+  changes:
+    - Move to node 14+.
 v1.5.3
   date: 2022-04-23
   changes:

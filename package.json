@@ -58,7 +58,7 @@
     "eslint-config-grunt": "~2.0.1",
     "grunt-contrib-nodeunit": "~4.0.0",
     "grunt-contrib-watch": "~1.1.0",
-    "grunt-eslint": "~18.1.0",
+    "grunt-eslint": "~24.0.0",
     "temporary": "~0.0.4",
     "through2": "~4.0.2"
   },

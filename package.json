@@ -7,7 +7,7 @@
   "repository": "https://github.com/gruntjs/grunt.git",
   "license": "MIT",
   "engines": {
-    "node": ">=8"
+    "node": ">=14"
   },
   "scripts": {
     "test": "node bin/grunt test",
@@ -55,10 +55,10 @@
   },
   "devDependencies": {
     "difflet": "~1.0.1",
-    "eslint-config-grunt": "~1.0.1",
+    "eslint-config-grunt": "~2.0.1",
     "grunt-contrib-nodeunit": "~4.0.0",
     "grunt-contrib-watch": "~1.1.0",
-    "grunt-eslint": "~18.1.0",
+    "grunt-eslint": "~24.0.1",
     "temporary": "~0.0.4",
     "through2": "~4.0.2"
   },

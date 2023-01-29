@@ -2,7 +2,8 @@ v1.6.0
   date: 2023-01-28
   changes:
     - Requires node.js 14+.
-    - 
+    - template.date now uses dateformat ~4.6.2.
+    - other dependency updates such as glob, rimraf, etc.
 v1.5.3
   date: 2022-04-23
   changes:

@@ -15,18 +15,18 @@ module.exports = function(grunt) {
       }
     },
     eslint: {
-      gruntfile_tasks: ['Gruntfile.js', 'internal-tasks/*.js'],
-      libs_n_tests: ['lib/**/*.js', '<%= nodeunit.all %>'],
+      gruntfileTasks: ['Gruntfile.js', 'internal-tasks/*.js'],
+      libsAndTests: ['lib/**/*.js', '<%= nodeunit.all %>'],
       subgrunt: ['<%= subgrunt.all %>']
     },
     watch: {
-      gruntfile_tasks: {
-        files: ['<%= eslint.gruntfile_tasks %>'],
-        tasks: ['eslint:gruntfile_tasks']
+      gruntfileTasks: {
+        files: ['<%= eslint.gruntfileTasks %>'],
+        tasks: ['eslint:gruntfileTasks']
       },
-      libs_n_tests: {
-        files: ['<%= eslint.libs_n_tests %>'],
-        tasks: ['eslint:libs_n_tests', 'nodeunit']
+      libsAndTests: {
+        files: ['<%= eslint.libsAndTests %>'],
+        tasks: ['eslint:libsAndTests', 'nodeunit']
       },
       subgrunt: {
         files: ['<%= subgrunt.all %>'],

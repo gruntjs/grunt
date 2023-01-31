@@ -1,3 +1,8 @@
+v1.6.1
+  date: 2023-01-31
+  changes:
+    - Downgrades to glob 7 for Windows compatability
+    - Removes mkdirp and rimraf in favour of node.js APIs.
 v1.6.0
   date: 2023-01-28
   changes:

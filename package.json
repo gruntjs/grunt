@@ -1,7 +1,7 @@
 {
   "name": "grunt",
   "description": "The JavaScript Task Runner",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "author": "Grunt Development Team (https://gruntjs.com/development-team)",
   "homepage": "https://gruntjs.com/",
   "repository": "https://github.com/gruntjs/grunt.git",
@@ -41,7 +41,7 @@
     "eventemitter2": "~0.4.13",
     "exit": "~0.1.2",
     "findup-sync": "~5.0.0",
-    "glob": "~7.1.6",
+    "glob": "~8.1.0",
     "grunt-cli": "~1.4.3",
     "grunt-known-options": "~2.0.0",
     "grunt-legacy-log": "~3.0.0",

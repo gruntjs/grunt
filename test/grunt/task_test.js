@@ -145,6 +145,69 @@ exports['task.normalizeMultiTaskFiles'] = {
 
     test.done();
   },
+  'filter': function(test) {
+    test.expect(3);
+    var actual, expected, value;
+
+    var filter = function(file) {
+      return (/\/file[0-9]\.js$/).test(file);
+    };
+
+    value = {
+      dest: 'dest/file1.js',
+      src: [
+        'src/file1.js',
+        'src/file1-123.js'
+      ],
+      filter: filter
+    };
+    actual = grunt.task.normalizeMultiTaskFiles(value, 'ignored');
+    expected = [
+      {
+        dest: 'dest/file1.js', src: ['src/file1.js'], orig: value
+      }
+    ];
+    test.deepEqual(actual, expected, 'should filter plain src arrays.');
+
+    value = {
+      files: {
+        'dest/file1.js': ['src/file1.js', 'src/file1-123.js'],
+        'dest/file2.js': ['src/file2.js', 'src/file2-123.js']
+      },
+      filter: filter
+    };
+    actual = grunt.task.normalizeMultiTaskFiles(value, 'ignored');
+    expected = [
+      {
+        dest: 'dest/file1.js', src: ['src/file1.js'], orig: {
+          dest: 'dest/file1.js', src: value.files['dest/file1.js'],
+          filter: value.filter
+        }
+      },
+      {
+        dest: 'dest/file2.js', src: ['src/file2.js'], orig: {
+          dest: 'dest/file2.js', src: value.files['dest/file2.js'],
+          filter: value.filter
+        }
+      }
+    ];
+    test.deepEqual(actual, expected, 'should filter file objects.');
+
+    value = {
+      files: [
+        { dest: 'dest/file1.js', src: ['src/file1.js', 'src/file1-123.js'], filter: filter },
+        { dest: 'dest/file2.js', src: ['src/file2.js', 'src/file2-123.js'], filter: filter }
+      ]
+    };
+    actual = grunt.task.normalizeMultiTaskFiles(value, 'ignored');
+    expected = [
+      { dest: 'dest/file1.js', src: ['src/file1.js'], orig: value.files[0] },
+      { dest: 'dest/file2.js', src: ['src/file2.js'], orig: value.files[1] }
+    ];
+    test.deepEqual(actual, expected, 'should filter file arrays.');
+
+    test.done();
+  },
   'nonull': function(test) {
     test.expect(2);
     var actual, expected, value;

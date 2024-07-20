@@ -42,14 +42,14 @@
     "exit": "~0.1.2",
     "findup-sync": "~5.0.0",
     "glob": "~7.1.6",
-    "grunt-cli": "~1.4.3",
+    "grunt-cli": "^1.4.3",
     "grunt-known-options": "~2.0.0",
     "grunt-legacy-log": "~3.0.0",
     "grunt-legacy-util": "~2.0.1",
     "iconv-lite": "~0.6.3",
     "js-yaml": "~3.14.0",
     "minimatch": "~3.0.4",
-    "nopt": "~3.0.6"
+    "nopt": "^5.0.0"
   },
   "devDependencies": {
     "difflet": "~1.0.1",

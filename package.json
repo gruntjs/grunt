@@ -47,7 +47,7 @@
     "grunt-legacy-log": "~3.0.0",
     "grunt-legacy-util": "~2.0.1",
     "iconv-lite": "~0.6.3",
-    "js-yaml": "~3.14.0",
+    "js-yaml": "~4.1.0",
     "minimatch": "~3.0.4",
     "nopt": "^5.0.0"
   },

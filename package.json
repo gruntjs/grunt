@@ -38,7 +38,7 @@
   ],
   "dependencies": {
     "dateformat": "~4.6.2",
-    "eventemitter2": "~0.4.13",
+    "eventemitter2": "~6.4.9",
     "exit": "~0.1.2",
     "findup-sync": "~5.0.0",
     "glob": "~7.1.6",

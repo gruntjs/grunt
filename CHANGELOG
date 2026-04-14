@@ -1,3 +1,10 @@
+v1.6.2
+  date: 2026-04-14
+  changes:
+    - Update minimatch to 3.1.5.
+      (PR: https://github.com/gruntjs/grunt/pull/1796)
+    - Update nopt to 5.0.0.
+      (PR: https://github.com/gruntjs/grunt/pull/1778)
 v1.6.1
   date: 2023-01-31
   changes:

@@ -39,3 +39,4 @@ See the [CHANGELOG](CHANGELOG).
 ### License
 
 [MIT](LICENSE)
+<!-- F65: Fix typo -->

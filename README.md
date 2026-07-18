@@ -1,6 +1,6 @@
 # Grunt: The JavaScript Task Runner
 
-[![Built with Grunt](https://cdn.gruntjs.com/builtwith.svg)](http://gruntjs.com/)
+[![Built with Grunt](https://cdn.gruntjs.com/builtwith.svg)](https://gruntjs.com/)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fgruntjs%2Fgrunt.svg?type=shield)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fgruntjs%2Fgrunt?ref=badge_shield)
 
 <img align="right" height="260" src="https://gruntjs.com/img/grunt-logo-no-wordmark.svg">

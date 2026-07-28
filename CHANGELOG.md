@@ -1,3 +1,7 @@
+## v1.6.3
+- date: 2026-07-28
+- changes:
+    - Update js-yaml to 3.15.0 to fix CVE (https://github.com/gruntjs/grunt/pull/1803)
 
 ## v1.6.2
 - date: 2026-04-14

@@ -1,7 +1,7 @@
 {
   "name": "grunt",
   "description": "The JavaScript Task Runner",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "author": "Grunt Development Team (https://gruntjs.com/development-team)",
   "homepage": "https://gruntjs.com/",
   "repository": "https://github.com/gruntjs/grunt.git",
@@ -11,7 +11,8 @@
   },
   "scripts": {
     "test": "node bin/grunt test",
-    "test-tap": "node bin/grunt test:tap"
+    "test-tap": "node bin/grunt test:tap",
+    "changelog": "git log HEAD --format=\"- %s\" --no-merges --not --tags --reverse"
   },
   "main": "lib/grunt",
   "bin": {

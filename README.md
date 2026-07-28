@@ -34,7 +34,7 @@ Before you make an issue, please read our [Contributing](https://gruntjs.com/con
 
 ### Release History
 
-See the [CHANGELOG](CHANGELOG).
+See the [CHANGELOG.md](./CHANGELOG.md).
 
 ### License
 

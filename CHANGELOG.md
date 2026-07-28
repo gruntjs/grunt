@@ -1,62 +1,74 @@
-v1.6.2
-  date: 2026-04-14
-  changes:
+
+## v1.6.2
+- date: 2026-04-14
+- changes:
     - Update minimatch to 3.1.5.
       (PR: https://github.com/gruntjs/grunt/pull/1796)
     - Update nopt to 5.0.0.
       (PR: https://github.com/gruntjs/grunt/pull/1778)
-v1.6.1
-  date: 2023-01-31
-  changes:
+
+## v1.6.1
+- date: 2023-01-31
+- changes:
     - Downgrades to glob 7 for Windows compatability
     - Removes mkdirp and rimraf in favour of node.js APIs.
-v1.6.0
-  date: 2023-01-28
-  changes:
+
+## v1.6.0
+- date: 2023-01-28
+- changes:
     - Requires node.js 16+.
     - template.date now uses dateformat ~4.6.2.
     - other dependency updates such as glob, rimraf, etc.
-v1.5.3
-  date: 2022-04-23
-  changes:
+
+## v1.5.3
+- date: 2022-04-23
+- changes:
     - Patch up race condition in symlink copying.
-v1.5.2
-  date: 2022-04-12
-  changes:
+
+## v1.5.2
+- date: 2022-04-12
+- changes:
     - Unlink symlinks when copy destination is a symlink.
-v1.5.1
-  date: 2022-04-11
-  changes:
+
+## v1.5.1
+- date: 2022-04-11
+- changes:
     - Fixed symlink destination handling.
-v1.5.0
-  date: 2022-04-10
-  changes:
+
+## v1.5.0
+- date: 2022-04-10
+- changes:
     - Updated dependencies.
     - Add symlink handling for copying files.
-v1.4.1
-  date: 2021-05-24
-  changes:
+
+## v1.4.1
+- date: 2021-05-24
+- changes:
     - Fix --preload option to be a known option
     - Switch to GitHub Actions
-v1.4.0
-  date: 2021-04-21
-  changes:
+
+## v1.4.0
+- date: 2021-04-21
+- changes:
     - Security fixes in production and dev dependencies
     - Liftup/Liftoff upgrade breaking change. Update your scripts to use --preload instead of --require. Ref: https://github.com/js-cli/js-liftoff/commit/e7a969d6706e730d90abb4e24d3cb4d3bce06ddb.
-v1.3.0
-  date: 2020-08-18
-  changes:
+
+## v1.3.0
+- date: 2020-08-18
+- changes:
     - Switch to use `safeLoad` for loading YML files via `file.readYAML`.
     - Upgrade legacy-log to ~3.0.0.
     - Upgrade legacy-util to ~2.0.0.
-v1.2.1
-  date: 2020-07-07
-  changes:
+
+## v1.2.1
+- date: 2020-07-07
+- changes:
     - Remove path-is-absolute dependency.
       (PR: https://github.com/gruntjs/grunt/pull/1715)
-v1.2.0
-  date: 2020-07-03
-  changes:
+
+## v1.2.0
+- date: 2020-07-03
+- changes:
     - Allow usage of grunt plugins that are located in any location that
       is visible to Node.js and NPM, instead of node_modules directly
       inside package that have a dev dependency to these plugins.
@@ -74,34 +86,40 @@ v1.2.0
       (PR: https://github.com/gruntjs/grunt/pull/1570)
     - Avoiding infinite loop on very long command names.
       (PR: https://github.com/gruntjs/grunt/pull/1697)
-v1.1.0
-  date: 2020-03-16
-  changes:
+
+## v1.1.0
+- date: 2020-03-16
+- changes:
     - Update to mkdirp ~1.0.3
     - Only support versions of Node >= 8
-v1.0.4
-  date: 2019-04-22
-  changes:
+
+## v1.0.4
+- date: 2019-04-22
+- changes:
     - Update js-yaml to address https://npmjs.com/advisories/788
     - Use SOURCE_DATE_EPOCH to render dates in template.
-v1.0.3
-  date: 2018-06-03
-  changes:
+
+## v1.0.3
+- date: 2018-06-03
+- changes:
     - Drop support for Node 0.10 and 0.12.
     - Dependency updates: rimraf, grunt-legacy-log, grunt-legacy-util.
     - Fix race condition with file.mkdir.
-v1.0.2
-  date: 2018-02-07
-  changes:
+
+## v1.0.2
+- date: 2018-02-07
+- changes:
     - Fix for readYAML error messages.
     - Remove deprecation warning for coffeescript. Pull #1621.
-v1.0.1
-  date: 2016-04-05
-  changes:
+
+## v1.0.1
+- date: 2016-04-05
+- changes:
     - minor fix for npm issues when installing grunt and grunt-cli at the same time. Pull #1500.
-v1.0.0
-  date: 2016-04-04
-  changes:
+
+## v1.0.0
+- date: 2016-04-04
+- changes:
     - full list of changes is on http://gruntjs.com, please also see changes from 1.0.0-rc1.
     - if you have a Grunt plugin that includes `grunt` in the `peerDependencies`,
       we recommend tagging with `"grunt": "">= 0.4.0"` and publishing a new version on npm.
@@ -112,9 +130,10 @@ v1.0.0
     - Update legacy log and util to 1.0.0.
     - Update to latest cli ~1.2.0.
     - Use grunt-known-options for shared options between Grunt and grunt-cli.
-v1.0.0-rc1
-  date: 2016-02-11
-  changes:
+
+## v1.0.0-rc1
+- date: 2016-02-11
+- changes:
     - full list of changes is on http://gruntjs.com
     - if you have a Grunt plugin that includes `grunt` in the `peerDependencies`,
       we recommend tagging with `"grunt": "">= 0.4.0"`
@@ -141,9 +160,10 @@ v1.0.0-rc1
       [grunt.file.write()](http://gruntjs.com/api/grunt.file#grunt.file.write).
     - `Done, without errors.` was changed to `Done.` to avoid failing by mistake
       on the word `errors`.
-v0.4.5:
-  date: 2014-05-12
-  changes:
+
+## v0.4.5:
+- date: 2014-05-12
+- changes:
     - Updated rimraf to 2.2.8. Closes gh-1134.
     - Moved grunt.log into separate grunt-legacy-log module.
     - Updated grunt-legacy-util to 0.2.0. Closes gh-971, gh-1129, gh-1118.
@@ -156,13 +176,15 @@ v0.4.5:
     - Warn instead of error when no new tasks found via '.loadTasks' method. Closes gh-1059.
     - Added Windows CI testing. Closes gh-1110.
     - Removed "CONTRIBUTING.md" from .npmignore. Closes gh-1093.
-v0.4.4:
-  date: 2014-03-12
-  changes:
+
+## v0.4.4:
+- date: 2014-03-12
+- changes:
     - Only signal completion of tasks async if grunt.task.start is invoked with `{asyncDone:true}`.
-v0.4.3:
-  date: 2014-03-07
-  changes:
+
+## v0.4.3:
+- date: 2014-03-07
+- changes:
     - When devving Grunt, do "npm install && npm uninstall grunt" (isaacs/npm#3958)
     - Grunt is now tested on Node.js 0.11
     - Extracted internal "util" lib to "grunt-legacy-util" lib
@@ -177,9 +199,10 @@ v0.4.3:
     - Fix <%= grunt.task.current.target %> in Multitask files. Closes gh-994.
     - Generalize cli tests, see gh-983, gh-991.
     - --debug option can optionally be Boolean. Closes Gh-983, gh-991.
-v0.4.2:
-  date: 2013-11-21
-  changes:
+
+## v0.4.2:
+- date: 2013-11-21
+- changes:
     - Extract internal "namespace" lib to external "getobject" lib.
     - '"Grunt collections" are now deprecated, use peerDependencies. See "grunt-contrib" 0.8.0 for details.'
     - Fix stdout / stderr issues on Windows. Closes gh-940, gh-921, gh-744, gh-792, gh-644, gh-708.
@@ -191,9 +214,10 @@ v0.4.2:
     - Test that file methods warn. Closes gh-909.
     - Fixed a few spelling errors in code comments. Closes gh-849.
     - Updated watch, jshint and nodeunit deps. Closes gh-914.
-v0.4.1:
-  date: 2013-03-13
-  changes:
+
+## v0.4.1:
+- date: 2013-03-13
+- changes:
     - Fix path.join thrown errors with expandMapping rename. Closes gh-725.
     - Update copyright date to 2013. Closes gh-660.
     - Remove some side effects from manually requiring Grunt. Closes gh-605.
@@ -209,8 +233,9 @@ v0.4.1:
     - The grunt.util.spawn method no longer breaks on multibyte stdio. Closes gh-710.
     - Fix "path.join arguments must be strings" error in file.expand/recurse when options.cwd is not set. Closes gh-722.
     - Adding a fairly relevant keyword to package.json (task).
-v0.4.0:
-  date: 2013-02-18
-  changes:
+
+## v0.4.0:
+- date: 2013-02-18
+- changes:
     - Initial release of 0.4.0.
     - See http://gruntjs.com/upgrading-from-0.3-to-0.4 for a list of changes / migration guide.

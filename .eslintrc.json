@@ -1,0 +1,10 @@
+{
+    "root": true,
+    "extends": "grunt",
+    "parserOptions": {
+        "ecmaVersion": 2017
+    },
+    "env": {
+        "es2017": true
+    }
+}

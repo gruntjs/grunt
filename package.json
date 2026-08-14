@@ -10,8 +10,11 @@
     "node": ">=16"
   },
   "scripts": {
-    "test": "node bin/grunt test",
-    "test-tap": "node bin/grunt test:tap",
+    "test": "eslint --cache . && qunit test/unit/ && node bin/grunt subgrunt",
+    "lint": "eslint --cache .",
+    "lint-fix": "eslint --cache -fix .",
+    "unit": "qunit test/unit/",
+    "unit-watch": "qunit --watch test/unit/",
     "changelog": "git log HEAD --format=\"- %s\" --no-merges --not --tags --reverse"
   },
   "main": "lib/grunt",
@@ -52,12 +55,15 @@
     "minimatch": "^3.1.5",
     "nopt": "^5.0.0"
   },
+  "overrides": {
+    "eslint-plugin-pabigot": "^1.1.0"
+  },
   "devDependencies": {
     "difflet": "~1.0.1",
-    "eslint-config-grunt": "~2.0.1",
-    "grunt-contrib-nodeunit": "~5.0.0",
-    "grunt-contrib-watch": "~1.1.0",
-    "grunt-eslint": "~24.1.0",
+    "eslint": "^8.57.0",
+    "eslint-config-grunt": "^2.0.1",
+    "eslint-plugin-pabigot": "^1.1.0",
+    "qunit": "^2.25.0",
     "temporary": "~1.1.0",
     "through2": "~4.0.2"
   },

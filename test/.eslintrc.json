@@ -1,4 +1,8 @@
 {
+    "extends": "../.eslintrc.json",
+    "env": {
+        "qunit": true
+    },
     "rules": {
         // Nullified until the files in test/ can be cleaned
         "max-len": "off"

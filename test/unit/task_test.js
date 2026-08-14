@@ -2,18 +2,16 @@
 
 var grunt = require('../../lib/grunt');
 
-exports['task.normalizeMultiTaskFiles'] = {
-  setUp: function(done) {
+QUnit.module('task.normalizeMultiTaskFiles', function(hooks) {
+  hooks.beforeEach(function() {
     this.cwd = process.cwd();
     process.chdir('test/fixtures/files');
-    done();
-  },
-  tearDown: function(done) {
+  });
+  hooks.afterEach(function() {
     process.chdir(this.cwd);
-    done();
-  },
-  'normalize': function(test) {
-    test.expect(7);
+  });
+
+  QUnit.test('normalize', function(assert) {
     var actual, expected, key, value;
     var flatten = grunt.util._.flatten;
 
@@ -27,7 +25,7 @@ exports['task.normalizeMultiTaskFiles'] = {
         orig: {dest: key, src: [value]},
       },
     ];
-    test.deepEqual(actual, expected, 'should normalize destTarget: srcString.');
+    assert.deepEqual(actual, expected, 'should normalize destTarget: srcString.');
 
     key = 'dist/built.js';
     value = [['src/*1.js'], ['src/*2.js']];
@@ -39,7 +37,7 @@ exports['task.normalizeMultiTaskFiles'] = {
         orig: {dest: key, src: flatten(value)},
       },
     ];
-    test.deepEqual(actual, expected, 'should normalize destTarget: srcArray.');
+    assert.deepEqual(actual, expected, 'should normalize destTarget: srcArray.');
 
     value = {
       src: ['src/*1.js', 'src/*2.js'],
@@ -53,7 +51,7 @@ exports['task.normalizeMultiTaskFiles'] = {
         orig: value,
       },
     ];
-    test.deepEqual(actual, expected, 'should normalize target: {src: srcStuff, dest: destStuff}.');
+    assert.deepEqual(actual, expected, 'should normalize target: {src: srcStuff, dest: destStuff}.');
 
     value = {
       files: {
@@ -74,7 +72,7 @@ exports['task.normalizeMultiTaskFiles'] = {
         orig: {dest: 'dist/built-b.js', src: flatten(value.files['dist/built-b.js'])},
       },
     ];
-    test.deepEqual(actual, expected, 'should normalize target: {files: {destTarget: srcStuff, ...}}.');
+    assert.deepEqual(actual, expected, 'should normalize target: {files: {destTarget: srcStuff, ...}}.');
 
     value = {
       files: [
@@ -95,7 +93,7 @@ exports['task.normalizeMultiTaskFiles'] = {
         orig: {dest: Object.keys(value.files[1])[0], src: flatten(value.files[1]['dist/built-b.js'])},
       },
     ];
-    test.deepEqual(actual, expected, 'should normalize target: {files: [{destTarget: srcStuff}, ...]}.');
+    assert.deepEqual(actual, expected, 'should normalize target: {files: [{destTarget: srcStuff}, ...]}.');
 
     value = {
       files: [
@@ -116,7 +114,7 @@ exports['task.normalizeMultiTaskFiles'] = {
         orig: value.files[1],
       },
     ];
-    test.deepEqual(actual, expected, 'should normalize target: {files: [{src: srcStuff, dest: destStuff}, ...]}.');
+    assert.deepEqual(actual, expected, 'should normalize target: {files: [{src: srcStuff, dest: destStuff}, ...]}.');
 
     value = {
       files: [
@@ -141,12 +139,9 @@ exports['task.normalizeMultiTaskFiles'] = {
         orig: value.files[1],
       },
     ];
-    test.deepEqual(actual, expected, 'should propagate extra properties.');
-
-    test.done();
-  },
-  'nonull': function(test) {
-    test.expect(2);
+    assert.deepEqual(actual, expected, 'should propagate extra properties.');
+  });
+  QUnit.test('nonull', function(assert) {
     var actual, expected, value;
 
     value = {
@@ -161,7 +156,7 @@ exports['task.normalizeMultiTaskFiles'] = {
         orig: value,
       },
     ];
-    test.deepEqual(actual, expected, 'if nonull is not set, should not include non-matching patterns.');
+    assert.deepEqual(actual, expected, 'if nonull is not set, should not include non-matching patterns.');
 
     value = {
       src: ['src/xxx*.js', 'src/yyy*.js'],
@@ -177,11 +172,9 @@ exports['task.normalizeMultiTaskFiles'] = {
         orig: value,
       },
     ];
-    test.deepEqual(actual, expected, 'if nonull is set, should include non-matching patterns.');
-    test.done();
-  },
-  'expandMapping': function(test) {
-    test.expect(3);
+    assert.deepEqual(actual, expected, 'if nonull is set, should include non-matching patterns.');
+  });
+  QUnit.test('expandMapping', function(assert) {
     var actual, expected, value;
 
     value = {
@@ -209,7 +202,7 @@ exports['task.normalizeMultiTaskFiles'] = {
         orig: value.files[1],
       },
     ];
-    test.deepEqual(actual, expected, 'expand to file mapping, removing cwd from destination paths.');
+    assert.deepEqual(actual, expected, 'expand to file mapping, removing cwd from destination paths.');
 
     value = {
       files: [
@@ -227,7 +220,7 @@ exports['task.normalizeMultiTaskFiles'] = {
         orig: value.files[0],
       },
     ];
-    test.deepEqual(actual, expected, 'expand to file mapping, flattening destination paths.');
+    assert.deepEqual(actual, expected, 'expand to file mapping, flattening destination paths.');
 
     value = {
       files: [
@@ -252,8 +245,7 @@ exports['task.normalizeMultiTaskFiles'] = {
         orig: value.files[0],
       },
     ];
-    test.deepEqual(actual, expected, 'expand to file mapping, renaming files.');
+    assert.deepEqual(actual, expected, 'expand to file mapping, renaming files.');
+  });
 
-    test.done();
-  },
-};
+});

@@ -15,34 +15,26 @@ var result = (function() {
   };
 }());
 
-var requireTask = require.bind(exports, '../../lib/util/task.js');
+require('../..');
+var tasklib = require('../../lib/util/task.js');
 
-exports['new Task'] = {
-  'create': function(test) {
-    test.expect(1);
-    var tasklib = requireTask();
-    test.ok(tasklib.create() instanceof tasklib.Task, 'It should return a Task instance.');
-    test.done();
-  }
-};
+QUnit.module('util.tasklib');
+QUnit.test('create', function(assert) {
+  assert.true(tasklib.create() instanceof tasklib.Task, 'return a Task instance');
+});
 
-exports.Tasks = {
-  setUp: function(done) {
+QUnit.module('util.Task', function(hooks) {
+  var task;
+  hooks.beforeEach(function() {
     result.reset();
-    this.task = requireTask().create();
-    var task = this.task;
+    task = tasklib.create();
     task.registerTask('nothing', 'Do nothing.', function() {});
-    done();
-  },
-  'Task#registerTask': function(test) {
-    test.expect(1);
-    var task = this.task;
-    test.ok('nothing' in task._tasks, 'It should register the passed task.');
-    test.done();
-  },
-  'Task#registerTask (alias)': function(test) {
-    test.expect(1);
-    var task = this.task;
+  });
+  QUnit.test('Task#registerTask', function(assert) {
+    assert.true('nothing' in task._tasks, 'It should register the passed task.');
+  });
+  // TODO: Refactor to avoid nesting assertions inside uncontrolled callback
+  QUnit.test('Task#registerTask (alias)', function(assert) {
     task.registerTask('a', 'Push task name onto result.', result.pushTaskname);
     task.registerTask('b', 'Push task name onto result.', result.pushTaskname);
     task.registerTask('c d', 'Push task name onto result.', result.pushTaskname);
@@ -53,108 +45,93 @@ exports.Tasks = {
         result.push('!' + this.name);
       },
       done: function() {
-        test.strictEqual(result.getJoined(), 'abc d!z', 'The specified tasks should have run, in-order.');
-        test.done();
+        assert.strictEqual(result.getJoined(), 'abc d!z', 'The specified tasks should have run, in-order.');
       }
     });
     task.run('y', 'z').start();
-  },
-  'Task#isTaskAlias': function(test) {
-    test.expect(2);
-    var task = this.task;
+  });
+  QUnit.test('Task#isTaskAlias', function(assert) {
     task.registerTask('a', 'nothing', function() {});
     task.registerTask('b', ['a']);
-    test.strictEqual(task.isTaskAlias('a'), false, 'It should not be an alias.');
-    test.strictEqual(task.isTaskAlias('b'), true, 'It should be an alias.');
-    test.done();
-  },
-  'Task#renameTask': function(test) {
-    test.expect(4);
-    var task = this.task;
+    assert.false(task.isTaskAlias('a'), 'It should not be an alias.');
+    assert.true(task.isTaskAlias('b'), 'It should be an alias.');
+  });
+  QUnit.test('Task#renameTask', function(assert) {
     task.renameTask('nothing', 'newnothing');
-    test.ok('newnothing' in task._tasks, 'It should rename the specified task.');
-    test.equal('nothing' in task._tasks, false, 'It should remove the previous task.');
-    test.doesNotThrow(function() { task.run('newnothing'); }, 'It should be accessible by its new name.');
-    test.throws(function() { task.run('nothing'); }, 'It should not be accessible by its previous name and throw an exception.');
-    test.done();
-  },
-  'Task#run (exception handling)': function(test) {
-    test.expect(4);
-    var task = this.task;
-    test.doesNotThrow(function() { task.run('nothing'); }, 'Registered tasks should be runnable.');
-    test.throws(function() { task.run('nonexistent'); }, 'Attempting to run unregistered tasks should throw an exception.');
+    assert.true('newnothing' in task._tasks, 'It should rename the specified task.');
+    assert.false('nothing' in task._tasks, 'It should remove the previous task.');
+    // It should be accessible by its new name.
+    task.run('newnothing');
+    assert.throws(function() {
+      task.run('nothing');
+    }, 'It should not be accessible by its previous name and throw an exception.');
+  });
+  QUnit.test('Task#run (exception handling)', function(assert) {
+    // Registered tasks should be runnable.;
+    task.run('nothing');
+    assert.throws(function() {
+      task.run('nonexistent');
+    }, 'Attempting to run unregistered tasks should throw an exception.');
     task.options({
       error: result.pushTaskname
     });
-    test.doesNotThrow(function() { task.run('nonexistent'); }, 'It should not throw an exception because an error handler is defined.');
-    test.deepEqual(result.get(), [null], 'Non-nested tasks have a null name.');
-    test.done();
-  },
-  'Task#run (async failing)': function(test) {
-    test.expect(1);
-    var task = this.task;
+    task.run('nonexistent');
+    // It should not throw an exception because an error handler is defined.
+    assert.deepEqual(result.get(), [null], 'Non-nested tasks have a null name.');
+  });
+  QUnit.test('Task#run (async failing)', function(assert) {
     var results = [];
 
     task.registerTask('sync1', 'sync, gonna succeed', function() {});
-
     task.registerTask('sync2', 'sync, gonna fail', function() {
       return false;
     });
-
     task.registerTask('sync3', 'sync, gonna fail', function() {
       return new Error('sync3: Error');
     });
-
     task.registerTask('sync4', 'sync, gonna fail', function() {
       return new TypeError('sync4: TypeError');
     });
-
     task.registerTask('sync5', 'sync, gonna fail', function() {
       throw new Error('sync5: Error');
     });
-
     task.registerTask('sync6', 'sync, gonna fail', function() {
       throw new TypeError('sync6: TypeError');
     });
-
     task.registerTask('syncs', ['sync1', 'sync2', 'sync3', 'sync4', 'sync5', 'sync6']);
-
     task.registerTask('async1', 'async, gonna succeed', function() {
       var done = this.async();
       setTimeout(function() {
         done();
       }, 1);
     });
-
     task.registerTask('async2', 'async, gonna fail', function() {
       var done = this.async();
       setTimeout(function() {
         done(false);
       }, 1);
     });
-
     task.registerTask('async3', 'async, gonna fail', function() {
       var done = this.async();
       setTimeout(function() {
         done(new Error('async3: Error'));
       }, 1);
     });
-
     task.registerTask('async4', 'async, gonna fail', function() {
       var done = this.async();
       setTimeout(function() {
         done(new TypeError('async4: TypeError'));
       }, 1);
     });
-
     task.registerTask('asyncs', ['async1', 'async2', 'async3', 'async4']);
 
+    var done = assert.async();
     task.options({
       error: function(e) {
         results.push({name: e.name, message: e.message});
       },
       done: function() {
-        test.deepEqual(results, [
+        assert.deepEqual(results, [
           {name: 'Error', message: 'Task "sync2" failed.'},
           {name: 'Error', message: 'sync3: Error'},
           {name: 'TypeError', message: 'sync4: TypeError'},
@@ -164,58 +141,60 @@ exports.Tasks = {
           {name: 'Error', message: 'async3: Error'},
           {name: 'TypeError', message: 'async4: TypeError'}
         ], 'The specified tasks should have run, in-order.');
-        test.done();
+        done();
       }
     });
     task.run('syncs', 'asyncs').start();
-  },
-  'Task#exists': function(test) {
-    test.expect(2);
-    var task = this.task;
-    test.equal(task.exists('nothing'), true, 'A task should not be exists (registered).');
-    test.equal(task.exists('notexistent'), false, 'A task should not be exists (registered).');
-    test.done();
-  },
-  'Task#run (nested, exception handling)': function(test) {
-    test.expect(2);
-    var task = this.task;
+  });
+  QUnit.test('Task#exists', function(assert) {
+    assert.true(task.exists('nothing'), 'A task should not be exists (registered).');
+    assert.false(task.exists('notexistent'), 'A task should not be exists (registered).');
+  });
+  QUnit.test('Task#run (nested, exception handling)', function(assert) {
     task.registerTask('yay', 'Run a registered task.', function() {
-      test.doesNotThrow(function() { task.run('nothing'); }, 'Registered tasks should be runnable.');
+      // Registered tasks should be runnable.;
+      task.run('nothing');
     });
     task.registerTask('nay', 'Attempt to run an unregistered task.', function() {
-      test.throws(function() { task.run('nonexistent'); }, 'Attempting to run unregistered tasks should throw an exception.');
+      assert.throws(function() {
+        task.run('nonexistent');
+      }, 'Attempting to run unregistered tasks should throw an exception.');
     });
     task.options({
-      done: test.done
+      done: assert.async()
     });
     task.run('yay', 'nay').start();
-  },
-  'Task#run (signatures, queue order)': function(test) {
-    test.expect(1);
-    var task = this.task;
+  });
+  QUnit.test('Task#run (signatures, queue order)', function(assert) {
     task.registerTask('a', 'Push task name onto result.', result.pushTaskname);
     task.registerTask('b', 'Push task name onto result.', result.pushTaskname);
     task.registerTask('c', 'Push task name onto result.', result.pushTaskname);
     task.registerTask('d', 'Push task name onto result.', result.pushTaskname);
     task.registerTask('e', 'Push task name onto result.', result.pushTaskname);
     task.registerTask('f g', 'Push task name onto result.', result.pushTaskname);
+    var done = assert.async();
     task.options({
       done: function() {
-        test.strictEqual(result.getJoined(), 'abcdef g', 'The specified tasks should have run, in-order.');
-        test.done();
+        assert.strictEqual(result.getJoined(), 'abcdef g', 'The specified tasks should have run, in-order.');
+        done();
       }
     });
     task.run('a').run('b', 'c').run(['d', 'e']).run('f g').start();
-  },
-  'Task#run (colon separated arguments)': function(test) {
-    test.expect(1);
-    var task = this.task;
-    task.registerTask('a', 'Push task name and args onto result.', function(x, y) { result.push([this.nameArgs, 1, this.name, x, y]); });
-    task.registerTask('a:b', 'Push task name and args onto result.', function(x, y) { result.push([this.nameArgs, 2, this.name, x, y]); });
-    task.registerTask('a:b:c', 'Push task name and args onto result.', function(x, y) { result.push([this.nameArgs, 3, this.name, x, y]); });
+  });
+  QUnit.test('Task#run (colon separated arguments)', function(assert) {
+    task.registerTask('a', 'Push task name and args onto result.', function(x, y) {
+      result.push([this.nameArgs, 1, this.name, x, y]);
+    });
+    task.registerTask('a:b', 'Push task name and args onto result.', function(x, y) {
+      result.push([this.nameArgs, 2, this.name, x, y]);
+    });
+    task.registerTask('a:b:c', 'Push task name and args onto result.', function(x, y) {
+      result.push([this.nameArgs, 3, this.name, x, y]);
+    });
+    var done = assert.async();
     task.options({
       done: function() {
-        test.deepEqual(result.get(), [
+        assert.deepEqual(result.get(), [
           ['a',                 1,  'a',      undefined,  undefined],
           ['a:x',               1,  'a',      'x',        undefined],
           ['a:x:c',             1,  'a',      'x',        'c'],
@@ -232,7 +211,7 @@ exports.Tasks = {
           ['a:b:c',             3,  'a:b:c',  undefined,  undefined],
           ['a:b:c: d',          3,  'a:b:c',  ' d',       undefined],
         ], 'Named tasks should be called as-specified if possible, and arguments should be passed properly.');
-        test.done();
+        done();
       }
     });
     task.run(
@@ -240,10 +219,8 @@ exports.Tasks = {
       'a:b', 'a:b:x', 'a:b:x:y', 'a:b:c ', 'a:b:x\\:y:\\:z\\:',
       'a:b:c', 'a:b:c: d'
     ).start();
-  },
-  'Task#run (nested tasks, queue order)': function(test) {
-    test.expect(1);
-    var task = this.task;
+  });
+  QUnit.test('Task#run (nested tasks, queue order)', function(assert) {
     task.registerTask('a', 'Push task name onto result and run other tasks.', function() { result.push(this.name); task.run('b', 'e'); });
     task.registerTask('b', 'Push task name onto result and run other tasks.', function() { result.push(this.name); task.run('c', 'd d'); });
     task.registerTask('c', 'Push task name onto result.', result.pushTaskname);
@@ -251,17 +228,16 @@ exports.Tasks = {
     task.registerTask('e', 'Push task name onto result and run other tasks.', function() { result.push(this.name); task.run('f f'); });
     task.registerTask('f f', 'Push task name onto result.', result.pushTaskname);
     task.registerTask('g', 'Push task name onto result.', result.pushTaskname);
+    var done = assert.async();
     task.options({
       done: function() {
-        test.strictEqual(result.getJoined(), 'abcd def fg', 'The specified tasks should have run, in-order.');
-        test.done();
+        assert.strictEqual(result.getJoined(), 'abcd def fg', 'The specified tasks should have run, in-order.');
+        done();
       }
     });
     task.run('a', 'g').start();
-  },
-  'Task#run (async, nested tasks, queue order)': function(test) {
-    test.expect(1);
-    var task = this.task;
+  });
+  QUnit.test('Task#run (async, nested tasks, queue order)', function(assert) {
     task.registerTask('a', 'Push task name onto result and run other tasks.', function() { result.push(this.name); task.run('b', 'e'); delay(this.async()); });
     task.registerTask('b', 'Push task name onto result and run other tasks.', function() { result.push(this.name); delay(this.async()); task.run('c', 'd d'); });
     task.registerTask('c', 'Push task name onto result.', result.pushTaskname);
@@ -270,48 +246,45 @@ exports.Tasks = {
     task.registerTask('f f', 'Push task name onto result and run other tasks.', function() { this.async()(); result.push(this.name); task.run('g'); });
     task.registerTask('g', 'Push task name onto result.', result.pushTaskname);
     task.registerTask('h', 'Push task name onto result.', result.pushTaskname);
+    var done = assert.async();
     task.options({
       done: function() {
-        test.strictEqual(result.getJoined(), 'abcd def fgh', 'The specified tasks should have run, in-order.');
-        test.done();
+        assert.strictEqual(result.getJoined(), 'abcd def fgh', 'The specified tasks should have run, in-order.');
+        done();
       }
     });
     task.run('a', 'h').start();
-  },
-  'Task#run (async task with multiple callbacks)': function(test) {
-    test.expect(1);
-    var task = this.task;
+  });
+  QUnit.test('Task#run (async task with multiple callbacks)', function(assert) {
     task.registerTask('a', 'Call async callback twice.', function() { var done = this.async(); done(); done(); });
     task.registerTask('b', 'Never call async callback.', function() { this.async(); });
     task.run('a', 'b').start();
+    var done = assert.async();
     delay(function() {
-      test.deepEqual(task.current.name, 'b', 'Should be stuck on task with no async callback');
-      test.done();
+      assert.deepEqual(task.current.name, 'b', 'Should be stuck on task with no async callback');
+      done();
     });
-  },
-  'Task#current': function(test) {
-    test.expect(8);
-    var task = this.task;
-    test.deepEqual(task.current, {}, 'Should start empty.');
+  });
+  QUnit.test('Task#current', function(assert) {
+    assert.deepEqual(task.current, {}, 'Should start empty.');
     task.registerTask('a', 'Sample task.', function() {
-      test.equal(task.current, this, 'This and task.current should be the same object.');
-      test.equal(task.current.nameArgs, 'a:b:c', 'Should be task name + args, as-specified.');
-      test.equal(task.current.name, 'a', 'Should be just the task name, no args.');
-      test.equal(typeof task.current.async, 'function', 'Should be a function.');
-      test.deepEqual(task.current.args, ['b', 'c'], 'Should be an array of args.');
-      test.deepEqual(task.current.flags, {b: true, c: true}, 'Should be a map of flags.');
+      assert.equal(task.current, this, 'This and task.current should be the same object.');
+      assert.equal(task.current.nameArgs, 'a:b:c', 'Should be task name + args, as-specified.');
+      assert.equal(task.current.name, 'a', 'Should be just the task name, no args.');
+      assert.equal(typeof task.current.async, 'function', 'Should be a function.');
+      assert.deepEqual(task.current.args, ['b', 'c'], 'Should be an array of args.');
+      assert.deepEqual(task.current.flags, {b: true, c: true}, 'Should be a map of flags.');
     });
+    var done = assert.async();
     task.options({
       done: function() {
-        test.deepEqual(task.current, {}, 'Should be empty again once tasks are done.');
-        test.done();
+        assert.deepEqual(task.current, {}, 'Should be empty again once tasks are done.');
+        done();
       }
     });
     task.run('a:b:c').start();
-  },
-  'Task#clearQueue': function(test) {
-    test.expect(1);
-    var task = this.task;
+  });
+  QUnit.test('Task#clearQueue', function(assert) {
     task.registerTask('a', 'Push task name onto result.', result.pushTaskname);
     task.registerTask('b', 'Push task name onto result.', result.pushTaskname);
     task.registerTask('c', 'Clear the queue.', function() {
@@ -321,17 +294,16 @@ exports.Tasks = {
     task.registerTask('d', 'Push task name onto result.', result.pushTaskname);
     task.registerTask('e', 'Push task name onto result.', result.pushTaskname);
     task.registerTask('f', 'Push task name onto result.', result.pushTaskname);
+    var done = assert.async();
     task.options({
       done: function() {
-        test.strictEqual(result.getJoined(), 'abcf', 'The specified tasks should have run, in-order.');
-        test.done();
+        assert.strictEqual(result.getJoined(), 'abcf', 'The specified tasks should have run, in-order.');
+        done();
       }
     });
     task.run('a', 'b', 'c', 'd', 'e').start();
-  },
-  'Task#mark': function(test) {
-    test.expect(1);
-    var task = this.task;
+  });
+  QUnit.test('Task#mark', function(assert) {
     task.registerTask('a', 'Explode.', function() {
       throw task.taskError('whoops.');
     });
@@ -370,21 +342,20 @@ exports.Tasks = {
 
     task.registerTask('p', 'Push task name onto result.', result.pushTaskname);
 
+    var done = assert.async();
     task.options({
       error: function() {
         result.push('!' + this.name);
         task.clearQueue({untilMarker: true});
       },
       done: function() {
-        test.strictEqual(result.getJoined(), '!ad!egh!ij!kmn!op', 'The specified tasks should have run, in-order.');
-        test.done();
+        assert.strictEqual(result.getJoined(), '!ad!egh!ij!kmn!op', 'The specified tasks should have run, in-order.');
+        done();
       }
     });
     task.run('a', 'b', 'c').mark().run('d', 'e', 'f').mark().run('g', 'h', 'i').mark().run('j', 'l').mark().run('m', 'n').mark().run('p').mark().start();
-  },
-  'Task#requires': function(test) {
-    test.expect(1);
-    var task = this.task;
+  });
+  QUnit.test('Task#requires', function(assert) {
     task.registerTask('notrun', 'This task is never run.', function() {});
     task.registerTask('a a', 'Push task name onto result, but fail.', function() {
       result.push(this.name);
@@ -413,70 +384,62 @@ exports.Tasks = {
       task.requires('b', 'c', 'd');
       result.push(this.name);
     });
+    var done = assert.async();
     task.options({
       error: function() {
         result.push('!' + this.name);
       },
       done: function() {
-        test.strictEqual(result.getJoined(), 'a a!a ab!bcde!x!y!z', 'Tasks whose requirements have failed or are missing should not run.');
-        test.done();
+        assert.strictEqual(result.getJoined(), 'a a!a ab!bcde!x!y!z', 'Tasks whose requirements have failed or are missing should not run.');
+        done();
       }
     });
     task.run('a a', 'b', 'c', 'd', 'e', 'x', 'y', 'z').start();
-  }
-};
+  });
+});
 
-exports['Task#parseArgs'] = {
-  setUp: function(done) {
-    var task = requireTask().create();
+QUnit.module('util.Task#parseArgs', function(hooks) {
+  var task;
+  hooks.beforeEach(function() {
+    result.reset();
+    task = tasklib.create();
     this.parseTest = function() {
       return task.parseArgs(arguments);
     };
-    done();
-  },
-  'arguments': function(test) {
-    test.expect(4);
-    test.deepEqual(this.parseTest('foo bar'), ['foo bar'], 'single argument should be converted to array.');
-    test.deepEqual(this.parseTest('foo bar: aa : bb '), ['foo bar: aa : bb '], 'single argument should be converted to array.');
-    test.deepEqual(this.parseTest('foo bar', 'baz', 'test 1 2 3'), ['foo bar', 'baz', 'test 1 2 3'], 'arguments should be converted to array.');
-    test.deepEqual(this.parseTest('foo bar', 'baz:x y z', 'test 1 2 3: 4 : 5'), ['foo bar', 'baz:x y z', 'test 1 2 3: 4 : 5'], 'arguments should be converted to array.');
-    test.done();
-  },
-  'array': function(test) {
-    test.expect(1);
-    test.deepEqual(this.parseTest(['foo bar', 'baz:x y z', 'test 1 2 3: 4 : 5']), ['foo bar', 'baz:x y z', 'test 1 2 3: 4 : 5'], 'passed array should be used.');
-    test.done();
-  },
-  'object': function(test) {
-    test.expect(1);
+  });
+  QUnit.test('arguments', function(assert) {
+    assert.deepEqual(this.parseTest('foo bar'), ['foo bar'], 'single argument should be converted to array.');
+    assert.deepEqual(this.parseTest('foo bar: aa : bb '), ['foo bar: aa : bb '], 'single argument should be converted to array.');
+    assert.deepEqual(this.parseTest('foo bar', 'baz', 'test 1 2 3'), ['foo bar', 'baz', 'test 1 2 3'], 'arguments should be converted to array.');
+    assert.deepEqual(this.parseTest('foo bar', 'baz:x y z', 'test 1 2 3: 4 : 5'), ['foo bar', 'baz:x y z', 'test 1 2 3: 4 : 5'], 'arguments should be converted to array.');
+  });
+  QUnit.test('array', function(assert) {
+    assert.deepEqual(this.parseTest(['foo bar', 'baz:x y z', 'test 1 2 3: 4 : 5']), ['foo bar', 'baz:x y z', 'test 1 2 3: 4 : 5'], 'passed array should be used.');
+  });
+  QUnit.test('object', function(assert) {
     var obj = {};
-    test.deepEqual(this.parseTest(obj), [obj], 'single object should be returned as array.');
-    test.done();
-  },
-  'nothing': function(test) {
-    test.expect(1);
-    test.deepEqual(this.parseTest(), [], 'should return an empty array if nothing passed.');
-    test.done();
-  }
-};
+    assert.deepEqual(this.parseTest(obj), [obj], 'single object should be returned as array.');
+  });
+  QUnit.test('nothing', function(assert) {
+    assert.deepEqual(this.parseTest(), [], 'should return an empty array if nothing passed.');
+  });
+});
 
-exports['Task#splitArgs'] = {
-  setUp: function(done) {
-    this.task = requireTask().create();
-    done();
-  },
-  'arguments': function(test) {
-    test.expect(9);
-    var task = this.task;
-    test.deepEqual(task.splitArgs(), [], 'missing items = empty array.');
-    test.deepEqual(task.splitArgs(''), [], 'missing items = empty array.');
-    test.deepEqual(task.splitArgs('a'), ['a'], 'single item should be parsed.');
-    test.deepEqual(task.splitArgs('a:b:c'), ['a', 'b', 'c'], 'mutliple items should be parsed.');
-    test.deepEqual(task.splitArgs('a::c'), ['a', '', 'c'], 'missing items should be parsed.');
-    test.deepEqual(task.splitArgs('::'), ['', '', ''], 'missing items should be parsed.');
-    test.deepEqual(task.splitArgs('\\:a:\\:b\\::c\\:'), [':a', ':b:', 'c:'], 'escaped colons should be unescaped.');
-    test.deepEqual(task.splitArgs('a\\\\:b\\\\:c'), ['a\\', 'b\\', 'c'], 'escaped backslashes should not be parsed.');
-    test.deepEqual(task.splitArgs('\\:a\\\\:\\\\\\:b\\:\\\\:c\\\\\\:\\\\'), [':a\\', '\\:b:\\', 'c\\:\\'], 'please avoid doing this, ok?');
-    test.done();
-  }
-};
+QUnit.module('util.Task#splitArgs', function(hooks) {
+  var task;
+  hooks.beforeEach(function() {
+    result.reset();
+    task = tasklib.create();
+  });
+  QUnit.test('arguments', function(assert) {
+    assert.deepEqual(task.splitArgs(), [], 'missing items = empty array.');
+    assert.deepEqual(task.splitArgs(''), [], 'missing items = empty array.');
+    assert.deepEqual(task.splitArgs('a'), ['a'], 'single item should be parsed.');
+    assert.deepEqual(task.splitArgs('a:b:c'), ['a', 'b', 'c'], 'mutliple items should be parsed.');
+    assert.deepEqual(task.splitArgs('a::c'), ['a', '', 'c'], 'missing items should be parsed.');
+    assert.deepEqual(task.splitArgs('::'), ['', '', ''], 'missing items should be parsed.');
+    assert.deepEqual(task.splitArgs('\\:a:\\:b\\::c\\:'), [':a', ':b:', 'c:'], 'escaped colons should be unescaped.');
+    assert.deepEqual(task.splitArgs('a\\\\:b\\\\:c'), ['a\\', 'b\\', 'c'], 'escaped backslashes should not be parsed.');
+    assert.deepEqual(task.splitArgs('\\:a\\\\:\\\\\\:b\\:\\\\:c\\\\\\:\\\\'), [':a\\', '\\:b:\\', 'c\\:\\'], 'please avoid doing this, ok?');
+  });
+});

@@ -50,3 +50,13 @@ QUnit.test('--verbose --debug', async function(assert) {
   ]);
   assert.deepEqual(getOptionValues(result.stdout), { debug: 1, verbose: true }, 'Options parsed');
 });
+
+QUnit.test('--version --verbose lists tasks in locale order', async function(assert) {
+  const result = await spawnGrunt([
+    '--gruntfile', 'test/fixtures/Gruntfile-task-sort.js', '--version', '--verbose'
+  ]);
+  const listed = result.stdout.match(/Available tasks: (.*)/);
+  assert.ok(listed, 'Available tasks listed');
+  assert.deepEqual(listed[1].trim().split(' '),
+    ['alpha', 'BETA', 'éclair', 'omega', 'über', 'Zeta'], 'Tasks sorted for readers');
+});
